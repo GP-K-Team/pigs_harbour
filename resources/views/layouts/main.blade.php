@@ -4,6 +4,8 @@
     <meta name="authors" content="whatevernumber, the_nepodarok" />
     <meta name="keywords" content="морские свинки, пристань пушистых сердец, помощь животным, волонтёрский проект">
     <meta name="viewport" content="width=device-width" />
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
     <body>
     <header>

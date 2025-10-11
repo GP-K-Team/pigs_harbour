@@ -8,10 +8,4 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    server: {
-        watch: {
-            host: 'localhost',
-            usePolling: true,
-        }
-    }
 });
