@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enum\Fur;
+use App\Enum\Sex;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,6 +22,11 @@ class Pig extends Model
         'available_for_other_cities',
         'is_active',
         'stopped_looking_date'
+    ];
+
+    protected $casts = [
+        'fur' => Fur::class,
+        'sex' => Sex::class,
     ];
 
     /**
