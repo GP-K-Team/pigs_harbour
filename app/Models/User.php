@@ -4,13 +4,19 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Traits\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @mixin Authenticatable
+ * @property int $id
+ * @property string $name
+ */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, HasTimestamps, Notifiable;
 
     /**
      * The attributes that are mass assignable.
