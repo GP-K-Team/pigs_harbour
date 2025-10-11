@@ -15,8 +15,10 @@ return new class extends Migration
             $table->unsignedBigInteger('article_id')->nullable();
             $table->unsignedBigInteger('hashtag_id')->nullable();
 
-            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
-            $table->foreign('hashtag_id')->references('id')->on('hashtags')->onDelete('cascade');
+            $table->foreign('article_id')->references('id')->on('articles')
+                ->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('hashtag_id')->references('id')->on('hashtags')
+                ->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

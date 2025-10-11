@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('pigs', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('name');
             $table->string('slug_name')->nullable()->index();
             $table->string('sex')->nullable();
@@ -28,8 +27,11 @@ return new class extends Migration
             $table->unsignedBigInteger('city_id')->nullable();
             $table->unsignedBigInteger('companion_pig_id')->nullable();
 
-            $table->foreign('city_id')->references('id')->on('cities');
-            $table->foreign('companion_pig_id')->references('id')->on('pigs')->onDelete('cascade');
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent()->useCurrentOnUpdate();
+
+            $table->foreign('city_id')->references('id')->on('cities')->nullOnDelete();
+            $table->foreign('companion_pig_id')->references('id')->on('pigs')->nullOnDelete();
 
             $table->index(['sex', 'fur', 'birthday']);
         });
