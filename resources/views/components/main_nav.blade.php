@@ -49,8 +49,7 @@
 
 <style>
     header {
-        min-width: calc(100% - 20px);
-        max-width: 1400px;
+        width: 100vw;
         height: 80px;
         display: flex;
         justify-content: center;
@@ -73,6 +72,7 @@
 
     .nav_list li {
         padding: 5px 20px;
+        font-weight: 700;
         cursor: pointer;
     }
 
