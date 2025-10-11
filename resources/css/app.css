@@ -1,0 +1,29 @@
+:root {
+    --main_blue: #C3E3E1;
+    --light_blue: #E2F4F4;
+    --pale_orange: #FBD6B9;
+    --pale_pin: #EAB0C8;
+    --pale_yellow: #FBF1C5;
+    --main_font: #323232;
+    --dark_blue_font: #0C6291;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 400 800;
+    src: local(""), url('/public/fonts/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: '315karusel';
+    font-style: normal;
+    font-weight: 400 800;
+    src: local(""), url('/public/fonts/315karusel_bold.otf') format('truetype');
+    font-display: swap;
+}
+
+.bg-texture-light {
+    background: #E2F4F4 url('/public/images/texture-light.png') 0 0 repeat;
+}

@@ -16,15 +16,17 @@
     </head>
 
     <body>
-    <header>
-       @include('components.main_nav')
-    </header>
-        <div class="main">
-            @yield('content')
-        </div>
-    <footer>
+        <header>
+           @include('components.main_nav')
+        </header>
 
-    </footer>
+        <main class="main {{ isset($background) ? "bg-$background" : '' }}">
+            @yield('content')
+        </main>
+
+        <footer>
+
+        </footer>
     </body>
 </html>
 
@@ -42,6 +44,10 @@
         background-color: #F0F8FF;
         font-family: Nunito, Arial, sans-serif;
         color: var(--main_font);
+    }
+
+    main {
+        height: 100%;
     }
 
     footer {
@@ -71,34 +77,4 @@
         margin: 0;
         list-style: none;
     }
-
-    :root {
-        --main_blue: #C3E3E1;
-        --light_blue: #E2F4F4;
-        --pale_orange: #FBD6B9;
-        --pale_pin: #EAB0C8;
-        --pale_yellow: #FBF1C5;
-        --main_font: #323232;
-        --dark_blue_font: #0C6291;
-
-    }
-
-    @font-face {
-        font-family: 'Nunito';
-        font-style: normal;
-        font-weight: 400 800;
-        src: local(""),
-            url('fonts/Nunito-VariableFont_wght.ttf') format('truetype'),
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: '315karusel';
-        font-style: normal;
-        font-weight: 400 800;
-        src: local(""),
-        url('fonts/315karusel_bold.otf') format('truetype'),
-        font-display: swap;
-    }
-
 </style>
