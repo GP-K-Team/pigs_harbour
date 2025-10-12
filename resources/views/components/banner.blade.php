@@ -22,7 +22,6 @@
         min-height: 500px;
         background-image: url("/images/header_background.png");
         background-size: cover;
-        z-index: -1;
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     }
 
@@ -35,6 +34,7 @@
 
     .banner_main_text_wrapper {
         font-family: '315karusel', sans-serif;
+        width: 200px;
     }
 
     .pigs_banner {
@@ -44,5 +44,6 @@
 
     .special_text {
         font-family: 'overdoze sans', sans-serif;
+        font-size: 25px;
     }
 </style>

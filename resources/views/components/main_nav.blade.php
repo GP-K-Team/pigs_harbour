@@ -102,6 +102,7 @@
         position: absolute;
         bottom: -50px;
         left: 85px;
+        z-index: 5;
     }
 
     .logo_square {
@@ -113,6 +114,7 @@
         background-color: #E2F4F4;
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
         border-radius: 30px;
+        z-index: 4;
     }
 
     .special_link {
