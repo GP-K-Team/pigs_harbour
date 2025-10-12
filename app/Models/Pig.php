@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Attributes\RouteSlug;
 use App\Enum\Fur;
 use App\Enum\Sex;
 use App\Models\Traits\HasTimestamps;
+use App\Models\Traits\IsIdentifiedBySlug;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,9 +34,10 @@ use Illuminate\Support\Collection;
  * @property Image $mainImage
  * @mixin HasTimestamps
  */
+#[RouteSlug('slug_name')]
 class Pig extends Model
 {
-    use HasTimestamps;
+    use HasTimestamps, IsIdentifiedBySlug;
 
     protected $fillable = [
         'name',
