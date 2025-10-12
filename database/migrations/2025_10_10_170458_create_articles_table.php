@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('title')->index();
             $table->string('slug_title')->index();
             $table->string('meta_description')->nullable();
@@ -21,6 +20,8 @@ return new class extends Migration
             $table->text('description');
             $table->string('author')->nullable()->index();
             $table->string('origin_link')->nullable();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

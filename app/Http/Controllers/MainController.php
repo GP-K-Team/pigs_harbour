@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 
 class MainController
@@ -16,7 +16,7 @@ class MainController
     {
         return view('index', [
             'title' => 'Приют для морских свинок',
-            'isAdmin' => Auth::user()?->id,
+            'isAdmin' => Auth::id(),
         ]);
     }
 }

@@ -1,16 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enum\Fur;
 use App\Enum\Sex;
+use App\Models\Traits\HasTimestamps;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $slug_name
+ * @property string $description
+ * @property Sex $sex
+ * @property Fur $fur
+ * @property string $age
+ * @property Carbon $birthday
+ * @property bool $available_for_other_cities
+ * @property bool $is_active
+ * @property City $city
+ * @property Pig $companion
+ * @property Pig $companionOf
+ * @property Collection|iterable<Image> $images
+ * @property Image $mainImage
+ * @mixin HasTimestamps
+ */
 class Pig extends Model
 {
+    use HasTimestamps;
+
     protected $fillable = [
         'name',
         'slug_name',
@@ -27,6 +52,7 @@ class Pig extends Model
     protected $casts = [
         'fur' => Fur::class,
         'sex' => Sex::class,
+        'birthday' => 'datetime',
     ];
 
     /**

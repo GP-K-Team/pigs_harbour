@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('image_pig', function (Blueprint $table) {
             $table->unsignedBigInteger('image_id')->nullable();
             $table->unsignedBigInteger('pig_id')->nullable();
-
-            $table->foreign('pig_id')->references('id')->on('pigs')->onDelete('cascade');
-            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
             $table->boolean('is_main')->default(false);
+
+            $table->foreign('pig_id')->references('id')->on('pigs')
+                ->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('image_id')->references('id')->on('images')
+                ->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
