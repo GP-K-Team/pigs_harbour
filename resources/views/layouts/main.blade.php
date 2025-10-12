@@ -41,12 +41,16 @@
         height: calc(100vh);
         margin: 0;
         padding: 0;
-        background-color: #F0F8FF;
         font-family: Nunito, Arial, sans-serif;
         color: var(--main_font);
     }
 
     main {
+        margin: 0 auto;
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        max-width: 1400px;
         height: 100%;
     }
 
