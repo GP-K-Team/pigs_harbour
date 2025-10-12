@@ -1,9 +1,8 @@
 @extends('layouts.main', ['background' => 'texture-light'])
 
 @php
-/**
- * @var ?\App\Models\Pig $pig
- */
+  /** @var ?\App\Models\Pig $pig */
+  $pig ??= null;
 @endphp
 
 @section('title')
@@ -13,7 +12,7 @@
 @section('content')
     <div class="content-container">
         <div class="form-container">
-            <form class="form" action="{{ route('pigs.' . (isset($pig) ? 'update' : 'create'), compact('pig')) }}" method="POST">
+            <form class="form" action="{{ route('pigs.' . (is_null($pig) ? 'create' : 'update'), compact('pig')) }}" method="POST">
                 <h2 class="form-title">
                     @if(isset($pig))
                         {{ $pig->name }}
