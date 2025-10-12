@@ -50,6 +50,18 @@
         height: 100%;
     }
 
+    header {
+        position: relative;
+        width: 100vw;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--main_blue);
+        font-size: 18px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.06);
+    }
+
     footer {
         width: 100%;
         height: 80px;

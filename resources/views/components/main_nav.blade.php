@@ -4,6 +4,9 @@
             <li>
                 Ищут дом
             </li>
+            <span>
+                <img src="/images/icons/dot.svg" alt="Круглый элемент">
+            </span>
             <li>
                 Как взять
             </li>
@@ -18,6 +21,9 @@
             <li>
                 Статьи
             </li>
+            <span>
+                <img src="/images/icons/dot.svg" alt="Круглый элемент">
+            </span>
             <li>
                 О нас
             </li>
@@ -46,19 +52,17 @@
         </ul>
     </div>
 </nav>
+<div class="menu_burger">
+    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="burger_menu_line" d="M25 2.75H0V5.25H25V2.75Z" fill="#323232"/>
+        <path class="burger_menu_line" d="M25 11.25H0V13.75H25V11.25Z" fill="#323232"/>
+        <path class="burger_menu_line" d="M25 19.75H0V22.25H25V19.75Z" fill="#323232"/>
+    </svg>
+</div>
+
+@include('components.mobile_nav')
 
 <style>
-    header {
-        width: 100vw;
-        height: 80px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: var(--main_blue);
-        font-size: 18px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.06);
-    }
-
     .nav_bar {
         display: flex;
         align-items: center;
@@ -68,11 +72,14 @@
         display: flex;
         align-items: center;
         column-gap: 15px;
+
+        justify-content: end;
+        min-width: 370px;
     }
 
     .nav_list li {
         padding: 5px 20px;
-        font-weight: 700;
+        font-weight: bold;
         cursor: pointer;
     }
 
@@ -80,8 +87,9 @@
         color: var(--dark_blue_font);
     }
 
-    .nav_list li:nth-child(2) {
-        list-style: disc;
+    .menu_burger {
+        display: none;
+        cursor: pointer;
     }
 
     .logo_wrapper {
@@ -117,7 +125,8 @@
         border-color: var(--dark_blue_font);
     }
 
-    li .special_link:hover .main_vk_logo {
+    li .special_link:hover .main_vk_logo,
+    .menu_burger:hover .burger_menu_line {
         fill: var(--dark_blue_font);
     }
 
@@ -125,5 +134,34 @@
         display: flex;
         column-gap: 10px;
         align-items: center;
+    }
+
+    @media (max-width: 1200px) {
+        .nav_list {
+            column-gap: 5px;
+        }
+    }
+
+    @media (max-width: 1000px) {
+        .nav_list {
+            column-gap: 5px;
+            min-width: auto;
+        }
+
+        .nav_list li {
+            padding: 5px 10px;
+        }
+    }
+
+    @media (max-width: 850px) {
+        .nav_list {
+            display: none;
+        }
+
+        .menu_burger {
+            display: block;
+            position: absolute;
+            right: 15px;
+        }
     }
 </style>
