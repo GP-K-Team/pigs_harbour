@@ -20,7 +20,7 @@
     text-align: left;
 }
 
-.select-input .select-input__option:first-child {
+.select-input .select-input__option:disabled {
     cursor: default;
 }
 
@@ -65,12 +65,4 @@
 
 .select-input .select-input__input + .select-input__option-wrap {
     width: 99%;
-}
-
-.select-input .select-input__option-wrap > .select-input__option:first-child {
-    display: none !important;
-}
-
-.select-input__option:first-child:not(:disabled) {
-    opacity: 0.5;
 }

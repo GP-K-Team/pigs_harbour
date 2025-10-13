@@ -51,7 +51,6 @@
         width: 100%;
         flex-direction: column;
         max-width: 100vw;
-        height: 100%;
     }
 
     header {

@@ -116,7 +116,7 @@ $pig ??= null;
 
                 <div class="input-container has-select">
                     <label class="input-label" for="companion">Отдаётся вместе</label>
-                    <select name="companion" id="companion">
+                    <select name="companion" id="companion" data-search="true">
                         <option value="" @selected(empty($pig))>Без напарника</option>
                         @foreach($companionCandidates as $candidate)
                             <option value="{{ $candidate->id }}" @selected(isset($pig) && $pig->companion_pig_id === $candidate->companion_pig_id)>
@@ -260,7 +260,7 @@ $pig ??= null;
             align-items: center;
         }
 
-        #companion + .select-input .select-input__option:not(.select-input__option--value, :disabled)::before {
+        #companion + .select-input .select-input__option:not(.select-input__option--value, :first-child)::before {
             content: "";
             width: 4rem;
             height: 4rem;
