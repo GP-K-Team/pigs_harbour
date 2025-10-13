@@ -41,13 +41,29 @@
         height: calc(100vh);
         margin: 0;
         padding: 0;
-        background-color: #F0F8FF;
         font-family: Nunito, Arial, sans-serif;
         color: var(--main_font);
     }
 
     main {
+        margin: 0 auto;
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        max-width: 1400px;
         height: 100%;
+    }
+
+    header {
+        position: relative;
+        width: 100vw;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--main_blue);
+        font-size: 18px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.06);
     }
 
     footer {

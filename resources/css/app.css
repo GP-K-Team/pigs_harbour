@@ -25,6 +25,14 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'overdoze sans';
+    font-style: normal;
+    font-weight: 400 800;
+    src: local(""), url('/public/fonts/overdozesans.ttf') format('truetype');
+    font-display: swap;
+}
+
 .bg-texture-light {
     background: #FFFFFF url('/public/images/texture-light.png') 0 0 repeat;
 }
