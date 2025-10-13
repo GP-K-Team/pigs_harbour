@@ -32,6 +32,8 @@ use Illuminate\Support\Collection;
  * @property Pig $companionOf
  * @property Collection|iterable<Image> $images
  * @property Image|null $mainImage
+ * @property int $city_id
+ * @property int $companion_pig_id
  * @mixin HasTimestamps
  */
 #[RouteSlug('slug_name')]
@@ -58,6 +60,7 @@ class Pig extends Model
         'fur' => Fur::class,
         'sex' => Sex::class,
         'birthday' => 'datetime',
+        'is_active' => 'boolean',
     ];
 
     /**

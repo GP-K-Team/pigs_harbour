@@ -1,8 +1,12 @@
 @extends('layouts.main', ['background' => 'texture-light'])
 
 @php
-  /** @var ?\App\Models\Pig $pig */
-  $pig ??= null;
+/**
+ * @var ?\App\Models\Pig $pig
+ * @var \Illuminate\Support\Collection|iterable<\App\Models\City> $cities
+ * @var \Illuminate\Support\Collection|iterable<\App\Models\Pig> $companionCandidates
+ */
+$pig ??= null;
 @endphp
 
 @section('title')
@@ -12,7 +16,8 @@
 @section('content')
     <div class="content-container">
         <div class="form-container">
-            <form class="form" action="{{ route('pigs.' . (is_null($pig) ? 'create' : 'update'), compact('pig')) }}" method="POST">
+            <form class="form" action="{{ route('pigs.' . (is_null($pig) ? 'create' : 'update'), compact('pig')) }}"
+                  method="POST">
                 <h2 class="form-title">
                     @if(isset($pig))
                         {{ $pig->name }}
@@ -20,24 +25,48 @@
                         Новая свинка
                     @endif
                 </h2>
+
+                <div class="input-container has-radio">
+                    <fieldset>
+                        <legend class="input-label">
+                            Ищет дом
+                        </legend>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="is_active" id="1" value="{{ true }}" @checked($pig?->is_active)>
+                                <label for="1">Да</label>
+                            </div>
+
+                            <div class="radio-item">
+                                <input type="radio" name="is_active" id="0" value="{{ false }}" @checked(!$pig?->is_active)>
+                                <label for="0">Нет</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
                 <div class="input-container">
                     <label class="input-label" for="name">Имя</label>
-                    <input type="text" name="name" id="name" value="{{ old('name', $pig?->name) }}" placeholder="Имя свинки">
+                    <input type="text" name="name" id="name" value="{{ old('name', $pig?->name) }}"
+                           placeholder="Имя свинки">
                 </div>
 
                 <div class="input-container">
                     <label class="input-label" for="age">Возраст (текстом)</label>
-                    <input type="text" name="age" id="age" value="{{ old('age', $pig?->age) }}" placeholder="Возраст свинки">
+                    <input type="text" name="age" id="age" value="{{ old('age', $pig?->age) }}"
+                           placeholder="Возраст свинки">
                 </div>
 
                 <div class="input-container">
                     <label class="input-label" for="slug_name">Транслит</label>
-                    <input type="text" name="slug_name" id="slug_name" value="{{ old('slug_name', $pig?->slug_name) }}" placeholder="Транслит">
+                    <input type="text" name="slug_name" id="slug_name" value="{{ old('slug_name', $pig?->slug_name) }}"
+                           placeholder="Транслит">
                 </div>
 
                 <div class="input-container has-textarea">
                     <label class="input-label" for="description">Подробное описание</label>
-                    <textarea name="description" id="description" placeholder="Подробное описание">{{ trim( old('description', $pig?->description) ) }}</textarea>
+                    <textarea name="description" id="description"
+                              placeholder="Подробное описание">{{ trim( old('description', $pig?->description) ) }}</textarea>
                 </div>
 
                 <div class="input-container">
@@ -48,7 +77,8 @@
                         <div class="radio-group">
                             @foreach(\App\Enum\Sex::cases() as $sex)
                                 <div class="radio-item">
-                                    <input type="radio" name="sex" id="{{ $sex->value }}" value="{{ $sex->value }}" @checked($pig?->sex === $sex)>
+                                    <input type="radio" name="sex" id="{{ $sex->value }}"
+                                           value="{{ $sex->value }}" @checked($pig?->sex === $sex)>
                                     <label for="{{ $sex->value }}">{{ $sex->getLabel() }}</label>
                                 </div>
                             @endforeach
@@ -64,12 +94,37 @@
                         <div class="radio-group">
                             @foreach(\App\Enum\Fur::cases() as $fur)
                                 <div class="radio-item">
-                                    <input type="radio" name="fur" id="{{ $fur->value }}" value="{{ $fur->value }}" @checked($pig?->fur === $fur)>
+                                    <input type="radio" name="fur" id="{{ $fur->value }}"
+                                           value="{{ $fur->value }}" @checked($pig?->fur === $fur)>
                                     <label for="{{ $fur->value }}">{{ $fur->getLabel() }}</label>
                                 </div>
                             @endforeach
                         </div>
                     </fieldset>
+                </div>
+
+                <div class="input-container has-select">
+                    <label class="input-label" for="city">Город</label>
+                    <select name="city" id="city">
+                        <option value="" disabled>Выберите город</option>
+                        @foreach($cities as $id => $city)
+                            <option value="{{ $id }}" @selected($id === $pig?->city_id)>
+                                {{ $city }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="input-container has-select">
+                    <label class="input-label" for="companion">Отдаётся вместе</label>
+                    <select name="companion" id="companion" data-search="true">
+                        <option value="" disabled>Выберите напарника</option>
+                        @foreach($companionCandidates as $candidate)
+                            <option value="{{ $candidate->id }}" @selected($pig?->companion_pig_id === $candidate->companion_pig_id)>
+                                {{ $candidate->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
             </form>
         </div>
@@ -86,7 +141,7 @@
 
         .form {
             width: 60vw;
-            height: 75vh;
+            min-height: 90vh;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
@@ -115,6 +170,15 @@
 
         .input-container:is(:has(textarea), .has-textarea) {
             flex-basis: calc(100% - 1rem);
+            max-height: unset;
+        }
+
+        .input-container:is(:has(input[type="radio"]), .has-radio) {
+            flex-basis: calc(100% - 1rem);
+            max-height: unset;
+        }
+
+        .input-container:is(:has(select), .has-select) {
             max-height: unset;
         }
 
@@ -179,6 +243,30 @@
 
         input[type="radio"]:checked {
             background: var(--main_pink);
+        }
+
+        .select-input .select-input__dropdown {
+            width: 100%;
+            max-height: 10rem;
+            border: 1px solid var(--main_font);
+            border-radius: 0.5rem;
+            overflow-y: scroll;
+            scrollbar-width: thin;
+            scrollbar-color: var(--main_pink) var(--light_blue);
+        }
+
+        #companion + .select-input .select-input__option:not(:disabled) {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        #companion + .select-input .select-input__option:not(.select-input__option--value, :disabled)::before {
+            content: "";
+            width: 4rem;
+            height: 4rem;
+            display: inline-flex;
+            background-image: url('/public/images/texture-light.png');
         }
     </style>
 @endsection
