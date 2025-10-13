@@ -26,25 +26,6 @@ $pig ??= null;
                     @endif
                 </h2>
 
-                <div class="input-container has-radio">
-                    <fieldset>
-                        <legend class="input-label">
-                            Ищет дом
-                        </legend>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" name="is_active" id="1" value="{{ true }}" @checked($pig?->is_active)>
-                                <label for="1">Да</label>
-                            </div>
-
-                            <div class="radio-item">
-                                <input type="radio" name="is_active" id="0" value="{{ false }}" @checked(!$pig?->is_active)>
-                                <label for="0">Нет</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-
                 <div class="input-container">
                     <label class="input-label" for="name">Имя</label>
                     <input type="text" name="name" id="name" value="{{ old('name', $pig?->name) }}"
@@ -61,6 +42,24 @@ $pig ??= null;
                     <label class="input-label" for="slug_name">Транслит</label>
                     <input type="text" name="slug_name" id="slug_name" value="{{ old('slug_name', $pig?->slug_name) }}"
                            placeholder="Транслит">
+                </div>
+
+                <div class="input-container has-radio">
+                    <fieldset>
+                        <legend class="input-label">
+                            Ищет дом
+                        </legend>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="is_active" id="1" value="{{ true }}" @checked(empty($pig) || $pig->is_active)>
+                                <label for="1">Да</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="is_active" id="0" value="{{ false }}" @checked(isset($pig) && !$pig->is_active)>
+                                <label for="0">Нет</label>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
 
                 <div class="input-container has-textarea">
@@ -117,10 +116,10 @@ $pig ??= null;
 
                 <div class="input-container has-select">
                     <label class="input-label" for="companion">Отдаётся вместе</label>
-                    <select name="companion" id="companion" data-search="true">
-                        <option value="" disabled>Выберите напарника</option>
+                    <select name="companion" id="companion">
+                        <option value="" @selected(empty($pig))>Без напарника</option>
                         @foreach($companionCandidates as $candidate)
-                            <option value="{{ $candidate->id }}" @selected($pig?->companion_pig_id === $candidate->companion_pig_id)>
+                            <option value="{{ $candidate->id }}" @selected(isset($pig) && $pig->companion_pig_id === $candidate->companion_pig_id)>
                                 {{ $candidate->name }}
                             </option>
                         @endforeach
