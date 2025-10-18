@@ -36,21 +36,22 @@
     }
 
     body {
-        display: flex;
-        flex-direction: column;
-        height: calc(100vh);
         margin: 0;
         padding: 0;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
         font-family: Nunito, Arial, sans-serif;
         color: var(--main_font);
     }
 
     main {
         margin: 0 auto;
-        display: flex;
         width: 100%;
-        flex-direction: column;
         max-width: 100vw;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
     }
 
     header {

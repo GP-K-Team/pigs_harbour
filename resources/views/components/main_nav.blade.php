@@ -2,7 +2,7 @@
     <div>
         <ul class="nav_list">
             <li>
-                Ищут дом
+                <a href="{{ route('pigs.index') }}">Ищут дом</a>
             </li>
             <span>
                 <img src="/images/icons/dot.svg" alt="Круглый элемент">

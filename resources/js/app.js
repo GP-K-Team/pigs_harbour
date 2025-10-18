@@ -1,9 +1,6 @@
 import './bootstrap';
-import './select-input.js';
-
-import $ from 'jquery';
-
-window.$ = window.jQuery = $;
+import './select-input';
+import './filepond';
 
 $(document).ready(function() {
     $('.menu_burger').on('click', function() {

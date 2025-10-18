@@ -33,22 +33,23 @@ class PigsController extends Controller
     public function showUpdate(Request $request, Pig $pig): View
     {
         $cities = City::query()->pluck('name', 'id');
+        $companionCandidates = Pig::activeDesc()->get();
 
-        return \view('pigs.form', compact('pig', 'cities'));
+        return \view('pigs.form', compact('pig', 'companionCandidates', 'cities'));
     }
 
     public function create(Request $request): RedirectResponse
     {
-        return \response()->redirectToAction([$this, 'index']);
+        return \response()->redirectToAction([self::class, 'index']);
     }
 
     public function update(Request $request, Pig $pig): RedirectResponse
     {
-        return \response()->redirectToAction([$this, 'index']);
+        return \response()->redirectToAction([self::class, 'index']);
     }
 
     public function delete(Request $request, Pig $pig): RedirectResponse
     {
-        return \response()->redirectToAction([$this, 'index']);
+        return \response()->redirectToAction([self::class, 'index']);
     }
 }

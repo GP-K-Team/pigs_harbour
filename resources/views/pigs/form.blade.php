@@ -17,7 +17,7 @@ $pig ??= null;
     <div class="content-container">
         <div class="form-container">
             <form class="form" action="{{ route('pigs.' . (is_null($pig) ? 'create' : 'update'), compact('pig')) }}"
-                  method="POST">
+                  method="POST" enctype="multipart/form-data">
                 <h2 class="form-title">
                     @if(isset($pig))
                         {{ $pig->name }}
@@ -117,14 +117,29 @@ $pig ??= null;
                 <div class="input-container has-select">
                     <label class="input-label" for="companion">Отдаётся вместе</label>
                     <select name="companion" id="companion" data-search="true">
-                        <option value="" @selected(empty($pig))>Без напарника</option>
+                        <option value="" @selected(empty($pig) && empty($pig->companion_pig_id))>Без напарника</option>
                         @foreach($companionCandidates as $candidate)
-                            <option value="{{ $candidate->id }}" @selected(isset($pig) && $pig->companion_pig_id === $candidate->companion_pig_id)>
+                            <option value="{{ $candidate->id }}" @selected(isset($pig) && ($pig->companion || $pig->companionOf) && ($pig->companion?->id ?? $pig->companionOf->id) === $candidate->id)>
                                 {{ $candidate->name }}
                             </option>
                         @endforeach
                     </select>
                 </div>
+
+                <div class="input-container has-dropzone">
+                    <label class="input-label" for="images">Фото</label>
+                    <div class="dropzone-container">
+                        <div class="filepond">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-button">
+                    <button type="submit">Отправить</button>
+                </div>
+
+                @csrf
             </form>
         </div>
     </div>
@@ -138,8 +153,12 @@ $pig ??= null;
             row-gap: 5rem;
         }
 
+        .form-container {
+            max-width: 750px;
+        }
+
         .form {
-            width: 60vw;
+            max-width: 75vw;
             min-height: 90vh;
             display: flex;
             flex-direction: row;
@@ -161,13 +180,19 @@ $pig ??= null;
 
         .input-container {
             display: flex;
-            flex-direction: column;
+            max-width: 100%;
             max-height: 90px;
+            flex-direction: column;
             flex-basis: calc(50% - 1rem);
             gap: 0.25rem;
         }
 
         .input-container:is(:has(textarea), .has-textarea) {
+            flex-basis: calc(100% - 1rem);
+            max-height: unset;
+        }
+
+        .input-container:is(:has(.filepond), .has-dropzone) {
             flex-basis: calc(100% - 1rem);
             max-height: unset;
         }
@@ -190,6 +215,7 @@ $pig ??= null;
         }
 
         .input-container :is(input, textarea, fieldset) {
+            margin: 0;
             border: 2px solid var(--main_blue);
             border-radius: 0.5rem;
         }
@@ -202,6 +228,7 @@ $pig ??= null;
         .radio-group {
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
             align-items: center;
             gap: 1rem;
         }
@@ -211,6 +238,15 @@ $pig ??= null;
             flex-direction: row;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        .filepond {
+            width: 100%;
+            height: 10rem;
+            padding: 0.25rem;
+            background-color: var(--light_blue);
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
         }
 
         input[type="text"], textarea {
@@ -244,6 +280,10 @@ $pig ??= null;
             background: var(--main_pink);
         }
 
+        input[type="file"] {
+            display: none;
+        }
+
         .select-input .select-input__dropdown {
             width: 100%;
             max-height: 10rem;
@@ -266,6 +306,24 @@ $pig ??= null;
             height: 4rem;
             display: inline-flex;
             background-image: url('/public/images/texture-light.png');
+        }
+
+        .form-button {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-button > button {
+            width: max-content;
+            align-self: flex-end;
+            margin-right: 1rem;
+            border: none;
+            padding: 0.75rem 1rem;
+            font-family: inherit;
+            font-size: 1rem;
+            background: var(--main_pink);
+            border-radius: 0.5rem;
         }
     </style>
 @endsection
