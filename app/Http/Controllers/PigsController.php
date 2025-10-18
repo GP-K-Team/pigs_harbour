@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PigFormRequest;
 use App\Models\City;
 use App\Models\Pig;
 use Illuminate\Http\RedirectResponse;
@@ -38,8 +41,10 @@ class PigsController extends Controller
         return \view('pigs.form', compact('pig', 'companionCandidates', 'cities'));
     }
 
-    public function create(Request $request): RedirectResponse
+    public function create(PigFormRequest $request): RedirectResponse
     {
+        $formData = $request->validated();
+
         return \response()->redirectToAction([self::class, 'index']);
     }
 

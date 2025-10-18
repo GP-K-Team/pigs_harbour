@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enum;
 
+use App\Attributes\FilterLabel;
 use App\Attributes\Label;
 use App\Traits\HasCallableAttribute;
 
@@ -11,18 +12,23 @@ enum Fur: string
 {
     use HasCallableAttribute;
 
-    #[Label('Жесткоошерстные')]
+    #[Label('Жёсткая')]
+    #[FilterLabel('Жесткоошерстные')]
     case Rough = 'rough';
 
-    #[Label('Длинношерстные')]
+    #[Label('Длинная')]
+    #[FilterLabel('Длинношерстные')]
     case Long = 'long';
 
-    #[Label('Гладкошерстные')]
+    #[Label('Гладкая')]
+    #[FilterLabel('Гладкошерстные')]
     case Smooth = 'smooth';
 
-    #[Label('Лысые')]
+    #[Label('Скинни')]
+    #[FilterLabel('Лысые')]
     case Hairless = 'bald';
 
-    #[Label('Розетчатые')]
+    #[Label('Розетка')]
+    #[FilterLabel('Розетчатые')]
     case Rosette = 'rosette';
 }

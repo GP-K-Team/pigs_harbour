@@ -62,7 +62,7 @@
 }
 
 .select-input .select-input__input {
-    width: 95%;
+    max-width: 95%;
     padding: 1rem;
     margin: 0.25rem 0.25rem 0;
 }

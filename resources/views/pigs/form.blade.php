@@ -1,17 +1,26 @@
 @extends('layouts.main', ['background' => 'texture-light'])
 
 @php
-/**
- * @var ?\App\Models\Pig $pig
- * @var \Illuminate\Support\Collection|iterable<\App\Models\City> $cities
- * @var \Illuminate\Support\Collection|iterable<\App\Models\Pig> $companionCandidates
- */
-$pig ??= null;
+    use Illuminate\Support\Facades\Vite;
+
+    /**
+     * @var ?\App\Models\Pig $pig
+     * @var \Illuminate\Support\Collection|iterable<\App\Models\City> $cities
+     * @var \Illuminate\Support\Collection|iterable<\App\Models\Pig> $companionCandidates
+     */
+    $pig ??= null;
 @endphp
 
 @section('title')
     {{ isset($pig) ? $pig->name : 'Новая свинка' }}
 @endsection
+
+@push('js')
+    <script type="module" src="{{ Vite::asset('resources/js/select-input.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/filepond.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/zebra.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/page/translit.js') }}"></script>
+@endpush
 
 @section('content')
     <div class="content-container">
@@ -29,25 +38,30 @@ $pig ??= null;
                 <div class="input-container">
                     <label class="input-label" for="name">Имя</label>
                     <input type="text" name="name" id="name" value="{{ old('name', $pig?->name) }}"
-                           placeholder="Имя свинки">
+                           placeholder="Имя свинки" data-translit-source>
+                    <x-error-bag name="name"/>
                 </div>
 
                 <div class="input-container">
                     <label class="input-label" for="age">Возраст (текстом)</label>
                     <input type="text" name="age" id="age" value="{{ old('age', $pig?->age) }}"
                            placeholder="Возраст свинки">
+                    <x-error-bag name="age"/>
                 </div>
 
                 <div class="input-container">
                     <label class="input-label" for="slug_name">Транслит</label>
                     <input type="text" name="slug_name" id="slug_name" value="{{ old('slug_name', $pig?->slug_name) }}"
-                           placeholder="Транслит">
+                           placeholder="Транслит" data-translit-target>
+                    <x-error-bag name="slug_name"/>
                 </div>
 
                 <div class="input-container">
-                    <label class="input-label" for="birthday">Дата рождения (примерно)</label>
-                    <input class="datepick" type="text" name="birthday" id="birthday" value="{{ old('birthday', $pig?->birthday) }}"
+                    <label class="input-label" for="birthday">Дата рождения (для фильтра)</label>
+                    <input class="datepick" type="text" name="birthday" id="birthday"
+                           value="{{ old('birthday', $pig?->birthday) }}"
                            placeholder="Дата рождения">
+                    <x-error-bag name="birthday"/>
                 </div>
 
                 <div class="input-container has-radio">
@@ -57,21 +71,25 @@ $pig ??= null;
                         </legend>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" name="is_active" id="1" value="{{ true }}" @checked(empty($pig) || $pig->is_active)>
+                                <input type="radio" name="is_active" id="1"
+                                       value="{{ true }}" @checked(empty($pig) || $pig->is_active)>
                                 <label for="1">Да</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" name="is_active" id="0" value="{{ false }}" @checked(isset($pig) && !$pig->is_active)>
+                                <input type="radio" name="is_active" id="0"
+                                       value="{{ false }}" @checked(isset($pig) && !$pig->is_active)>
                                 <label for="0">Нет</label>
                             </div>
                         </div>
                     </fieldset>
+                    <x-error-bag name="is_active"/>
                 </div>
 
                 <div class="input-container has-textarea">
                     <label class="input-label" for="description">Подробное описание</label>
                     <textarea name="description" id="description"
                               placeholder="Подробное описание">{{ trim( old('description', $pig?->description) ) }}</textarea>
+                    <x-error-bag name="description"/>
                 </div>
 
                 <div class="input-container">
@@ -89,6 +107,7 @@ $pig ??= null;
                             @endforeach
                         </div>
                     </fieldset>
+                    <x-error-bag name="sex"/>
                 </div>
 
                 <div class="input-container">
@@ -106,6 +125,7 @@ $pig ??= null;
                             @endforeach
                         </div>
                     </fieldset>
+                    <x-error-bag name="fur"/>
                 </div>
 
                 <div class="input-container has-select">
@@ -113,11 +133,12 @@ $pig ??= null;
                     <select name="city" id="city">
                         <option value="" disabled>Выберите город</option>
                         @foreach($cities as $id => $city)
-                            <option value="{{ $id }}" @selected($id === $pig?->city_id)>
+                            <option value="12" @selected($id === $pig?->city_id)>
                                 {{ $city }}
                             </option>
                         @endforeach
                     </select>
+                    <x-error-bag name="city"/>
                 </div>
 
                 <div class="input-container has-select">
@@ -125,11 +146,13 @@ $pig ??= null;
                     <select name="companion" id="companion" data-search="true">
                         <option value="" @selected(empty($pig) && empty($pig->companion_pig_id))>Без напарника</option>
                         @foreach($companionCandidates as $candidate)
-                            <option value="{{ $candidate->id }}" @selected(isset($pig) && ($pig->companion || $pig->companionOf) && ($pig->companion?->id ?? $pig->companionOf->id) === $candidate->id)>
+                            <option
+                                value="{{ $candidate->id }}" @selected(isset($pig) && ($pig->companion || $pig->companionOf) && ($pig->companion?->id ?? $pig->companionOf->id) === $candidate->id)>
                                 {{ $candidate->name }}
                             </option>
                         @endforeach
                     </select>
+                    <x-error-bag name="companion"/>
                 </div>
 
                 <div class="input-container has-dropzone">
@@ -139,6 +162,7 @@ $pig ??= null;
 
                         </div>
                     </div>
+                    <x-error-bag name="files"/>
                 </div>
 
                 <div class="form-button">
@@ -187,7 +211,7 @@ $pig ??= null;
         .input-container {
             display: flex;
             max-width: 100%;
-            max-height: 90px;
+            max-height: 100px;
             flex-direction: column;
             flex-basis: calc(50% - 1rem);
             gap: 0.25rem;
@@ -328,8 +352,14 @@ $pig ??= null;
             padding: 0.75rem 1rem;
             font-family: inherit;
             font-size: 1rem;
+            font-weight: 800;
+            color: var(--main_font);
             background: var(--main_pink);
             border-radius: 0.5rem;
+        }
+
+        span.input-error {
+            color: var(--holiday-red);
         }
     </style>
 @endsection

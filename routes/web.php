@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PigsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'index']);
+
+Route::get('/ajax', [AjaxController::class, 'index']);
 
 Route::prefix('pigs')->name('pigs.')->group(function () {
     Route::get('/', [PigsController::class, 'index'])->name('index');

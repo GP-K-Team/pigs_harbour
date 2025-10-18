@@ -64,4 +64,15 @@ class LinguisticsHelper
 
         return $result ?? $word;
     }
+
+    public static function transliterate(string $text): string
+    {
+        $text = Str::of($text);
+        $customReplace = [
+            'х' => 'h',
+            'я' => 'ya',
+        ];
+
+        return $text->lower()->swap($customReplace)->transliterate()->slug()->toString();
+    }
 }
