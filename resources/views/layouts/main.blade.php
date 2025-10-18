@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="ru">
     <head>
         <title>@yield('title')&mdash; Пристань Пушистых Сердец</title>

@@ -1,0 +1,62 @@
+.Zebra_DatePicker_Icon_Wrapper {
+    display: flex !important;
+}
+
+.Zebra_DatePicker_Icon_Wrapper .Zebra_DatePicker_Icon {
+    background: url("/public/images/icons/calendar.svg");
+    background-size: contain;
+}
+
+.Zebra_DatePicker_Icon_Wrapper input.datepick {
+    width: 100%;
+}
+
+.Zebra_DatePicker.Zebra_DatePicker {
+    padding: 0;
+    font-family: Nunito, Arial, sans-serif;
+    background-color: var(--main_blue);
+}
+
+.Zebra_DatePicker .dp_header.dp_actions,
+.Zebra_DatePicker .dp_footer.dp_actions {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.Zebra_DatePicker .dp_actions .dp_hover {
+    background-color: var(--light_blue) !important;
+    color: var(--main_font) !important;
+    font-weight: 750;
+}
+
+.Zebra_DatePicker table.dp_actions td {
+    color: var(--main_font);
+}
+
+.Zebra_DatePicker table.dp_daypicker th {
+    background-color: var(--main_pink);
+    color: var(--main_font);
+}
+
+.Zebra_DatePicker table.dp_body td {
+    font-family: inherit;
+    background-color: var(--white-tpr);
+}
+
+.Zebra_DatePicker table.dp_body td.dp_hover {
+    color: var(--light_blue);
+    background-color: var(--dark_blue_font);
+}
+
+.Zebra_DatePicker table.dp_body td.dp_disabled {
+    cursor: not-allowed;
+}
+
+.Zebra_DatePicker .dp_body td.dp_weekend {
+    background-color: var(--pale_yellow);
+}
+
+.Zebra_DatePicker .dp_body td.dp_weekend.dp_hover {
+    color: var(--holiday-red);
+    background-color: var(--main_pink);
+}

@@ -44,6 +44,12 @@ $pig ??= null;
                            placeholder="Транслит">
                 </div>
 
+                <div class="input-container">
+                    <label class="input-label" for="birthday">Дата рождения (примерно)</label>
+                    <input class="datepick" type="text" name="birthday" id="birthday" value="{{ old('birthday', $pig?->birthday) }}"
+                           placeholder="Дата рождения">
+                </div>
+
                 <div class="input-container has-radio">
                     <fieldset>
                         <legend class="input-label">
@@ -88,14 +94,14 @@ $pig ??= null;
                 <div class="input-container">
                     <fieldset>
                         <legend class="input-label">
-                            Принадлежность по шерсти
+                            Шерсть
                         </legend>
                         <div class="radio-group">
                             @foreach(\App\Enum\Fur::cases() as $fur)
                                 <div class="radio-item">
                                     <input type="radio" name="fur" id="{{ $fur->value }}"
                                            value="{{ $fur->value }}" @checked($pig?->fur === $fur)>
-                                    <label for="{{ $fur->value }}">{{ $fur->getLabel() }}</label>
+                                    <label for="{{ $fur->value }}">{{ $fur->label() }}</label>
                                 </div>
                             @endforeach
                         </div>

@@ -1,5 +1,6 @@
 @import "select-input.css";
 @import "filepond.css";
+@import "zebra.css";
 
 :root {
     --main_blue: #C3E3E1;
@@ -11,6 +12,7 @@
     --main_font: #323232;
     --dark_blue_font: #0C6291;
     --white-tpr: rgba(255, 255, 255, 0.35);
+    --holiday-red: #CC236B;
 }
 
 @font-face {

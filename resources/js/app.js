@@ -1,6 +1,7 @@
 import './bootstrap';
 import './select-input';
 import './filepond';
+import './zebra';
 
 $(document).ready(function() {
     $('.menu_burger').on('click', function() {
