@@ -24,15 +24,44 @@ class LinguisticsHelper
 
         if ($isRiverCityWord) {
             $tail = Str::of($word)->after('-')->prepend('-');
-            $word = Str::before($word, $tail);
+            $mainWord = Str::before($word, $tail);
+
+            $result = self::getCityLocativeForm($mainWord) . $tail;
         }
 
-        $wordEnding = Str::charAt($word, -1);
-        $result = match ($wordEnding) {
-            'ь' => Str::of($word)->chopEnd($wordEnding)->append('и')->toString(),
-            default => (LinguisticsHelper::isVowel($wordEnding) ? Str::chopEnd($word, $wordEnding) : $word) . 'е',
-        };
+        $rules = [
+            'лец' => 'льце',
+            'ец' => 'це',
+            'зи' => 'зях',
+            'кий' => 'ком',
+            'ль' => 'ле',
+            'ний' => 'нем',
+            'но' => 'но',
+            'ой' => 'ом',
+            'ое' => 'ом',
+            'рел' => 'рле',
+            'рь' => 'ре',
+            'чи' => 'чи',
+            'ый' => 'ом',
+            'ь' => 'и',
+        ];
 
-        return $result . ($isRiverCityWord ? $tail : '');
+        $ruleApplied = false;
+
+        foreach ($rules as $ending => $replacement) {
+            if (Str::endsWith($result ?? $word, $ending)) {
+                $result = Str::replace($ending, $replacement, $word);
+                $ruleApplied = true;
+
+                break;
+            }
+        }
+
+        if (!$ruleApplied) {
+            $lastLetter = Str::charAt($word, -1);
+            $result = (self::isVowel($lastLetter) ? Str::chopEnd($word, $lastLetter) : $word) . 'е';
+        }
+
+        return $result ?? $word;
     }
 }
