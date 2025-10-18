@@ -50,13 +50,12 @@
         display: flex;
         width: 100%;
         flex-direction: column;
-        max-width: 1400px;
-        height: 100%;
+        max-width: 100vw;
     }
 
     header {
         position: relative;
-        width: 100vw;
+        width: 100%;
         height: 80px;
         display: flex;
         justify-content: center;

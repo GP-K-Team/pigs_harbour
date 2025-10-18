@@ -4,15 +4,25 @@ declare(strict_types=1);
 
 namespace App\Enum;
 
+use App\Attributes\Label;
+use App\Traits\HasCallableAttribute;
+
 enum Fur: string
 {
-    case Rough = 'rough_coated';
+    use HasCallableAttribute;
 
-    case Long = 'long_haired';
+    #[Label('Жесткоошерстные')]
+    case Rough = 'rough';
 
-    case Smooth = 'smooth_haired';
+    #[Label('Длинношерстные')]
+    case Long = 'long';
 
-    case Hairless = 'hairless';
+    #[Label('Гладкошерстные')]
+    case Smooth = 'smooth';
 
+    #[Label('Лысые')]
+    case Hairless = 'bald';
+
+    #[Label('Розетчатые')]
     case Rosette = 'rosette';
 }

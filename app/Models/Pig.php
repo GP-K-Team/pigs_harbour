@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Attributes\RouteSlug;
 use App\Enum\Fur;
 use App\Enum\Sex;
 use App\Models\Traits\HasTimestamps;
+use App\Models\Traits\IsIdentifiedBySlug;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,12 +31,17 @@ use Illuminate\Support\Collection;
  * @property Pig $companion
  * @property Pig $companionOf
  * @property Collection|iterable<Image> $images
- * @property Image $mainImage
+ * @property Image|null $mainImage
+ * @property int $city_id
+ * @property int $companion_pig_id
  * @mixin HasTimestamps
  */
+#[RouteSlug('slug_name')]
 class Pig extends Model
 {
-    use HasTimestamps;
+    use HasTimestamps, IsIdentifiedBySlug;
+
+    public const DEFAULT_IMAGE = 'PELICAN.jpg';
 
     protected $fillable = [
         'name',
@@ -53,16 +60,15 @@ class Pig extends Model
         'fur' => Fur::class,
         'sex' => Sex::class,
         'birthday' => 'datetime',
+        'is_active' => 'boolean',
     ];
 
     /**
      * @return Image|null
      */
-    public function mainImage(): Image|null
+    public function getMainImageAttribute(): Image|null
     {
-        return $this->belongsToMany(Image::class)
-            ->wherePivot('is_main', true)
-            ->one();
+        return $this->images()->wherePivot('is_main', true)->first();
     }
 
     /**
@@ -70,7 +76,7 @@ class Pig extends Model
      */
     public function images(): BelongsToMany
     {
-        return $this->belongsToMany(Image::class);
+        return $this->belongsToMany(Image::class)->withPivot('is_main');
     }
 
     /**

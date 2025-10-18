@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Pig;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ class PigsController extends Controller
 {
     public function index(Request $request): View
     {
-        $pigs = Pig::query()->cursorPaginate(25);
+        $pigs = Pig::query()->with(['companion', 'companionOf', 'city', 'images'])->cursorPaginate(6);
 
         return \view('pigs.index', compact('pigs'));
     }
@@ -23,12 +24,17 @@ class PigsController extends Controller
 
     public function showCreate(Request $request): View
     {
-        return \view('pigs.form');
+        $cities = City::query()->pluck('name', 'id');
+        $companionCandidates = Pig::query()->where('is_active', true)->orderByDesc('created_at')->get();
+
+        return \view('pigs.form', compact('cities', 'companionCandidates'));
     }
 
     public function showUpdate(Request $request, Pig $pig): View
     {
-        return \view('pigs.form');
+        $cities = City::query()->pluck('name', 'id');
+
+        return \view('pigs.form', compact('pig', 'cities'));
     }
 
     public function create(Request $request): RedirectResponse

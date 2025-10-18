@@ -24,6 +24,11 @@ class Image extends Model
         'link',
     ];
 
+    public function getFullUrl(): string
+    {
+        return storage_path("images/$this->link");
+    }
+
     /**
      * @return BelongsToMany
      */

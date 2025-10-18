@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Attributes\RouteSlug;
 use App\Models\Traits\HasTimestamps;
+use App\Models\Traits\IsIdentifiedBySlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -19,9 +21,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $origin_link
  * @mixin HasTimestamps
  */
+#[RouteSlug('slug_title')]
 class Article extends Model
 {
-    use HasTimestamps;
+    use HasTimestamps, IsIdentifiedBySlug;
 
     protected $fillable = [
         'title',

@@ -1,0 +1,68 @@
+.select-input {
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.select-input .select-input__dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 0.5rem;
+}
+
+.select-input .select-input__option {
+    width: 100%;
+    border: none;
+    background: none;
+    border-radius: 0.5rem;
+    font-family: inherit;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.select-input .select-input__option:disabled {
+    cursor: default;
+}
+
+.select-input .select-input__option--value {
+    display: flex;
+    width: 100%;
+    position: relative;
+    background: none;
+    border: none;
+}
+
+.select-input .select-input__option--value::after {
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    bottom: 0.5rem;
+    right: 1rem;
+    background-color: transparent;
+    border-top: 1px solid var(--main_font);
+    border-right: 1px solid var(--main_font);
+    rotate: 135deg;
+}
+
+.select-input--active .select-input__option--value {
+    display: none !important;
+}
+
+.select-input .select-input__option:not(.select-input__option--value) {
+    padding: 0.5rem;
+}
+
+.select-input .select-input__option:not(.select-input__option--value):not(:first-child):hover {
+    background-color: var(--light_blue);
+}
+
+.select-input .select-input__input {
+    width: 98%;
+    padding: 1rem;
+    margin: 0.25rem 0.25rem 0;
+}
+
+.select-input .select-input__input + .select-input__option-wrap {
+    width: 99%;
+}
