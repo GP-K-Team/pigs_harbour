@@ -15,8 +15,14 @@
         </div>
         <ul class="list">
             @foreach($pigs as $pig)
-                <li class="list-item card">
-                    <a href="{{ route('pigs.show.update', compact('pig')) }}">
+                <li class="list-item card @if(true) can-edit @endif">
+                    @if(true)
+                        <a class="edit-icon-link" href="{{ route('pigs.show.update', compact('pig')) }}" draggable="false">
+                            <img src="{{ asset('images/icons/edit.svg') }}" alt="" draggable="false">
+                        </a>
+                    @endif
+
+                    <a href="{{ route('pigs.one', compact('pig')) }}">
                         <img class="card-image" src="{{ $pig->mainImage?->getFullUrl() ?? \App\Helpers\FileHelper::getDefaultImage($pig) }}"
                                     width="350" height="250" alt="Фотография морской свинки по имени {{ $pig->name }}">
                         <div class="card-bio">
@@ -35,6 +41,17 @@
                     </a>
                 </li>
             @endforeach
+
+            @if(true)
+                <li class="list-item card add-card">
+                    <a class="add-card-link" href="{{ route('pigs.show.create') }}" draggable="false">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                            <path d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
+                        </svg>
+                        <p class="add-card-link-text">Добавить свинку</p>
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
 
@@ -74,7 +91,7 @@
             display: inline-flex;
             width: 35px;
             height: 35px;
-            background-image: url({{ asset('images/filter-icon.svg') }});
+            background-image: url({{ asset('images/icons/filter-icon.svg') }});
             background-repeat: no-repeat;
         }
 
@@ -128,6 +145,70 @@
             padding: 0;
             margin: 0;
             font-size: 2rem;
+        }
+
+        .card.can-edit {
+            position: relative;
+        }
+
+        .edit-icon-link {
+            width: 1.75rem;
+            height: 1.75rem;
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: var(--light_pink);
+            border-radius: 0.5rem;
+            user-select: none;
+        }
+
+        .edit-icon-link img {
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 4px 4px 0 #00000040;
+        }
+
+        .edit-icon-link:hover {
+            background-color: var(--pale_yellow);
+        }
+
+        .card.add-card {
+            background-color: var(--white-tpr);
+        }
+
+        .add-card-link {
+            padding: 0.75rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            place-items: center;
+            place-content: center;
+        }
+
+        .add-card-link svg {
+            width: 75%;
+            height: 75%;
+            object-fit: contain;
+            color: #0C6291;
+            opacity: 0.4;
+            transition: 0.25s;
+        }
+
+        .add-card-link:hover svg {
+            color: var(--main_pink);
+            opacity: 0.6;
+        }
+
+        .add-card-link .add-card-link-text {
+            visibility: hidden;
+            font-family: inherit;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .add-card-link:hover .add-card-link-text {
+            visibility: visible;
         }
     </style>
 @endsection
