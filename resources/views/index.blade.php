@@ -1,8 +1,6 @@
-@include('layouts.main')
+@extends('layouts.main')
 
 @section('content')
-<div>
-    <p>Страница</p>
-</div>
+    @include('components.banner')
 @endsection
 
