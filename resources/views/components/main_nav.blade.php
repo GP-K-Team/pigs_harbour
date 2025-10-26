@@ -74,7 +74,7 @@
         column-gap: 15px;
 
         justify-content: end;
-        min-width: 370px;
+        min-width: 410px;
     }
 
     .nav_list li {
@@ -147,7 +147,7 @@
     @media (max-width: 1000px) {
         .nav_list {
             column-gap: 5px;
-            min-width: auto;
+            min-width: 320px;
         }
 
         .nav_list li {

@@ -1,6 +1,6 @@
 <html lang="ru">
     <head>
-        <title>@yield('title')&mdash; Пристань Пушистых Сердец</title>
+        <title>{{ $title }} &mdash; Пристань Пушистых Сердец</title>
         <meta name="authors" content="whatevernumber, the_nepodarok" />
         <meta name="keywords" content="морские свинки, пристань пушистых сердец, помощь животным, волонтёрский проект">
         <meta name="viewport" content="width=device-width" />
@@ -50,13 +50,14 @@
         display: flex;
         width: 100%;
         flex-direction: column;
-        max-width: 100vw;
+        max-width: 1400px;
     }
 
     header {
         position: relative;
         width: 100%;
         height: 80px;
+        min-height: 80px;
         display: flex;
         justify-content: center;
         align-items: center;

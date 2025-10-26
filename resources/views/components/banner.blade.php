@@ -1,7 +1,7 @@
 <div class="banner_wrapper">
     <div class="banner_text_wrapper">
         <div class="banner_main_text_wrapper">
-            <h1>Пристань пушистых сердец</h1>
+            <h1>Пристань <br> пушистых сердец</h1>
             <p class="special_text">
                 Группа помощи морским свинкам
             </p>
@@ -28,22 +28,79 @@
     .banner_text_wrapper {
         display: flex;
         justify-content: center;
-        width: 100%;
+        width: 50%;
         background: rgba(255, 255, 255, 0.8);
     }
 
     .banner_main_text_wrapper {
         font-family: '315karusel', sans-serif;
-        width: 200px;
+        text-align: center;
+    }
+
+    .banner_main_text_wrapper h1 {
+        font-size: 50px;
+        font-weight: bold;
     }
 
     .pigs_banner {
         position: absolute;
-        bottom: -30%;
+        right: 0;
+        bottom: -15%;
+        width: 40%;
+    }
+
+    .pigs_banner img {
+        width: 100%;
     }
 
     .special_text {
         font-family: 'overdoze sans', sans-serif;
-        font-size: 25px;
+        font-size: 40px;
+    }
+
+    @media (min-width: 1400px) {
+        .pigs_banner {
+            right: 10%;
+            width: 600px;
+        }
+    }
+
+    @media (max-width: 1000px) {
+        .banner_main_text_wrapper h1 {
+            font-size: 35px;
+        }
+
+        .special_text {
+            font-size: 30px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .banner_wrapper {
+            min-height: 300px;
+        }
+
+        .banner_text_wrapper {
+            width: 100%;
+        }
+
+        .pigs_banner {
+            bottom: -45%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .pigs_banner img {
+            width: 300px;
+        }
+
+        .banner_main_text_wrapper h1 {
+            font-size: 25px;
+        }
+
+        .special_text {
+            font-size: 20px;
+        }
     }
 </style>
