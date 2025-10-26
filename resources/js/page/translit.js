@@ -3,12 +3,18 @@
  * send an ajax request for generating the value on change.
  */
 
-$('[data-translit-source]').on('change', function () {
+const sourceInput = $('[data-translit-source]');
+const targetInput = $('[data-translit-target]');
+
+if (!targetInput.val().length) {
+    prependInputPrefix(targetInput);
+}
+
+sourceInput.on('change', function () {
     const value = this.value;
-    const target = $('[data-translit-target]');
 
     if (!value.length) {
-        return target.val(value);
+        return prependInputPrefix(targetInput);
     }
 
     $.ajax({
@@ -18,10 +24,20 @@ $('[data-translit-source]').on('change', function () {
             data: value,
         },
         success(res) {
-            $(target).val(res);
+            prependInputPrefix(targetInput, res);
         },
         error(err) {
             console.log(err);
         },
     });
 });
+
+targetInput.on('change', function () {
+    prependInputPrefix(targetInput, $(this).val());
+});
+
+function prependInputPrefix(elm, val = '') {
+    const inputPrefix = $(elm).data('input-prefix');
+
+    $(elm).val(inputPrefix + val.replace(inputPrefix, ''));
+}

@@ -8,6 +8,8 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+        @stack('styles')
+
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.ico" />
@@ -30,6 +32,26 @@
         </footer>
 
         @stack('js')
+
+        <script type="module">
+            $(document).ready(function () {
+                $(document).on('click', function (e) {
+                    if (!$('.window-container').length) {
+                        return;
+                    }
+
+                    if (!$(e.target).closest('.window').length) {
+                        $(e.target).closest('.window-container').hide();
+                    }
+                });
+
+                $('.window-close-button').on('click', function () {
+                    $(this).closest('.window-container').hide();
+
+                    return false;
+                });
+            });
+        </script>
     </body>
 </html>
 

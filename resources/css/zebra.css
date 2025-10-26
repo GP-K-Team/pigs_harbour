@@ -40,7 +40,7 @@
 
 .Zebra_DatePicker table.dp_body td {
     font-family: inherit;
-    background-color: var(--white-tpr);
+    background-color: var(--white_trp);
 }
 
 .Zebra_DatePicker table.dp_body td.dp_hover {

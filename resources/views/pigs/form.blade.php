@@ -1,12 +1,17 @@
 @extends('layouts.main', ['background' => 'texture-light'])
 
 @php
+    use App\Enum\Fur;
+    use App\Enum\Sex;
+    use App\Models\Pig;
+    use App\Models\City;
+    use Illuminate\Support\Collection;
     use Illuminate\Support\Facades\Vite;
 
     /**
-     * @var ?\App\Models\Pig $pig
-     * @var \Illuminate\Support\Collection|iterable<\App\Models\City> $cities
-     * @var \Illuminate\Support\Collection|iterable<\App\Models\Pig> $companionCandidates
+     * @var ?Pig $pig
+     * @var Collection|iterable<City> $cities
+     * @var Collection|iterable<Pig> $companionCandidates
      */
     $pig ??= null;
 @endphp
@@ -14,6 +19,10 @@
 @section('title')
     {{ isset($pig) ? $pig->name : 'Новая свинка' }}
 @endsection
+
+@push('styles')
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
+@endpush
 
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/select-input.js') }}"></script>
@@ -49,10 +58,10 @@
                     <x-error-bag name="age"/>
                 </div>
 
-                <div class="input-container">
+                <div class="input-container has-input-prefix">
                     <label class="input-label" for="slug_name">Транслит</label>
                     <input type="text" name="slug_name" id="slug_name" value="{{ old('slug_name', $pig?->slug_name) }}"
-                           placeholder="Транслит" data-translit-target>
+                           placeholder="Транслит" data-input-prefix="/pigs/" data-translit-target>
                     <x-error-bag name="slug_name"/>
                 </div>
 
@@ -72,7 +81,7 @@
                         <div class="radio-group">
                             <div class="radio-item">
                                 <input type="radio" name="is_active" id="1"
-                                       value="{{ true }}" @checked(empty($pig) || $pig->is_active)>
+                                       value="{{ true }}" checked>
                                 <label for="1">Да</label>
                             </div>
                             <div class="radio-item">
@@ -98,7 +107,7 @@
                             Пол
                         </legend>
                         <div class="radio-group">
-                            @foreach(\App\Enum\Sex::cases() as $sex)
+                            @foreach(Sex::cases() as $sex)
                                 <div class="radio-item">
                                     <input type="radio" name="sex" id="{{ $sex->value }}"
                                            value="{{ $sex->value }}" @checked($pig?->sex === $sex)>
@@ -116,7 +125,7 @@
                             Шерсть
                         </legend>
                         <div class="radio-group">
-                            @foreach(\App\Enum\Fur::cases() as $fur)
+                            @foreach(Fur::cases() as $fur)
                                 <div class="radio-item">
                                     <input type="radio" name="fur" id="{{ $fur->value }}"
                                            value="{{ $fur->value }}" @checked($pig?->fur === $fur)>
@@ -183,93 +192,6 @@
             row-gap: 5rem;
         }
 
-        .form-container {
-            max-width: 750px;
-        }
-
-        .form {
-            max-width: 75vw;
-            min-height: 90vh;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            place-content: flex-start;
-            padding: 1rem;
-            gap: 1rem;
-            background-color: #ffffff;
-            border: 1px solid var(--main_font);
-            border-radius: 1rem;
-        }
-
-        .form-title {
-            width: 100%;
-            height: fit-content;
-            flex-basis: 100%;
-            margin: 0;
-        }
-
-        .input-container {
-            display: flex;
-            max-width: 100%;
-            max-height: 100px;
-            flex-direction: column;
-            flex-basis: calc(50% - 1rem);
-            gap: 0.25rem;
-        }
-
-        .input-container:is(:has(textarea), .has-textarea) {
-            flex-basis: calc(100% - 1rem);
-            max-height: unset;
-        }
-
-        .input-container:is(:has(.filepond), .has-dropzone) {
-            flex-basis: calc(100% - 1rem);
-            max-height: unset;
-        }
-
-        .input-container:is(:has(input[type="radio"]), .has-radio) {
-            flex-basis: calc(100% - 1rem);
-            max-height: unset;
-        }
-
-        .input-container:is(:has(select), .has-select) {
-            max-height: unset;
-        }
-
-        .input-container label.input-label {
-            white-space: nowrap;
-            overflow-x: hidden;
-            text-overflow: '...';
-            font-size: 1rem;
-            border-bottom: 1px solid var(--main_font);
-        }
-
-        .input-container :is(input, textarea, fieldset) {
-            margin: 0;
-            border: 2px solid var(--main_blue);
-            border-radius: 0.5rem;
-        }
-
-        .input-container :is(input:not([type="radio"]), textarea):focus {
-            outline: none;
-            border-color: var(--main_pink);
-        }
-
-        .radio-group {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .radio-item {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
         .filepond {
             width: 100%;
             height: 10rem;
@@ -277,51 +199,6 @@
             background-color: var(--light_blue);
             border-bottom-left-radius: 1rem;
             border-bottom-right-radius: 1rem;
-        }
-
-        input[type="text"], textarea {
-            padding: 0.5rem;
-            font-family: inherit;
-            font-size: 1rem;
-            background-color: transparent;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 8rem;
-            max-height: 20vh;
-            overscroll-behavior: contain;
-        }
-
-        input[type="radio"] {
-            width: 0.75rem;
-            height: 0.75rem;
-            margin: 0;
-
-            appearance: none;
-            border-radius: 50%;
-            background: var(--light_blue);
-            border: none;
-            outline: 1px solid var(--main_font);
-            outline-offset: 2px;
-        }
-
-        input[type="radio"]:checked {
-            background: var(--main_pink);
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        .select-input .select-input__dropdown {
-            width: 100%;
-            max-height: 10rem;
-            border: 1px solid var(--main_font);
-            border-radius: 0.5rem;
-            overflow-y: scroll;
-            scrollbar-width: thin;
-            scrollbar-color: var(--main_pink) var(--light_blue);
         }
 
         #companion + .select-input .select-input__option:not(:disabled) {
@@ -336,30 +213,6 @@
             height: 4rem;
             display: inline-flex;
             background-image: url('/public/images/texture-light.png');
-        }
-
-        .form-button {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-button > button {
-            width: max-content;
-            align-self: flex-end;
-            margin-right: 1rem;
-            border: none;
-            padding: 0.75rem 1rem;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--main_font);
-            background: var(--main_pink);
-            border-radius: 0.5rem;
-        }
-
-        span.input-error {
-            color: var(--holiday-red);
         }
     </style>
 @endsection

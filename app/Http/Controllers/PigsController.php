@@ -15,9 +15,10 @@ class PigsController extends Controller
 {
     public function index(Request $request): View
     {
+        $cities = City::query()->pluck('name');
         $pigs = Pig::query()->with(['companion', 'companionOf', 'city', 'images'])->cursorPaginate(6);
 
-        return \view('pigs.index', compact('pigs'));
+        return \view('pigs.index', compact('cities', 'pigs'));
     }
 
     public function showOne(Pig $pig): View

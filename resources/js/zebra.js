@@ -14,4 +14,7 @@ $('input.datepick').Zebra_DatePicker({
     select_other_months: true,
     view: 'months',
     show_select_today: 'Сегодня',
+    onSelect() {
+        this.blur();
+    },
 });
