@@ -26,6 +26,8 @@ class Article extends Model
 {
     use HasTimestamps, IsIdentifiedBySlug;
 
+    public const DEFAULT_IMAGE = 'PEEG.jpg';
+
     protected $fillable = [
         'title',
         'slug_title',
@@ -39,11 +41,9 @@ class Article extends Model
     /**
      * @return Image|null
      */
-    public function mainImage(): Image|null
+    public function getMainImageAttribute(): Image|null
     {
-        return $this->belongsToMany(Image::class)
-            ->wherePivot('is_main', true)
-            ->one();
+        return $this->images()->wherePivot('is_main', true)->first();
     }
 
     /**
@@ -51,7 +51,7 @@ class Article extends Model
      */
     public function images(): BelongsToMany
     {
-        return $this->belongsToMany(Image::class);
+        return $this->belongsToMany(Image::class)->withPivot('is_main');
     }
 
     /**

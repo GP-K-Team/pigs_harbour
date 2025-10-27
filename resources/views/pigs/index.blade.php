@@ -36,6 +36,13 @@
         </div>
     </div>
 
+    <div class="bread-crumbs">
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li>Ищут дом</li>
+        </ul>
+    </div>
+
     <div class="list-container">
         <div class="list-header">
             <button class="button list-filter-button" type="button" onclick="$('#filter_window').closest('.window-container').show()">
@@ -210,6 +217,31 @@
             }
         }
 
+        .bread-crumbs {
+            margin: 3.75rem;
+            font-family: Inter, Nunito, Arial, sans-serif;
+        }
+
+        .bread-crumbs > ul {
+            display: flex;
+            flex-direction: row;
+            row-gap: 0.5rem;
+        }
+
+        .bread-crumbs > ul :is(li, a) {
+            color: var(--brown_gray);
+            font-size: 1rem;
+        }
+
+        .bread-crumbs > ul > li > a:hover {
+            color: var(--main_blue);
+        }
+
+        .bread-crumbs > ul > li:not(:last-child)::after {
+            content: " / ";
+        }
+
+        /** Page header **/
         .page-header {
             width: 100%;
             height: 40vh;
@@ -218,7 +250,7 @@
             justify-content: center;
             background-image: url("{{ asset('images/dots.jpg') }}");
             background-size: 25%;
-            box-shadow: 0 4px 4px 0 var(--shadow-drop);
+            box-shadow: 0 4px 4px 0 var(--shadow_drop);
         }
 
         @media (max-width: 768px) {
@@ -262,14 +294,6 @@
             }
         }
 
-        .list-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 4rem 1rem 1rem;
-            row-gap: 5rem;
-        }
-
         /** Filter button **/
         .list-header {
             position: relative;
@@ -305,7 +329,7 @@
             color: white;
             font-family: inherit;
             font-size: 1.25rem;
-            background: var(--holiday-red);
+            background: var(--holiday_red);
             border-radius: 50%;
             border: 1px solid var(--main_font);
             cursor: default;
@@ -395,10 +419,18 @@
         }
 
         .filter-reset-button {
-            background-color: var(--button-gray);
+            background-color: var(--button_gray);
         }
 
         /** List **/
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 1rem 1rem;
+            row-gap: 5rem;
+        }
+
         .list {
             display: flex;
             flex-direction: row;
@@ -416,7 +448,7 @@
             height: 430px;
             background-color: var(--light_blue);
             border-radius: 1rem;
-            box-shadow: 0 4px 4px 0 var(--shadow-drop);
+            box-shadow: 0 4px 4px 0 var(--shadow_drop);
             cursor: pointer;
         }
 
@@ -519,7 +551,7 @@
         .edit-icon-link img {
             width: 100%;
             height: 100%;
-            box-shadow: 0 4px 4px 0 var(--shadow-drop);
+            box-shadow: 0 4px 4px 0 var(--shadow_drop);
         }
 
         .edit-icon-link:hover {

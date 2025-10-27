@@ -57,6 +57,6 @@
 }
 
 .Zebra_DatePicker .dp_body td.dp_weekend.dp_hover {
-    color: var(--holiday-red);
+    color: var(--holiday_red);
     background-color: var(--main_pink);
 }

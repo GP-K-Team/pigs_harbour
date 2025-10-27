@@ -19,7 +19,7 @@
     <div>
         <ul class="nav_list">
             <li>
-                Статьи
+                <a href="{{ route('articles.index') }}">Статьи</a>
             </li>
             <span>
                 <img src="/images/icons/dot.svg" alt="Круглый элемент">

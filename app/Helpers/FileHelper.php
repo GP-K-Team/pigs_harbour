@@ -15,7 +15,7 @@ class FileHelper
     {
         $filename = match (get_class($model)) {
             Pig::class => Pig::DEFAULT_IMAGE,
-            Article::class => '',
+            Article::class => Article::DEFAULT_IMAGE,
         };
 
         return Storage::url("images/$filename");

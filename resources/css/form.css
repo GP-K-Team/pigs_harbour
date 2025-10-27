@@ -179,5 +179,5 @@ input[type="file"] {
 }
 
 span.input-error {
-    color: var(--holiday-red);
+    color: var(--holiday_red);
 }

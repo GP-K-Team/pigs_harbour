@@ -8,15 +8,17 @@
     --pale_orange: #FBD6B9;
     --main_pink: #EAB0C8;
     --light_pink: #F4E9E7;
+    --main_green: #CDE3CC;
     --pale_yellow: #FBF1C5;
     --main_font: #323232;
     --dark_blue_font: #0C6291;
     --white_trp: rgba(255, 255, 255, 35%);
     --main_font_trp: rgba(50, 50, 50, 20%);
     --overlay: rgba(255, 255, 255, 75%);
-    --holiday-red: #CC236B;
-    --shadow-drop: #00000040;
-    --button-gray: #EAEAEA;
+    --holiday_red: #CC236B;
+    --shadow_drop: #00000040;
+    --button_gray: #EAEAEA;
+    --brown_gray: #949494;
 }
 
 @font-face {
@@ -71,7 +73,7 @@
     background-color: white;
     border: 1px solid var(--main_font_trp);
     border-radius: 0.75rem;
-    box-shadow: 0 4px 4px 0 var(--shadow-drop);
+    box-shadow: 0 4px 4px 0 var(--shadow_drop);
     transform: translateY(-50%);
 }
 
