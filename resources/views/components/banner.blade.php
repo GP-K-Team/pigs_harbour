@@ -3,7 +3,7 @@
         <div class="banner_main_text_wrapper">
             <h1>Пристань <br> пушистых сердец</h1>
             <p class="special_text">
-                Группа помощи морским свинкам
+                Группа помощи морским <br>свинкам
             </p>
         </div>
     </div>
@@ -47,6 +47,7 @@
         right: 0;
         bottom: -15%;
         width: 40%;
+        z-index: 5;
     }
 
     .pigs_banner img {
@@ -85,7 +86,7 @@
         }
 
         .pigs_banner {
-            bottom: -45%;
+            bottom: -55%;
             width: 100%;
             display: flex;
             justify-content: center;

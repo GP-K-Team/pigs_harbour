@@ -50,6 +50,7 @@
         top: 0;
         width: 100%;
         background-color: var(--main_blue);
+        z-index: 6;
     }
 
     .mobile_nav_wrapper ul {

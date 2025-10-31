@@ -43,6 +43,13 @@
         padding: 0;
         font-family: Nunito, Arial, sans-serif;
         color: var(--main_font);
+        overflow-x: hidden;
+    }
+
+    html, body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
     }
 
     main {

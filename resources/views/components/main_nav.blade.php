@@ -100,13 +100,13 @@
 
     .logo_image {
         position: absolute;
-        bottom: -50px;
+        bottom: -40px;
         left: 85px;
         z-index: 5;
     }
 
     .logo_square {
-        top: -150px;
+        top: -170px;
         position: absolute;
         width: 200px;
         height: 200px;

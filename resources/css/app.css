@@ -38,3 +38,7 @@
 .bg-texture-light {
     background: #FFFFFF url('/public/images/texture-light.png') 0 0 repeat;
 }
+
+p {
+    margin: 5px;
+}
