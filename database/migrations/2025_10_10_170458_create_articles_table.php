@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title')->index();
             $table->string('slug_title')->index();
-            $table->string('meta_description')->nullable();
+            $table->string('description');
+            $table->text('text');
             $table->string('meta_title')->nullable();
-            $table->text('description');
+            $table->string('meta_description')->nullable();
             $table->string('author')->nullable()->index();
             $table->string('origin_link')->nullable();
             $table->dateTime('created_at')->useCurrent();

@@ -1,0 +1,71 @@
+.filepond--drop-label, .filepond--data, .filepond--credits {
+    display: none;
+}
+
+.filepond--root {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 8rem;
+    margin-bottom: 0 !important;
+    position: relative !important;
+    contain: unset !important;
+}
+
+.filepond--root .filepond--drop-label {
+    position: static !important;
+    background: url('/public/images/icons/add-file.svg') no-repeat;
+    transform: none !important;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.filepond--drop-label:hover {
+    scale: 1.2;
+    translate: 3rem;
+    transition: 0.25s;
+}
+
+.filepond--root .filepond--list-scroller {
+    position: static !important;
+    height: auto !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    flex: 1 !important;
+    scrollbar-width: thin;
+    scrollbar-color: var(--main_blue) var(--light_blue);
+    overscroll-behavior: contain;
+    transform: none !important;
+}
+
+.filepond--root .filepond--list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    position: static !important;
+}
+
+.filepond--root .filepond--list .filepond--item {
+    width: 30%;
+}
+
+.filepond--root .filepond--panel-root {
+    background-color: transparent;
+}
+
+.filepond--root .filepond--list .filepond--item .filepond--file-info {
+    position: absolute;
+    bottom: 1rem;
+    transform: none !important;
+}
+
+.filepond--root .filepond--file .filepond--file-action-button.filepond--action-remove-item {
+    top: 0.5rem;
+    left: auto;
+    right: 0.5rem;
+}
+
+.filepond--root .filepond--file .filepond--image-preview-overlay {
+    opacity: 0.25;
+}

@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="ru">
     <head>
         <title>@yield('title')&mdash; Пристань Пушистых Сердец</title>
@@ -6,6 +7,8 @@
         <meta name="viewport" content="width=device-width" />
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        @stack('styles')
 
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -27,6 +30,28 @@
         <footer>
 
         </footer>
+
+        @stack('js')
+
+        <script type="module">
+            $(document).ready(function () {
+                $(document).on('click', function (e) {
+                    if (!$('.window-container').length) {
+                        return;
+                    }
+
+                    if (!$(e.target).closest('.window').length) {
+                        $(e.target).closest('.window-container').hide();
+                    }
+                });
+
+                $('.window-close-button').on('click', function () {
+                    $(this).closest('.window-container').hide();
+
+                    return false;
+                });
+            });
+        </script>
     </body>
 </html>
 
@@ -36,21 +61,22 @@
     }
 
     body {
-        display: flex;
-        flex-direction: column;
-        height: calc(100vh);
         margin: 0;
         padding: 0;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
         font-family: Nunito, Arial, sans-serif;
         color: var(--main_font);
     }
 
     main {
         margin: 0 auto;
-        display: flex;
         width: 100%;
-        flex-direction: column;
         max-width: 100vw;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
     }
 
     header {
