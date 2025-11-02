@@ -10,6 +10,7 @@ use App\Enum\Sex;
 use App\Models\Traits\HasTimestamps;
 use App\Models\Traits\IsIdentifiedBySlug;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -34,6 +35,9 @@ use Illuminate\Support\Collection;
  * @property Image|null $mainImage
  * @property int $city_id
  * @property int $companion_pig_id
+ *
+ * @method static Builder|static activeDesc()
+ *
  * @mixin HasTimestamps
  */
 #[RouteSlug('slug_name')]
@@ -101,5 +105,13 @@ class Pig extends Model
     public function companionOf(): HasOne
     {
         return $this->hasOne(Pig::class, 'companion_pig_id', 'id');
+    }
+
+    /**
+     * Currently active in desc order by created_at
+     */
+    public function scopeActiveDesc(Builder $query): void
+    {
+        $query->where('is_active', true)->orderByDesc('created_at');
     }
 }
