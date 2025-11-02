@@ -1,0 +1,50 @@
+.window-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    background-color: var(--overlay);
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.window {
+    position: absolute;
+    width: 75vw;
+    height: 50vh;
+    max-width: 1080px;
+    padding: 2.5rem;
+    margin: 0 auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid var(--main_font_trp);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 4px 0 var(--shadow_drop);
+    transform: translateY(-50%);
+}
+
+.window-title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.window-title {
+    width: 100%;
+    height: fit-content;
+    margin: 0;
+    font-size: 1.75rem;
+    text-transform: uppercase;
+}
+
+.window-close-button {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: transparent;
+    background-image: url('/public/images/icons/close.svg');
+    background-size: contain;
+    border: none;
+}

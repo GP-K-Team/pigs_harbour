@@ -33,7 +33,34 @@
         </div>
 
         <ul class="list">
-            @if(false)
+            @foreach($articles as $article)
+                <li class="list-item card @if(true) can-edit @endif">
+                    <a href="{{ route('articles.one', compact('article')) }}">
+                        <img class="card-image" width="350" height="250" alt="Обложка статьи"
+                             src="{{ $article->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($article) }}">
+                    </a>
+                    <div class="card-bio">
+                        <a href="{{ route('articles.one', compact('article')) }}">
+                            <h2 class="card-title">{{ $article->title }}</h2>
+                        </a>
+
+                        @if(true)
+                            <a class="edit-icon-link" href="{{ route('articles.show.update', compact('article')) }}"
+                               draggable="false">
+                                <img src="{{ asset('images/icons/edit.svg') }}" alt="" draggable="false">
+                            </a>
+                        @endif
+
+                        <p class="card-description">{{ $article->description }}</p>
+
+                        <a class="button card-button" href="{{ route('articles.one', compact('article')) }}">
+                            Читать
+                        </a>
+                    </div>
+                </li>
+            @endforeach
+
+            @if(true)
                 <li class="list-item card add-card">
                     <a class="add-card-link" href="{{ route('articles.show.create') }}" draggable="false">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
@@ -44,72 +71,17 @@
                     </a>
                 </li>
             @endif
-
-            @foreach($articles as $article)
-                <li class="list-item card @if(true) can-edit @endif">
-                    @if(true)
-                        <a class="edit-icon-link" href="{{ route('articles.show.update', compact('article')) }}"
-                           draggable="false">
-                            <img src="{{ asset('images/icons/edit.svg') }}" alt="" draggable="false">
-                        </a>
-                    @endif
-
-                    <a href="{{ route('articles.one', compact('article')) }}">
-                        <img class="card-image" width="350" height="250" alt="Обложка статьи"
-                             src="{{ $article->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($article) }}">
-                        <div class="card-bio">
-                            <h2 class="card-title">{{ $article->title }}</h2>
-                            <p>{{ $article->description }}</p>
-                        </div>
-                    </a>
-                </li>
-            @endforeach
         </ul>
+
+        <div class="pagination">
+            <button class="button pagination-next-button">Показать ещё</button>
+            <ul class="pagination-list">
+                {{-- todo: pages --}}
+            </ul>
+        </div>
     </div>
 
     <style>
-        .button {
-            width: fit-content;
-            padding: 0.25rem 1.5rem;
-            text-transform: uppercase;
-            font-family: inherit;
-            font-size: 2rem;
-            background-color: #C3E9EA;
-            border: solid 2px #000000;
-            border-radius: 0.75rem;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-            .button {
-                font-size: 1.5rem;
-            }
-        }
-
-        .bread-crumbs {
-            margin: 3.75rem;
-            font-family: Inter, Nunito, Arial, sans-serif;
-        }
-
-        .bread-crumbs > ul {
-            display: flex;
-            flex-direction: row;
-            row-gap: 0.5rem;
-        }
-
-        .bread-crumbs > ul :is(li, a) {
-            color: var(--brown_gray);
-            font-size: 1rem;
-        }
-
-        .bread-crumbs > ul > li > a:hover {
-            color: var(--main_blue);
-        }
-
-        .bread-crumbs > ul > li:not(:last-child)::after {
-            content: " / ";
-        }
-
         /** Page header **/
         .page-header {
             width: 100%;
@@ -182,8 +154,8 @@
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            width: 100%;
-            max-width: 90vw;
+            width: 90vw;
+            max-width: 1080px;
             align-items: center;
             justify-content: center;
             gap: 1rem;
@@ -195,7 +167,7 @@
             width: 100%;
             height: 300px;
             background-color: white;
-            border-radius: 1rem;
+            border-radius: 1.5rem;
             box-shadow: 0 4px 4px 0 var(--shadow_drop);
             cursor: pointer;
         }
@@ -203,20 +175,6 @@
         .list-item.card > a {
             display: flex;
             flex-direction: row;
-        }
-
-        @media (max-width: 1200px) {
-            .list-item.card {
-                width: 217px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .list-item.card {
-                width: 90%;
-                max-width: 300px;
-                height: 340px;
-            }
         }
 
         .card.add-card {
@@ -239,50 +197,110 @@
             }
         }
 
-        .card:nth-child(2n) {
-            background-color: var(--light_pink);
-        }
-
-        .card p {
+        .card .card-description {
             margin: 0;
             padding: 0;
             font-size: 1.25rem;
         }
 
         .card-image {
-            width: 100%;
             height: 100%;
             object-fit: cover;
-            border-top-left-radius: 1rem;
-            border-top-right-radius: 1rem;
+            border-top-left-radius: 1.5rem;
+            border-bottom-left-radius: 1.5rem;
         }
 
         @media (max-width: 768px) {
+            .list-item.card {
+                border-radius: 0.75rem;
+            }
+
             .card-image {
                 height: 200px;
+                border-radius: 0.75rem 0.75rem 0 0;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .list-item.card:nth-child(2n) {
+                flex-direction: row-reverse;
+            }
+
+            .list-item.card:nth-child(2n) .card-image {
+                height: 100%;
+                object-fit: cover;
+                border-radius: 0 1.5rem 1.5rem 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .list-item.card {
+                width: 90%;
+                max-width: 300px;
+                height: 340px;
+                flex-direction: column;
             }
         }
 
         .card-bio {
-            width: 100%;
+            padding: 1.25rem;
+            position: relative;
             display: flex;
             flex-direction: column;
-            padding: 0.75rem 2.5rem;
             row-gap: 0.5rem;
+            flex-grow: 1;
         }
 
         .card-title {
             padding: 0;
             margin: 0;
-            font-size: 2rem;
+            font-size: 1.75rem;
+            line-height: 1;
+        }
+
+        .card-description {
+            height: 100%;
+            font-size: 1.25rem;
+        }
+
+        .card-button {
+            align-self: flex-end;
+            font-size: 1.5rem;
         }
 
         @media (max-width: 1200px) {
-            .card-bio > .card-title {
-                font-size: 1.5rem;
+            .card-bio .card-title {
+                font-size: 1.25rem;
             }
 
-            .card-bio > p {
+            .card-bio > .card-description {
+                font-size: 1rem;
+            }
+
+            .card-bio > .card-button {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card-bio {
+                padding: 1rem;
+                justify-content: space-evenly;
+                align-items: center;
+                row-gap: 1.25rem;
+            }
+
+            .card-bio .card-title {
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            .card-bio > .card-description {
+                display: none;
+            }
+
+            .card-bio > .card-button {
+                align-self: unset;
                 font-size: 1rem;
             }
         }
@@ -312,17 +330,26 @@
         }
 
         .card.add-card {
+            width: fit-content;
+            margin-left: 0;
+            margin-right: auto;
             background-color: var(--white_trp);
+        }
+
+        .card.add-card:nth-child(even) {
+            margin-left: auto;
+            margin-right: 0;
         }
 
         .add-card-link {
             padding: 0.75rem;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
             gap: 1rem;
             place-items: center;
             place-content: center;
+        }
+
+        .card.add-card:nth-child(even) .add-card-link {
+            flex-direction: row-reverse;
         }
 
         .add-card-link svg {
@@ -343,13 +370,24 @@
         .add-card-link .add-card-link-text {
             visibility: hidden;
             font-family: inherit;
-            font-size: 1.5rem;
+            font-size: 3rem;
             font-weight: 700;
             text-align: center;
         }
 
         .add-card-link:hover .add-card-link-text {
             visibility: visible;
+        }
+
+        /** Pagination **/
+        .pagination {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .pagination-next-button {
+            font-size: 1.75rem;
         }
     </style>
 @endsection
