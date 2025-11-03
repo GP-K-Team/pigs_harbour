@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PigsController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [MainController::class, 'index']);
+Route::get('/', [MainController::class, 'index'])->name('home');
+
+Route::get('/catalog', [PigsController::class, 'index'])->name('pigs.catalog');
+
+
+Route::get('/admin', [AuthController::class, 'index'])->name('auth.home');
+Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::get('/ajax', [AjaxController::class, 'index']);
 
