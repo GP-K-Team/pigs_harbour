@@ -351,7 +351,7 @@
 
     @media (max-width: 500px) {
         .badge_wrapper {
-            min-height: 1150px;
+            min-height: 1250px;
         }
 
         .banner_pig_image_wrapper img {

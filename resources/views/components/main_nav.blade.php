@@ -2,7 +2,7 @@
     <div>
         <ul class="nav_list">
             <li>
-                <a href="{{ route('pigs.index') }}">Ищут дом</a>
+                <a href="{{ route('pigs.catalog') }}">Ищут дом</a>
             </li>
             <span>
                 <img src="/images/icons/dot.svg" alt="Круглый элемент">
@@ -14,7 +14,9 @@
     </div>
     <div class="logo_wrapper">
         <div class="logo_square"></div>
-        <img class="logo_image" src="/images/logo.svg" alt="Логотип пристани" width="67" height="61">
+        <a href="{{ route('home') }}">
+            <img class="logo_image" src="/images/logo.svg" alt="Логотип пристани" width="67" height="61">
+        </a>
     </div>
     <div>
         <ul class="nav_list">

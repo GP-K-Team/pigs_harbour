@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
 @endpush
 
+@section('title')
+    Вход
+@endsection
+
 @section('content')
 <div class="login_form_wrapper">
     <form class="login_form" action="{{ route('auth.login') }}" method="POST">

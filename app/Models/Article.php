@@ -27,6 +27,7 @@ class Article extends Model
     use HasTimestamps, IsIdentifiedBySlug;
 
     public const DEFAULT_IMAGE = 'PEEG.jpg';
+    public const DEFAULT_IMAGE_PATH = 'articles';
 
     protected $fillable = [
         'title',

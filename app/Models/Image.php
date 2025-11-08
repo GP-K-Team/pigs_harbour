@@ -8,6 +8,7 @@ use App\Models\Traits\HasTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
@@ -26,7 +27,7 @@ class Image extends Model
 
     public function getFullUrl(): string
     {
-        return storage_path("images/$this->link");
+        return Storage::url($this->link);
     }
 
     /**

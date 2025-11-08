@@ -45,7 +45,8 @@ class Pig extends Model
 {
     use HasTimestamps, IsIdentifiedBySlug;
 
-    public const DEFAULT_IMAGE = 'PELICAN.jpg';
+    public const DEFAULT_IMAGE = '/pigs/default_pig.png';
+    public const DEFAULT_IMAGE_PATH = 'pigs';
 
     protected $fillable = [
         'name',

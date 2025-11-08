@@ -27,7 +27,8 @@ class AuthController extends Controller
      */
     public function login(AuthRequest $request): RedirectResponse
     {
-        if (Auth::attempt($request->validated())) {
+        $data = $request->validated();
+        if (Auth::attempt(['name' => $data['login'], 'password' => $data['password']])) {
             $request->session()->regenerate();
             return to_route('home');
         }

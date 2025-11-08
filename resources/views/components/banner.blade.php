@@ -1,15 +1,40 @@
+@props([
+    'showPigs' => true,
+    'specialHeader',
+    'specialText',
+    'imageSrc',
+    'imageCaption',
+])
+
 <div class="banner_wrapper">
-    <div class="banner_text_wrapper">
-        <div class="banner_main_text_wrapper">
-            <h1>Пристань <br> пушистых сердец</h1>
-            <p class="special_text">
-                Группа помощи морским <br>свинкам
-            </p>
+    <div @class(['with_pigs' => $showPigs, "banner_text_wrapper"])>
+        @if($showPigs)
+            <div class="banner_main_text_wrapper">
+                <h1>Пристань <br> пушистых сердец</h1>
+                <p class="special_text">
+                    Группа помощи морским <br>свинкам
+                </p>
+            </div>
+        @elseif (isset($imageSrc))
+            <div class="banner_image">
+                <img src="{{'/images/' . $imageSrc }}" alt="{{ $imageCaption ?? '' }}">
+            </div>
+        @else
+            <div class="banner_side_text_wrapper">
+                <h1>{{ $specialHeader }}</h1>
+                @if(isset($specialText))
+                    <p class="special_text">
+                        {{ $specialText }}
+                    </p>
+                @endif
+            </div>
+        @endif
+    </div>
+    @if ($showPigs)
+        <div class="pigs_banner">
+            <img src="/images/3_pigs.svg">
         </div>
-    </div>
-    <div class="pigs_banner">
-        <img src="/images/3_pigs.svg">
-    </div>
+    @endif
 </div>
 
 <style>
@@ -28,18 +53,34 @@
     .banner_text_wrapper {
         display: flex;
         justify-content: center;
-        width: 50%;
+        width: 100%;
+        min-height: 50%;
         background: rgba(255, 255, 255, 0.8);
     }
 
+    .banner_text_wrapper.with_pigs {
+        width: 50%;
+    }
+
     .banner_main_text_wrapper {
-        font-family: '315karusel', sans-serif;
         text-align: center;
     }
 
-    .banner_main_text_wrapper h1 {
+    .banner_main_text_wrapper h1,
+    .banner_side_text_wrapper h1 {
+        font-family: '315karusel', sans-serif;
         font-size: 50px;
         font-weight: bold;
+    }
+
+    .banner_side_text_wrapper {
+        width: 100%;
+        min-height: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        text-align: center;
     }
 
     .pigs_banner {
@@ -59,6 +100,12 @@
         font-size: 40px;
     }
 
+    .banner_image {
+        margin: auto;
+        display: flex;
+        justify-content: center;
+    }
+
     @media (min-width: 1400px) {
         .pigs_banner {
             right: 10%;
@@ -74,6 +121,11 @@
         .special_text {
             font-size: 30px;
         }
+
+        .banner_image img {
+            max-width: 50%;
+        }
+
     }
 
     @media (max-width: 768px) {
@@ -81,7 +133,7 @@
             min-height: 300px;
         }
 
-        .banner_text_wrapper {
+        .banner_text_wrapper.with_pigs  {
             width: 100%;
         }
 

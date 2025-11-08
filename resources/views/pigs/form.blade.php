@@ -24,12 +24,28 @@
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
 @endpush
 
+<script>
+    window.preloadedFiles = @json(
+        $pig?->images->map(fn($file) => [
+            'source' => asset('/storage/' . $file->link),
+            'options' => [
+                'type' => 'local',
+                 'metadata' => [
+                    'id' => $file->id
+                ]
+            ]
+        ])
+    );
+</script>
+
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/select-input.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/filepond.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/zebra.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/page/translit.js') }}"></script>
 @endpush
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('content')
     <div class="content-container">
@@ -61,14 +77,14 @@
                 <div class="input-container has-input-prefix">
                     <label class="input-label" for="slug_name">Транслит</label>
                     <input type="text" name="slug_name" id="slug_name" value="{{ old('slug_name', $pig?->slug_name) }}"
-                           placeholder="Транслит" data-input-prefix="/pigs/" data-translit-target>
+                           placeholder="Транслит" data-input-prefix="/catalog/" data-translit-target>
                     <x-error-bag name="slug_name"/>
                 </div>
 
                 <div class="input-container">
                     <label class="input-label" for="birthday">Дата рождения (для фильтра)</label>
                     <input class="datepick" type="text" name="birthday" id="birthday"
-                           value="{{ old('birthday', $pig?->birthday) }}"
+                           value="{{ old('birthday', $pig?->birthday->format('d.m.Y')) }}"
                            placeholder="Дата рождения">
                     <x-error-bag name="birthday"/>
                 </div>
@@ -110,7 +126,7 @@
                             @foreach(Sex::cases() as $sex)
                                 <div class="radio-item">
                                     <input type="radio" name="sex" id="{{ $sex->value }}"
-                                           value="{{ $sex->value }}" @checked($pig?->sex === $sex)>
+                                           value="{{ $sex->value }}" @checked($pig?->sex === $sex || old('sex') === $sex->value)>
                                     <label for="{{ $sex->value }}">{{ $sex->getLabel() }}</label>
                                 </div>
                             @endforeach
@@ -128,7 +144,7 @@
                             @foreach(Fur::cases() as $fur)
                                 <div class="radio-item">
                                     <input type="radio" name="fur" id="{{ $fur->value }}"
-                                           value="{{ $fur->value }}" @checked($pig?->fur === $fur)>
+                                           value="{{ $fur->value }}" @checked($pig?->fur === $fur || old('fur') === $fur->value)>
                                     <label for="{{ $fur->value }}">{{ $fur->label() }}</label>
                                 </div>
                             @endforeach
@@ -142,7 +158,7 @@
                     <select name="city" id="city">
                         <option value="" disabled>Выберите город</option>
                         @foreach($cities as $id => $city)
-                            <option value="12" @selected($id === $pig?->city_id)>
+                            <option value="{{ $id }}" @selected($id === $pig?->city_id)>
                                 {{ $city }}
                             </option>
                         @endforeach
