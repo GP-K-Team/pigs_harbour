@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ru">
     <head>
-        <title>@yield('title')&mdash; Пристань Пушистых Сердец</title>
+        <title>@yield('title') &mdash; Пристань Пушистых Сердец</title>
         <meta name="authors" content="whatevernumber, the_nepodarok" />
         <meta name="keywords" content="морские свинки, пристань пушистых сердец, помощь животным, волонтёрский проект">
         <meta name="viewport" content="width=device-width" />
@@ -61,6 +61,9 @@
     }
 
     body {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh);
         margin: 0;
         padding: 0;
         min-height: 100%;
@@ -68,37 +71,52 @@
         flex-direction: column;
         font-family: Nunito, Arial, sans-serif;
         color: var(--main_font);
+        overflow-x: hidden;
+    }
+
+    html, body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
     }
 
     main {
         margin: 0 auto;
-        width: 100%;
-        max-width: 100vw;
         display: flex;
+        width: 100%;
         flex-direction: column;
+        max-width: 1400px;
         flex-grow: 1;
     }
 
     header {
+        margin: auto;
         position: relative;
         width: 100%;
+        max-width: 1400px;
         height: 80px;
+        min-height: 80px;
         display: flex;
         justify-content: center;
         align-items: center;
         background-color: var(--main_blue);
         font-size: 18px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.06);
+        /*box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.06);*/
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        z-index: 2;
     }
 
     footer {
+        margin: auto;
         width: 100%;
+        max-width: 1400px;
         height: 80px;
-        margin-top: auto;
+        min-height: 80px;
         background-color: var(--light_blue);
         display:flex;
         justify-content: flex-start;
         align-items: center;
+        border-top: 10px solid var(--main_blue);
     }
 
     .container {
@@ -111,6 +129,14 @@
     a {
         color: var(--main_font);
         text-decoration: none;
+    }
+
+    a:hover {
+        color: var(--dark_blue_font);
+    }
+
+    a:active {
+        color: var(--main_blue);
     }
 
     ul {

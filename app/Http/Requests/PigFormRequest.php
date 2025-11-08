@@ -7,6 +7,7 @@ namespace App\Http\Requests;
 use App\Enum\Fur;
 use App\Enum\Sex;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 
@@ -39,7 +40,6 @@ class PigFormRequest extends FormRequest
         return [
             'name' => 'required|string',
             'age' => 'nullable|string',
-            'slug_name' => 'required|string|unique:pigs,slug_name',
             'birthday' => 'required|string',
             'is_active' => 'required',
             'description' => 'nullable|string',
@@ -47,7 +47,19 @@ class PigFormRequest extends FormRequest
             'fur' => ['required', Rule::enum(Fur::class)],
             'city' => 'required|int|exists:cities,id',
             'companion' => 'nullable|int|exists:pigs,id',
-            'files' => 'nullable',
+            'files' => 'nullable|array',
+            'files.*' => [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    if (is_string($value)) {
+                        if (!filter_var($value, FILTER_VALIDATE_URL)) {
+                            $fail('Некорректная ссылка на изображение.');
+                        }
+                    } elseif ($value instanceof UploadedFile) {
+                        validator(['file' => $value], ['file' => 'image'])->validate();
+                    }
+                },
+            ],
         ];
     }
 
@@ -59,6 +71,7 @@ class PigFormRequest extends FormRequest
             'slug_name.unique' => 'Адрес уже занят!',
             'city.exists' => 'Город не найден - убедитесь в правильности данных',
             'companion.exists' => 'Свинка не найдена - убедитесь в правильности данных',
+            'image' => 'Файл должен быть изображением',
         ];
     }
 }
