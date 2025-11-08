@@ -15,10 +15,11 @@ class UpdatePigFormRequest extends PigFormRequest
     public function rules(): array
     {
         return parent::rules() + [
-                'slug_name' => [
-                    'required',
-                    'string',
-                    Rule::unique('pigs', 'slug_name')->ignore($this->route('pig'))
-                ]];
+            'slug_name' => [
+                'required',
+                'string',
+                Rule::unique('pigs', 'slug_name')->ignore($this->route('pig'))
+            ]
+        ];
     }
 }

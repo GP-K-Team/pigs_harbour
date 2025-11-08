@@ -18,6 +18,7 @@ class AuthController extends Controller
         if (Auth::user()) {
             return redirect()->route('home');
         }
+
         return view('auth.login');
     }
 
@@ -28,6 +29,7 @@ class AuthController extends Controller
     public function login(AuthRequest $request): RedirectResponse
     {
         $data = $request->validated();
+
         if (Auth::attempt(['name' => $data['login'], 'password' => $data['password']])) {
             $request->session()->regenerate();
             return to_route('home');

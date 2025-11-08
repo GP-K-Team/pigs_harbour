@@ -83,10 +83,12 @@ class PigsController extends Controller
         if ($request->get('files')) {
             $mainFile = $request->get('files')[0];
             $mainImage = $pig->images()->wherePivot('is_main', true)->first();
+
             if ($mainImage) {
                 $mainImage->pivot->is_main = false;
                 $mainImage->pivot->save();
             }
+
             $newMainImage = $pig->images()->where('link', '=', Str::after($mainFile, 'storage/'))->first();
             $newMainImage->pivot->is_main = true;
             $newMainImage->save();

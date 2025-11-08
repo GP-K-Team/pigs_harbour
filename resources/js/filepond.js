@@ -8,7 +8,6 @@ $(document).ready(function () {
     FilePond.setOptions({
         server: {
             load: (source, load, error, progress, abort, headers) => {
-                console.log('load')
                 const myRequest = new Request(source);
                 fetch(myRequest).then(response => {
                     if (!response.ok) throw new Error('Failed to load image');
@@ -33,9 +32,7 @@ $(document).ready(function () {
     });
 
     pond.on('removefile', (error, file) => {
-        console.log(file);
         if (file.getMetadata('id')) {
-            console.log(file.getMetadata('id'));
             fetch(`/files/${file.getMetadata('id')}`, {
                 method: 'DELETE',
                 headers: {

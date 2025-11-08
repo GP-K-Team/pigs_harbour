@@ -15,6 +15,7 @@ class CreatePigFormRequest extends PigFormRequest
     public function rules(): array
     {
         return parent::rules() + [
-                'slug_name' => 'required|string|unique:pigs,slug_name'];
+            'slug_name' => 'required|string|unique:pigs,slug_name'
+        ];
     }
 }
