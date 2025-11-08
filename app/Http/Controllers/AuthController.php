@@ -32,6 +32,7 @@ class AuthController extends Controller
 
         if (Auth::attempt(['name' => $data['login'], 'password' => $data['password']])) {
             $request->session()->regenerate();
+
             return to_route('home');
         }
 
