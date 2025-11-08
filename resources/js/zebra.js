@@ -1,5 +1,6 @@
 import Zebra_DatePicker from 'zebra_datepicker';
 import 'zebra_datepicker/dist/css/default/zebra_datepicker.min.css';
+import '../css/zebra.css';
 window.Zebra_DatePicker = Zebra_DatePicker;
 
 $('input.datepick').Zebra_DatePicker({

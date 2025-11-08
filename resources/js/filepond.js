@@ -1,5 +1,6 @@
 import 'filepond/dist/filepond.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import '../css/filepond.css';
 
 $(document).ready(function () {
     const pond = FilePond.create(document.querySelector('.filepond'), {
