@@ -89,6 +89,10 @@
         bottom: -15%;
         width: 40%;
         z-index: 5;
+
+        @media (max-width: 768px) {
+            z-index: 1;
+        }
     }
 
     .pigs_banner img {
