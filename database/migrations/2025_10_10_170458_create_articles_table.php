@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('text');
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
-            $table->string('author')->nullable()->index();
+            $table->string('author')->nullable();
             $table->string('origin_link')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent()->useCurrentOnUpdate();

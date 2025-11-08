@@ -1,4 +1,4 @@
-.filepond--drop-label, .filepond--data, .filepond--credits {
+.filepond--data, .filepond--credits {
     display: none;
 }
 
@@ -13,6 +13,7 @@
 }
 
 .filepond--root .filepond--drop-label {
+    width: 80px;
     position: static !important;
     background: url('/public/images/icons/add-file.svg') no-repeat;
     transform: none !important;
@@ -22,7 +23,7 @@
 
 .filepond--drop-label:hover {
     scale: 1.2;
-    translate: 3rem;
+    translate: 1rem 1rem;
     transition: 0.25s;
 }
 

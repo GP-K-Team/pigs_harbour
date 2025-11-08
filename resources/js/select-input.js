@@ -1,4 +1,5 @@
 import jqueryCustomSelect from "jquery-custom-select";
+import '../css/select-input.css';
 
 $(document).ready(function () {
     $('select').each(function (i, sel) {
