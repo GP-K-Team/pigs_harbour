@@ -4,6 +4,10 @@
     Морские свинки в добрые руки
 @endsection
 
+@section('description')
+    Морские свинки Пристани в поисках дома
+@endsection
+
 @php
     use App\Enum\Fur;
     use App\Enum\Sex;
@@ -857,6 +861,7 @@
             border-radius: 50%;
 
             @media (max-width: 1000px) {
+                padding: 10px 15px;
                 font-size: 15px;
             }
         }

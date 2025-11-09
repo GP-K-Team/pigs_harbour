@@ -25,6 +25,7 @@
     @include('components.badge')
     @include('components.main_pigs')
     @include('components.steps')
+    @include('components.main_articles')
     @include('components.summary')
 @endsection
 

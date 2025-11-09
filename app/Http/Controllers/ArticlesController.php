@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ArticleFormRequest;
 use App\Models\Article;
+use App\Models\Hashtag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,12 +14,19 @@ use Illuminate\View\View;
 
 class ArticlesController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $articles = Article::query()->with('images')->cursorPaginate(6);
+        $showMore = $request->get('show_more', 1);
+        $articles = Article::query()->with('images')->paginate(Article::PAGINATE_ITEMS_COUNT * $showMore);
+        $hashtags = Hashtag::query()->get();
         $isAdmin = Auth::check() ?? false;
+        $activeHashtags = [];
 
-        return \view('articles.index', compact('articles', 'isAdmin'));
+        if ($request->get('hashtags')) {
+            $activeHashtags = explode('&', $request->get('hashtags'));
+        }
+
+        return \view('articles.index', compact('articles', 'isAdmin', 'hashtags', 'showMore', 'activeHashtags'));
     }
 
     public function showOne(Article $article): View

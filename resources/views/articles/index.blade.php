@@ -1,19 +1,31 @@
 @extends('layouts.main', ['background' => 'texture-light'])
 
 @section('title')
-    Статьи
+    Статьи Пристани
+@endsection
+
+@section('description')
+    Статьи пристани о морских свинках
 @endsection
 
 @php
     use App\Models\Article;
     use App\Helpers\FileHelper;
+    use App\Models\Hashtag;
     use Illuminate\Support\Collection;
 
     /** @var Collection|iterable<Article> $articles */
+    /** @var Collection|iterable<Hashtag> $hashtags */
+    /** @var bool $isAdmin */
+    /** @var array $activeHashtags */
 @endphp
 
 @push('styles')
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/bread-crumbs.css') }}">
+@endpush
+
+@push('js')
+    <script type="module" src="{{ Vite::asset('resources/js/hashtags.js') }}"></script>
 @endpush
 
 @section('content')
@@ -27,8 +39,36 @@
     </div>
 
     <div class="list-container">
-        <div class="list-header" style="display:none;">
-            {{-- todo: hashtags go here --}}
+        <div class="list-header">
+            <ul class="hashtag-list">
+                <li @class(['hashtag-item-active' => !count($activeHashtags), 'hashtag-item']) data-hashtag="vse">
+                    Все
+                </li>
+                @foreach($hashtags as $hashtag)
+                    <li @class(['hashtag-item-active' => in_array($hashtag->slug, $activeHashtags), 'hashtag-item']) data-hashtag="{{ $hashtag->slug }}">
+                        {{ $hashtag->tag }}
+                    </li>
+                @endforeach
+            </ul>
+
+{{--            <section id="hashtags_splide" class="splide hashtag_splide_wrapper" aria-label="Хэштеги">--}}
+{{--                <div class="splide__track">--}}
+{{--                    <ul class="splide__list">--}}
+{{--                        <li class="splide__slide">--}}
+{{--                            <div @class(['hashtag-item-active' => !count($achtiveHashtags), 'hashtag-item'])>--}}
+{{--                                Все--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                        @foreach($hashtags as $hashtag)--}}
+{{--                            <li class="splide__slide">--}}
+{{--                                <div @class(['hashtag-item-active' => in_array($hashtag->slug, $achtiveHashtags), 'hashtag-item'])>--}}
+{{--                                    {{ $hashtag->tag }}--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                        @endforeach--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            </section>--}}
         </div>
 
         <ul class="list">
@@ -37,7 +77,8 @@
                     <a class="add-card-link" href="{{ route('articles.show.create') }}" draggable="false">
                         <p class="add-card-link-text">Добавить статью</p>
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-                            <path d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
+                            <path
+                                d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
                         </svg>
                     </a>
                 </li>
@@ -45,7 +86,7 @@
             @endif
 
             @foreach($articles as $article)
-                <li class="list-item card @if(true) can-edit @endif">
+                <li class="list-item card @if($isAdmin) can-edit @endif">
                     <a href="{{ route('articles.one', compact('article')) }}">
                         <img class="card-image" width="350" height="250" alt="Обложка статьи"
                              src="{{ $article->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($article) }}">
@@ -55,7 +96,7 @@
                             <h2 class="card-title">{{ $article->title }}</h2>
                         </a>
 
-                        @if(true)
+                        @if($isAdmin)
                             <a class="edit-icon-link" href="{{ route('articles.show.update', compact('article')) }}"
                                draggable="false">
                                 <img src="{{ asset('images/icons/edit.svg') }}" alt="" draggable="false">
@@ -72,11 +113,76 @@
             @endforeach
         </ul>
 
-        <div class="pagination">
-            <button class="button pagination-next-button">Показать ещё</button>
-            <ul class="pagination-list">
-                {{-- todo: pages --}}
-            </ul>
+        @if ($articles->currentPage() !== $articles->lastPage())
+            <div class="button show_more_button">
+                <a href="{{ '?show_more=' . ($showMore + 1) }}">
+                    Показать ещё
+                </a>
+            </div>
+        @endif
+
+        @if($articles->total() > 1 && $articles->lastPage() !== 1)
+            <div class="pagination_wrapper">
+                <ul class="pagination_list">
+                    <li @class(['item_active' => $articles->currentPage() === 1])>
+                        <a href="?page=1">
+                            1
+                        </a>
+                    </li>
+
+                    @if($articles->lastPage() > 2)
+
+                        @if($articles->currentPage() !== 1 && $articles->currentPage() - 1 !== 1 && $articles->currentPage() !== $articles->lastPage())
+                            <li>
+                                <a href="{{ $articles->previousPageUrl() }}">
+                                    {{ $articles->currentPage() - 1 }}
+                                </a>
+                            </li>
+                        @endif
+
+                        @if($articles->currentPage() === 1)
+                            <li>
+                                <a href="{{ $articles->nextPageUrl() }}">
+                                    {{ $articles->currentPage() + 1 }}
+                                </a>
+                            </li>
+                        @elseif($articles->currentPage() === $articles->lastPage())
+                            <li>
+                                <a href="{{ $articles->previousPageUrl() }}">
+                                    {{ $articles->lastPage() - 1 }}
+                                </a>
+                            </li>
+                        @else
+                            <li @class(['item_active'])>
+                                <a>
+                                    {{ $articles->currentPage()}}
+                                </a>
+                            </li>
+                        @endif
+
+                        @if($articles->currentPage() !== 1 && $articles->currentPage() + 1 !== $articles->lastPage() && $articles->currentPage() !== $articles->lastPage())
+                            <li>
+                                <a href="{{ $articles->nextPageUrl() }}">
+                                    {{ $articles->currentPage() + 1 }}
+                                </a>
+                            </li>
+                        @endif
+                    @endif
+
+                    <li @class(['item_active' => $articles->currentPage() === $articles->lastPage()])>
+                        <a href="{{ "?page=" . $articles->lastPage()  }}">
+                            {{ $articles->lastPage() }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        @endif
+    </div>
+    <div class="footer_block">
+        <div class="footer_text">
+            <p>
+                На нашей Пристани можно найти много полезных статей о морских свинках.
+            </p>
         </div>
     </div>
 
@@ -98,7 +204,7 @@
             max-width: 1080px;
             align-items: center;
             justify-content: center;
-            gap: 1rem;
+            gap: 3rem;
         }
 
         .list > li:empty {
@@ -186,7 +292,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            row-gap: 0.5rem;
+            row-gap: 0.7rem;
             flex-grow: 1;
         }
 
@@ -257,6 +363,12 @@
             background-color: var(--main_green);
             border-radius: 0.5rem;
             user-select: none;
+
+            @media (max-width: 768px) {
+                top: unset;
+                bottom: 15px;
+                right: 0.5rem;
+            }
         }
 
         .edit-icon-link img {
@@ -355,5 +467,103 @@
         .pagination-next-button {
             font-size: 1.75rem;
         }
+
+
+        .footer_block {
+            padding: 40px;
+            border-top: 10px solid var(--main_pink);
+            background-image: url("/images/bright_dark.png");
+        }
+
+        .footer_text {
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+            font-size: 25px;
+            text-align: justify;
+
+            @media (max-width: 768px) {
+                font-size: 15px;
+            }
+        }
+
+        .pagination_list {
+            display: flex;
+            column-gap: 20px;
+        }
+
+        .pagination_list li {
+            padding: 10px 20px;
+            font-size: 25px;
+            cursor: pointer;
+            border-radius: 50%;
+
+            @media (max-width: 1000px) {
+                padding: 10px 15px;
+                font-size: 15px;
+            }
+        }
+
+        .pagination_list li:hover a {
+            color: var(--main_blue);
+        }
+
+        .item_active {
+            background-color: var(--light_blue);
+        }
+
+        .pagination_list .item_active:hover a {
+            color: var(--main_font);
+        }
+
+        .list-header {
+            max-width: 80%;
+        }
+
+        .hashtag-list {
+            display: flex;
+            column-gap: 20px;
+            row-gap: 25px;
+            flex-wrap: wrap;
+
+            @media (max-width: 768px) {
+                display: none;
+            }
+        }
+
+        .hashtag-item {
+            width: fit-content;
+            padding: 10px 30px;
+            border-radius: 10px;
+            font-size: 25px;
+            cursor: pointer;
+
+            @media (max-width: 1000px) {
+                font-size: 15px;
+            }
+        }
+
+        .hashtag-item:hover {
+            opacity: 0.7;
+        }
+
+        .hashtag-item-active {
+            color: white;
+            background-color: var(--main_pink);
+            font-weight: bold;
+        }
+
+        .hashtag_splide_wrapper {
+            display: none;
+
+            @media (max-width: 768px) {
+                display: block;
+            }
+        }
+
+        /*.splide_slide {*/
+        /*    display: flex;*/
+        /*    justify-content: center;*/
+        /*}*/
     </style>
 @endsection
