@@ -426,6 +426,10 @@
         margin: 3.75rem;
         font-family: Inter, Nunito, Arial, sans-serif;
         z-index: 2;
+
+        @media (max-width: 768px) {
+            margin: 2rem;
+        }
     }
 
     .bread-crumbs > ul {
@@ -437,6 +441,14 @@
     .bread-crumbs > ul :is(li, a) {
         color: var(--brown_gray);
         font-size: 1rem;
+
+        @media (max-width: 768px) {
+            margin: 0;
+        }
+
+        @media (max-width: 405px) {
+            font-size: 13px;
+        }
     }
 
     .bread-crumbs > ul > li > a:hover {
