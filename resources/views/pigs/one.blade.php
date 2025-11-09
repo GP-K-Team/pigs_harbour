@@ -10,6 +10,7 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/bread-crumbs.css') }}">
 @endpush
 
 @push('js')
@@ -188,13 +189,14 @@
         overflow: hidden;
         min-height: 500px;
         background-image: url("/images/texture-light.png");
+        z-index: 0;
     }
 
     .pig_wrapper:before,
     .pig_wrapper:after {
         content: '';
         position: absolute;
-        z-index: 0;
+        z-index: -1;
     }
 
     .pig_wrapper:before {
@@ -421,50 +423,16 @@
         }
     }
 
-    .bread-crumbs {
-        position: relative;
-        margin: 3.75rem;
-        font-family: Inter, Nunito, Arial, sans-serif;
-        z-index: 2;
-
-        @media (max-width: 768px) {
-            margin: 2rem;
-        }
-    }
-
-    .bread-crumbs > ul {
-        display: flex;
-        flex-direction: row;
-        row-gap: 0.5rem;
-    }
-
-    .bread-crumbs > ul :is(li, a) {
-        color: var(--brown_gray);
-        font-size: 1rem;
-
-        @media (max-width: 768px) {
-            margin: 0;
-        }
-
-        @media (max-width: 405px) {
-            font-size: 13px;
-        }
-    }
-
-    .bread-crumbs > ul > li > a:hover {
-        color: var(--main_blue);
-    }
-
-    .bread-crumbs > ul > li:not(:last-child)::after {
-        content: " / ";
-    }
-
     .companion_link {
         text-decoration: underline;
     }
 
     .admin_controls_wrapper {
         position: relative;
+    }
+
+    .admin_controls_wrapper fieldset {
+        padding: 0.125rem 1rem 0.5rem;
     }
 
     .edit-icon-link {
