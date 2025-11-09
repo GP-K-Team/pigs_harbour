@@ -31,7 +31,6 @@ Route::prefix('pigs')->name('pigs.')->group(function () {
 });
 
 Route::get('/blog', [ArticlesController::class, 'index'])->name('articles.index');
-
 Route::prefix('articles')->name('articles.')->group(function () {
     Route::get('/{article}', [ArticlesController::class, 'showOne'])->name('one');
 

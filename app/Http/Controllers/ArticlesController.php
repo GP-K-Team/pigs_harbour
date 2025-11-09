@@ -8,15 +8,17 @@ use App\Http\Requests\ArticleFormRequest;
 use App\Models\Article;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ArticlesController extends Controller
 {
-    public function index(Request $request): View
+    public function index(): View
     {
         $articles = Article::query()->with('images')->cursorPaginate(6);
+        $isAdmin = Auth::check() ?? false;
 
-        return \view('articles.index', compact('articles'));
+        return \view('articles.index', compact('articles', 'isAdmin'));
     }
 
     public function showOne(Article $article): View

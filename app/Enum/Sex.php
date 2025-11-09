@@ -18,13 +18,13 @@ enum Sex: string
 
     #[Label('Девочка')]
     #[FilterValue('devochki')]
-    case F = 'female';
+    case FEMALE = 'female';
 
     #[Label('Мальчик')]
     #[FilterValue('malchiki')]
-    case M = 'male';
+    case MALE = 'male';
 
     #[Label('Кастрированный')]
     #[FilterValue('kastrirovannie')]
-    case K = 'neutered';
+    case NEUTERED = 'neutered';
 }
