@@ -61,6 +61,37 @@
             @endforeach
         </ul>
 
+        <section id="pigs_splide" class="splide pigs_splide_wrapper list_mobile_splide" aria-label="Splide Basic HTML Example">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    @foreach($pigs->take(3) as $pig)
+                        <li class="splide__slide">
+                            <div class="list-item card">
+                                <a href="{{ route('pigs.one', compact('pig')) }}">
+                                    <img class="card-image"
+                                         src="{{ asset($pig->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($pig)) }}"
+                                         width="350" height="250" alt="Фотография морской свинки по имени {{ $pig->name }}">
+                                    <div class="card-bio">
+                                        <h2 class="card-title">{{ $pig->name }}</h2>
+                                        <p class="card-age">{{ $pig->age ?? 'Возраст неизвестен' }}</p>
+
+                                        @if($pig->city)
+                                            <p class="card-city">Находится
+                                                в {{ LinguisticsHelper::getCityLocativeForm($pig->city->name) }}</p>
+                                        @endif
+
+                                        @if($pig->companion || $pig->companionOf)
+                                            <p class="card-companion">Пристраивается с другом</p>
+                                        @endif
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </section>
+
         <div class="button catalog_button">
             <a href="{{ route('pigs.catalog') }}">
                 Смотреть всех
@@ -133,6 +164,11 @@
         display: none;
     }
 
+    .list_mobile_splide {
+        display: none;
+        z-index: 5;
+    }
+
     .list {
         display: flex;
         flex-direction: row;
@@ -165,8 +201,14 @@
     @media (max-width: 768px) {
         .list-item.card {
             width: 90%;
-            max-width: 300px;
+            max-width: 400px;
             height: 380px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .list-item.card {
+            max-width: 300px;
         }
     }
 
@@ -217,8 +259,18 @@
             display: none;
         }
 
+        .list_mobile_splide {
+            display: block;
+        }
+    }
+
+    @media (max-width: 500px) {
         .list.list_mobile {
             display: flex;
+        }
+
+        .list_mobile_splide {
+            display: none;
         }
     }
 
@@ -265,5 +317,24 @@
         @media (max-width: 450px) {
             font-size: 20px;
         }
+    }
+
+    .splide__pagination__page.is-active {
+        background-color: var(--main_pink);
+    }
+
+    .splide__pagination__page {
+        background-color: var(--main_blue);
+        opacity: 1;
+    }
+
+    .splide__pagination {
+        bottom: -20px;
+    }
+
+    .splide__slide {
+        display: flex;
+        justify-content: center;
+        padding: 5px 0;
     }
 </style>

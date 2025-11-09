@@ -3,10 +3,12 @@
 :root {
     --main_blue: #C3E3E1;
     --light_blue: #E2F4F4;
+    --bright_blue: #C3E9EA;
     --pale_orange: #FBD6B9;
     --main_pink: #EAB0C8;
     --light_pink: #F4E9E7;
     --main_green: #CDE3CC;
+    --darker_green: #C7E7CF;
     --pale_yellow: #FBF1C5;
     --main_font: #323232;
     --dark_blue_font: #0C6291;

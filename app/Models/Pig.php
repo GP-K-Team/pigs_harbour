@@ -56,7 +56,7 @@ class Pig extends Model
         'description',
         'fur',
         'birthday',
-        'available_for_other_cities',
+        'has_delivery',
         'is_active',
         'stopped_looking_date'
     ];

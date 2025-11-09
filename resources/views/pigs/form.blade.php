@@ -97,12 +97,12 @@
                         <div class="radio-group">
                             <div class="radio-item">
                                 <input type="radio" name="is_active" id="1"
-                                       value="{{ true }}" checked>
+                                       value="1" checked>
                                 <label for="1">Да</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" name="is_active" id="0"
-                                       value="{{ false }}" @checked(isset($pig) && !$pig->is_active)>
+                                       value="0" @checked(isset($pig) && !$pig->is_active)>
                                 <label for="0">Нет</label>
                             </div>
                         </div>
@@ -178,6 +178,27 @@
                         @endforeach
                     </select>
                     <x-error-bag name="companion"/>
+                </div>
+
+                <div class="input-container has-radio">
+                    <fieldset>
+                        <legend class="input-label">
+                            Есть доставка по РФ
+                        </legend>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="has_delivery" id="1"
+                                       value="1" checked>
+                                <label for="1">Да</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="has_delivery" id="0"
+                                       value="0" @checked(isset($pig) && !$pig->has_delivery)>
+                                <label for="0">Нет</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <x-error-bag name="has_delivery"/>
                 </div>
 
                 <div class="input-container has-dropzone">
