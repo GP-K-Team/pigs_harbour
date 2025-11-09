@@ -32,6 +32,18 @@
         </div>
 
         <ul class="list">
+            @if($isAdmin)
+                <li class="list-item card add-card">
+                    <a class="add-card-link" href="{{ route('articles.show.create') }}" draggable="false">
+                        <p class="add-card-link-text">Добавить статью</p>
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                            <path d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
+                        </svg>
+                    </a>
+                </li>
+                <li></li>
+            @endif
+
             @foreach($articles as $article)
                 <li class="list-item card @if(true) can-edit @endif">
                     <a href="{{ route('articles.one', compact('article')) }}">
@@ -58,18 +70,6 @@
                     </div>
                 </li>
             @endforeach
-
-            @if(true)
-                <li class="list-item card add-card">
-                    <a class="add-card-link" href="{{ route('articles.show.create') }}" draggable="false">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-                            <path
-                                d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
-                        </svg>
-                        <p class="add-card-link-text">Добавить статью</p>
-                    </a>
-                </li>
-            @endif
         </ul>
 
         <div class="pagination">
@@ -99,6 +99,10 @@
             align-items: center;
             justify-content: center;
             gap: 1rem;
+        }
+
+        .list > li:empty {
+            display: none;
         }
 
         .list-item.card {
@@ -281,7 +285,9 @@
         }
 
         .card.add-card {
-            align-self: flex-start;
+            margin-left: auto;
+            margin-right: unset;
+            align-self: flex-end;
         }
 
         @media (max-width: 1200px) {
@@ -293,7 +299,7 @@
         @media (max-width: 768px) {
             .card.add-card {
                 height: max-content;
-                margin-right: 0;
+                margin-inline: auto;
             }
 
             .add-card-link-text {
