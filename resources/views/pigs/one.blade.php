@@ -310,7 +310,7 @@
 
     .pig_description {
         position: relative;
-        padding: 20px 40px;
+        padding: 20px 0;
         text-align: justify;
         font-size: 25px;
         z-index: 2;
@@ -323,11 +323,20 @@
     .pig_main_block_wrapper {
         display: flex;
         column-gap: 50px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            row-gap: 50px;
+        }
     }
 
     .pig_image_block, .pig_details_block {
         width: 50%;
         z-index: 2;
+
+        @media (max-width: 768px) {
+            width: 100%;
+        }
     }
 
     .pig_image_block {
@@ -451,4 +460,11 @@
         top: -60%;
         right: 0;
     }
+
+    @media (max-width: 880px) {
+        .button.pig_details_button {
+            font-size: 20px;
+        }
+    }
+
 </style>
