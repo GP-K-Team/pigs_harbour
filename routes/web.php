@@ -19,7 +19,6 @@ Route::get('/ajax', [AjaxController::class, 'index']);
 
 Route::get('/catalog/show/{pig}', [PigsController::class, 'showOne'])->name('pigs.one');
 Route::get('/catalog/{city?}/{sex?}/{age?}/{fur?}', [PigsController::class, 'index'])->name('pigs.catalog');
-Route::get('/catalog/{pig}', [PigsController::class, 'showOne'])->name('pigs.one');
 Route::prefix('pigs')->name('pigs.')->group(function () {
     Route::middleware('auth:web')->group(function () {
         Route::get('/update/{pig}', [PigsController::class, 'showUpdate'])->name('show.update');
