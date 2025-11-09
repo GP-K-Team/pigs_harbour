@@ -581,6 +581,12 @@
             z-index: 2;
         }
 
+        @media (max-width: 768px) {
+            .list {
+                flex-direction: column;
+            }
+        }
+
         .list-item.card {
             display: flex;
             flex-direction: column;
@@ -590,6 +596,28 @@
             border-radius: 1rem;
             box-shadow: 0 4px 4px 0 var(--shadow_drop);
             cursor: pointer;
+            transition: 250ms;
+        }
+
+        .card:hover {
+            opacity: 0.9;
+            scale: 1.01;
+            transition: 250ms;
+        }
+
+        .card a {
+            color: var(--main_font) !important;
+        }
+
+        .card p {
+            margin: 0;
+            padding: 0;
+            font-size: 1.25rem;
+            will-change: transform, opacity;
+        }
+
+        .card:nth-child(2n) {
+            background-color: var(--light_pink);
         }
 
         @media (max-width: 1200px) {
@@ -606,13 +634,10 @@
             }
         }
 
-        .card.add-card {
-            align-self: flex-start;
-        }
-
         @media (max-width: 1200px) {
             .card.add-card {
                 height: 250px;
+                align-self: flex-start;
             }
 
             .add-card-link-text {
@@ -623,17 +648,8 @@
         @media (max-width: 768px) {
             .card.add-card {
                 height: max-content;
+                align-self: unset;
             }
-        }
-
-        .card:nth-child(2n) {
-            background-color: var(--light_pink);
-        }
-
-        .card p {
-            margin: 0;
-            padding: 0;
-            font-size: 1.25rem;
         }
 
         .card-image {
@@ -642,12 +658,23 @@
             object-fit: cover;
             border-top-left-radius: 1rem;
             border-top-right-radius: 1rem;
+            will-change: transform, opacity;
         }
 
         @media (max-width: 768px) {
             .card-image {
                 height: 200px;
             }
+        }
+
+        .card-image.card-image_alt-shown {
+            width: fit-content;
+            height: fit-content;
+            padding: 1rem 0.5rem 0;
+            display: inline-flex;
+            align-items: center;
+            color: var(--dark_blue_font);
+            text-align: center;
         }
 
         .card-bio {
@@ -700,7 +727,11 @@
         }
 
         .card.add-card {
-            background-color: var(--white_trp);
+            background-color: var(--light_blue);
+        }
+
+        .card.add-card:hover {
+            background-color: #FFFFFF;
         }
 
         .add-card-link {
@@ -724,7 +755,7 @@
         }
 
         .add-card-link:hover svg {
-            color: var(--main_pink);
+            color: var(--main_green);
             opacity: 0.6;
         }
 
