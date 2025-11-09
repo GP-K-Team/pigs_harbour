@@ -169,7 +169,7 @@
                     @endif
 
                     @foreach($pigs as $pig)
-                        <li class="list-item card @if(true) can-edit @endif">
+                        <li class="list-item card @if($isAdmin) can-edit @endif">
                             @if($isAdmin)
                                 <a class="edit-icon-link" href="{{ route('pigs.show.update', compact('pig')) }}" draggable="false">
                                     <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
