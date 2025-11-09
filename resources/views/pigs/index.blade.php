@@ -169,7 +169,7 @@
                     @endif
 
                     @foreach($pigs as $pig)
-                        <li class="list-item card @if($isAdmin) can-edit @endif">
+                        <li @class(['can-edit' => $isAdmin, 'card-pink' => ($pig->sex->value === 'female'), 'list-item', 'card'])>
                             @if($isAdmin)
                                 <a class="edit-icon-link" href="{{ route('pigs.show.update', compact('pig')) }}" draggable="false">
                                     <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
@@ -583,7 +583,7 @@
             will-change: transform, opacity;
         }
 
-        .card:nth-child(2n) {
+        .list-item.card.card-pink {
             background-color: var(--light_pink);
         }
 
@@ -756,51 +756,6 @@
             @media (max-width: 768px) {
                 font-size: 1rem;
             }
-        }
-
-        .summary_wrapper {
-            padding: 20px 40px;
-            border-top: 10px solid var(--pale_orange);
-            background-image: url("/images/bright_dark.png");
-            background-size: contain;
-        }
-
-        .summary_list {
-            margin: auto;
-            width: 50%;
-            display: flex;
-            row-gap: 20px;
-            column-gap: 20px;
-            justify-content: space-between;
-
-            @media (max-width: 1000px) {
-                width: 80%;
-            }
-
-            @media (max-width: 768px) {
-                width: 100%;
-                flex-direction: column;
-            }
-        }
-
-        .summary_block {
-            display: flex;
-            flex-direction: column;
-            row-gap: 5px;
-            justify-content: center;
-            align-items: center;
-            font-size: 1rem;
-        }
-
-        .summary_block p {
-            margin: 0;
-        }
-
-        .summary_number {
-            font-family: '315karusel', sans-serif;
-            font-size: 2rem;
-            color: var(--main_pink);
-            font-weight: bold;
         }
     </style>
 @endsection

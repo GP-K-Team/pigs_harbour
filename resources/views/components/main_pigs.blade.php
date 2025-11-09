@@ -13,7 +13,7 @@
     <div>
         <ul class="list">
             @foreach($pigs as $pig)
-                <li class="list-item card">
+                <li @class(['card-pink' => ($pig->sex->value === 'female'), 'list-item', 'card'])>
                     <a href="{{ route('pigs.one', compact('pig')) }}">
                         <img class="card-image"
                              src="{{ asset($pig->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($pig)) }}"
@@ -32,7 +32,7 @@
                             @endif
                         </div>
                     </a>
-                </li>
+                </>
             @endforeach
         </ul>
 
@@ -232,7 +232,7 @@
         }
     }
 
-    .card:nth-child(2n) {
+    .list-item.card.card-pink {
         background-color: var(--light_pink);
     }
 
