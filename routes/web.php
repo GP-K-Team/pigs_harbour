@@ -17,6 +17,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::get('/ajax', [AjaxController::class, 'index']);
 
+Route::get('/catalog/show/{pig}', [PigsController::class, 'showOne'])->name('pigs.one');
 Route::get('/catalog/{city?}/{sex?}/{age?}/{fur?}', [PigsController::class, 'index'])->name('pigs.catalog');
 Route::get('/catalog/{pig}', [PigsController::class, 'showOne'])->name('pigs.one');
 Route::prefix('pigs')->name('pigs.')->group(function () {

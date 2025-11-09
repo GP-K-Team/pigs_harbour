@@ -51,6 +51,8 @@ class Pig extends Model
 
     public const IMAGE_PATH = 'pigs';
 
+    public const PAGINATE_ITEMS_COUNT = '3';
+
     protected $fillable = [
         'name',
         'slug_name',

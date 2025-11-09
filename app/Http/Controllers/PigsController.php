@@ -21,19 +21,20 @@ use Illuminate\View\View;
 
 class PigsController extends Controller
 {
-    public function index(UrlHelper $urlHelper): View
+    public function index(Request $request, UrlHelper $urlHelper): View
     {
         $cities = City::query()->pluck('name');
         $filters = $urlHelper->collectFilters();
+        $showMore = $request->get('show_more', 1);
 
         if (array_key_exists('city', $filters)) {
             $filters['city'] = $cities->firstWhere(fn (string $city) => LinguisticsHelper::transliterate($city) === $filters['city']);
         }
 
-        $pigs = Pig::activeDesc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->cursorPaginate(6);
+        $pigs = Pig::activeDesc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT * $showMore));
         $isAdmin = Auth::check() ?? false;
 
-        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin'));
+        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin', 'showMore'));
     }
 
     public function filteredList(string $city, string $sex, string $age, string $fur): View
