@@ -650,6 +650,16 @@
             }
         }
 
+        .card-image.card-image_alt-shown {
+            width: fit-content;
+            height: fit-content;
+            padding: 1rem 0.5rem 0;
+            display: inline-flex;
+            align-items: center;
+            color: var(--dark_blue_font);
+            text-align: center;
+        }
+
         .card-bio {
             display: flex;
             flex-direction: column;
@@ -700,7 +710,11 @@
         }
 
         .card.add-card {
-            background-color: var(--white_trp);
+            background-color: var(--light_blue);
+        }
+
+        .card.add-card:hover {
+            background-color: #FFFFFF;
         }
 
         .add-card-link {
@@ -724,7 +738,7 @@
         }
 
         .add-card-link:hover svg {
-            color: var(--main_pink);
+            color: var(--main_green);
             opacity: 0.6;
         }
 

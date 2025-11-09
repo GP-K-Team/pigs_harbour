@@ -225,6 +225,16 @@
             }
         }
 
+        .card-image.card-image_alt-shown {
+            width: fit-content;
+            height: fit-content;
+            padding: 1rem 0.5rem 0;
+            display: inline-flex;
+            align-items: center;
+            color: var(--dark_blue_font);
+            text-align: center;
+        }
+
         @media (min-width: 768px) {
             .list-item.card:nth-child(2n) {
                 flex-direction: row-reverse;
@@ -340,6 +350,10 @@
             background-color: var(--white_trp);
         }
 
+        .card.add-card:hover {
+            background-color: #FFFFFF;
+        }
+
         .card.add-card:nth-child(even) {
             margin-left: auto;
             margin-right: 0;
@@ -367,7 +381,7 @@
         }
 
         .add-card-link:hover svg {
-            color: var(--main_pink);
+            color: var(--main_green);
             opacity: 0.6;
         }
 

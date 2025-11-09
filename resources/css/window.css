@@ -47,4 +47,5 @@
     background-image: url('/public/images/icons/close.svg');
     background-size: contain;
     border: none;
+    cursor: pointer;
 }
