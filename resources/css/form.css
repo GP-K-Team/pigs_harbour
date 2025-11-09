@@ -126,7 +126,6 @@ input[type="radio"] {
     border: none;
     outline: 1px solid var(--main_font);
     outline-offset: 3px;
-    transition: background-color 0.25s linear;
 }
 
 input[type="checkbox"] {
@@ -166,7 +165,6 @@ input[type="radio"]:hover {
 
 input[type="radio"]:checked {
     background: var(--main_blue);
-    transition: background-color 0.25s linear;
 }
 
 input[type="file"] {

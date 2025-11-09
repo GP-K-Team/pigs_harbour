@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Helpers\FileHelper;
+use App\Helpers\LinguisticsHelper;
+use App\Helpers\UrlHelper;
 use App\Http\Requests\CreatePigFormRequest;
 use App\Http\Requests\UpdatePigFormRequest;
 use App\Http\Requests\UpdatePigStatusRequest;
@@ -19,14 +21,24 @@ use Illuminate\View\View;
 
 class PigsController extends Controller
 {
-    public function index(Request $request): View
+    public function index(UrlHelper $urlHelper): View
     {
         $cities = City::query()->pluck('name');
-        $pigs = Pig::query()->with(['companion', 'companionOf', 'city', 'images'])->cursorPaginate(6);
-        $title = 'Морские свинки в добрые руки';
-        $admin = Auth::check() ?? false;
+        $filters = $urlHelper->collectFilters();
 
-        return \view('pigs.index', compact('cities', 'pigs', 'title', 'admin'));
+        if (array_key_exists('city', $filters)) {
+            $filters['city'] = $cities->firstWhere(fn (string $city) => LinguisticsHelper::transliterate($city) === $filters['city']);
+        }
+
+        $pigs = Pig::activeDesc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->cursorPaginate(6);
+        $isAdmin = Auth::check() ?? false;
+
+        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin'));
+    }
+
+    public function filteredList(string $city, string $sex, string $age, string $fur): View
+    {
+
     }
 
     public function showOne(Pig $pig): View
