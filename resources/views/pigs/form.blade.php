@@ -84,7 +84,7 @@
                 <div class="input-container">
                     <label class="input-label" for="birthday">Дата рождения (для фильтра)</label>
                     <input class="datepick" type="text" name="birthday" id="birthday"
-                           value="{{ old('birthday', $pig?->birthday->format('d.m.Y')) }}"
+                           value="{{ old('birthday', Str::headline($pig?->birthday->translatedFormat('d M Y'))) }}"
                            placeholder="Дата рождения">
                     <x-error-bag name="birthday"/>
                 </div>

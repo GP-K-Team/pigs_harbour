@@ -67,7 +67,7 @@ class Pig extends Model
     protected $casts = [
         'fur' => Fur::class,
         'sex' => Sex::class,
-        'birthday' => 'datetime',
+        'birthday' => 'date:Y-m-d',
         'is_active' => 'boolean',
     ];
 
