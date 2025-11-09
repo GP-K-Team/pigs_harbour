@@ -17,12 +17,7 @@
 @endpush
 
 @section('content')
-    <div class="page-header">
-        <div class="page-header-text">
-            <h1>Полезные статьи</h1>
-            <p>все самое важное, что нужно знать о морских свинках</p>
-        </div>
-    </div>
+    @include('components.banner', ['showPigs' => false, 'specialHeader' => 'Полезные статьи', 'specialText' => 'все самое важное, что нужно знать о морских свинках'])
 
     <div class="bread-crumbs">
         <ul>
@@ -86,65 +81,6 @@
     </div>
 
     <style>
-        /** Page header **/
-        .page-header {
-            width: 100%;
-            height: 40vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background-image: url("{{ asset('images/dots.jpg') }}");
-            background-size: 25%;
-            box-shadow: 0 4px 4px 0 var(--shadow_drop);
-        }
-
-        @media (max-width: 768px) {
-            .page-header {
-                height: 50dvh;
-                background-size: 50%;
-            }
-        }
-
-        .page-header-text {
-            padding: 1.25rem 0;
-            min-height: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-            text-align: center;
-            background-color: var(--overlay);
-        }
-
-        .page-header-text > h1 {
-            margin: 0;
-            font-family: '315karusel', sans-serif;
-            font-size: 3rem;
-        }
-
-        .page-header-text > p {
-            max-width: 75%;
-            margin: 0;
-            padding: 0 1.5rem;
-            font-family: 'overdoze sans', sans-serif;
-            font-size: 2.5rem;
-            text-transform: lowercase;
-        }
-
-        @media (max-width: 768px) {
-            .page-header-text {
-                min-height: 25%;
-            }
-
-            .page-header-text > h1 {
-                font-size: 1.875rem;
-            }
-
-            .page-header-text > p {
-                font-size: 1.25rem;
-            }
-        }
-
         /** List **/
         .list-container {
             display: flex;
