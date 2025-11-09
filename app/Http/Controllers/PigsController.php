@@ -33,8 +33,31 @@ class PigsController extends Controller
 
         $pigs = Pig::activeDesc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT * $showMore));
         $isAdmin = Auth::check() ?? false;
+        $state = 'catalog';
 
-        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin', 'showMore'));
+        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin', 'showMore', 'state'));
+    }
+
+    /**
+     * @param Request $request
+     * @param UrlHelper $urlHelper
+     * @return View
+     */
+    public function archive(Request $request, UrlHelper $urlHelper): View
+    {
+        $cities = City::query()->pluck('name');
+        $filters = $urlHelper->collectFilters();
+        $showMore = $request->get('show_more', 1);
+
+        if (array_key_exists('city', $filters)) {
+            $filters['city'] = $cities->firstWhere(fn (string $city) => LinguisticsHelper::transliterate($city) === $filters['city']);
+        }
+
+        $pigs = Pig::notActiveAsc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT * $showMore));
+        $isAdmin = Auth::check() ?? false;
+        $state = 'archive';
+
+        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin', 'showMore', 'state'));
     }
 
     public function filteredList(string $city, string $sex, string $age, string $fur): View

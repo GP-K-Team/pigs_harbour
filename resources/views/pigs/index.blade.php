@@ -19,6 +19,7 @@
     /** @var Collection|iterable<Pig> $pigs */
     /** @var Collection|iterable<City> $cities */
     /** @var bool $isAdmin */
+    /** @var string $state */
 @endphp
 
 @push('styles')
@@ -32,6 +33,10 @@
     <script type="module" src="{{ Vite::asset('resources/js/catalog-initialize.js') }}"></script>
 @endpush
 
+<script>
+    window.stateUrl = "{{ $state }}";
+</script>
+
 @section('content')
     @include('components.banner', ['showPigs' => false, 'specialHeader' => 'Морские свинки в добрые руки', 'specialText' => 'Выберите себе милого друга'])
 
@@ -39,8 +44,21 @@
         <div class="bread-crumbs">
             <ul>
                 <li><a href="/">Главная</a></li>
-                <li>Ищут дом</li>
+                @if($state === 'catalog')
+                    <li>Ищут дом</li>
+                @else
+                    <li>Архив</li>
+                @endif
             </ul>
+            @if($isAdmin)
+                <div class="admin_links">
+                    @if($state === 'catalog')
+                        <a href="{{ route('pigs.archive') }}">Архив</a>
+                    @else
+                        <a href="{{ route('pigs.catalog') }}">Ищут дом</a>
+                    @endif
+                </div>
+            @endif
         </div>
 
         <div class="list-container">
@@ -363,6 +381,7 @@
         }
 
         .bread-crumbs {
+            position: relative;
             margin: 3.75rem;
             font-family: Inter, Nunito, Arial, sans-serif;
         }
@@ -852,6 +871,15 @@
 
         .pagination_list .item_active:hover a {
             color: var(--main_font);
+        }
+
+        .admin_links {
+            top: 30px;
+            position: absolute;
+        }
+
+        .admin_links a {
+            color: var(--main_pink);
         }
     </style>
 @endsection
