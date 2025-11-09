@@ -17,9 +17,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::get('/ajax', [AjaxController::class, 'index']);
 
-Route::get('/catalog/{city?}/{sex?}/{age?}/{fur?}', [PigsController::class, 'index'])->name('pigs.catalog');
-Route::get('/catalog/{pig}', [PigsController::class, 'showOne'])->name('pigs.one');
-Route::prefix('pigs')->name('pigs.')->group(function () {
+Route::prefix('catalog')->name('catalog.')->group(function () {
     Route::middleware('auth:web')->group(function () {
         Route::get('/update/{pig}', [PigsController::class, 'showUpdate'])->name('show.update');
         Route::get('/create', [PigsController::class, 'showCreate'])->name('show.create');
@@ -28,12 +26,12 @@ Route::prefix('pigs')->name('pigs.')->group(function () {
         Route::delete('/{pig}', [PigsController::class, 'delete'])->name('update');
         Route::post('/status/{pig}', [PigsController::class, 'updateStatus'])->name('status');
     });
+
+    Route::get('show/{pig}', [PigsController::class, 'showOne'])->name('one');
+    Route::get('/{city?}/{sex?}/{age?}/{fur?}', [PigsController::class, 'index'])->name('index');
 });
 
-Route::get('/blog', [ArticlesController::class, 'index'])->name('articles.index');
-Route::prefix('articles')->name('articles.')->group(function () {
-    Route::get('/{article}', [ArticlesController::class, 'showOne'])->name('one');
-
+Route::prefix('blog')->name('blog.')->group(function () {
     Route::middleware('auth:web')->group(function () {
         Route::get('/create', [ArticlesController::class, 'showCreate'])->name('show.create');
         Route::get('/update/{article}', [ArticlesController::class, 'showUpdate'])->name('show.update');
@@ -41,6 +39,9 @@ Route::prefix('articles')->name('articles.')->group(function () {
         Route::post('/{article}', [ArticlesController::class, 'update'])->name('update');
         Route::delete('/{article}', [ArticlesController::class, 'delete'])->name('update');
     });
+
+    Route::get('/', [ArticlesController::class, 'index'])->name('index');
+    Route::get('/{article}', [ArticlesController::class, 'showOne'])->name('one');
 });
 
 Route::middleware('auth:web')->group(function () {

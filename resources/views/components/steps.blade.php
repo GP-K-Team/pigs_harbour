@@ -89,7 +89,7 @@
     </section>
 
     <div class="button steps_button">
-        <a href="{{ route('pigs.catalog') }}">
+        <a href="{{ route('catalog.index') }}">
             Подробнее
         </a>
     </div>

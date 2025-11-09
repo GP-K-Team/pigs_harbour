@@ -70,3 +70,22 @@
 .filepond--root .filepond--file .filepond--image-preview-overlay {
     opacity: 0.25;
 }
+
+.filepond--root .filepond--file .filepond--file-info {
+    max-width: 98%;
+    padding: 0.5rem;
+    left: 1%;
+    bottom: 1% !important;
+    background-color: #FFFFFF;
+    border-radius: 0.75rem;
+    opacity: 0.8;
+}
+
+.filepond--file-info-main {
+    color: var(--dark_blue_font);
+    overflow: hidden;
+}
+
+.filepond--file-info-sub {
+    color: var(--main_font) !important;
+}

@@ -9,19 +9,25 @@ $(document).ready(function () {
         server: {
             load: (source, load, error, progress, abort, headers) => {
                 const myRequest = new Request(source);
+
                 fetch(myRequest).then(response => {
-                    if (!response.ok) throw new Error('Failed to load image');
-                    return response.blob();
+                    if (response.ok) {
+                        return response.blob();
+                    }
+
+                    throw new Error('Failed to load image');
                 }).then(load).catch(error);
             },
         },
-    })
+    });
 
-    const pond = FilePond.create(document.querySelector('.filepond'), {
-        name: 'files[]',
+    const target = document.querySelector('.filepond');
+    const isMultiple = Boolean(target.dataset.multiple);
+    const pond = FilePond.create(target, {
+        name: (target.dataset.filepondInputName ?? 'files') + (isMultiple ? '[]' : ''),
         storeAsFile: true,
         labelIdle: '<span class="filepond--label-action"></span>',
-        allowMultiple: true,
+        allowMultiple: isMultiple,
         allowReorder: true,
         allowBrowse: true,
         acceptedFileTypes: ['image/*'],

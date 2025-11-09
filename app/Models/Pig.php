@@ -10,11 +10,11 @@ use App\Enum\Fur;
 use App\Enum\Sex;
 use App\Models\Traits\HasTimestamps;
 use App\Models\Traits\IsIdentifiedBySlug;
+use App\Traits\HasImages;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 
@@ -45,7 +45,7 @@ use Illuminate\Support\Collection;
 #[RouteSlug('slug_name')]
 class Pig extends Model
 {
-    use HasTimestamps, IsIdentifiedBySlug;
+    use HasImages, HasTimestamps, IsIdentifiedBySlug;
 
     public const DEFAULT_IMAGE = 'default.png';
 
@@ -61,7 +61,8 @@ class Pig extends Model
         'birthday',
         'has_delivery',
         'is_active',
-        'stopped_looking_date'
+        'stopped_looking_date',
+        'city_id',
     ];
 
     protected $casts = [
@@ -70,22 +71,6 @@ class Pig extends Model
         'birthday' => 'date:Y-m-d',
         'is_active' => 'boolean',
     ];
-
-    /**
-     * @return Image|null
-     */
-    public function getMainImageAttribute(): Image|null
-    {
-        return $this->images()->wherePivot('is_main', true)->first();
-    }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function images(): BelongsToMany
-    {
-        return $this->belongsToMany(Image::class)->withPivot('is_main');
-    }
 
     /**
      * @return BelongsTo

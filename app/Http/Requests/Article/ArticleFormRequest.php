@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Article;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class ArticleFormRequest extends FormRequest
 {
@@ -19,9 +20,10 @@ class ArticleFormRequest extends FormRequest
     /** @inheritDoc */
     public function validated($key = null, $default = null): array
     {
-        // todo
+        $formData = parent::validated($key, $default);
+        $formData['slug_title'] = Str::afterLast($formData['slug_title'], '/');
 
-        return parent::validated($key, $default);
+        return $formData;
     }
 
     /**
@@ -31,7 +33,14 @@ class ArticleFormRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-            'slug_title' => 'required|string|unique:articles,slug_title',
+            'description' => 'required|string|max:300',
+            'text' => 'required|string',
+            'meta_title' => 'nullable|string',
+            'meta_description' => 'nullable|string',
+            'author' => 'nullable|string',
+            'origin_link' => 'nullable|url',
+            'cover' => 'nullable',
+            'hashtags' => 'nullable',
         ];
     }
 

@@ -4,7 +4,7 @@
             <a href="{{ route('home') }}">Главная</a>
         </li>
         <li>
-            <a href="{{ route('pigs.catalog') }}">
+            <a href="{{ route('catalog.index') }}">
                 Ищут дом
             </a>
         </li>
