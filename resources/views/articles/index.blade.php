@@ -12,13 +12,12 @@
     /** @var Collection|iterable<Article> $articles */
 @endphp
 
+@push('styles')
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/bread-crumbs.css') }}">
+@endpush
+
 @section('content')
-    <div class="page-header">
-        <div class="page-header-text">
-            <h1>Полезные статьи</h1>
-            <p>все самое важное, что нужно знать о морских свинках</p>
-        </div>
-    </div>
+    @include('components.banner', ['showPigs' => false, 'specialHeader' => 'Полезные статьи', 'specialText' => 'все самое важное, что нужно знать о морских свинках'])
 
     <div class="bread-crumbs">
         <ul>
@@ -82,65 +81,6 @@
     </div>
 
     <style>
-        /** Page header **/
-        .page-header {
-            width: 100%;
-            height: 40vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background-image: url("{{ asset('images/dots.jpg') }}");
-            background-size: 25%;
-            box-shadow: 0 4px 4px 0 var(--shadow_drop);
-        }
-
-        @media (max-width: 768px) {
-            .page-header {
-                height: 50dvh;
-                background-size: 50%;
-            }
-        }
-
-        .page-header-text {
-            padding: 1.25rem 0;
-            min-height: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-            text-align: center;
-            background-color: var(--overlay);
-        }
-
-        .page-header-text > h1 {
-            margin: 0;
-            font-family: '315karusel', sans-serif;
-            font-size: 3rem;
-        }
-
-        .page-header-text > p {
-            max-width: 75%;
-            margin: 0;
-            padding: 0 1.5rem;
-            font-family: 'overdoze sans', sans-serif;
-            font-size: 2.5rem;
-            text-transform: lowercase;
-        }
-
-        @media (max-width: 768px) {
-            .page-header-text {
-                min-height: 25%;
-            }
-
-            .page-header-text > h1 {
-                font-size: 1.875rem;
-            }
-
-            .page-header-text > p {
-                font-size: 1.25rem;
-            }
-        }
-
         /** List **/
         .list-container {
             display: flex;
@@ -170,31 +110,29 @@
             border-radius: 1.5rem;
             box-shadow: 0 4px 4px 0 var(--shadow_drop);
             cursor: pointer;
+            transition: 250ms;
+        }
+
+        .card:hover {
+            opacity: 0.9;
+            scale: 1.01;
+            transition: 250ms;
+        }
+
+        @media (max-width: 768px) {
+            .list-item.card {
+                width: 90%;
+                max-width: 300px;
+                height: 340px;
+                flex-direction: column;
+                border-radius: 0.75rem;
+            }
         }
 
         .list-item.card > a {
             display: flex;
             flex-direction: row;
-        }
-
-        .card.add-card {
-            align-self: flex-start;
-        }
-
-        @media (max-width: 1200px) {
-            .card.add-card {
-                height: 250px;
-            }
-
-            .add-card-link-text {
-                display: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .card.add-card {
-                height: max-content;
-            }
+            color: var(--main_font) !important;
         }
 
         .card .card-description {
@@ -211,14 +149,20 @@
         }
 
         @media (max-width: 768px) {
-            .list-item.card {
-                border-radius: 0.75rem;
-            }
-
             .card-image {
                 height: 200px;
                 border-radius: 0.75rem 0.75rem 0 0;
             }
+        }
+
+        .card-image.card-image_alt-shown {
+            width: fit-content;
+            height: fit-content;
+            padding: 1rem 0.5rem 0;
+            display: inline-flex;
+            align-items: center;
+            color: var(--dark_blue_font);
+            text-align: center;
         }
 
         @media (min-width: 768px) {
@@ -230,15 +174,6 @@
                 height: 100%;
                 object-fit: cover;
                 border-radius: 0 1.5rem 1.5rem 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .list-item.card {
-                width: 90%;
-                max-width: 300px;
-                height: 340px;
-                flex-direction: column;
             }
         }
 
@@ -336,9 +271,34 @@
             background-color: var(--white_trp);
         }
 
+        .card.add-card:hover {
+            background-color: #FFFFFF;
+        }
+
         .card.add-card:nth-child(even) {
             margin-left: auto;
             margin-right: 0;
+        }
+
+        .card.add-card {
+            align-self: flex-start;
+        }
+
+        @media (max-width: 1200px) {
+            .card.add-card {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card.add-card {
+                height: max-content;
+                margin-right: 0;
+            }
+
+            .add-card-link-text {
+                display: none;
+            }
         }
 
         .add-card-link {
@@ -363,7 +323,7 @@
         }
 
         .add-card-link:hover svg {
-            color: var(--main_pink);
+            color: var(--main_green);
             opacity: 0.6;
         }
 

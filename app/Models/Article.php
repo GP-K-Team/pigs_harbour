@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $description
  * @property string $author
  * @property string $origin_link
+ * @property Image|null $mainImage
  * @mixin HasTimestamps
  */
 #[RouteSlug('slug_title')]
@@ -26,8 +27,9 @@ class Article extends Model
 {
     use HasTimestamps, IsIdentifiedBySlug;
 
-    public const DEFAULT_IMAGE = 'PEEG.jpg';
-    public const DEFAULT_IMAGE_PATH = 'articles';
+    public const DEFAULT_IMAGE = 'default.png';
+
+    public const IMAGE_PATH = 'articles';
 
     protected $fillable = [
         'title',

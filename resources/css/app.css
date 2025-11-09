@@ -43,24 +43,14 @@
     font-display: swap;
 }
 
+p {
+    margin: 0.25rem;
+}
+
 .bg-texture-light {
     background: #FFFFFF url('/public/images/texture-light.png') 0 0 repeat;
 }
 
-p {
-    margin: 5px;
-}
-
-.window-container {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    display: none;
-    background-color: var(--overlay);
-    top: 0;
-    left: 0;
-    z-index: 5;
-}
 /** Button **/
 
 .button {
@@ -81,30 +71,4 @@ p {
     .button {
         font-size: 1.5rem;
     }
-}
-
-/** Breadcrumbs **/
-
-.bread-crumbs {
-    margin: 3.75rem;
-    font-family: Inter, Nunito, Arial, sans-serif;
-}
-
-.bread-crumbs > ul {
-    display: flex;
-    flex-direction: row;
-    row-gap: 0.5rem;
-}
-
-.bread-crumbs > ul :is(li, a) {
-    color: var(--brown_gray);
-    font-size: 1rem;
-}
-
-.bread-crumbs > ul > li > a:hover {
-    color: var(--main_blue);
-}
-
-.bread-crumbs > ul > li:not(:last-child)::after {
-    content: " / ";
 }

@@ -1,7 +1,7 @@
 @extends('layouts.main', ['background' => 'texture-light'])
 
 @section('title')
-    Свинки
+    Морские свинки в добрые руки
 @endsection
 
 @php
@@ -18,15 +18,17 @@
 
     /** @var Collection|iterable<Pig> $pigs */
     /** @var Collection|iterable<City> $cities */
-    /** @var bool $admin */
+    /** @var bool $isAdmin */
 @endphp
 
 @push('styles')
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/bread-crumbs.css') }}">
 @endpush
 
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/select-input.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/filter.js') }}"></script>
 @endpush
 
 @section('content')
@@ -42,11 +44,12 @@
 
         <div class="list-container">
             <div class="list-header">
-                <button class="button list-filter-button" type="button" onclick="$('#filter_window').closest('.window-container').show()">
+                <button class="button list-filter-button" type="button"
+                        onclick="$('#filter_window').closest('.window-container').show()">
                     Фильтры
                 </button>
-                @if(request()->fullUrl() !== request()->url())
-                    <sup class="filter-count">{{ count(array_filter(request()->all())) }}</sup>
+                @if($filterCount = count(array_filter($filters)))
+                    <sup class="filter-count">{{ $filterCount }}</sup>
                 @endif
             </div>
 
@@ -68,7 +71,7 @@
                                 <select name="city" id="city">
                                     <option value="" selected>Любой город</option>
                                     @foreach($cities as $city)
-                                        <option value="{{ $city }}" @selected(request('city') === $city)>
+                                        <option value="{{ LinguisticsHelper::transliterate($city) }}" @selected(isset($filters['city']) && $filters['city'] === $city)>
                                             {{ $city }}
                                         </option>
                                     @endforeach
@@ -82,14 +85,13 @@
                                     </legend>
                                     <div class="radio-group">
                                         <div class="radio-item">
-                                            <input type="radio" name="sex" value="" @checked(empty(request('sex'))) id="sex-empty">
+                                            <input type="radio" name="sex" value="" @checked(empty($filters['sex'])) id="sex-empty">
                                             <label for="sex-empty">Любой</label>
                                         </div>
 
                                         @foreach(Sex::cases() as $sex)
                                             <div class="radio-item">
-                                                <input type="radio" name="sex" id="{{ $sex->value }}"
-                                                       value="{{ $sex->getLabel() }}" @checked(request('sex') === $sex->getLabel())>
+                                                <input type="radio" name="sex" id="{{ $sex->value }}" value="{{ $sex->getFilterValue() }}" @checked(isset($filters['sex']) && $filters['sex'] === $sex)>
                                                 <label for="{{ $sex->value }}">{{ $sex->getLabel() }}</label>
                                             </div>
                                         @endforeach
@@ -110,8 +112,7 @@
 
                                         @foreach(AgeFilter::cases() as $age)
                                             <div class="radio-item">
-                                                <input type="radio" name="age" id="{{ $age->value }}"
-                                                       value="{{ $age->getFilterLabel() }}" @checked(Str::replace('+', ' ', request('age')) === $age->getFilterLabel())>
+                                                <input type="radio" name="age" id="{{ $age->value }}" value="{{ LinguisticsHelper::transliterate($age->getFilterLabel()) }}" @checked(isset($filters['age']) && $filters['age'] === $age)>
                                                 <label for="{{ $age->value }}">{{ $age->getFilterLabel() }}</label>
                                             </div>
                                         @endforeach
@@ -132,8 +133,7 @@
 
                                         @foreach(Fur::cases() as $fur)
                                             <div class="radio-item">
-                                                <input type="radio" name="fur" id="{{ $fur->value }}"
-                                                       value="{{ $fur->getFilterLabel() }}" @checked(request('fur') === $fur->getFilterLabel())>
+                                                <input type="radio" name="fur" id="{{ $fur->value }}" value="{{ LinguisticsHelper::transliterate($fur->getFilterLabel()) }}" @checked(isset($filters['fur']) && $filters['fur'] === $fur)>
                                                 <label for="{{ $fur->value }}">{{ $fur->getFilterLabel() }}</label>
                                             </div>
                                         @endforeach
@@ -143,72 +143,89 @@
                         </div>
 
                         <div class="filter-buttons">
-                            <button class="button filter-submit-button" type="submit">Показать</button>
-                            <input class="button filter-reset-button" type="reset" value="Сбросить" onclick="location.href = @js(request()->path())">
+                            <button class="button filter-submit-button" type="submit">
+                                Показать
+                            </button>
+                            <input class="button filter-reset-button" type="reset" value="Сбросить" onclick="location.href = @js(route('pigs.catalog'))">
                         </div>
                     </div>
                 </form>
             </div>
 
-            <ul class="list">
-                @if($admin)
-                    <li class="list-item card add-card">
-                        <a class="add-card-link" href="{{ route('pigs.show.create') }}" draggable="false">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-                                <path
-                                    d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
-                            </svg>
-                            <p class="add-card-link-text">Добавить свинку</p>
-                        </a>
-                    </li>
-                @endif
-
-                @foreach($pigs as $pig)
-                    <li class="list-item card @if(true) can-edit @endif">
-                        @if(true)
-                            <a class="edit-icon-link" href="{{ route('pigs.show.update', compact('pig')) }}"
-                               draggable="false">
-                                <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
+            @if($pigs->isEmpty())
+                <h3>Нет результатов</h3>
+            @else
+                <ul class="list">
+                    @if($isAdmin)
+                        <li class="list-item card add-card">
+                            <a class="add-card-link" href="{{ route('pigs.show.create') }}" draggable="false">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                    <path
+                                        d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
+                                </svg>
+                                <p class="add-card-link-text">Добавить свинку</p>
                             </a>
-                        @endif
+                        </li>
+                    @endif
 
-                        <a href="{{ route('pigs.one', compact('pig')) }}">
-                            <img class="card-image"
-                                 src="{{ asset($pig->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($pig)) }}"
-                                 width="350" height="250" alt="Фотография морской свинки по имени {{ $pig->name }}">
-                            <div class="card-bio">
-                                <h2 class="card-title">{{ $pig->name }}</h2>
-                                <p class="card-age">{{ $pig->age ?? 'Возраст неизвестен' }}</p>
+                    @foreach($pigs as $pig)
+                        <li class="list-item card @if(true) can-edit @endif">
+                            @if($isAdmin)
+                                <a class="edit-icon-link" href="{{ route('pigs.show.update', compact('pig')) }}"
+                                   draggable="false">
+                                    <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
+                                </a>
+                            @endif
 
-                                @if($pig->city)
-                                    <p class="card-city">Находится
-                                        в {{ LinguisticsHelper::getCityLocativeForm($pig->city->name) }}</p>
-                                @endif
+                            <a href="{{ route('pigs.one', compact('pig')) }}">
+                                <img class="card-image"
+                                     src="{{ asset($pig->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($pig)) }}"
+                                     width="350" height="250" alt="Фотография морской свинки по имени {{ $pig->name }}">
+                                <div class="card-bio">
+                                    <h2 class="card-title">{{ $pig->name }}</h2>
+                                    <p class="card-age">{{ $pig->age ?? 'Возраст неизвестен' }}</p>
 
-                                @if($pig->companion || $pig->companionOf)
-                                    <p class="card-companion">Пристраивается с другом</p>
-                                @endif
-                            </div>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
+                                    @if($pig->city)
+                                        <p class="card-city">Находится
+                                            в {{ LinguisticsHelper::getCityLocativeForm($pig->city->name) }}</p>
+                                    @endif
+
+                                    @if($pig->companion || $pig->companionOf)
+                                        <p class="card-companion">Пристраивается с другом</p>
+                                    @endif
+                                </div>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
     </div>
 
     <div class="footer_block">
         <div class="footer_text">
             <p>
-                На нашей Пристани временно обрели пристанище очаровательные морские свинки, мечтающие о любящей семье. Эти маленькие пушистые комочки энергии ищут добрые руки, готовые подарить им тепло, заботу и безграничную любовь. Мы приютили их, чтобы дать им шанс на счастливую жизнь, полную радости и вкусной еды.
+                На нашей Пристани временно обрели пристанище очаровательные морские свинки, мечтающие о любящей семье.
+                Эти маленькие пушистые комочки энергии ищут добрые руки, готовые подарить им тепло, заботу и
+                безграничную любовь. Мы приютили их, чтобы дать им шанс на счастливую жизнь, полную радости и вкусной
+                еды.
             </p>
             <p>
-                Каждая свинка обладает своим уникальным характером и очарованием. Есть среди них робкие и застенчивые, нуждающиеся в терпеливом подходе и ласковом слове. Другие, наоборот, смелые и любопытные, готовые исследовать каждый уголок своего нового дома. Все они без исключения нуждаются в заботе, внимании и регулярном общении.
+                Каждая свинка обладает своим уникальным характером и очарованием. Есть среди них робкие и застенчивые,
+                нуждающиеся в терпеливом подходе и ласковом слове. Другие, наоборот, смелые и любопытные, готовые
+                исследовать каждый уголок своего нового дома. Все они без исключения нуждаются в заботе, внимании и
+                регулярном общении.
             </p>
             <p>
-                Мы отдаем морских свинок бесплатно, но с обязательным условием: они должны попасть в добрые руки, где их будут любить и заботиться о них. Мы хотим убедиться, что новые владельцы готовы обеспечить им просторную клетку, хороший корм и вкусное сено. Для этого мы просим заполнить нашу анкету.
+                Мы отдаем морских свинок бесплатно, но с обязательным условием: они должны попасть в добрые руки, где их
+                будут любить и заботиться о них. Мы хотим убедиться, что новые владельцы готовы обеспечить им просторную
+                клетку, хороший корм и вкусное сено. Для этого мы просим заполнить нашу анкету.
             </p>
             <p>
-                Если вы мечтаете о верном и преданном друге, который будет радовать вас своим забавным поведением и милым видом, морская свинка – идеальный выбор. Подарите этим маленьким созданиям дом, и они отплатят вам безграничной любовью и преданностью. Свяжитесь с нами, чтобы узнать больше о наших подопечных. Мы уверены, что среди них найдется именно та свинка, которая покорит ваше сердце!
+                Если вы мечтаете о верном и преданном друге, который будет радовать вас своим забавным поведением и
+                милым видом, морская свинка – идеальный выбор. Подарите этим маленьким созданиям дом, и они отплатят вам
+                безграничной любовью и преданностью. Свяжитесь с нами, чтобы узнать больше о наших подопечных. Мы
+                уверены, что среди них найдется именно та свинка, которая покорит ваше сердце!
             </p>
         </div>
     </div>
@@ -309,150 +326,6 @@
         @media (max-width: 768px) {
             .button {
                 font-size: 1.5rem;
-            }
-        }
-
-        .bread-crumbs {
-            margin: 3.75rem;
-            font-family: Inter, Nunito, Arial, sans-serif;
-        }
-
-        .bread-crumbs > ul {
-            display: flex;
-            flex-direction: row;
-            row-gap: 0.5rem;
-        }
-
-        .bread-crumbs > ul :is(li, a) {
-            color: var(--brown_gray);
-            font-size: 1rem;
-        }
-
-        .bread-crumbs > ul > li > a:hover {
-            color: var(--main_blue);
-        }
-
-        .bread-crumbs > ul > li:not(:last-child)::after {
-            content: " / ";
-        }
-
-        /** Page header **/
-        .page-header {
-            width: 100%;
-            min-height: 500px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background-image: url("{{ asset('images/dots.jpg') }}");
-            background-size: 25%;
-            box-shadow: 0 4px 4px 0 var(--shadow_drop);
-
-            @media (max-width: 1000px) {
-                min-height: 300px;
-            }
-        }
-
-        .footer_block {
-            padding: 40px;
-            border-top: 10px solid var(--main_pink);
-            background-image: url("/images/texture-light.png");
-        }
-
-        .footer_text {
-            display: flex;
-            flex-direction: column;
-            row-gap: 25px;
-            font-size: 25px;
-            text-align: justify;
-
-            @media (max-width: 768px) {
-                font-size: 15px;
-            }
-        }
-
-        .summary_wrapper {
-            padding: 20px 40px;
-            border-top: 10px solid var(--pale_orange);
-            background-image: url("/images/bright_dark.png");
-            background-size: contain;
-        }
-
-        .summary_list {
-            margin: auto;
-            width: 50%;
-            display: flex;
-            row-gap: 20px;
-            column-gap: 20px;
-            justify-content: space-between;
-
-            @media (max-width: 1000px) {
-                width: 80%;
-            }
-
-            @media (max-width: 768px) {
-                width: 100%;
-                flex-direction: column;
-            }
-        }
-
-        .summary_block {
-            display: flex;
-            flex-direction: column;
-            row-gap: 5px;
-            justify-content: center;
-            align-items: center;
-            font-size: 15px;
-        }
-
-        .summary_block p {
-            margin: 0;
-        }
-
-        .summary_number {
-            font-family: '315karusel', sans-serif;
-            font-size: 30px;
-            color: var(--main_pink);
-            font-weight: bold;
-        }
-
-        @media (max-width: 768px) {
-            .page-header {
-                height: 50dvh;
-                background-size: 50%;
-            }
-        }
-
-        .page-header-text {
-            padding: 1.5rem;
-            min-height: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-            text-align: center;
-            background-color: var(--overlay);
-        }
-
-        .page-header-text > h1 {
-            margin: 0;
-            font-family: '315karusel', sans-serif;
-            font-size: 3rem;
-        }
-
-        .page-header-text > p {
-            margin: 0;
-            font-family: 'overdoze sans', sans-serif;
-            font-size: 2.5rem;
-            text-transform: lowercase;
-        }
-
-        @media (max-width: 768px) {
-            .page-header-text > h1 {
-                font-size: 1.875rem;
-            }
-
-            .page-header-text > p {
-                font-size: 1.25rem;
             }
         }
 
@@ -584,6 +457,12 @@
             background-color: var(--button_gray);
         }
 
+        h3 {
+            margin: 0;
+            font-size: 3rem;
+            z-index: 1;
+        }
+
         /** List **/
         .list-container {
             display: flex;
@@ -604,6 +483,12 @@
             z-index: 2;
         }
 
+        @media (max-width: 768px) {
+            .list {
+                flex-direction: column;
+            }
+        }
+
         .list-item.card {
             display: flex;
             flex-direction: column;
@@ -613,6 +498,28 @@
             border-radius: 1rem;
             box-shadow: 0 4px 4px 0 var(--shadow_drop);
             cursor: pointer;
+            transition: 250ms;
+        }
+
+        .card:hover {
+            opacity: 0.9;
+            scale: 1.01;
+            transition: 250ms;
+        }
+
+        .card a {
+            color: var(--main_font) !important;
+        }
+
+        .card p {
+            margin: 0;
+            padding: 0;
+            font-size: 1.25rem;
+            will-change: transform, opacity;
+        }
+
+        .card:nth-child(2n) {
+            background-color: var(--light_pink);
         }
 
         @media (max-width: 1200px) {
@@ -629,13 +536,10 @@
             }
         }
 
-        .card.add-card {
-            align-self: flex-start;
-        }
-
         @media (max-width: 1200px) {
             .card.add-card {
                 height: 250px;
+                align-self: flex-start;
             }
 
             .add-card-link-text {
@@ -646,17 +550,8 @@
         @media (max-width: 768px) {
             .card.add-card {
                 height: max-content;
+                align-self: unset;
             }
-        }
-
-        .card:nth-child(2n) {
-            background-color: var(--light_pink);
-        }
-
-        .card p {
-            margin: 0;
-            padding: 0;
-            font-size: 1.25rem;
         }
 
         .card-image {
@@ -665,12 +560,23 @@
             object-fit: cover;
             border-top-left-radius: 1rem;
             border-top-right-radius: 1rem;
+            will-change: transform, opacity;
         }
 
         @media (max-width: 768px) {
             .card-image {
                 height: 200px;
             }
+        }
+
+        .card-image.card-image_alt-shown {
+            width: fit-content;
+            height: fit-content;
+            padding: 1rem 0.5rem 0;
+            display: inline-flex;
+            align-items: center;
+            color: var(--dark_blue_font);
+            text-align: center;
         }
 
         .card-bio {
@@ -723,7 +629,11 @@
         }
 
         .card.add-card {
-            background-color: var(--white_trp);
+            background-color: var(--light_blue);
+        }
+
+        .card.add-card:hover {
+            background-color: #FFFFFF;
         }
 
         .add-card-link {
@@ -747,7 +657,7 @@
         }
 
         .add-card-link:hover svg {
-            color: var(--main_pink);
+            color: var(--main_green);
             opacity: 0.6;
         }
 
@@ -761,6 +671,70 @@
 
         .add-card-link:hover .add-card-link-text {
             visibility: visible;
+        }
+
+        /** Page footer **/
+        .footer_block {
+            padding: 40px;
+            border-top: 10px solid var(--main_pink);
+            background-image: url("/images/texture-light.png");
+        }
+
+        .footer_text {
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+            font-size: 1.5rem;
+            text-align: justify;
+
+            @media (max-width: 768px) {
+                font-size: 1rem;
+            }
+        }
+
+        .summary_wrapper {
+            padding: 20px 40px;
+            border-top: 10px solid var(--pale_orange);
+            background-image: url("/images/bright_dark.png");
+            background-size: contain;
+        }
+
+        .summary_list {
+            margin: auto;
+            width: 50%;
+            display: flex;
+            row-gap: 20px;
+            column-gap: 20px;
+            justify-content: space-between;
+
+            @media (max-width: 1000px) {
+                width: 80%;
+            }
+
+            @media (max-width: 768px) {
+                width: 100%;
+                flex-direction: column;
+            }
+        }
+
+        .summary_block {
+            display: flex;
+            flex-direction: column;
+            row-gap: 5px;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        .summary_block p {
+            margin: 0;
+        }
+
+        .summary_number {
+            font-family: '315karusel', sans-serif;
+            font-size: 2rem;
+            color: var(--main_pink);
+            font-weight: bold;
         }
     </style>
 @endsection

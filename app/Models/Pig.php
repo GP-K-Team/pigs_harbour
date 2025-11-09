@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Attributes\RouteSlug;
+use App\Enum\AgeFilter;
 use App\Enum\Fur;
 use App\Enum\Sex;
 use App\Models\Traits\HasTimestamps;
@@ -37,6 +38,7 @@ use Illuminate\Support\Collection;
  * @property int $companion_pig_id
  *
  * @method static Builder|static activeDesc()
+ * @method static Builder|static filter(array $params)
  *
  * @mixin HasTimestamps
  */
@@ -45,8 +47,9 @@ class Pig extends Model
 {
     use HasTimestamps, IsIdentifiedBySlug;
 
-    public const DEFAULT_IMAGE = '/pigs/default_pig.png';
-    public const DEFAULT_IMAGE_PATH = 'pigs';
+    public const DEFAULT_IMAGE = 'default.png';
+
+    public const IMAGE_PATH = 'pigs';
 
     protected $fillable = [
         'name',
@@ -114,5 +117,23 @@ class Pig extends Model
     public function scopeActiveDesc(Builder $query): void
     {
         $query->where('is_active', true)->orderByDesc('created_at');
+    }
+
+    public function scopeFilter(Builder $query, array $params = []): void
+    {
+        $params = array_filter($params);
+
+        foreach ($params as $key => $value) {
+            match ($key) {
+                default => $query->where($key, $value),
+                'city' => $query->whereHas('city', fn (Builder $cities) => $cities->where('name', $value)),
+                'age' => match ($value) {
+                    AgeFilter::Young => $query->where('birthday', '<', today()->subYear()),
+                    AgeFilter::Mid => $query->where('birthday', '<', today()->subYears(3)),
+                    AgeFilter::Old => $query->where('birthday', '>=', today()->subYears(3)),
+                    default => $query->whereNull('birthday'),
+                },
+            };
+        }
     }
 }
