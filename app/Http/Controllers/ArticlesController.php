@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArticleFormRequest;
 use App\Models\Article;
 use App\Models\Hashtag;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,15 +17,24 @@ class ArticlesController extends Controller
 {
     public function index(Request $request): View
     {
-        $showMore = $request->get('show_more', 1);
-        $articles = Article::query()->with('images')->paginate(Article::PAGINATE_ITEMS_COUNT * $showMore);
-        $hashtags = Hashtag::query()->get();
-        $isAdmin = Auth::check() ?? false;
         $activeHashtags = [];
 
         if ($request->get('hashtags')) {
             $activeHashtags = explode('&', $request->get('hashtags'));
         }
+
+        $showMore = $request->get('show_more', 1);
+        $articlesBuilder = Article::query()->with('images');
+
+        if (count($activeHashtags)) {
+            $articlesBuilder->whereHas('hashtags', function (Builder $query) use ($activeHashtags) {
+               $query->whereIn('slug', $activeHashtags);
+            });
+        }
+
+        $articles = $articlesBuilder->paginate(Article::PAGINATE_ITEMS_COUNT * $showMore);
+        $hashtags = Hashtag::query()->get();
+        $isAdmin = Auth::check() ?? false;
 
         return \view('articles.index', compact('articles', 'isAdmin', 'hashtags', 'showMore', 'activeHashtags'));
     }

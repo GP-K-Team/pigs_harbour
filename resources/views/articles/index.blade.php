@@ -71,111 +71,114 @@
 {{--            </section>--}}
         </div>
 
-        <ul class="list">
-            @if($isAdmin)
-                <li class="list-item card add-card">
-                    <a class="add-card-link" href="{{ route('articles.show.create') }}" draggable="false">
-                        <p class="add-card-link-text">Добавить статью</p>
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-                            <path
-                                d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
-                        </svg>
+        @if($articles->isEmpty())
+            <h3>Нет результатов</h3>
+        @else
+            <ul class="list">
+                @if($isAdmin)
+                    <li class="list-item card add-card">
+                        <a class="add-card-link" href="{{ route('articles.show.create') }}" draggable="false">
+                            <p class="add-card-link-text">Добавить статью</p>
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                <path
+                                    d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
+                            </svg>
+                        </a>
+                    </li>
+                @endif
+
+                @foreach($articles as $article)
+                    <li class="list-item card @if($isAdmin) can-edit @endif">
+                        <a href="{{ route('articles.one', compact('article')) }}">
+                            <img class="card-image" width="350" height="250" alt="Обложка статьи"
+                                 src="{{ $article->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($article) }}">
+                        </a>
+                        <div class="card-bio">
+                            <a href="{{ route('articles.one', compact('article')) }}">
+                                <h2 class="card-title">{{ $article->title }}</h2>
+                            </a>
+
+                            @if($isAdmin)
+                                <a class="edit-icon-link" href="{{ route('articles.show.update', compact('article')) }}"
+                                   draggable="false">
+                                    <img src="{{ asset('images/icons/edit.svg') }}" alt="" draggable="false">
+                                </a>
+                            @endif
+
+                            <p class="card-description">{{ $article->description }}</p>
+
+                            <a class="button card-button" href="{{ route('articles.one', compact('article')) }}">
+                                Читать
+                            </a>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+
+            @if ($articles->currentPage() !== $articles->lastPage())
+                <div class="button show_more_button">
+                    <a href="{{ '?show_more=' . ($showMore + 1) }}">
+                        Показать ещё
                     </a>
-                </li>
-                <li></li>
+                </div>
             @endif
 
-            @foreach($articles as $article)
-                <li class="list-item card @if($isAdmin) can-edit @endif">
-                    <a href="{{ route('articles.one', compact('article')) }}">
-                        <img class="card-image" width="350" height="250" alt="Обложка статьи"
-                             src="{{ $article->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($article) }}">
-                    </a>
-                    <div class="card-bio">
-                        <a href="{{ route('articles.one', compact('article')) }}">
-                            <h2 class="card-title">{{ $article->title }}</h2>
-                        </a>
-
-                        @if($isAdmin)
-                            <a class="edit-icon-link" href="{{ route('articles.show.update', compact('article')) }}"
-                               draggable="false">
-                                <img src="{{ asset('images/icons/edit.svg') }}" alt="" draggable="false">
+            @if($articles->total() > 1 && $articles->lastPage() !== 1)
+                <div class="pagination_wrapper">
+                    <ul class="pagination_list">
+                        <li @class(['item_active' => $articles->currentPage() === 1])>
+                            <a href="?page=1">
+                                1
                             </a>
+                        </li>
+
+                        @if($articles->lastPage() > 2)
+
+                            @if($articles->currentPage() !== 1 && $articles->currentPage() - 1 !== 1 && $articles->currentPage() !== $articles->lastPage())
+                                <li>
+                                    <a href="{{ $articles->previousPageUrl() }}">
+                                        {{ $articles->currentPage() - 1 }}
+                                    </a>
+                                </li>
+                            @endif
+
+                            @if($articles->currentPage() === 1)
+                                <li>
+                                    <a href="{{ $articles->nextPageUrl() }}">
+                                        {{ $articles->currentPage() + 1 }}
+                                    </a>
+                                </li>
+                            @elseif($articles->currentPage() === $articles->lastPage())
+                                <li>
+                                    <a href="{{ $articles->previousPageUrl() }}">
+                                        {{ $articles->lastPage() - 1 }}
+                                    </a>
+                                </li>
+                            @else
+                                <li @class(['item_active'])>
+                                    <a>
+                                        {{ $articles->currentPage()}}
+                                    </a>
+                                </li>
+                            @endif
+
+                            @if($articles->currentPage() !== 1 && $articles->currentPage() + 1 !== $articles->lastPage() && $articles->currentPage() !== $articles->lastPage())
+                                <li>
+                                    <a href="{{ $articles->nextPageUrl() }}">
+                                        {{ $articles->currentPage() + 1 }}
+                                    </a>
+                                </li>
+                            @endif
                         @endif
 
-                        <p class="card-description">{{ $article->description }}</p>
-
-                        <a class="button card-button" href="{{ route('articles.one', compact('article')) }}">
-                            Читать
-                        </a>
-                    </div>
-                </li>
-            @endforeach
-        </ul>
-
-        @if ($articles->currentPage() !== $articles->lastPage())
-            <div class="button show_more_button">
-                <a href="{{ '?show_more=' . ($showMore + 1) }}">
-                    Показать ещё
-                </a>
-            </div>
-        @endif
-
-        @if($articles->total() > 1 && $articles->lastPage() !== 1)
-            <div class="pagination_wrapper">
-                <ul class="pagination_list">
-                    <li @class(['item_active' => $articles->currentPage() === 1])>
-                        <a href="?page=1">
-                            1
-                        </a>
-                    </li>
-
-                    @if($articles->lastPage() > 2)
-
-                        @if($articles->currentPage() !== 1 && $articles->currentPage() - 1 !== 1 && $articles->currentPage() !== $articles->lastPage())
-                            <li>
-                                <a href="{{ $articles->previousPageUrl() }}">
-                                    {{ $articles->currentPage() - 1 }}
-                                </a>
-                            </li>
-                        @endif
-
-                        @if($articles->currentPage() === 1)
-                            <li>
-                                <a href="{{ $articles->nextPageUrl() }}">
-                                    {{ $articles->currentPage() + 1 }}
-                                </a>
-                            </li>
-                        @elseif($articles->currentPage() === $articles->lastPage())
-                            <li>
-                                <a href="{{ $articles->previousPageUrl() }}">
-                                    {{ $articles->lastPage() - 1 }}
-                                </a>
-                            </li>
-                        @else
-                            <li @class(['item_active'])>
-                                <a>
-                                    {{ $articles->currentPage()}}
-                                </a>
-                            </li>
-                        @endif
-
-                        @if($articles->currentPage() !== 1 && $articles->currentPage() + 1 !== $articles->lastPage() && $articles->currentPage() !== $articles->lastPage())
-                            <li>
-                                <a href="{{ $articles->nextPageUrl() }}">
-                                    {{ $articles->currentPage() + 1 }}
-                                </a>
-                            </li>
-                        @endif
-                    @endif
-
-                    <li @class(['item_active' => $articles->currentPage() === $articles->lastPage()])>
-                        <a href="{{ "?page=" . $articles->lastPage()  }}">
-                            {{ $articles->lastPage() }}
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                        <li @class(['item_active' => $articles->currentPage() === $articles->lastPage()])>
+                            <a href="{{ "?page=" . $articles->lastPage()  }}">
+                                {{ $articles->lastPage() }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            @endif
         @endif
     </div>
     <div class="footer_block">
@@ -187,12 +190,18 @@
     </div>
 
     <style>
+        h3 {
+            margin: 0;
+            font-size: 3rem;
+            z-index: 1;
+        }
+
         /** List **/
         .list-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 1rem 1rem;
+            padding: 0 1rem 40px 1rem;
             row-gap: 5rem;
         }
 
