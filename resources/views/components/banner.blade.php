@@ -1,6 +1,7 @@
 @props([
     'showPigs' => true,
     'specialHeader',
+    'specialSubHeader',
     'specialText',
     'imageSrc',
     'imageCaption',
@@ -21,7 +22,7 @@
             </div>
         @else
             <div class="banner_side_text_wrapper">
-                <h1>{{ $specialHeader }}</h1>
+                <h1>{{ $specialHeader }}@if(isset($specialSubHeader))<br>{{ $specialSubHeader }}@endif</h1>
                 @if(isset($specialText))
                     <p class="special_text">
                         {{ $specialText }}
@@ -89,6 +90,10 @@
         bottom: -15%;
         width: 40%;
         z-index: 5;
+
+        @media (max-width: 768px) {
+            z-index: 1;
+        }
     }
 
     .pigs_banner img {

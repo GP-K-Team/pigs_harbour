@@ -2,6 +2,8 @@
 <html lang="ru">
     <head>
         <title>@yield('title') &mdash; Пристань Пушистых Сердец</title>
+        <meta name="description" content="@yield('description')">
+
         <meta name="authors" content="whatevernumber, the_nepodarok" />
         <meta name="keywords" content="морские свинки, пристань пушистых сердец, помощь животным, волонтёрский проект">
         <meta name="viewport" content="width=device-width" />
@@ -28,7 +30,22 @@
         </main>
 
         <footer>
-
+            <div class="footer_logo_wrapper">
+                <a href="{{ route('home') }}">
+                    <img src="/images/logo.svg" alt="Логотип пристани" width="80">
+                </a>
+            </div>
+            <div class="footer_links">
+                <div class="links">
+                    @include('components.links')
+                </div>
+                <div class="footer_small_logo_wrapper">
+                    <a href="{{ route('home') }}">
+                        <img src="/images/logo.svg" alt="Логотип пристани">
+                    </a>
+                    <p>Пристань пушистых сердец  | {{ now()->year }}</p>
+                </div>
+            </div>
         </footer>
 
         @stack('js')
@@ -107,16 +124,64 @@
     }
 
     footer {
+        padding: 20px 40px;
         margin: auto;
         width: 100%;
         max-width: 1400px;
-        height: 80px;
-        min-height: 80px;
+        min-height: 120px;
         background-color: var(--light_blue);
         display:flex;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: center;
         border-top: 10px solid var(--main_blue);
+        box-sizing: border-box;
+
+        @media (max-width: 768px) {
+            justify-content: center;
+        }
+    }
+
+    footer p {
+        margin: 0;
+    }
+
+    .footer_small_logo_wrapper {
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+    }
+
+    .footer_small_logo_wrapper a {
+        display: none;
+
+        @media (max-width: 768px) {
+            display: block;
+        }
+    }
+
+    .footer_small_logo_wrapper img {
+        width: 40px;
+
+        @media (max-width: 400px) {
+            width: 20px;
+        }
+    }
+
+    .footer_links {
+        display: flex;
+        column-gap: 20px;
+        align-items: center;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            row-gap: 10px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .footer_logo_wrapper {
+            display: none;
+        }
     }
 
     .container {

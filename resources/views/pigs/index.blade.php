@@ -169,7 +169,7 @@
                     @endif
 
                     @foreach($pigs as $pig)
-                        <li class="list-item card @if($isAdmin) can-edit @endif">
+                        <li @class(['can-edit' => $isAdmin, 'card-pink' => ($pig->sex->value === 'female'), 'list-item', 'card'])>
                             @if($isAdmin)
                                 <a class="edit-icon-link" href="{{ route('pigs.show.update', compact('pig')) }}" draggable="false">
                                     <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
@@ -229,40 +229,7 @@
         </div>
     </div>
 
-    <div class="summary_wrapper">
-        <ul class="summary_list">
-            <li>
-                <div class="summary_block">
-                    <p class="summary_number">
-                        {{ $cities->count() }}
-                    </p>
-                    <p>
-                        {{ trans_choice('город|города|городов', $cities->count()) }}
-                    </p>
-                </div>
-            </li>
-            <li>
-                <div class="summary_block">
-                    <p class="summary_number">
-                        15+
-                    </p>
-                    <p>
-                        волонтеров
-                    </p>
-                </div>
-            </li>
-            <li>
-                <div class="summary_block">
-                    <p class="summary_number">
-                        {{ $pigs->count() > 50 ? $pigs->count() : '50' }}+
-                    </p>
-                    <p>
-                        счастливых свинок
-                    </p>
-                </div>
-            </li>
-        </ul>
-    </div>
+    @include('components.summary')
 
     <style>
         .catalog_wrapper {
@@ -325,6 +292,105 @@
         @media (max-width: 768px) {
             .button {
                 font-size: 1.5rem;
+            }
+        }
+
+        .bread-crumbs {
+            margin: 3.75rem;
+            font-family: Inter, Nunito, Arial, sans-serif;
+        }
+
+        .bread-crumbs > ul {
+            display: flex;
+            flex-direction: row;
+            row-gap: 0.5rem;
+        }
+
+        .bread-crumbs > ul :is(li, a) {
+            color: var(--brown_gray);
+            font-size: 1rem;
+        }
+
+        .bread-crumbs > ul > li > a:hover {
+            color: var(--main_blue);
+        }
+
+        .bread-crumbs > ul > li:not(:last-child)::after {
+            content: " / ";
+        }
+
+        /** Page header **/
+        .page-header {
+            width: 100%;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-image: url("{{ asset('images/dots.jpg') }}");
+            background-size: 25%;
+            box-shadow: 0 4px 4px 0 var(--shadow_drop);
+
+            @media (max-width: 1000px) {
+                min-height: 300px;
+            }
+        }
+
+        .footer_block {
+            padding: 40px;
+            border-top: 10px solid var(--main_pink);
+            background-image: url("/images/texture-light.png");
+        }
+
+        .footer_text {
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+            font-size: 25px;
+            text-align: justify;
+
+            @media (max-width: 768px) {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                height: 50dvh;
+                background-size: 50%;
+            }
+        }
+
+        .page-header-text {
+            padding: 1.5rem;
+            min-height: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+            background-color: var(--overlay);
+        }
+
+        .page-header-text > h1 {
+            margin: 0;
+            font-family: '315karusel', sans-serif;
+            font-size: 3rem;
+        }
+
+        .page-header-text > p {
+            margin: 0;
+            font-family: 'overdoze sans', sans-serif;
+            font-size: 2.5rem;
+            text-transform: lowercase;
+        }
+
+        @media (max-width: 768px) {
+            .page-header-text > h1 {
+                font-size: 1.875rem;
+            }
+
+            .page-header-text > p {
+                font-size: 1.25rem;
             }
         }
 
@@ -517,7 +583,7 @@
             will-change: transform, opacity;
         }
 
-        .card:nth-child(2n) {
+        .list-item.card.card-pink {
             background-color: var(--light_pink);
         }
 
@@ -690,51 +756,6 @@
             @media (max-width: 768px) {
                 font-size: 1rem;
             }
-        }
-
-        .summary_wrapper {
-            padding: 20px 40px;
-            border-top: 10px solid var(--pale_orange);
-            background-image: url("/images/bright_dark.png");
-            background-size: contain;
-        }
-
-        .summary_list {
-            margin: auto;
-            width: 50%;
-            display: flex;
-            row-gap: 20px;
-            column-gap: 20px;
-            justify-content: space-between;
-
-            @media (max-width: 1000px) {
-                width: 80%;
-            }
-
-            @media (max-width: 768px) {
-                width: 100%;
-                flex-direction: column;
-            }
-        }
-
-        .summary_block {
-            display: flex;
-            flex-direction: column;
-            row-gap: 5px;
-            justify-content: center;
-            align-items: center;
-            font-size: 1rem;
-        }
-
-        .summary_block p {
-            margin: 0;
-        }
-
-        .summary_number {
-            font-family: '315karusel', sans-serif;
-            font-size: 2rem;
-            color: var(--main_pink);
-            font-weight: bold;
         }
     </style>
 @endsection

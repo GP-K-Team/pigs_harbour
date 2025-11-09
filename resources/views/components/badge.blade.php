@@ -38,7 +38,7 @@
     .badge_wrapper {
         position: relative;
         padding: 40px;
-        background-image: url("/images/dark.jpg");
+        background-image: url("/images/bright_dark.png");
         min-height: 1200px;
     }
 

@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'index'])->name('home');
 
+Route::get('/catalog', [PigsController::class, 'index'])->name('pigs.catalog');
+Route::get('/catalog/{pig}', [PigsController::class, 'showOne'])->name('pigs.one');
+
 Route::get('/admin', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
@@ -25,13 +28,13 @@ Route::prefix('pigs')->name('pigs.')->group(function () {
         Route::post('/', [PigsController::class, 'create'])->name('create');
         Route::post('/{pig}', [PigsController::class, 'update'])->name('update');
         Route::delete('/{pig}', [PigsController::class, 'delete'])->name('update');
+        Route::post('/status/{pig}', [PigsController::class, 'updateStatus'])->name('status');
     });
-
-    Route::get('/{pig}', [PigsController::class, 'showOne'])->name('one');
 });
 
+Route::get('/blog', [ArticlesController::class, 'index'])->name('articles.index');
+
 Route::prefix('articles')->name('articles.')->group(function () {
-    Route::get('/', [ArticlesController::class, 'index'])->name('index');
     Route::get('/{article}', [ArticlesController::class, 'showOne'])->name('one');
 
     Route::middleware('auth:web')->group(function () {

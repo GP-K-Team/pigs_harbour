@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('fur')->nullable();
             $table->string('age')->nullable();
             $table->date('birthday')->nullable();
-            $table->boolean('available_for_other_cities')->default(true);
+            $table->boolean('has_delivery')->default(true);
             $table->boolean('is_active')->default(true);
             $table->date('stopped_looking_date')->nullable();
 
