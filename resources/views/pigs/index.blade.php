@@ -23,6 +23,7 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/bread-crumbs.css') }}">
 @endpush
 
 @push('js')
@@ -310,30 +311,6 @@
             .button {
                 font-size: 1.5rem;
             }
-        }
-
-        .bread-crumbs {
-            margin: 3.75rem;
-            font-family: Inter, Nunito, Arial, sans-serif;
-        }
-
-        .bread-crumbs > ul {
-            display: flex;
-            flex-direction: row;
-            row-gap: 0.5rem;
-        }
-
-        .bread-crumbs > ul :is(li, a) {
-            color: var(--brown_gray);
-            font-size: 1rem;
-        }
-
-        .bread-crumbs > ul > li > a:hover {
-            color: var(--main_blue);
-        }
-
-        .bread-crumbs > ul > li:not(:last-child)::after {
-            content: " / ";
         }
 
         /** Page header **/

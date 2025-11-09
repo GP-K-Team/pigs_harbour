@@ -12,6 +12,10 @@
     /** @var Collection|iterable<Article> $articles */
 @endphp
 
+@push('styles')
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/bread-crumbs.css') }}">
+@endpush
+
 @section('content')
     <div class="page-header">
         <div class="page-header-text">
