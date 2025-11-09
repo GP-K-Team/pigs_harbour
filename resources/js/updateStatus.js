@@ -7,7 +7,6 @@ $(document).ready(function () {
             type: 'POST',
             data: {
                 is_active: $(this).val(),
-                _token: $('meta[name="csrf-token"]').attr('content')
             }
         });
     });
