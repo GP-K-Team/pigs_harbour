@@ -201,7 +201,7 @@
     }
 
     a:active {
-        color: var(--main_blue);
+        color: var(--dark_blue_font);
     }
 
     ul {

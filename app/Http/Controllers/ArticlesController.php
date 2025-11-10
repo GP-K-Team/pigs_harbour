@@ -26,7 +26,6 @@ class ArticlesController extends Controller
             $activeHashtags = explode(',', $request->get('hashtags'));
         }
 
-        $showMore = $request->get('show_more', 1);
         $articlesBuilder = Article::query()->with('images');
 
         if (count($activeHashtags)) {
@@ -35,12 +34,12 @@ class ArticlesController extends Controller
             });
         }
 
-        $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT * $showMore);
+        $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT);
         $hashtags = Hashtag::query()->get();
         $isAdmin = Auth::check() ?? false;
         $pageTexts = PageText::where('page_base_url', '=', $urlHelper->getCurrentPage())->get();
 
-        return \view('articles.index', compact('articles', 'isAdmin', 'hashtags', 'showMore', 'activeHashtags', 'pageTexts'));
+        return \view('articles.index', compact('articles', 'isAdmin', 'hashtags', 'activeHashtags', 'pageTexts'));
     }
 
     public function showOne(Article $article): View
