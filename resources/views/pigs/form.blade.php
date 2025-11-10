@@ -24,34 +24,31 @@
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
 @endpush
 
-<script>
-    window.preloadedFiles = @json(
-        $pig?->images->map(fn($file) => [
-            'source' => asset('/storage/' . $file->link),
-            'options' => [
-                'type' => 'local',
-                 'metadata' => [
-                    'id' => $file->id
-                ]
-            ]
-        ])
-    );
-</script>
-
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/select-input.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/filepond.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/zebra.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/page/translit.js') }}"></script>
-@endpush
 
-<meta name="csrf-token" content="{{ csrf_token() }}">
+    @if($pig)
+        <script type="module">
+            window.preloadedFiles = @js(
+                $pig->images->map(fn ($file) => [
+                    'source' => asset('/storage/' . $file->link),
+                    'options' => [
+                        'metadata' => ['id' => $file->id],
+                        'type' => 'local',
+                    ],
+                ])->all()
+            );
+        </script>
+    @endif
+@endpush
 
 @section('content')
     <div class="content-container">
         <div class="form-container">
-            <form class="form" action="{{ route('pigs.' . (is_null($pig) ? 'create' : 'update'), compact('pig')) }}"
-                  method="POST" enctype="multipart/form-data">
+            <form class="form" action="{{ route('catalog.' . (is_null($pig) ? 'create' : 'update'), compact('pig')) }}" method="POST" enctype="multipart/form-data">
                 <h2 class="form-title">
                     @if(isset($pig))
                         {{ $pig->name }}
@@ -84,7 +81,7 @@
                 <div class="input-container">
                     <label class="input-label" for="birthday">Дата рождения (для фильтра)</label>
                     <input class="datepick" type="text" name="birthday" id="birthday"
-                           value="{{ old('birthday', Str::headline($pig?->birthday->translatedFormat('d M Y'))) }}"
+                           value="{{ old('birthday', Str::headline($pig?->birthday?->translatedFormat('d M Y'))) }}"
                            placeholder="Дата рождения">
                     <x-error-bag name="birthday"/>
                 </div>
@@ -204,7 +201,7 @@
                 <div class="input-container has-dropzone">
                     <label class="input-label" for="images">Фото</label>
                     <div class="dropzone-container">
-                        <div class="filepond">
+                        <div class="filepond" data-multiple="true">
 
                         </div>
                     </div>

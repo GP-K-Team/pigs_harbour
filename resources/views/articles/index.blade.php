@@ -10,9 +10,10 @@
 
 @php
     use App\Models\Article;
+    use Illuminate\Support\Collection;
     use App\Helpers\FileHelper;
     use App\Models\Hashtag;
-    use App\Models\PageText;use Illuminate\Support\Collection;
+    use App\Models\PageText;
 
     /** @var Collection|iterable<Article> $articles */
     /** @var Collection|iterable<Hashtag> $hashtags */
@@ -62,7 +63,7 @@
             <ul class="list">
                 @if($isAdmin)
                     <li class="list-item card add-card">
-                        <a class="add-card-link" href="{{ route('articles.show.create') }}" draggable="false">
+                        <a class="add-card-link" href="{{ route('blog.show.create') }}" draggable="false">
                             <p class="add-card-link-text">Добавить статью</p>
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
                                 <path
@@ -74,17 +75,17 @@
 
                 @foreach($articles as $article)
                     <li class="list-item card @if($isAdmin) can-edit @endif">
-                        <a href="{{ route('articles.one', compact('article')) }}">
+                        <a href="{{ route('blog.one', compact('article')) }}">
                             <img class="card-image" width="350" height="250" alt="Обложка статьи"
                                  src="{{ $article->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($article) }}">
                         </a>
                         <div class="card-bio">
-                            <a href="{{ route('articles.one', compact('article')) }}">
+                            <a href="{{ route('blog.one', compact('article')) }}">
                                 <h2 class="card-title">{{ $article->title }}</h2>
                             </a>
 
                             @if($isAdmin)
-                                <a class="edit-icon-link" href="{{ route('articles.show.update', compact('article')) }}"
+                                <a class="edit-icon-link" href="{{ route('blog.show.update', compact('article')) }}"
                                    draggable="false">
                                     <img src="{{ asset('images/icons/edit.svg') }}" alt="" draggable="false">
                                 </a>
@@ -92,7 +93,7 @@
 
                             <p class="card-description">{{ $article->description }}</p>
 
-                            <a class="button card-button" href="{{ route('articles.one', compact('article')) }}">
+                            <a class="button card-button" href="{{ route('blog.one', compact('article')) }}">
                                 Читать
                             </a>
                         </div>

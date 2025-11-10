@@ -15,7 +15,6 @@
     use App\Models\City;
     use App\Enum\AgeFilter;
     use Illuminate\Support\Str;
-    use App\Helpers\FileHelper;
     use App\Helpers\LinguisticsHelper;
     use Illuminate\Support\Collection;
     use Illuminate\Support\Facades\Vite;
@@ -169,7 +168,7 @@
                             <button class="button filter-submit-button" type="submit">
                                 Показать
                             </button>
-                            <input class="button filter-reset-button" type="reset" value="Сбросить" onclick="location.href = @js(route('pigs.catalog'))">
+                            <input class="button filter-reset-button" type="reset" value="Сбросить" onclick="location.href = @js(route('catalog.index'))">
                         </div>
                     </div>
                 </form>
@@ -181,7 +180,7 @@
                 <ul class="list">
                     @if($isAdmin)
                         <li class="list-item card add-card">
-                            <a class="add-card-link" href="{{ route('pigs.show.create') }}" draggable="false">
+                            <a class="add-card-link" href="{{ route('catalog.show.create') }}" draggable="false">
                                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
                                     <path d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
                                 </svg>
@@ -193,14 +192,14 @@
                     @foreach($pigs as $pig)
                         <li @class(['can-edit' => $isAdmin, 'card-pink' => $pig->sex === Sex::FEMALE, 'list-item', 'card'])>
                             @if($isAdmin)
-                                <a class="edit-icon-link" href="{{ route('pigs.show.update', compact('pig')) }}" draggable="false">
+                                <a class="edit-icon-link" href="{{ route('catalog.show.update', compact('pig')) }}" draggable="false">
                                     <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
                                 </a>
                             @endif
 
-                            <a href="{{ route('pigs.one', compact('pig')) }}">
+                            <a href="{{ route('catalog.one', compact('pig')) }}">
                                 <img class="card-image"
-                                     src="{{ asset($pig->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($pig)) }}"
+                                     src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
                                      width="350" height="250" alt="Фотография морской свинки по имени {{ $pig->name }}">
                                 <div class="card-bio">
                                     <h2 class="card-title">{{ $pig->name }}</h2>

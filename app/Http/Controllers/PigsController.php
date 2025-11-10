@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Helpers\FileHelper;
 use App\Helpers\LinguisticsHelper;
 use App\Helpers\UrlHelper;
-use App\Http\Requests\CreatePigFormRequest;
-use App\Http\Requests\UpdatePigFormRequest;
-use App\Http\Requests\UpdatePigStatusRequest;
+use App\Http\Requests\Pig\CreatePigFormRequest;
+use App\Http\Requests\Pig\UpdatePigFormRequest;
+use App\Http\Requests\Pig\UpdatePigStatusRequest;
 use App\Models\City;
 use App\Models\Pig;
 use Illuminate\Http\JsonResponse;
@@ -93,35 +92,25 @@ class PigsController extends Controller
     {
         $formData = $request->validated();
 
-        $newPig = new Pig();
-        $newPig->fill($formData);
-        $newPig->slug_name = Str::afterLast($newPig->slug_name, '/');
-        $newPig->city_id = $formData['city'];
-        $newPig->companion_pig_id = $formData['companion'] ?? null;
-        $newPig->save();
+        $pig = new Pig();
+        $pig->fill($formData)->save();
 
-        if ($request->files) {
-            FileHelper::handleImages($request->file('files', []), $newPig);
+        if (!empty($formData['files'])) {
+            $pig->uploadImages($request['files']);
         }
 
-        return \response()->redirectToAction([self::class, 'showOne'], compact('newPig'));
+        return \response()->redirectToAction([self::class, 'showOne'], compact('pig'));
     }
 
     public function update(UpdatePigFormRequest $request, Pig $pig): RedirectResponse
     {
         $formData = $request->validated();
 
-        $pig->fill($formData);
-        $pig->slug_name = Str::afterLast($pig->slug_name, '/');
-        $pig->city_id = $formData['city'];
-        $pig->companion_pig_id = $formData['companion'] ?? null;
-        $pig->save();
+        $pig->fill($formData)->save();
 
-        if ($request->files) {
-            FileHelper::handleImages($request->file('files', []), $pig);
-        }
+        if ($request->has('files')) {
+            $pig->uploadImages($request['files']);
 
-        if ($request->get('files')) {
             $mainFile = $request->get('files')[0];
             $mainImage = $pig->images()->wherePivot('is_main', '=', 1)->first();
             $newMainFileName = Str::after($mainFile, 'storage/');

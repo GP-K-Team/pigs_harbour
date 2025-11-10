@@ -25,7 +25,6 @@
     use App\Models\City;
     use App\Enum\AgeFilter;
     use Illuminate\Support\Str;
-    use App\Helpers\FileHelper;
     use App\Helpers\LinguisticsHelper;
     use Illuminate\Support\Collection;
     use Illuminate\Support\Facades\Vite;
@@ -58,10 +57,10 @@
             <div class="pig_image_block">
                 <div class="main_image_wrapper">
                     <img class="blurred_main_pig_image"
-                         src="{{ asset($pig->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($pig)) }}"
+                         src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
                          alt="Фон для фотографии свинки по имени {{ $pig->name }}">
                     <img class="main_pig_image"
-                         src="{{ asset($pig->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($pig)) }}"
+                         src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
                          alt="Фотография морской свинки по имени {{ $pig->name }}">
                 </div>
                 @if($pig->images()->count() > 1)
@@ -81,7 +80,7 @@
                 @if($admin)
                 <div class="admin_controls_wrapper">
                     <div>
-                        <a class="edit-icon-link" href="{{ route('pigs.show.update', compact('pig')) }}"
+                        <a class="edit-icon-link" href="{{ route('catalog.show.update', compact('pig')) }}"
                            draggable="false">
                             <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
                         </a>
@@ -112,7 +111,7 @@
                         <b>Пол</b>: <span>{{ $pig->sex->getLabel() }}</span>
                     </p>
                     <p>
-                        <b>ДР</b>: <span>~{{ $pig->birthday->locale('ru')->translatedFormat('d F Y') }}</span>
+                        <b>ДР</b>: <span>~ {{ $pig->birthday?->translatedFormat('d F Y') ?? 'Неизвестно' }}</span>
                     </p>
                     <p>
                         <b>Город</b>: <span>{{ $pig->city->name }}</span>
@@ -127,14 +126,14 @@
                         @endphp
                         <p>
                             <b>
-                                Пристраивается в паре со свинкой <a class="companion_link" href="{{ route('pigs.one', [$companion]) }}">{{ $companion->name }}</a>
+                                Пристраивается в паре со свинкой <a class="companion_link" href="{{ route('catalog.one', [$companion]) }}">{{ $companion->name }}</a>
                             </b>
                         </p>
                     @endif
 
                 </div>
                 <div class="button pig_details_button">
-                    <a href="{{ route('pigs.catalog') }}">
+                    <a href="{{ route('catalog.index') }}">
                         Как взять свинку
                     </a>
                 </div>
@@ -151,7 +150,7 @@
             Все наши животные обработаны от паразитов. Отдаются в готовые условия в обмен на корм или другие нужности для будущих подопечных, после заполнения анкеты. Волонтеры остаются на связи для поддержки будущих владельцев.
         </p>
         <div class="button">
-            <a href="{{ route('pigs.catalog') }}">
+            <a href="{{ route('catalog.index') }}">
                 Как взять свинку
             </a>
         </div>
@@ -164,9 +163,9 @@
             <ul class="additional_pig_list">
                 @foreach($additionalPigs as $pig)
                 <li>
-                    <a href="{{ route('pigs.one', compact('pig')) }}">
+                    <a href="{{ route('catalog.one', compact('pig')) }}">
                         <img class="additional_pig_image"
-                             src="{{ asset($pig->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($pig)) }}"
+                             src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
                              alt="Фотография морской свинки по имени {{ $pig->name }}">
                     </a>
                 </li>
@@ -174,7 +173,7 @@
             </ul>
 
             <div class="button">
-                <a href="{{ route('pigs.catalog') }}">
+                <a href="{{ route('catalog.index') }}">
                     Показать всех
                 </a>
             </div>

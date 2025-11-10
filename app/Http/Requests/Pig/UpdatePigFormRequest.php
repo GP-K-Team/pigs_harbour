@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Pig;
 
-use App\Http\Requests\PigFormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdatePigFormRequest extends PigFormRequest
