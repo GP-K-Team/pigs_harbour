@@ -76,7 +76,7 @@
                     <li class="list-item card @if($isAdmin) can-edit @endif">
                         <a href="{{ route('blog.one', compact('article')) }}">
                             <img class="card-image" width="350" height="250" alt="Обложка статьи"
-                                 src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage() }}">
+                                 src="{{ $article->mainImage?->getFullUrl() ?? $article->getDefaultImage() }}">
                         </a>
                         <div class="card-bio">
                             <a href="{{ route('blog.one', compact('article')) }}">
@@ -182,17 +182,19 @@
             @endif
         @endif
     </div>
+
     @php
-        $footerContent = $pageTexts->where('text_key', '=', 'footer_text')->first();
+        $footerContent = $pageTexts->firstWhere('text_key', 'footer_text');
     @endphp
+
     @if($footerContent)
-    <div class="footer_block">
-        <div class="footer_text">
-            <p class="footer_text" @if($isAdmin) contenteditable @endif data-page-text-id="{{ $footerContent->id }}">
-                {{ $footerContent->content }}
-            </p>
+        <div class="footer_block">
+            <div class="footer_text">
+                <p class="footer_text" @if($isAdmin) contenteditable @endif data-page-text-id="{{ $footerContent->id }}">
+                    {{ $footerContent->content }}
+                </p>
+            </div>
         </div>
-    </div>
     @endif
 
     <style>

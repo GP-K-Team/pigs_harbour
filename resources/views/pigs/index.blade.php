@@ -32,7 +32,7 @@
 
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/select-input.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/filter.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/list/filter.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/catalog-initialize.js') }}"></script>
 @endpush
 
