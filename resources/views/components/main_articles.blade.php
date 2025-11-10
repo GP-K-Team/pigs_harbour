@@ -12,18 +12,18 @@
     <ul class="article-list">
     @foreach($articles as $article)
         <li class="article-list-item article-card">
-            <a href="{{ route('articles.one', compact('article')) }}">
+            <a href="{{ route('blog.one', compact('article')) }}">
                 <img class="article-card-image" width="350" height="250" alt="Обложка статьи"
                      src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage($article) }}">
             </a>
             <div class="article-card-bio">
-                <a href="{{ route('articles.one', compact('article')) }}">
+                <a href="{{ route('blog.one', compact('article')) }}">
                     <h2 class="article-card-title">{{ $article->title }}</h2>
                 </a>
 
                 <p class="article-card-description">{{ $article->description }}</p>
 
-                <a class="button article-card-button" href="{{ route('articles.one', compact('article')) }}">
+                <a class="button article-card-button" href="{{ route('blog.one', compact('article')) }}">
                     Читать
                 </a>
             </div>
@@ -37,18 +37,18 @@
                 @foreach($articles as $article)
                     <li class="splide__slide">
                         <div class="article-list-item article-card">
-                            <a href="{{ route('articles.one', compact('article')) }}">
+                            <a href="{{ route('blog.one', compact('article')) }}">
                                 <img class="article-card-image" width="350" height="250" alt="Обложка статьи"
                                      src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage($article) }}">
                             </a>
                             <div class="article-card-bio">
-                                <a href="{{ route('articles.one', compact('article')) }}">
+                                <a href="{{ route('blog.one', compact('article')) }}">
                                     <h2 class="article-card-title">{{ $article->title }}</h2>
                                 </a>
 
                                 <p class="article-card-description">{{ $article->description }}</p>
 
-                                <a class="button article-card-button" href="{{ route('articles.one', compact('article')) }}">
+                                <a class="button article-card-button" href="{{ route('blog.one', compact('article')) }}">
                                     Читать
                                 </a>
                             </div>

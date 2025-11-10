@@ -45,7 +45,13 @@ class ArticlesController extends Controller
 
     public function showOne(Article $article): View
     {
-        // todo
+        $isAdmin = Auth::check() ?? false;
+        $hashtags = Hashtag::query()->get();
+        $additionalArticles = Article::query()->whereHas('hashtags', function (Builder $query) use ($article) {
+            $query->whereIn('tag', $article->hashtags()->pluck('tag')->toArray() ?? []);
+        })->inRandomOrder()->take(3)->get();
+
+        return \view('articles.one', compact('article', 'isAdmin', 'hashtags', 'additionalArticles'));
     }
 
     public function showCreate(): View
