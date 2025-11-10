@@ -21,12 +21,14 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/choices.css') }}">
 @endpush
 
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/select-input.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/filepond.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/page/translit.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/article_choice.js') }}"></script>
 
     @if($article)
         <script type="module">
@@ -120,30 +122,16 @@
 
                 <div class="input-container has-select">
                     <label class="input-label" for="hashtags">Категории</label>
-                    <select name="hashtags" id="hashtags" multiple>
+                    <select name="hashtags[]" id="hashtags" multiple>
                         <option value="" disabled>Выберите категории</option>
                         @foreach($hashtags as $id => $tag)
-                            <option value="{{ $id }}">
+                            <option value="{{ $id }}" @selected(in_array($id, old('hashtags', [])))>
                                 {{ $tag }}
                             </option>
                         @endforeach
                     </select>
                     <x-error-bag name="hashtags"/>
                 </div>
-
-                {{--                <div class="input-container has-select">--}}
-                {{--                    <label class="input-label" for="companion">Отдаётся вместе</label>--}}
-                {{--                    <select name="companion" id="companion" data-search="true">--}}
-                {{--                        <option value="" @selected(empty($pig) && empty($pig->companion_pig_id))>Без напарника</option>--}}
-                {{--                        @foreach($companionCandidates as $candidate)--}}
-                {{--                            <option--}}
-                {{--                                value="{{ $candidate->id }}" @selected(isset($pig) && ($pig->companion || $pig->companionOf) && ($pig->companion?->id ?? $pig->companionOf->id) === $candidate->id)>--}}
-                {{--                                {{ $candidate->name }}--}}
-                {{--                            </option>--}}
-                {{--                        @endforeach--}}
-                {{--                    </select>--}}
-                {{--                    <x-error-bag name="companion"/>--}}
-                {{--                </div>--}}
 
                 <div class="input-container has-dropzone">
                     <label class="input-label" for="cover">Обложка</label>

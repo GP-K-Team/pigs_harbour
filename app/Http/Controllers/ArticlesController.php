@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Helpers\HashtagHelper;
 use App\Helpers\PageTextHelper;
 use App\Http\Requests\Article\CreateArticleFormRequest;
 use App\Http\Requests\Article\UpdateArticleFormRequest;
@@ -61,7 +62,7 @@ class ArticlesController extends Controller
         return \view('articles.form', compact('article', 'hashtags'));
     }
 
-    public function create(CreateArticleFormRequest $request): RedirectResponse
+    public function create(CreateArticleFormRequest $request, HashtagHelper $hashtagHelper): RedirectResponse
     {
         $formData = $request->validated();
 
@@ -72,10 +73,15 @@ class ArticlesController extends Controller
             $article->uploadImages($formData['cover']);
         }
 
+        if ($request->has('hashtags')) {
+            $hashtagIds = $hashtagHelper->handleHashtags($formData['hashtags']);
+            $article->hashtags()->sync($hashtagIds);
+        }
+
         return \response()->redirectToAction([self::class, 'index']);
     }
 
-    public function update(UpdateArticleFormRequest $request, Article $article): RedirectResponse
+    public function update(UpdateArticleFormRequest $request, Article $article, HashtagHelper $hashtagHelper): RedirectResponse
     {
         $formData = $request->validated();
 
@@ -84,6 +90,11 @@ class ArticlesController extends Controller
         if ($request->has('cover')) {
             $article->mainImage->delete();
             $article->uploadImages($formData['cover']);
+        }
+
+        if ($request->has('hashtags')) {
+            $hashtagIds = $hashtagHelper->handleHashtags($formData['hashtags']);
+            $article->hashtags()->sync($hashtagIds);
         }
 
         return \response()->redirectToAction([self::class, 'index']);

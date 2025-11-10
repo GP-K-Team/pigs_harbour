@@ -40,7 +40,7 @@ class ArticleFormRequest extends FormRequest
             'author' => 'nullable|string',
             'origin_link' => 'nullable|url',
             'cover' => 'nullable',
-            'hashtags' => 'nullable',
+            'hashtags' => 'nullable|array',
         ];
     }
 
