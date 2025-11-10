@@ -568,10 +568,5 @@
                 display: block;
             }
         }
-
-        /*.splide_slide {*/
-        /*    display: flex;*/
-        /*    justify-content: center;*/
-        /*}*/
     </style>
 @endsection
