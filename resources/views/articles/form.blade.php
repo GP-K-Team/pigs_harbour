@@ -124,7 +124,7 @@
                     <select name="hashtags[]" id="hashtags" multiple>
                         <option value="" disabled>Выберите категории</option>
                         @foreach($hashtags as $id => $tag)
-                            <option value="{{ $tag }}" @selected(in_array($tag, old('hashtags', $article?->hashtags()->pluck('tag')->toArray())))>
+                            <option value="{{ $tag }}" @selected(in_array($tag, old('hashtags', $article?->hashtags()->pluck('tag')->toArray() ?? [])))>
                                 {{ $tag }}
                             </option>
                         @endforeach
