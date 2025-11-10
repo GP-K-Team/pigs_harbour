@@ -35,7 +35,7 @@ class ArticlesController extends Controller
             });
         }
 
-        $articles = $articlesBuilder->paginate(Article::PAGINATE_ITEMS_COUNT * $showMore);
+        $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT * $showMore);
         $hashtags = Hashtag::query()->get();
         $isAdmin = Auth::check() ?? false;
         $pageTexts = PageTextHelper::getPageText();
