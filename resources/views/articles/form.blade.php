@@ -30,7 +30,7 @@
     <script type="module" src="{{ Vite::asset('resources/js/page/translit.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/article_choice.js') }}"></script>
 
-    @if($article)
+    @if($article && $article->mainImage)
         <script type="module">
             window.preloadedFiles = @js([
                 [
