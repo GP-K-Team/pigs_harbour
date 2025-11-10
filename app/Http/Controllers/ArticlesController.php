@@ -80,7 +80,7 @@ class ArticlesController extends Controller
         }
 
         if ($request->has('hashtags')) {
-            $hashtagIds = Hashtag::getOrCreatedIds($formData['hashtags']);
+            $hashtagIds = Hashtag::getOrCreateIds($formData['hashtags']);
             $article->hashtags()->sync($hashtagIds);
         }
 
@@ -99,7 +99,7 @@ class ArticlesController extends Controller
         }
 
         if ($request->has('hashtags')) {
-            $hashtagIds = Hashtag::getOrCreatedIds($formData['hashtags']);
+            $hashtagIds = Hashtag::getOrCreateIds($formData['hashtags']);
             $article->hashtags()->sync($hashtagIds);
         }
 

@@ -36,7 +36,7 @@ class Hashtag extends Model
      * @param array{string} $hashtagsToProcess
      * @return array{int}
      */
-    public static function getOrCreatedIds(array $hashtagsToProcess): array
+    public static function getOrCreateIds(array $hashtagsToProcess): array
     {
         $hashtags = Hashtag::whereIn('tag', $hashtagsToProcess)->get();
 
