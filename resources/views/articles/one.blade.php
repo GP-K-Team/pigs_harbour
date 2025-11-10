@@ -88,17 +88,17 @@
 
             <div class="hashtag-list-header">
                 <ul class="hashtag-list">
-                    <li class="hashtag-item">
                         <a href="/blog">
-                            Все
+                            <li class="hashtag-item">
+                                    Все
+                            </li>
                         </a>
-                    </li>
                     @foreach($hashtags as $hashtag)
-                        <li class="hashtag-item">
-                            <a href="{{ '/blog?hashtags=' . $hashtag->slug }}" >
-                                {{ $hashtag->tag }}
-                            </a>
-                        </li>
+                        <a href="{{ '/blog?hashtags=' . $hashtag->slug }}" >
+                            <li class="hashtag-item">
+                            {{ $hashtag->tag }}
+                            </li>
+                        </a>
                     @endforeach
                 </ul>
             </div>

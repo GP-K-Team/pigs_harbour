@@ -111,11 +111,11 @@
             @if($articles->total() > 1 && $articles->lastPage() !== 1)
                 <div class="pagination_wrapper">
                     <ul class="pagination_list">
-                        <li @class(['item_active' => $articles->currentPage() === 1])>
-                            <a href="?page=1">
-                                1
-                            </a>
-                        </li>
+                        <a href="?page=1">
+                            <li @class(['item_active' => $articles->currentPage() === 1])>
+                                    1
+                            </li>
+                        </a>
 
                         @if($articles->lastPage() > 2)
 
@@ -128,39 +128,39 @@
                             @endif
 
                             @if($articles->currentPage() !== 1 && $articles->currentPage() - 1 !== 1 && $articles->currentPage() !== $articles->lastPage())
-                                <li>
-                                    <a href="{{ $articles->previousPageUrl() }}">
-                                        {{ $articles->currentPage() - 1 }}
-                                    </a>
-                                </li>
+                                <a href="{{ $articles->previousPageUrl() }}">
+                                    <li>
+                                            {{ $articles->currentPage() - 1 }}
+                                    </li>
+                                </a>
                             @endif
 
                             @if($articles->currentPage() === 1)
-                                <li>
-                                    <a href="{{ $articles->nextPageUrl() }}">
-                                        {{ $articles->currentPage() + 1 }}
-                                    </a>
-                                </li>
+                                <a href="{{ $articles->nextPageUrl() }}">
+                                    <li>
+                                            {{ $articles->currentPage() + 1 }}
+                                    </li>
+                                </a>
                             @elseif($articles->currentPage() === $articles->lastPage())
-                                <li>
-                                    <a href="{{ $articles->previousPageUrl() }}">
-                                        {{ $articles->lastPage() - 1 }}
-                                    </a>
-                                </li>
+                                <a href="{{ $articles->previousPageUrl() }}">
+                                    <li>
+                                            {{ $articles->lastPage() - 1 }}
+                                    </li>
+                                </a>
                             @else
-                                <li @class(['item_active'])>
-                                    <a>
-                                        {{ $articles->currentPage()}}
-                                    </a>
-                                </li>
+                                <a>
+                                    <li @class(['item_active'])>
+                                            {{ $articles->currentPage()}}
+                                    </li>
+                                </a>
                             @endif
 
                             @if($articles->currentPage() !== 1 && $articles->currentPage() + 1 !== $articles->lastPage() && $articles->currentPage() !== $articles->lastPage())
-                                <li>
-                                    <a href="{{ $articles->nextPageUrl() }}">
-                                        {{ $articles->currentPage() + 1 }}
-                                    </a>
-                                </li>
+                                <a href="{{ $articles->nextPageUrl() }}">
+                                    <li>
+                                            {{ $articles->currentPage() + 1 }}
+                                    </li>
+                                </a>
                             @endif
 
                             @if($articles->currentPage() + 1 != $articles->lastPage() &&
@@ -172,11 +172,11 @@
                             @endif
                         @endif
 
-                        <li @class(['item_active' => $articles->currentPage() === $articles->lastPage()])>
-                            <a href="{{ "?page=" . $articles->lastPage()  }}">
-                                {{ $articles->lastPage() }}
-                            </a>
-                        </li>
+                        <a href="{{ "?page=" . $articles->lastPage()  }}">
+                            <li @class(['item_active' => $articles->currentPage() === $articles->lastPage()])>
+                                    {{ $articles->lastPage() }}
+                            </li>
+                        </a>
                     </ul>
                 </div>
             @endif

@@ -231,11 +231,11 @@
             @if($pigs->total() > 1 && $pigs->lastPage() !== 1)
                 <div class="pagination_wrapper">
                     <ul class="pagination_list">
-                        <li @class(['item_active' => $pigs->currentPage() === 1])>
-                            <a href="?page=1">
-                                1
-                            </a>
-                        </li>
+                        <a href="?page=1">
+                            <li @class(['item_active' => $pigs->currentPage() === 1])>
+                                    1
+                            </li>
+                        </a>
 
                         @if($pigs->lastPage() > 2)
 
@@ -248,39 +248,39 @@
                             @endif
 
                             @if($pigs->currentPage() !== 1 && $pigs->currentPage() - 1 !== 1 && $pigs->currentPage() !== $pigs->lastPage())
-                                <li>
-                                    <a href="{{ $pigs->previousPageUrl() }}">
-                                        {{ $pigs->currentPage() - 1 }}
-                                    </a>
-                                </li>
+                                <a href="{{ $pigs->previousPageUrl() }}">
+                                    <li>
+                                            {{ $pigs->currentPage() - 1 }}
+                                    </li>
+                                </a>
                             @endif
 
                             @if($pigs->currentPage() === 1)
-                                    <li>
-                                        <a href="{{ $pigs->nextPageUrl() }}">
-                                            {{ $pigs->currentPage() + 1 }}
-                                        </a>
-                                    </li>
+                                    <a href="{{ $pigs->nextPageUrl() }}">
+                                        <li>
+                                                {{ $pigs->currentPage() + 1 }}
+                                        </li>
+                                    </a>
                                 @elseif($pigs->currentPage() === $pigs->lastPage())
-                                    <li>
-                                        <a href="{{ $pigs->previousPageUrl() }}">
-                                            {{ $pigs->lastPage() - 1 }}
-                                        </a>
-                                    </li>
+                                    <a href="{{ $pigs->previousPageUrl() }}">
+                                        <li>
+                                                {{ $pigs->lastPage() - 1 }}
+                                        </li>
+                                    </a>
                                 @else
-                                    <li @class(['item_active'])>
-                                        <a>
-                                            {{ $pigs->currentPage()}}
-                                        </a>
-                                    </li>
+                                    <a>
+                                        <li @class(['item_active'])>
+                                                {{ $pigs->currentPage()}}
+                                        </li>
+                                    </a>
                             @endif
 
                             @if($pigs->currentPage() !== 1 && $pigs->currentPage() + 1 !== $pigs->lastPage() && $pigs->currentPage() !== $pigs->lastPage())
-                                <li>
-                                    <a href="{{ $pigs->nextPageUrl() }}">
-                                        {{ $pigs->currentPage() + 1 }}
-                                    </a>
-                                </li>
+                                <a href="{{ $pigs->nextPageUrl() }}">
+                                    <li>
+                                            {{ $pigs->currentPage() + 1 }}
+                                    </li>
+                                </a>
                             @endif
 
                             @if($pigs->currentPage() + 1 != $pigs->lastPage() &&
@@ -292,11 +292,11 @@
                             @endif
                         @endif
 
-                        <li @class(['item_active' => $pigs->currentPage() === $pigs->lastPage()])>
-                            <a href="{{ "?page=" . $pigs->lastPage()  }}">
-                                {{ $pigs->lastPage() }}
-                            </a>
-                        </li>
+                        <a href="{{ "?page=" . $pigs->lastPage()  }}">
+                            <li @class(['item_active' => $pigs->currentPage() === $pigs->lastPage()])>
+                                    {{ $pigs->lastPage() }}
+                            </li>
+                        </a>
                     </ul>
                 </div>
             @endif
