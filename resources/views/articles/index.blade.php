@@ -1,19 +1,37 @@
 @extends('layouts.main', ['background' => 'texture-light'])
 
 @section('title')
-    Статьи
+    Статьи Пристани
+@endsection
+
+@section('description')
+    Статьи пристани о морских свинках
 @endsection
 
 @php
     use App\Models\Article;
     use Illuminate\Support\Collection;
+    use App\Helpers\FileHelper;
+    use App\Models\Hashtag;
+    use App\Models\PageText;
 
     /** @var Collection|iterable<Article> $articles */
+    /** @var Collection|iterable<Hashtag> $hashtags */
+    /** @var Collection|iterable<PageText> $pageTexts */
+    /** @var bool $isAdmin */
+    /** @var array $activeHashtags */
 @endphp
 
 @push('styles')
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/bread-crumbs.css') }}">
 @endpush
+
+@push('js')
+    <script type="module" src="{{ Vite::asset('resources/js/hashtags.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/pageText.js') }}"></script>
+@endpush
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('content')
     @include('components.banner', ['showPigs' => false, 'specialHeader' => 'Полезные статьи', 'specialText' => 'все самое важное, что нужно знать о морских свинках'])
@@ -26,66 +44,155 @@
     </div>
 
     <div class="list-container">
-        <div class="list-header" style="display:none;">
-            {{-- todo: hashtags go here --}}
-        </div>
-
-        <ul class="list">
-            @if($isAdmin)
-                <li class="list-item card add-card">
-                    <a class="add-card-link" href="{{ route('blog.show.create') }}" draggable="false">
-                        <p class="add-card-link-text">Добавить статью</p>
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-                            <path d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
-                        </svg>
-                    </a>
+        <div class="list-header">
+            <ul class="hashtag-list">
+                <li @class(['hashtag-item-active' => !count($activeHashtags), 'hashtag-item']) data-hashtag="vse">
+                    Все
                 </li>
-                <li></li>
-            @endif
-
-            @foreach($articles as $article)
-                <li class="list-item card @if(true) can-edit @endif">
-                    <a href="{{ route('blog.one', compact('article')) }}">
-                        <img class="card-image" width="350" height="250" alt="Обложка статьи"
-                             src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage() }}">
-                    </a>
-                    <div class="card-bio">
-                        <a href="{{ route('blog.one', compact('article')) }}">
-                            <h2 class="card-title">{{ $article->title }}</h2>
-                        </a>
-
-                        @if(true)
-                            <a class="edit-icon-link" href="{{ route('blog.show.update', compact('article')) }}"
-                               draggable="false">
-                                <img src="{{ asset('images/icons/edit.svg') }}" alt="" draggable="false">
-                            </a>
-                        @endif
-
-                        <p class="card-description">{{ $article->description }}</p>
-
-                        <a class="button card-button" href="{{ route('blog.one', compact('article')) }}">
-                            Читать
-                        </a>
-                    </div>
-                </li>
-            @endforeach
-        </ul>
-
-        <div class="pagination">
-            <button class="button pagination-next-button">Показать ещё</button>
-            <ul class="pagination-list">
-                {{-- todo: pages --}}
+                @foreach($hashtags as $hashtag)
+                    <li @class(['hashtag-item-active' => in_array($hashtag->slug, $activeHashtags), 'hashtag-item']) data-hashtag="{{ $hashtag->slug }}">
+                        {{ $hashtag->tag }}
+                    </li>
+                @endforeach
             </ul>
         </div>
+
+        @if($articles->isEmpty())
+            <h3>Нет результатов</h3>
+        @else
+            <ul class="list">
+                @if($isAdmin)
+                    <li class="list-item card add-card">
+                        <a class="add-card-link" href="{{ route('blog.show.create') }}" draggable="false">
+                            <p class="add-card-link-text">Добавить статью</p>
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                <path
+                                    d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
+                            </svg>
+                        </a>
+                    </li>
+                @endif
+
+                @foreach($articles as $article)
+                    <li class="list-item card @if($isAdmin) can-edit @endif">
+                        <a href="{{ route('blog.one', compact('article')) }}">
+                            <img class="card-image" width="350" height="250" alt="Обложка статьи"
+                                 src="{{ $article->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($article) }}">
+                        </a>
+                        <div class="card-bio">
+                            <a href="{{ route('blog.one', compact('article')) }}">
+                                <h2 class="card-title">{{ $article->title }}</h2>
+                            </a>
+
+                            @if($isAdmin)
+                                <a class="edit-icon-link" href="{{ route('blog.show.update', compact('article')) }}"
+                                   draggable="false">
+                                    <img src="{{ asset('images/icons/edit.svg') }}" alt="" draggable="false">
+                                </a>
+                            @endif
+
+                            <p class="card-description">{{ $article->description }}</p>
+
+                            <a class="button card-button" href="{{ route('blog.one', compact('article')) }}">
+                                Читать
+                            </a>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+
+            @if ($articles->currentPage() !== $articles->lastPage())
+                <div class="button show_more_button">
+                    <a href="{{ '?show_more=' . ($showMore + 1) }}">
+                        Показать ещё
+                    </a>
+                </div>
+            @endif
+
+            @if($articles->total() > 1 && $articles->lastPage() !== 1)
+                <div class="pagination_wrapper">
+                    <ul class="pagination_list">
+                        <li @class(['item_active' => $articles->currentPage() === 1])>
+                            <a href="?page=1">
+                                1
+                            </a>
+                        </li>
+
+                        @if($articles->lastPage() > 2)
+
+                            @if($articles->currentPage() !== 1 && $articles->currentPage() - 1 !== 1 && $articles->currentPage() !== $articles->lastPage())
+                                <li>
+                                    <a href="{{ $articles->previousPageUrl() }}">
+                                        {{ $articles->currentPage() - 1 }}
+                                    </a>
+                                </li>
+                            @endif
+
+                            @if($articles->currentPage() === 1)
+                                <li>
+                                    <a href="{{ $articles->nextPageUrl() }}">
+                                        {{ $articles->currentPage() + 1 }}
+                                    </a>
+                                </li>
+                            @elseif($articles->currentPage() === $articles->lastPage())
+                                <li>
+                                    <a href="{{ $articles->previousPageUrl() }}">
+                                        {{ $articles->lastPage() - 1 }}
+                                    </a>
+                                </li>
+                            @else
+                                <li @class(['item_active'])>
+                                    <a>
+                                        {{ $articles->currentPage()}}
+                                    </a>
+                                </li>
+                            @endif
+
+                            @if($articles->currentPage() !== 1 && $articles->currentPage() + 1 !== $articles->lastPage() && $articles->currentPage() !== $articles->lastPage())
+                                <li>
+                                    <a href="{{ $articles->nextPageUrl() }}">
+                                        {{ $articles->currentPage() + 1 }}
+                                    </a>
+                                </li>
+                            @endif
+                        @endif
+
+                        <li @class(['item_active' => $articles->currentPage() === $articles->lastPage()])>
+                            <a href="{{ "?page=" . $articles->lastPage()  }}">
+                                {{ $articles->lastPage() }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            @endif
+        @endif
     </div>
+    @php
+        $footerContent = $pageTexts->where('text_key', '=', 'footer_text')->first();
+    @endphp
+    @if($footerContent)
+    <div class="footer_block">
+        <div class="footer_text">
+            <p class="footer_text" @if($isAdmin) contenteditable @endif data-page-text-id="{{ $footerContent->id }}">
+                {{ $footerContent->content }}
+            </p>
+        </div>
+    </div>
+    @endif
 
     <style>
+        h3 {
+            margin: 0;
+            font-size: 3rem;
+            z-index: 1;
+        }
+
         /** List **/
         .list-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 1rem 1rem;
+            padding: 0 1rem 40px 1rem;
             row-gap: 5rem;
         }
 
@@ -97,7 +204,7 @@
             max-width: 1080px;
             align-items: center;
             justify-content: center;
-            gap: 1rem;
+            gap: 3rem;
         }
 
         .list > li:empty {
@@ -185,7 +292,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            row-gap: 0.5rem;
+            row-gap: 0.7rem;
             flex-grow: 1;
         }
 
@@ -256,6 +363,12 @@
             background-color: var(--main_green);
             border-radius: 0.5rem;
             user-select: none;
+
+            @media (max-width: 768px) {
+                top: unset;
+                bottom: 15px;
+                right: 0.5rem;
+            }
         }
 
         .edit-icon-link img {
@@ -353,6 +466,107 @@
 
         .pagination-next-button {
             font-size: 1.75rem;
+        }
+
+
+        .footer_block {
+            padding: 40px;
+            border-top: 10px solid var(--main_pink);
+            background-image: url("/images/bright_dark.png");
+        }
+
+        .footer_text {
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+            font-size: 25px;
+            text-align: justify;
+
+            @media (max-width: 768px) {
+                font-size: 15px;
+            }
+        }
+
+        .pagination_list {
+            display: flex;
+            column-gap: 20px;
+        }
+
+        .pagination_list li {
+            padding: 10px 20px;
+            font-size: 25px;
+            cursor: pointer;
+            border-radius: 50%;
+
+            @media (max-width: 1000px) {
+                padding: 10px 15px;
+                font-size: 15px;
+            }
+        }
+
+        .pagination_list li:hover a {
+            color: var(--main_blue);
+        }
+
+        .item_active {
+            background-color: var(--light_blue);
+        }
+
+        .pagination_list .item_active:hover a {
+            color: var(--main_font);
+        }
+
+        .list-header {
+            max-width: 80%;
+
+            @media (max-width: 768px) {
+                padding-bottom: 25px;
+                overflow-x: scroll;
+            }
+        }
+
+        .hashtag-list {
+            display: flex;
+            column-gap: 20px;
+            row-gap: 25px;
+            flex-wrap: wrap;
+
+            @media (max-width: 768px) {
+                flex-wrap: nowrap;
+            }
+        }
+
+        .hashtag-item {
+            display: flex;
+            align-items: center;
+            width: fit-content;
+            padding: 10px 30px;
+            border-radius: 10px;
+            font-size: 25px;
+            cursor: pointer;
+            background-color: white;
+
+            @media (max-width: 1000px) {
+                font-size: 15px;
+            }
+        }
+
+        .hashtag-item:hover {
+            opacity: 0.7;
+        }
+
+        .hashtag-item-active {
+            color: white;
+            background-color: var(--main_pink);
+            font-weight: bold;
+        }
+
+        .hashtag_splide_wrapper {
+            display: none;
+
+            @media (max-width: 768px) {
+                display: block;
+            }
         }
     </style>
 @endsection

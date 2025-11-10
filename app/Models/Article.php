@@ -33,6 +33,8 @@ class Article extends Model
 
     public const IMAGE_PATH = 'articles';
 
+    public const PAGINATE_ITEMS_COUNT = '1';
+
     protected $fillable = [
         'title',
         'slug_title',

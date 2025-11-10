@@ -7,6 +7,7 @@ use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\PageTextController;
 use App\Http\Controllers\PigsController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,8 @@ Route::get('/admin', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::get('/ajax', [AjaxController::class, 'index']);
+
+Route::middleware('auth:web')->get('/archive/{city?}/{sex?}/{age?}/{fur?}', [PigsController::class, 'archive'])->name('pigs.archive');
 
 Route::prefix('catalog')->name('catalog.')->group(function () {
     Route::middleware('auth:web')->group(function () {
@@ -46,4 +49,5 @@ Route::prefix('blog')->name('blog.')->group(function () {
 
 Route::middleware('auth:web')->group(function () {
    Route::delete('files/{file}', [FileController::class, 'delete']);
+   Route::put('page_text/{pageText}', [PageTextController::class, 'update']);
 });

@@ -46,7 +46,7 @@
                 @if($pig->is_active || !$pig->is_active && !$admin)
                     <li><a href="/catalog">Ищут дом</a></li>
                 @else
-                    <li><a href="/achieve">Архив</a></li>
+                    <li><a href="{{ route('pigs.archive') }}">Архив</a></li>
                 @endif
                 <li>{{ $pig->name }}</li>
             </ul>

@@ -38,6 +38,7 @@ use Illuminate\Support\Collection;
  * @property int $companion_pig_id
  *
  * @method static Builder|static activeDesc()
+ * @method static Builder|static notActiveAsc()
  * @method static Builder|static filter(array $params)
  *
  * @mixin HasTimestamps
@@ -50,6 +51,8 @@ class Pig extends Model
     public const DEFAULT_IMAGE = 'default.png';
 
     public const IMAGE_PATH = 'pigs';
+
+    public const PAGINATE_ITEMS_COUNT = '3';
 
     protected $fillable = [
         'name',
@@ -102,6 +105,14 @@ class Pig extends Model
     public function scopeActiveDesc(Builder $query): void
     {
         $query->where('is_active', true)->orderByDesc('created_at');
+    }
+
+    /**
+     * Currently not active in asc order by created_at
+     */
+    public function scopeNotActiveAsc(Builder $query): void
+    {
+        $query->where('is_active', false)->orderBy('created_at');
     }
 
     public function scopeFilter(Builder $query, array $params = []): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\City;
 use App\Models\Pig;
 use Illuminate\Contracts\View\View;
@@ -21,6 +22,7 @@ class MainController
             'isAdmin' => Auth::id(),
             'cities' => City::all(),
             'pigs' => Pig::query()->orderBy('created_at')->limit(6)->with(['city', 'companion', 'companionOf'])->get(),
+            'articles' => Article::inRandomOrder()->take(3)->get(),
         ]);
     }
 }

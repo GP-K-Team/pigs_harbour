@@ -110,6 +110,14 @@
                     <x-error-bag name="meta_description"/>
                 </div>
 
+                <div class="input-container has-input-prefix">
+                    <label class="input-label" for="meta_description">Автор</label>
+                    <input type="text" name="author" id="author"
+                           value="{{ old('author', $article?->author) }}"
+                           placeholder="Автор">
+                    <x-error-bag name="author"/>
+                </div>
+
                 <div class="input-container has-select">
                     <label class="input-label" for="hashtags">Категории</label>
                     <select name="hashtags" id="hashtags" multiple>

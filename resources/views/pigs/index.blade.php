@@ -4,6 +4,10 @@
     Морские свинки в добрые руки
 @endsection
 
+@section('description')
+    Морские свинки Пристани в поисках дома
+@endsection
+
 @php
     use App\Enum\Fur;
     use App\Enum\Sex;
@@ -18,6 +22,7 @@
     /** @var Collection|iterable<Pig> $pigs */
     /** @var Collection|iterable<City> $cities */
     /** @var bool $isAdmin */
+    /** @var string $state */
 @endphp
 
 @push('styles')
@@ -28,7 +33,12 @@
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/select-input.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/filter.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/catalog-initialize.js') }}"></script>
 @endpush
+
+<script>
+    window.stateUrl = "{{ $state }}";
+</script>
 
 @section('content')
     @include('components.banner', ['showPigs' => false, 'specialHeader' => 'Морские свинки в добрые руки', 'specialText' => 'Выберите себе милого друга'])
@@ -37,8 +47,21 @@
         <div class="bread-crumbs">
             <ul>
                 <li><a href="/">Главная</a></li>
-                <li>Ищут дом</li>
+                @if($state === 'catalog')
+                    <li>Ищут дом</li>
+                @else
+                    <li>Архив</li>
+                @endif
             </ul>
+            @if($isAdmin)
+                <div class="admin_links">
+                    @if($state === 'catalog')
+                        <a href="{{ route('pigs.archive') }}">Архив</a>
+                    @else
+                        <a href="{{ route('catalog.index') }}">Ищут дом</a>
+                    @endif
+                </div>
+            @endif
         </div>
 
         <div class="list-container">
@@ -196,6 +219,71 @@
                     @endforeach
                 </ul>
             @endif
+
+            @if ($pigs->currentPage() !== $pigs->lastPage())
+                <div class="button show_more_button">
+                        <a href="{{ '?show_more=' . ($showMore + 1) }}">
+                            Смотреть всех
+                        </a>
+                </div>
+            @endif
+
+            @if($pigs->total() > 1 && $pigs->lastPage() !== 1)
+                <div class="pagination_wrapper">
+                    <ul class="pagination_list">
+                        <li @class(['item_active' => $pigs->currentPage() === 1])>
+                            <a href="?page=1">
+                                1
+                            </a>
+                        </li>
+
+                        @if($pigs->lastPage() > 2)
+
+                            @if($pigs->currentPage() !== 1 && $pigs->currentPage() - 1 !== 1 && $pigs->currentPage() !== $pigs->lastPage())
+                                <li>
+                                    <a href="{{ $pigs->previousPageUrl() }}">
+                                        {{ $pigs->currentPage() - 1 }}
+                                    </a>
+                                </li>
+                            @endif
+
+                            @if($pigs->currentPage() === 1)
+                                    <li>
+                                        <a href="{{ $pigs->nextPageUrl() }}">
+                                            {{ $pigs->currentPage() + 1 }}
+                                        </a>
+                                    </li>
+                                @elseif($pigs->currentPage() === $pigs->lastPage())
+                                    <li>
+                                        <a href="{{ $pigs->previousPageUrl() }}">
+                                            {{ $pigs->lastPage() - 1 }}
+                                        </a>
+                                    </li>
+                                @else
+                                    <li @class(['item_active'])>
+                                        <a>
+                                            {{ $pigs->currentPage()}}
+                                        </a>
+                                    </li>
+                            @endif
+
+                            @if($pigs->currentPage() !== 1 && $pigs->currentPage() + 1 !== $pigs->lastPage() && $pigs->currentPage() !== $pigs->lastPage())
+                                <li>
+                                    <a href="{{ $pigs->nextPageUrl() }}">
+                                        {{ $pigs->currentPage() + 1 }}
+                                    </a>
+                                </li>
+                            @endif
+                        @endif
+
+                        <li @class(['item_active' => $pigs->currentPage() === $pigs->lastPage()])>
+                            <a href="{{ "?page=" . $pigs->lastPage()  }}">
+                                {{ $pigs->lastPage() }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -276,6 +364,7 @@
         }
 
         .button {
+            position: relative;
             width: fit-content;
             padding: 0.25rem 1.5rem;
             text-transform: uppercase;
@@ -285,6 +374,7 @@
             border: solid 2px #000000;
             border-radius: 0.75rem;
             cursor: pointer;
+            z-index: 3;
         }
 
         @media (max-width: 768px) {
@@ -294,6 +384,7 @@
         }
 
         .bread-crumbs {
+            position: relative;
             margin: 3.75rem;
             font-family: Inter, Nunito, Arial, sans-serif;
         }
@@ -432,6 +523,7 @@
             border: 1px solid var(--main_font);
             cursor: default;
             user-select: none;
+            z-index: 4;
         }
 
         /** Filter window **/
@@ -754,6 +846,44 @@
             @media (max-width: 768px) {
                 font-size: 1rem;
             }
+        }
+
+        .pagination_list {
+            display: flex;
+            column-gap: 20px;
+        }
+
+        .pagination_list li {
+            padding: 10px 20px;
+            font-size: 25px;
+            cursor: pointer;
+            border-radius: 50%;
+
+            @media (max-width: 1000px) {
+                padding: 10px 15px;
+                font-size: 15px;
+            }
+        }
+
+        .pagination_list li:hover a {
+            color: var(--main_blue);
+        }
+
+        .item_active {
+            background-color: var(--light_blue);
+        }
+
+        .pagination_list .item_active:hover a {
+            color: var(--main_font);
+        }
+
+        .admin_links {
+            top: 30px;
+            position: absolute;
+        }
+
+        .admin_links a {
+            color: var(--main_pink);
         }
     </style>
 @endsection

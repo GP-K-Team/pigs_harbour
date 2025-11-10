@@ -22,7 +22,7 @@
             </div>
             <div class="additional-links">
                 <div class="link_wrapper">
-                    <a href="{{ route('pigs.catalog') }}">
+                    <a href="{{ route('catalog.index') }}">
                         Морские свинки в поиске дома
                     </a>
                 </div>
