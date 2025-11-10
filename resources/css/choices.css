@@ -14,3 +14,7 @@
     background-color: var(--main_blue) !important;
     color: white !important;
 }
+
+.choices__list--dropdown, .choices__list[aria-expanded] {
+    z-index: 6 !important;
+}
