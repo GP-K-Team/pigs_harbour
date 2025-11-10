@@ -89,11 +89,15 @@
             <div class="hashtag-list-header">
                 <ul class="hashtag-list">
                     <li class="hashtag-item">
-                        Все
+                        <a href="/blog">
+                            Все
+                        </a>
                     </li>
                     @foreach($hashtags as $hashtag)
                         <li class="hashtag-item">
-                            {{ $hashtag->tag }}
+                            <a href="{{ '/blog?hashtags=' . $hashtag->slug }}" >
+                                {{ $hashtag->tag }}
+                            </a>
                         </li>
                     @endforeach
                 </ul>
@@ -149,9 +153,9 @@
         display: flex;
         align-items: center;
         width: fit-content;
-        padding: 10px 30px;
+        padding: 5px 20px;
         border-radius: 10px;
-        font-size: 25px;
+        font-size: 15px;
         cursor: pointer;
         background-color: white;
 
