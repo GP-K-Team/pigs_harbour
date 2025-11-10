@@ -239,6 +239,14 @@
 
                         @if($pigs->lastPage() > 2)
 
+                            @if($pigs->currentPage() !== 1 &&
+                                           $pigs->currentPage() - 1 != 1 &&
+                                                $pigs->currentPage() - 2 != 1)
+                                <li>
+                                    ...
+                                </li>
+                            @endif
+
                             @if($pigs->currentPage() !== 1 && $pigs->currentPage() - 1 !== 1 && $pigs->currentPage() !== $pigs->lastPage())
                                 <li>
                                     <a href="{{ $pigs->previousPageUrl() }}">
@@ -272,6 +280,14 @@
                                     <a href="{{ $pigs->nextPageUrl() }}">
                                         {{ $pigs->currentPage() + 1 }}
                                     </a>
+                                </li>
+                            @endif
+
+                            @if($pigs->currentPage() + 1 != $pigs->lastPage() &&
+                                                $pigs->currentPage() + 2 != $pigs->lastPage() &&
+                                                                        $pigs->currentPage() !== $pigs->lastPage())
+                                <li>
+                                    ...
                                 </li>
                             @endif
                         @endif

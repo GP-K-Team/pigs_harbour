@@ -119,6 +119,14 @@
 
                         @if($articles->lastPage() > 2)
 
+                            @if($articles->currentPage() !== 1 &&
+                                               $articles->currentPage() - 1 != 1 &&
+                                                    $articles->currentPage() - 2 != 1)
+                                <li>
+                                    ...
+                                </li>
+                            @endif
+
                             @if($articles->currentPage() !== 1 && $articles->currentPage() - 1 !== 1 && $articles->currentPage() !== $articles->lastPage())
                                 <li>
                                     <a href="{{ $articles->previousPageUrl() }}">
@@ -152,6 +160,14 @@
                                     <a href="{{ $articles->nextPageUrl() }}">
                                         {{ $articles->currentPage() + 1 }}
                                     </a>
+                                </li>
+                            @endif
+
+                            @if($articles->currentPage() + 1 != $articles->lastPage() &&
+                                                $articles->currentPage() + 2 != $articles->lastPage() &&
+                                                                        $articles->currentPage() !== $articles->lastPage())
+                                <li>
+                                    ...
                                 </li>
                             @endif
                         @endif
