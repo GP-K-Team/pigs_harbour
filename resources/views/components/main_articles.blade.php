@@ -60,7 +60,7 @@
     </section>
 
     <div class="button show_more_button">
-        <a href="{{ route('articles.index') }}">
+        <a href="{{ route('blog.index') }}">
             Смотреть все
         </a>
     </div>
