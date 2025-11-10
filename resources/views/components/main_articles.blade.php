@@ -1,6 +1,5 @@
 @php
     use App\Models\Article;
-    use App\Helpers\FileHelper;
     use App\Helpers\LinguisticsHelper;
     use Illuminate\Support\Collection;
 
@@ -15,7 +14,7 @@
         <li class="article-list-item article-card">
             <a href="{{ route('articles.one', compact('article')) }}">
                 <img class="article-card-image" width="350" height="250" alt="Обложка статьи"
-                     src="{{ $article->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($article) }}">
+                     src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage($article) }}">
             </a>
             <div class="article-card-bio">
                 <a href="{{ route('articles.one', compact('article')) }}">
@@ -40,7 +39,7 @@
                         <div class="article-list-item article-card">
                             <a href="{{ route('articles.one', compact('article')) }}">
                                 <img class="article-card-image" width="350" height="250" alt="Обложка статьи"
-                                     src="{{ $article->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($article) }}">
+                                     src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage($article) }}">
                             </a>
                             <div class="article-card-bio">
                                 <a href="{{ route('articles.one', compact('article')) }}">

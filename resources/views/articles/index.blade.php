@@ -11,7 +11,6 @@
 @php
     use App\Models\Article;
     use Illuminate\Support\Collection;
-    use App\Helpers\FileHelper;
     use App\Models\Hashtag;
     use App\Models\PageText;
 
@@ -77,7 +76,7 @@
                     <li class="list-item card @if($isAdmin) can-edit @endif">
                         <a href="{{ route('blog.one', compact('article')) }}">
                             <img class="card-image" width="350" height="250" alt="Обложка статьи"
-                                 src="{{ $article->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($article) }}">
+                                 src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage($article) }}">
                         </a>
                         <div class="card-bio">
                             <a href="{{ route('blog.one', compact('article')) }}">
