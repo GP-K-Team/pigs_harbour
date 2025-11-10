@@ -3,7 +3,6 @@
 @php
     use App\Models\Pig;
     use App\Models\City;
-    use App\Helpers\FileHelper;
     use App\Helpers\LinguisticsHelper;
     use Illuminate\Support\Collection;
     use Illuminate\Support\Facades\Vite;

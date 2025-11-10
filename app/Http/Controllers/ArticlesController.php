@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Helpers\PageTextHelper;
+use App\Helpers\UrlHelper;
 use App\Http\Requests\Article\CreateArticleFormRequest;
 use App\Http\Requests\Article\UpdateArticleFormRequest;
 use App\Models\Article;
 use App\Models\Hashtag;
+use App\Models\PageText;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ use Illuminate\View\View;
 
 class ArticlesController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request, UrlHelper $urlHelper): View
     {
         $activeHashtags = [];
 
@@ -37,14 +38,20 @@ class ArticlesController extends Controller
         $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT * $showMore);
         $hashtags = Hashtag::query()->get();
         $isAdmin = Auth::check() ?? false;
-        $pageTexts = PageTextHelper::getPageText();
+        $pageTexts = PageText::where('page_base_url', '=', $urlHelper->getCurrentPage())->get();
 
         return \view('articles.index', compact('articles', 'isAdmin', 'hashtags', 'showMore', 'activeHashtags', 'pageTexts'));
     }
 
     public function showOne(Article $article): View
     {
-        // todo
+        $isAdmin = Auth::check() ?? false;
+        $hashtags = Hashtag::query()->get();
+        $additionalArticles = Article::query()->whereHas('hashtags', function (Builder $query) use ($article) {
+            $query->whereIn('tag', $article->hashtags()->pluck('tag')->toArray() ?? []);
+        })->inRandomOrder()->take(3)->get();
+
+        return \view('articles.one', compact('article', 'isAdmin', 'hashtags', 'additionalArticles'));
     }
 
     public function showCreate(): View
@@ -72,6 +79,11 @@ class ArticlesController extends Controller
             $article->uploadImages($formData['cover']);
         }
 
+        if ($request->has('hashtags')) {
+            $hashtagIds = Hashtag::getOrCreateIds($formData['hashtags']);
+            $article->hashtags()->sync($hashtagIds);
+        }
+
         return \response()->redirectToAction([self::class, 'index']);
     }
 
@@ -84,6 +96,11 @@ class ArticlesController extends Controller
         if ($request->has('cover')) {
             $article->mainImage->delete();
             $article->uploadImages($formData['cover']);
+        }
+
+        if ($request->has('hashtags')) {
+            $hashtagIds = Hashtag::getOrCreateIds($formData['hashtags']);
+            $article->hashtags()->sync($hashtagIds);
         }
 
         return \response()->redirectToAction([self::class, 'index']);

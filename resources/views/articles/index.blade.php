@@ -11,7 +11,6 @@
 @php
     use App\Models\Article;
     use Illuminate\Support\Collection;
-    use App\Helpers\FileHelper;
     use App\Models\Hashtag;
     use App\Models\PageText;
 
@@ -77,7 +76,7 @@
                     <li class="list-item card @if($isAdmin) can-edit @endif">
                         <a href="{{ route('blog.one', compact('article')) }}">
                             <img class="card-image" width="350" height="250" alt="Обложка статьи"
-                                 src="{{ $article->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($article) }}">
+                                 src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage() }}">
                         </a>
                         <div class="card-bio">
                             <a href="{{ route('blog.one', compact('article')) }}">
@@ -120,6 +119,14 @@
 
                         @if($articles->lastPage() > 2)
 
+                            @if($articles->currentPage() !== 1 &&
+                                               $articles->currentPage() - 1 != 1 &&
+                                                    $articles->currentPage() - 2 != 1)
+                                <li>
+                                    ...
+                                </li>
+                            @endif
+
                             @if($articles->currentPage() !== 1 && $articles->currentPage() - 1 !== 1 && $articles->currentPage() !== $articles->lastPage())
                                 <li>
                                     <a href="{{ $articles->previousPageUrl() }}">
@@ -153,6 +160,14 @@
                                     <a href="{{ $articles->nextPageUrl() }}">
                                         {{ $articles->currentPage() + 1 }}
                                     </a>
+                                </li>
+                            @endif
+
+                            @if($articles->currentPage() + 1 != $articles->lastPage() &&
+                                                $articles->currentPage() + 2 != $articles->lastPage() &&
+                                                                        $articles->currentPage() !== $articles->lastPage())
+                                <li>
+                                    ...
                                 </li>
                             @endif
                         @endif

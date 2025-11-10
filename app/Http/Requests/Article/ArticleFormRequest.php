@@ -40,7 +40,7 @@ class ArticleFormRequest extends FormRequest
             'author' => 'nullable|string',
             'origin_link' => 'nullable|url',
             'cover' => 'nullable',
-            'hashtags' => 'nullable',
+            'hashtags' => 'nullable|array',
         ];
     }
 
@@ -50,6 +50,7 @@ class ArticleFormRequest extends FormRequest
         return [
             'required' => 'Это обязательное поле',
             'slug_title.unique' => 'Адрес уже занят!',
+            'url' => 'Невалидная ссылка'
         ];
     }
 }

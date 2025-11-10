@@ -19,8 +19,6 @@ $(document).ready(function () {
     });
 
     function initateSplide() {
-        new Splide('#steps_splide').mount();
-        new Splide('#pigs_splide').mount()
         new Splide('#articles_splide').mount();
     }
 });

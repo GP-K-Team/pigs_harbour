@@ -29,7 +29,7 @@
     use Illuminate\Support\Collection;
     use Illuminate\Support\Facades\Vite;
 
-    /** @var Collection|iterable<Pig> $pigs */
+    /** @var <Pig> $pig */
     /** @var Collection|iterable<Pig> $additionalPigs */
     /** @var Collection|iterable<City> $cities */
     /** @var bool $admin */
