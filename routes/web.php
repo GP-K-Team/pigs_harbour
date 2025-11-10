@@ -18,6 +18,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::get('/ajax', [AjaxController::class, 'index']);
 
+Route::middleware('auth:web')->get('/archive/{city?}/{sex?}/{age?}/{fur?}', [PigsController::class, 'archive'])->name('pigs.archive');
+
 Route::prefix('catalog')->name('catalog.')->group(function () {
     Route::middleware('auth:web')->group(function () {
         Route::get('/update/{pig}', [PigsController::class, 'showUpdate'])->name('show.update');

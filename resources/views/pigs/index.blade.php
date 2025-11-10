@@ -58,7 +58,7 @@
                     @if($state === 'catalog')
                         <a href="{{ route('pigs.archive') }}">Архив</a>
                     @else
-                        <a href="{{ route('pigs.catalog') }}">Ищут дом</a>
+                        <a href="{{ route('catalog.index') }}">Ищут дом</a>
                     @endif
                 </div>
             @endif
