@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
-
-use App\Http\Requests\PigFormRequest;
+namespace App\Http\Requests\Pig;
 
 class CreatePigFormRequest extends PigFormRequest
 {
@@ -11,7 +9,6 @@ class CreatePigFormRequest extends PigFormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-
     public function rules(): array
     {
         return parent::rules() + [

@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Pig;
 
 use App\Enum\Fur;
 use App\Enum\Sex;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class PigFormRequest extends FormRequest
@@ -28,6 +29,9 @@ class PigFormRequest extends FormRequest
         $formData['birthday'] = Carbon::parseFromLocale($formData['birthday']);
         $formData['sex'] = Sex::from($formData['sex']);
         $formData['fur'] = Fur::from($formData['fur']);
+        $formData['slug_name'] = Str::afterLast($formData['slug_name'], '/');
+        $formData['city_id'] = (int) $formData['city'];
+        $formData['companion_pig_id'] = $formData['companion'] ?? null;
 
         return $formData;
     }

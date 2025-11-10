@@ -32,7 +32,7 @@
                     </a>
                 </div>
                 <div class="link_wrapper">
-                    <a href="{{ route('articles.index') }}">
+                    <a href="{{ route('blog.index') }}">
                         Полезные статьи
                     </a>
                 </div>

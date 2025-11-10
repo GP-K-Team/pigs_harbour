@@ -1,6 +1,5 @@
 @php
     use App\Models\Pig;
-    use App\Helpers\FileHelper;
     use App\Helpers\LinguisticsHelper;
     use Illuminate\Support\Collection;
 
@@ -14,9 +13,9 @@
         <ul class="list">
             @foreach($pigs as $pig)
                 <li @class(['card-pink' => ($pig->sex->value === 'female'), 'list-item', 'card'])>
-                    <a href="{{ route('pigs.one', compact('pig')) }}">
+                    <a href="{{ route('catalog.one', compact('pig')) }}">
                         <img class="card-image"
-                             src="{{ asset($pig->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($pig)) }}"
+                             src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
                              width="350" height="250" alt="Фотография морской свинки по имени {{ $pig->name }}">
                         <div class="card-bio">
                             <h2 class="card-title">{{ $pig->name }}</h2>
@@ -32,16 +31,16 @@
                             @endif
                         </div>
                     </a>
-                </>
+                </li>
             @endforeach
         </ul>
 
         <ul class="list list_mobile">
             @foreach($pigs->take(3) as $pig)
                 <li class="list-item card">
-                    <a href="{{ route('pigs.one', compact('pig')) }}">
+                    <a href="{{ route('catalog.one', compact('pig')) }}">
                         <img class="card-image"
-                             src="{{ asset($pig->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($pig)) }}"
+                             src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
                              width="350" height="250" alt="Фотография морской свинки по имени {{ $pig->name }}">
                         <div class="card-bio">
                             <h2 class="card-title">{{ $pig->name }}</h2>
@@ -67,9 +66,9 @@
                     @foreach($pigs->take(3) as $pig)
                         <li class="splide__slide">
                             <div class="list-item card">
-                                <a href="{{ route('pigs.one', compact('pig')) }}">
+                                <a href="{{ route('catalog.one', compact('pig')) }}">
                                     <img class="card-image"
-                                         src="{{ asset($pig->mainImage?->getFullUrl() ?? FileHelper::getDefaultImage($pig)) }}"
+                                         src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
                                          width="350" height="250" alt="Фотография морской свинки по имени {{ $pig->name }}">
                                     <div class="card-bio">
                                         <h2 class="card-title">{{ $pig->name }}</h2>
@@ -93,7 +92,7 @@
         </section>
 
         <div class="button catalog_button">
-            <a href="{{ route('pigs.catalog') }}">
+            <a href="{{ route('catalog.index') }}">
                 Смотреть всех
             </a>
         </div>
