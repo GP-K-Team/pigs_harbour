@@ -50,6 +50,7 @@ class ArticleFormRequest extends FormRequest
         return [
             'required' => 'Это обязательное поле',
             'slug_title.unique' => 'Адрес уже занят!',
+            'url' => 'Невалидная ссылка'
         ];
     }
 }
