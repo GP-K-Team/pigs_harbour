@@ -12,10 +12,11 @@
     use App\Models\Article;
     use App\Helpers\FileHelper;
     use App\Models\Hashtag;
-    use Illuminate\Support\Collection;
+    use App\Models\PageText;use Illuminate\Support\Collection;
 
     /** @var Collection|iterable<Article> $articles */
     /** @var Collection|iterable<Hashtag> $hashtags */
+    /** @var Collection|iterable<PageText> $pageTexts */
     /** @var bool $isAdmin */
     /** @var array $activeHashtags */
 @endphp
@@ -26,7 +27,10 @@
 
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/hashtags.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/pageText.js') }}"></script>
 @endpush
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('content')
     @include('components.banner', ['showPigs' => false, 'specialHeader' => 'Полезные статьи', 'specialText' => 'все самое важное, что нужно знать о морских свинках'])
@@ -50,25 +54,6 @@
                     </li>
                 @endforeach
             </ul>
-
-{{--            <section id="hashtags_splide" class="splide hashtag_splide_wrapper" aria-label="Хэштеги">--}}
-{{--                <div class="splide__track">--}}
-{{--                    <ul class="splide__list">--}}
-{{--                        <li class="splide__slide">--}}
-{{--                            <div @class(['hashtag-item-active' => !count($achtiveHashtags), 'hashtag-item'])>--}}
-{{--                                Все--}}
-{{--                            </div>--}}
-{{--                        </li>--}}
-{{--                        @foreach($hashtags as $hashtag)--}}
-{{--                            <li class="splide__slide">--}}
-{{--                                <div @class(['hashtag-item-active' => in_array($hashtag->slug, $achtiveHashtags), 'hashtag-item'])>--}}
-{{--                                    {{ $hashtag->tag }}--}}
-{{--                                </div>--}}
-{{--                            </li>--}}
-{{--                        @endforeach--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
-{{--            </section>--}}
         </div>
 
         @if($articles->isEmpty())
@@ -181,13 +166,18 @@
             @endif
         @endif
     </div>
+    @php
+        $footerContent = $pageTexts->where('text_key', '=', 'footer_text')->first();
+    @endphp
+    @if($footerContent)
     <div class="footer_block">
         <div class="footer_text">
-            <p>
-                На нашей Пристани можно найти много полезных статей о морских свинках.
+            <p class="footer_text" @if($isAdmin) contenteditable @endif data-page-text-id="{{ $footerContent->id }}">
+                {{ $footerContent->content }}
             </p>
         </div>
     </div>
+    @endif
 
     <style>
         h3 {
@@ -527,6 +517,11 @@
 
         .list-header {
             max-width: 80%;
+
+            @media (max-width: 768px) {
+                padding-bottom: 25px;
+                overflow-x: scroll;
+            }
         }
 
         .hashtag-list {
@@ -536,16 +531,19 @@
             flex-wrap: wrap;
 
             @media (max-width: 768px) {
-                display: none;
+                flex-wrap: nowrap;
             }
         }
 
         .hashtag-item {
+            display: flex;
+            align-items: center;
             width: fit-content;
             padding: 10px 30px;
             border-radius: 10px;
             font-size: 25px;
             cursor: pointer;
+            background-color: white;
 
             @media (max-width: 1000px) {
                 font-size: 15px;

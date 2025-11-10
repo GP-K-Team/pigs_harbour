@@ -7,6 +7,7 @@ use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\PageTextController;
 use App\Http\Controllers\PigsController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,4 +49,5 @@ Route::prefix('articles')->name('articles.')->group(function () {
 
 Route::middleware('auth:web')->group(function () {
    Route::delete('files/{file}', [FileController::class, 'delete']);
+   Route::put('page_text/{pageText}', [PageTextController::class, 'update']);
 });

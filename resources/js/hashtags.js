@@ -18,8 +18,8 @@ $(document).ready(function () {
             let hashtags = '';
 
             $('.hashtag-item-active').each((index,element) => {
-                if (index > 0) {
-                    hashtags += '&'
+                if (hashtags > 0) {
+                    hashtags += ','
                 }
 
                 let currentTagData = $(element).data('hashtag');
@@ -28,15 +28,16 @@ $(document).ready(function () {
                     return;
                 }
 
-                if (!clickedTag.hasClass('hashtag-item-active') && clickedTag.data('hashtag') === currentTagData ||
-                    clickedTag.hasClass('hashtag-item-active') && clickedTag.data('hashtag') !== currentTagData
-                ) {
-                    hashtags += currentTagData;
+                if (clickedTag.data('hashtag') === currentTagData && clickedTag.hasClass('hashtag-item-active')) {
+                    return;
                 }
+
+                hashtags += currentTagData;
+
             });
 
             if (!clickedTag.hasClass('hashtag-item-active')) {
-                hashtags += hashtags ? ('&' + clickedTag.data('hashtag')) : clickedTag.data('hashtag');
+                hashtags += hashtags ? (',' + clickedTag.data('hashtag')) : clickedTag.data('hashtag');
             }
 
             if (hashtags && hashtags.length) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PageTextHelper;
 use App\Http\Requests\ArticleFormRequest;
 use App\Models\Article;
 use App\Models\Hashtag;
@@ -20,7 +21,7 @@ class ArticlesController extends Controller
         $activeHashtags = [];
 
         if ($request->get('hashtags')) {
-            $activeHashtags = explode('&', $request->get('hashtags'));
+            $activeHashtags = explode(',', $request->get('hashtags'));
         }
 
         $showMore = $request->get('show_more', 1);
@@ -35,8 +36,9 @@ class ArticlesController extends Controller
         $articles = $articlesBuilder->paginate(Article::PAGINATE_ITEMS_COUNT * $showMore);
         $hashtags = Hashtag::query()->get();
         $isAdmin = Auth::check() ?? false;
+        $pageTexts = PageTextHelper::getPageText();
 
-        return \view('articles.index', compact('articles', 'isAdmin', 'hashtags', 'showMore', 'activeHashtags'));
+        return \view('articles.index', compact('articles', 'isAdmin', 'hashtags', 'showMore', 'activeHashtags', 'pageTexts'));
     }
 
     public function showOne(Article $article): View
