@@ -76,7 +76,7 @@
                     <li class="list-item card @if($isAdmin) can-edit @endif">
                         <a href="{{ route('blog.one', compact('article')) }}">
                             <img class="card-image" width="350" height="250" alt="Обложка статьи"
-                                 src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage($article) }}">
+                                 src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage() }}">
                         </a>
                         <div class="card-bio">
                             <a href="{{ route('blog.one', compact('article')) }}">

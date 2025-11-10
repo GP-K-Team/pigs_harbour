@@ -14,7 +14,7 @@
         <li class="article-list-item article-card">
             <a href="{{ route('blog.one', compact('article')) }}">
                 <img class="article-card-image" width="350" height="250" alt="Обложка статьи"
-                     src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage($article) }}">
+                     src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage() }}">
             </a>
             <div class="article-card-bio">
                 <a href="{{ route('blog.one', compact('article')) }}">
@@ -39,7 +39,7 @@
                         <div class="article-list-item article-card">
                             <a href="{{ route('blog.one', compact('article')) }}">
                                 <img class="article-card-image" width="350" height="250" alt="Обложка статьи"
-                                     src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage($article) }}">
+                                     src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage() }}">
                             </a>
                             <div class="article-card-bio">
                                 <a href="{{ route('blog.one', compact('article')) }}">

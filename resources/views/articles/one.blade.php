@@ -37,19 +37,19 @@
             <ul class="article-list">
                 @foreach($additionalArticles as $additionalArticle)
                     <li class="article-list-item article-card">
-                        <a href="{{ route('blog.one', compact('additionalArticle')) }}">
+                        <a href="{{ route('blog.one', ['article' => $additionalArticle]) }}">
                             <img class="article-card-image" width="350" height="250" alt="Обложка статьи"
-                                 src="{{ $additionalArticle->mainImage?->getFullUrl() ?? $additionalArticle::getDefaultImage($additionalArticle) }}">
+                                 src="{{ $additionalArticle->mainImage?->getFullUrl() ?? $additionalArticle::getDefaultImage() }}">
                         </a>
                         <div class="article-card-bio">
-                            <a href="{{ route('blog.one', compact('additionalArticle')) }}">
+                            <a href="{{ route('blog.one', ['article' => $additionalArticle]) }}">
                                 <h2 class="article-card-title">{{ $additionalArticle->title }}</h2>
                             </a>
 
                             <p class="article-card-description">{{ $additionalArticle->description }}</p>
 
                             <a class="button article-card-button"
-                               href="{{ route('blog.one', compact('additionalArticle')) }}">
+                               href="{{ route('blog.one', ['article' => $additionalArticle]) }}">
                                 Читать
                             </a>
                         </div>
@@ -63,19 +63,19 @@
                         @foreach($additionalArticles as $additionalArticle)
                             <li class="splide__slide">
                                 <div class="article-list-item article-card">
-                                    <a href="{{ route('blog.one', compact('additionalArticle')) }}">
+                                    <a href="{{ route('blog.one', ['article' => $additionalArticle]) }}">
                                         <img class="article-card-image" width="350" height="250" alt="Обложка статьи"
-                                             src="{{ $additionalArticle->mainImage?->getFullUrl() ?? $additionalArticle::getDefaultImage($additionalArticle) }}">
+                                             src="{{ $additionalArticle->mainImage?->getFullUrl() ?? $additionalArticle::getDefaultImage() }}">
                                     </a>
                                     <div class="article-card-bio">
-                                        <a href="{{ route('blog.one', compact('additionalArticle')) }}">
+                                        <a href="{{ route('blog.one', ['article' => $additionalArticle]) }}">
                                             <h2 class="article-card-title">{{ $additionalArticle->title }}</h2>
                                         </a>
 
                                         <p class="article-card-description">{{ $additionalArticle->description }}</p>
 
                                         <a class="button article-card-button"
-                                           href="{{ route('blog.one', compact('additionalArticle')) }}">
+                                           href="{{ route('blog.one', ['article' => $additionalArticle]) }}">
                                             Читать
                                         </a>
                                     </div>
@@ -104,6 +104,11 @@
 
 <style>
     .additional_articles_wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        row-gap: 35px;
         border-top: 10px solid var(--pale_orange);
         background-image: url("/images/texture-light.png");
     }
@@ -119,6 +124,7 @@
     }
 
     .hashtag-list-header {
+        padding: 10px 0;
         max-width: 80%;
 
         @media (max-width: 768px) {
@@ -128,6 +134,7 @@
     }
 
     .hashtag-list {
+        padding: 10px 0;
         display: flex;
         column-gap: 20px;
         row-gap: 25px;
