@@ -6,8 +6,10 @@ namespace App\Traits;
 
 use App\Models\Image;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Psr\Http\Message\UploadedFileInterface;
 
 trait HasImages
 {
@@ -28,6 +30,11 @@ trait HasImages
         }
 
         foreach ($files as $key => $file) {
+
+            if (!$file instanceof UploadedFile) {
+               continue;
+            }
+
             $newImage = Image::query()->create([
                 'link' => Storage::disk('public')->putFile(static::IMAGE_PATH, $file),
             ]);
