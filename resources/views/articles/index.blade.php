@@ -100,14 +100,6 @@
                 @endforeach
             </ul>
 
-            @if ($articles->currentPage() !== $articles->lastPage())
-                <div class="button show_more_button">
-                    <a href="{{ '?show_more=' . ($showMore + 1) }}">
-                        Показать ещё
-                    </a>
-                </div>
-            @endif
-
             @if($articles->total() > 1 && $articles->lastPage() !== 1)
                 <div class="pagination_wrapper">
                     <ul class="pagination_list">

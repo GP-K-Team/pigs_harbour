@@ -220,14 +220,6 @@
                 </ul>
             @endif
 
-            @if ($pigs->currentPage() !== $pigs->lastPage())
-                <div class="button show_more_button">
-                        <a href="{{ '?show_more=' . ($showMore + 1) }}">
-                            Смотреть всех
-                        </a>
-                </div>
-            @endif
-
             @if($pigs->total() > 1 && $pigs->lastPage() !== 1)
                 <div class="pagination_wrapper">
                     <ul class="pagination_list">

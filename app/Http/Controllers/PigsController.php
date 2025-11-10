@@ -46,17 +46,16 @@ class PigsController extends Controller
     {
         $cities = City::query()->pluck('name');
         $filters = $urlHelper->collectFilters();
-        $showMore = $request->get('show_more', 1);
 
         if (array_key_exists('city', $filters)) {
             $filters['city'] = $cities->firstWhere(fn (string $city) => LinguisticsHelper::transliterate($city) === $filters['city']);
         }
 
-        $pigs = Pig::notActiveAsc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT * $showMore));
+        $pigs = Pig::notActiveAsc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT));
         $isAdmin = Auth::check() ?? false;
         $state = 'archive';
 
-        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin', 'showMore', 'state'));
+        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin', 'state'));
     }
 
     public function filteredList(string $city, string $sex, string $age, string $fur): View
