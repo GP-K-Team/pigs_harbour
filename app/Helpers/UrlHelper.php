@@ -10,12 +10,13 @@ use App\Enum\AgeFilter;
 use App\Enum\Fur;
 use App\Enum\Sex;
 use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
 
 class UrlHelper
 {
     public function collectFilters(): array
     {
-        $routePrefix = Str::of(request()->route()->uri)->before('{')->trim('/');
+        $routePrefix = $this->getCurrentPage();
         $urlPath = request()->path();
         $filters = [];
 
@@ -37,5 +38,14 @@ class UrlHelper
             });
 
         return $filters;
+    }
+
+
+    /**
+     * @return Stringable
+     */
+    public function getCurrentPage(): Stringable
+    {
+        return Str::of(request()->route()->uri)->before('{')->trim('/');
     }
 }

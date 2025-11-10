@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Helpers\HashtagHelper;
-use App\Helpers\PageTextHelper;
+use App\Helpers\UrlHelper;
 use App\Http\Requests\Article\CreateArticleFormRequest;
 use App\Http\Requests\Article\UpdateArticleFormRequest;
 use App\Models\Article;
 use App\Models\Hashtag;
+use App\Models\PageText;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ use Illuminate\View\View;
 
 class ArticlesController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request, UrlHelper $urlHelper): View
     {
         $activeHashtags = [];
 
@@ -38,7 +38,7 @@ class ArticlesController extends Controller
         $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT * $showMore);
         $hashtags = Hashtag::query()->get();
         $isAdmin = Auth::check() ?? false;
-        $pageTexts = PageTextHelper::getPageText();
+        $pageTexts = PageText::where('page_base_url', '=', $urlHelper->getCurrentPage())->get();
 
         return \view('articles.index', compact('articles', 'isAdmin', 'hashtags', 'showMore', 'activeHashtags', 'pageTexts'));
     }
@@ -62,7 +62,7 @@ class ArticlesController extends Controller
         return \view('articles.form', compact('article', 'hashtags'));
     }
 
-    public function create(CreateArticleFormRequest $request, HashtagHelper $hashtagHelper): RedirectResponse
+    public function create(CreateArticleFormRequest $request): RedirectResponse
     {
         $formData = $request->validated();
 
@@ -74,14 +74,14 @@ class ArticlesController extends Controller
         }
 
         if ($request->has('hashtags')) {
-            $hashtagIds = $hashtagHelper->handleHashtags($formData['hashtags']);
+            $hashtagIds = Hashtag::getOrCreatedIds($formData['hashtags']);
             $article->hashtags()->sync($hashtagIds);
         }
 
         return \response()->redirectToAction([self::class, 'index']);
     }
 
-    public function update(UpdateArticleFormRequest $request, Article $article, HashtagHelper $hashtagHelper): RedirectResponse
+    public function update(UpdateArticleFormRequest $request, Article $article): RedirectResponse
     {
         $formData = $request->validated();
 
@@ -93,7 +93,7 @@ class ArticlesController extends Controller
         }
 
         if ($request->has('hashtags')) {
-            $hashtagIds = $hashtagHelper->handleHashtags($formData['hashtags']);
+            $hashtagIds = Hashtag::getOrCreatedIds($formData['hashtags']);
             $article->hashtags()->sync($hashtagIds);
         }
 
