@@ -25,7 +25,6 @@
 @endpush
 
 @push('js')
-    <script type="module" src="{{ Vite::asset('resources/js/select-input.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/filepond.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/page/translit.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/article_choice.js') }}"></script>
@@ -120,12 +119,12 @@
                     <x-error-bag name="author"/>
                 </div>
 
-                <div class="input-container has-select">
+                <div class="input-container">
                     <label class="input-label" for="hashtags">Категории</label>
                     <select name="hashtags[]" id="hashtags" multiple>
                         <option value="" disabled>Выберите категории</option>
                         @foreach($hashtags as $id => $tag)
-                            <option value="{{ $id }}" @selected(in_array($id, old('hashtags', [])))>
+                            <option value="{{ $tag }}" @selected(in_array($tag, old('hashtags', $article?->hashtags()->pluck('tag')->toArray())))>
                                 {{ $tag }}
                             </option>
                         @endforeach

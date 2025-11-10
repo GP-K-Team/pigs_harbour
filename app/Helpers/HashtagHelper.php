@@ -13,7 +13,7 @@ class HashtagHelper
      */
     public function handleHashtags(array $hashtagsToProcess): array
     {
-        $hashtags = Hashtag::whereIn('id', $hashtagsToProcess)->get();
+        $hashtags = Hashtag::whereIn('tag', $hashtagsToProcess)->get();
 
         $newHashtags = array_diff($hashtagsToProcess, $hashtags->pluck('tag')->toArray());
         $hashtagIDs = $hashtags->pluck('id')->toArray();

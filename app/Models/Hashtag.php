@@ -21,6 +21,8 @@ class Hashtag extends Model
         'slug',
     ];
 
+    public $timestamps = false;
+
     /**
      * @return BelongsToMany
      */
