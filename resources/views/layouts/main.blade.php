@@ -7,6 +7,7 @@
         <meta name="authors" content="whatevernumber, the_nepodarok" />
         <meta name="keywords" content="морские свинки, пристань пушистых сердец, помощь животным, волонтёрский проект">
         <meta name="viewport" content="width=device-width" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -58,12 +59,12 @@
                     }
 
                     if (!$(e.target).closest('.window').length) {
-                        $(e.target).closest('.window-container').hide();
+                        $(e.target).closest('.window-container').hide().trigger('close');
                     }
                 });
 
                 $('.window-close-button').on('click', function () {
-                    $(this).closest('.window-container').hide();
+                    $(this).closest('.window-container').hide().trigger('close');
 
                     return false;
                 });

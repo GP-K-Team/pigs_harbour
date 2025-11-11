@@ -17,6 +17,7 @@ Route::get('/admin', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::get('/ajax', [AjaxController::class, 'index']);
+Route::post('/editor/upload', [AjaxController::class, 'uploadEditorImage']);
 
 Route::middleware('auth:web')->get('/archive/{city?}/{sex?}/{age?}/{fur?}', [PigsController::class, 'archive'])->name('pigs.archive');
 
