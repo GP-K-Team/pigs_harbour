@@ -31,9 +31,9 @@
 @endpush
 
 @push('js')
-    <script type="module" src="{{ Vite::asset('resources/js/select-input.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/list/filter.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/catalog-initialize.js') }}"></script>
+    @vite('resources/js/catalog-initialize.js')
+    @vite('resources/js/list/filter.js')
+    @vite('resources/js/select-input.js')
 @endpush
 
 <script>
@@ -176,6 +176,19 @@
 
             @if($pigs->isEmpty())
                 <h3>Нет результатов</h3>
+
+                @if($isAdmin)
+                    <ul class="list">
+                        <li class="list-item card add-card">
+                            <a class="add-card-link" href="{{ route('catalog.show.create') }}" draggable="false">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                    <path d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
+                                </svg>
+                                <p class="add-card-link-text">Добавить свинку</p>
+                            </a>
+                        </li>
+                    </ul>
+                @endif
             @else
                 <ul class="list">
                     @if($isAdmin)

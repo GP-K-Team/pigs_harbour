@@ -12,7 +12,7 @@
 @endphp
 
 @push('js')
-    <script type="module" src="{{ Vite::asset('resources/js/splide.js') }}"></script>
+    @vite('resources/js/splide.js')
 @endpush
 
 @section('title')

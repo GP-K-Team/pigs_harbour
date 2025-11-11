@@ -27,11 +27,11 @@
 @endpush
 
 @push('js')
-    <script type="module" src="{{ Vite::asset('resources/js/filepond.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/article_choice.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/form/rich-text-editor.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/form/translit.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/blog/article.js') }}"></script>
+    @vite('resources/js/filepond.js')
+    @vite('resources/js/article_choice.js')
+    @vite('resources/js/blog/article.js')
+    @vite('resources/js/form/translit.js')
+    @vite('resources/js/form/rich-text-editor.js')
 
     @if($article && $article->mainImage)
         <script type="module">

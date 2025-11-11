@@ -25,10 +25,10 @@
 @endpush
 
 @push('js')
-    <script type="module" src="{{ Vite::asset('resources/js/select-input.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/filepond.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/zebra.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/form/translit.js') }}"></script>
+    @vite('resources/js/filepond.js')
+    @vite('resources/js/select-input.js')
+    @vite('resources/js/form/translit.js')
+    @vite('resources/js/zebra.js')
 
     @if($pig)
         <script type="module">
