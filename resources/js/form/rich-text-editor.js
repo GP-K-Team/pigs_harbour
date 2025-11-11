@@ -22,8 +22,6 @@ $(document).ready(function () {
             ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
             ['unorderedList', 'orderedList'],
             ['emoji'],
-            ['horizontalRule'],
-            ['removeformat'],
         ],
         plugins: {
             upload: {
@@ -36,6 +34,10 @@ $(document).ready(function () {
         },
         removeformatPasted: true, // prevent style carryover from other web pages or, say, Word
         tagsToRemove: ['script', 'iframe'],
+    }).on('tbwblur', function () {
+        if (!$(this).val().length) {
+            $(this).trumbowyg('empty');
+        }
     });
 
     $('#editor_window').closest('.window-container').on('close', function () {

@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    {{ $article->meta_title ?? 'Статья' }}
+    {{ $article->meta_title ?? $article->title }}
 @endsection
 
 @section('description')
@@ -22,13 +22,57 @@
     /** @var bool $admin */
 @endphp
 
+@push('styles')
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/article.css') }}">
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/bread-crumbs.css') }}">
+@endpush
+
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/articleSplide.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/blog/article.js') }}"></script>
 @endpush
 
 @section('content')
     @include('components.banner', ['showPigs' => false, 'specialHeader' => $article->title])
 
+    <div class="bread-crumbs">
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="{{ route('blog.index') }}">Статьи</a></li>
+            <li>{{ $article->title }}</li>
+        </ul>
+    </div>
+
+    <div class="article-date">
+        {{ $article->created_at->format('d.m.Y') }}
+    </div>
+
+    <div class="article-container">
+        {!! $article->text !!}
+    </div>
+
+    <dl class="article-info">
+        @if($article->author)
+            <div class="article-info-item">
+                <dt>Автор:</dt>
+                <dd>{{ $article->author }}</dd>
+            </div>
+        @endif
+
+        @if($article->translation)
+            <div class="article-info-item">
+                <dt>Перевод:</dt>
+                <dd>{{ $article->translation }}</dd>
+            </div>
+        @endif
+
+        @if($article->origin_link)
+            <div class="article-info-item">
+                <dt>Источник:</dt>
+                <dd>{{ $article->origin_link }}</dd>
+            </div>
+        @endif
+    </dl>
 
     @if($additionalArticles->count())
         <div class="additional_articles_wrapper">
@@ -107,6 +151,45 @@
 @endsection
 
 <style>
+    .article-date {
+        margin: 0 3.75rem 1.25rem;
+        text-align: right;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--brown_gray);
+    }
+
+    @media screen and (max-width: 1200px) {
+        .article-date {
+            margin: 0 2.5rem 2.5rem;
+            font-size: 1rem;
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        .article-date {
+            margin: 0 1.25rem 1.25rem;
+        }
+    }
+
+    .article-info {
+        width: 100%;
+        margin: 0 3.75rem 1.25rem;
+        color: var(--brown_gray);
+        font-size: 1.25rem;
+        font-style: italic;
+    }
+
+    .article-info .article-info-item {
+        display: flex;
+        column-gap: 0.25rem;
+    }
+
+    .article-info-item > dd {
+        margin: 0;
+    }
+
+    /* Additional articles list */
     .additional_articles_wrapper {
         display: flex;
         flex-direction: column;
@@ -127,6 +210,7 @@
         }
     }
 
+    /* Hashtags */
     .hashtag-list-header {
         padding: 10px 0;
         max-width: 80%;
@@ -167,7 +251,6 @@
     .hashtag-item:hover {
         opacity: 0.7;
     }
-
 
     .articles_splide_wrapper {
         display: none;
@@ -334,6 +417,4 @@
             font-size: 1rem;
         }
     }
-
-
 </style>
