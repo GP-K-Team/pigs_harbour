@@ -28,7 +28,7 @@
     <script type="module" src="{{ Vite::asset('resources/js/select-input.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/filepond.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/zebra.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/page/translit.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/form/translit.js') }}"></script>
 
     @if($pig)
         <script type="module">

@@ -18,6 +18,7 @@
         "filepond-plugin-image-preview": "^4.6.12",
         "jquery": "^3.7.1",
         "jquery-custom-select": "^1.6.4",
+        "trumbowyg": "^2.31.0",
         "zebra_datepicker": "^2.2.0"
     }
 }

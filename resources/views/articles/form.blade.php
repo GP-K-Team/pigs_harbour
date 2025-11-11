@@ -16,18 +16,21 @@
 @endphp
 
 @section('title')
-    {{ isset($article) ? $article->title : 'Новая статья' }}
+    {{ $article?->title ?? 'Новая статья' }}
 @endsection
 
 @push('styles')
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/choices.css') }}">
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/rich-text-editor.css') }}">
 @endpush
 
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/filepond.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/page/translit.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/article_choice.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/form/rich-text-editor.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/form/translit.js') }}"></script>
 
     @if($article && $article->mainImage)
         <script type="module">
@@ -47,7 +50,7 @@
 @section('content')
     <div class="content-container">
         <div class="form-container">
-            <form class="form"
+            <form class="form" name="article_form" id="article_form"
                   action="{{ route('blog.' . (is_null($article) ? 'create' : 'update'), compact('article')) }}"
                   method="POST" enctype="multipart/form-data">
                 <h2 class="form-title">
@@ -74,8 +77,9 @@
 
                 <div class="input-container has-textarea">
                     <label class="input-label" for="text">Текст статьи</label>
-                    <textarea name="text" id="text"
-                              placeholder="Текст статьи">{{ trim( old('text', $article?->text) ) }}</textarea>
+                    <button class="button" type="button" onclick="$('#editor_window').closest('.window-container').show()">
+                        Открыть редактор
+                    </button>
                     <x-error-bag name="text"/>
                 </div>
 
@@ -149,6 +153,22 @@
                 @csrf
             </form>
         </div>
+
+        <div class="window-container">
+            <div class="window" id="editor_window">
+                <div class="window-title-container">
+                    <h2 class="window-title">{{ $article?->title ?? 'Новая статья' }}</h2>
+                    <button class="window-close-button" type="button"></button>
+                </div>
+
+                <div class="editor-container">
+                    <textarea class="rich-text-editor" name="text" id="text" form="article_form"
+                              placeholder="Текст статьи">
+                        {{ trim( old('text', $article?->text) ) }}
+                    </textarea>
+                </div>
+            </div>
+        </div>
     </div>
 
     <style>
@@ -167,6 +187,18 @@
             background-color: var(--light_blue);
             border-bottom-left-radius: 1rem;
             border-bottom-right-radius: 1rem;
+        }
+
+        #editor_window {
+            width: 75vw;
+            height: 80vh;
+            max-width: 90vw;
+            max-height: 80vh;
+        }
+
+        .editor-container {
+            min-height: 100%;
+            height: 100%;
         }
     </style>
 @endsection

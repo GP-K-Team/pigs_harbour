@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Helpers\LinguisticsHelper;
+use App\Models\Article;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
@@ -37,5 +39,16 @@ class AjaxController
     public function transliterate(string $text): string
     {
         return LinguisticsHelper::transliterate($text);
+    }
+
+    public function uploadEditorImage(Request $request): JsonResponse
+    {
+        $filePath = Article::storeImage($request['image']);
+        $imgUrl = Article::getPublicUrl($filePath);
+
+        return \response()->json([
+            'success' => true,
+            'file' => $imgUrl,
+        ]);
     }
 }
