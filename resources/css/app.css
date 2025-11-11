@@ -82,3 +82,7 @@ p {
 .splide__arrow svg {
     fill: var(--main_pink) !important;
 }
+
+[draggable="false"] {
+    user-select: none;
+}

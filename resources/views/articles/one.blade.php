@@ -23,13 +23,14 @@
 @endphp
 
 @push('styles')
-    <link rel="stylesheet" href="{{ Vite::asset('resources/css/article.css') }}">
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/bread-crumbs.css') }}">
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/article.css') }}">
 @endpush
 
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/articleSplide.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/blog/article.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/delete-handler.js') }}"></script>
 @endpush
 
 @section('content')
@@ -44,6 +45,17 @@
     </div>
 
     <div class="article-date">
+        @if($isAdmin)
+            <div class="control-buttons">
+                <a class="edit-icon-link" href="{{ route('blog.show.update', compact('article')) }}" draggable="false">
+                    <img src="{{ asset('images/icons/edit.svg') }}" height="28" alt="Иконка редактирования карточки" draggable="false">
+                </a>
+                <div class="delete-form-wrapper">
+                    @include('components.buttons.article-delete-button', ['articleToDelete' => $article])
+                </div>
+            </div>
+        @endif
+
         {{ $article->created_at->format('d.m.Y') }}
     </div>
 
@@ -69,7 +81,11 @@
         @if($article->origin_link)
             <div class="article-info-item">
                 <dt>Источник:</dt>
-                <dd>{{ $article->origin_link }}</dd>
+                <dd>
+                    <a href="{{ $article->origin_link }}" target="_blank">
+                        {{ Str::limit($article->origin_link, 75) }}
+                    </a>
+                </dd>
             </div>
         @endif
     </dl>
@@ -148,10 +164,26 @@
             </div>
         </div>
     @endif
+
+    @include('components.modal.modal-delete-confirm')
 @endsection
 
 <style>
+    .control-buttons {
+        position: absolute;
+        left: 0;
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+
+    .edit-icon-link:hover {
+        border-radius: 0.5rem;
+        background-color: var(--pale_yellow);
+    }
+
     .article-date {
+        position: relative;
         margin: 0 3.75rem 1.25rem;
         text-align: right;
         font-size: 1.5rem;
@@ -187,6 +219,14 @@
 
     .article-info-item > dd {
         margin: 0;
+    }
+
+    .article-info-item a {
+        color: inherit;
+    }
+
+    .article-info-item a:hover {
+        color: var(--dark_blue_font);
     }
 
     /* Additional articles list */

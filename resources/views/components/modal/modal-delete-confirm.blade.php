@@ -2,7 +2,7 @@
     <div class="window delete-modal">
         <div class="modal-content-wrapper">
             <p>
-                Вы собираетесь удалить <span class="delete-text-slot"></span>. Это действие <span class="permanent-text-marker">необратимо</span>. Вы уверены?
+                Вы собираетесь удалить «<span class="delete-text-slot"></span>». Это действие <span class="permanent-text-marker">необратимо</span>. Вы уверены?
             </p>
             <div class="modal-buttons-container">
                 <button class="confirm-delete button orange-button">
@@ -18,7 +18,7 @@
 
 <style>
     .permanent-text-marker {
-        color: var(--main_pink);
+        color: var(--holiday_red);
     }
 
     .window.delete-modal {
@@ -41,7 +41,19 @@
         flex-wrap: wrap;
     }
 
-    .button.orange-button {
+    .delete-modal .button.orange-button {
         background-color: var(--pale_orange);
+    }
+
+    .delete-modal .button.orange-button:hover {
+        background-color: var(--main_green);
+    }
+
+    .delete-modal .button:not(.orange-button):hover {
+        background-color: var(--pale_yellow);
+    }
+
+    .delete-text-slot {
+        color: var(--dark_blue_font);
     }
 </style>

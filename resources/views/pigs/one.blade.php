@@ -80,8 +80,7 @@
                 @if($admin)
                 <div class="admin_controls_wrapper">
                     <div>
-                        <a class="edit-icon-link" href="{{ route('catalog.show.update', compact('pig')) }}"
-                           draggable="false">
+                        <a class="edit-icon-link" href="{{ route('catalog.show.update', compact('pig')) }}" draggable="false">
                             <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
                         </a>
                     </div>

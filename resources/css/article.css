@@ -42,14 +42,14 @@
 }
 
 :is(.article-container, .trumbowyg-editor) figure {
-    margin: 0;
+    margin: 0 auto 1.25rem;
     display: flex;
     flex-direction: column;
     row-gap: 0.75rem;
 }
 
 :is(.article-container, .trumbowyg-editor) > p > img,
-:is(.article-container, .trumbowyg-editor) > p > figure > img {
+:is(.article-container, .trumbowyg-editor) figure > img {
     max-width: 100%;
     max-height: 40rem;
     margin: 0 auto;
@@ -57,7 +57,7 @@
     border-radius: 2rem;
 }
 
-:is(.article-container, .trumbowyg-editor) > p > figure > img + figcaption {
+:is(.article-container, .trumbowyg-editor) figure > img + figcaption {
     text-align: center;
     font-size: 1.125rem;
     color: var(--caption-gray);
@@ -150,6 +150,7 @@
 
     :is(.article-container, .trumbowyg-editor) > p > figure {
         row-gap: 0.325rem;
+        margin: 0 auto 0.625rem;
     }
 
     :is(.article-container, .trumbowyg-editor) > p > figure > img + figcaption {
