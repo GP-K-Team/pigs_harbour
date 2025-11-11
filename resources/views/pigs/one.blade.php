@@ -14,8 +14,8 @@
 @endpush
 
 @push('js')
-    <script type="module" src="{{ Vite::asset('resources/js/updateStatus.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/thumbnails.js') }}"></script>
+    @vite('resources/js/thumbnails.js')
+    @vite('resources/js/updateStatus.js')
 @endpush
 
 @php

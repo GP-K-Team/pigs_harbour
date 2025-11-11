@@ -26,9 +26,9 @@
 @endpush
 
 @push('js')
-    <script type="module" src="{{ Vite::asset('resources/js/hashtags.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/pageText.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/delete-handler.js') }}"></script>
+    @vite('resources/js/hashtags.js')
+    @vite('resources/js/pageText.js')
+    @vite('resources/js/delete-handler.js')
 @endpush
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -59,6 +59,19 @@
 
         @if($articles->isEmpty())
             <h3>Нет результатов</h3>
+
+            @if($isAdmin)
+                <ul class="list">
+                    <li class="list-item card add-card">
+                        <a class="add-card-link" href="{{ route('blog.show.create') }}" draggable="false">
+                            <p class="add-card-link-text">Добавить статью</p>
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                <path d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            @endif
         @else
             <ul class="list">
                 @if($isAdmin)
@@ -66,8 +79,7 @@
                         <a class="add-card-link" href="{{ route('blog.show.create') }}" draggable="false">
                             <p class="add-card-link-text">Добавить статью</p>
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-                                <path
-                                    d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
+                                <path d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z"/>
                             </svg>
                         </a>
                     </li>

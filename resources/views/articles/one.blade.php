@@ -28,9 +28,9 @@
 @endpush
 
 @push('js')
-    <script type="module" src="{{ Vite::asset('resources/js/articleSplide.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/blog/article.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/delete-handler.js') }}"></script>
+    @vite('resources/js/articleSplide.js')
+    @vite('resources/js/delete-handler.js')
+    @vite('resources/js/blog/article.js')
 @endpush
 
 @section('content')
