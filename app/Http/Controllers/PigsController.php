@@ -110,19 +110,22 @@ class PigsController extends Controller
         if ($request->has('files')) {
             $pig->uploadImages($request['files']);
 
-            $mainFile = $request->get('files')[0];
             $mainImage = $pig->images()->wherePivot('is_main', '=', 1)->first();
-            $newMainFileName = Str::after($mainFile, 'storage/');
+            $mainFile = $request->get('files')[0] ?? null;
 
-            if ($mainImage) {
-                if ($mainImage->link !== $newMainFileName) {
-                    $pig->images()->updateExistingPivot($mainImage->id, ['is_main' => 0]);
+            if ($mainFile) {
+                $newMainFileName = Str::after($mainFile, 'storage/');
+
+                if ($mainImage) {
+                    if ($mainImage->link !== $newMainFileName) {
+                        $pig->images()->updateExistingPivot($mainImage->id, ['is_main' => 0]);
+                        $newMainImage = $pig->images()->where('link', '=', $newMainFileName)->first();
+                        $pig->images()->updateExistingPivot($newMainImage->id, ['is_main' => 1]);
+                    }
+                } else {
                     $newMainImage = $pig->images()->where('link', '=', $newMainFileName)->first();
                     $pig->images()->updateExistingPivot($newMainImage->id, ['is_main' => 1]);
                 }
-            } else {
-                $newMainImage = $pig->images()->where('link', '=', $newMainFileName)->first();
-                $pig->images()->updateExistingPivot($newMainImage->id, ['is_main' => 1]);
             }
         }
 
