@@ -54,7 +54,7 @@ trait HasImages
     public function deleteImages(): void
     {
         foreach ($this->images as $image) {
-            Storage::disk('public')->delete($this::IMAGE_PATH . '/' . $image->link);
+            Storage::disk('public')->delete($image->link);
             $image->delete();
         }
     }

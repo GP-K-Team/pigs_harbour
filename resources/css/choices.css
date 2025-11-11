@@ -16,5 +16,5 @@
 }
 
 .choices__list--dropdown, .choices__list[aria-expanded] {
-    z-index: 6 !important;
+    z-index: 15 !important;
 }
