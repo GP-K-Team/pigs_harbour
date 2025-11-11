@@ -36,10 +36,6 @@
 }
 
 /* Modals */
-.trumbowyg-modal.trumbowyg-fixed-top {
-    height: 220px !important;
-}
-
 .trumbowyg-modal-box .trumbowyg-input-row {
     min-height: 2rem;
     border-radius: 0.25rem;
@@ -97,4 +93,9 @@
 .trumbowyg-modal-box button.trumbowyg-modal-button.trumbowyg-modal-reset:hover {
     background-color: var(--holiday_red);
     color: #FFFFFF;
+}
+
+.trumbowyg-editor[contenteditable=true]:empty::before{
+    content: attr(placeholder);
+    color: #999;
 }

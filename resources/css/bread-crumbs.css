@@ -1,6 +1,8 @@
 .bread-crumbs {
-    margin: 3.75rem;
+    margin: 3.75rem 3.75rem 1.25rem;
     font-family: Inter, Nunito, Arial, sans-serif;
+    white-space: nowrap;
+    overflow-x: scroll;
 }
 
 .bread-crumbs > ul {
@@ -20,4 +22,26 @@
 
 .bread-crumbs > ul > li:not(:last-child)::after {
     content: " / ";
+}
+
+@media screen and (max-width: 1200px) {
+    .bread-crumbs {
+        margin: 2.5rem 2.5rem 1.25rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .bread-crumbs {
+        margin: 1.25rem 1.25rem 0.625rem;
+    }
+}
+
+/* Hide horizontal scrollbar while preserving scrollability */
+.bread-crumbs {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox, Safari 18.2+, Chromium 121+ */
+}
+
+.bread-crumbs::-webkit-scrollbar {
+    display: none;  /* Older Safari and Chromium */
 }

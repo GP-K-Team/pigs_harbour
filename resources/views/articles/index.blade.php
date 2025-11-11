@@ -86,8 +86,7 @@
 
                             @if($isAdmin)
                                 <div class="admin-buttons-wrapper">
-                                    <a class="edit-icon-link" href="{{ route('blog.show.update', compact('article')) }}"
-                                       draggable="false">
+                                    <a class="edit-icon-link" href="{{ route('blog.show.update', compact('article')) }}" draggable="false">
                                         <img src="{{ asset('images/icons/edit.svg') }}" alt="" draggable="false">
                                     </a>
 
@@ -332,6 +331,11 @@
             font-size: 1.5rem;
         }
 
+        .card-button:hover {
+            background-color: var(--main_green);
+            color: var(--main_font);
+        }
+
         @media (max-width: 1200px) {
             .card-bio .card-title {
                 font-size: 1.25rem;
@@ -385,7 +389,7 @@
         .edit-icon-link {
             width: 1.75rem;
             height: 1.75rem;
-            background-color: var(--main_green);
+            background-color: #FFFFFF;
             border-radius: 0.5rem;
             user-select: none;
 

@@ -1,0 +1,159 @@
+.article-container {
+    width: 100%;
+    padding: 0 3.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: center;
+
+    --caption-gray: #838383;
+}
+
+.trumbowyg-editor {
+    padding: 2.25%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+:is(.article-container, .trumbowyg-editor),
+:is(.article-container, .trumbowyg-editor) * {
+    box-sizing: border-box;
+    font-size: 1.5rem;
+}
+
+:is(.article-container, .trumbowyg-editor) > p {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0 0 1.25rem;
+    font-family: Nunito, Arial, sans-serif;
+    font-size: inherit;
+}
+
+.article-container > p:empty,
+.article-container > p > br {
+    display: none;
+}
+
+:is(.article-container, .trumbowyg-editor) ::selection {
+    background-color: var(--dark_blue_font);
+    color: #FFFFFF;
+}
+
+:is(.article-container, .trumbowyg-editor) figure {
+    margin: 0 auto 1.25rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.75rem;
+}
+
+:is(.article-container, .trumbowyg-editor) > p > img,
+:is(.article-container, .trumbowyg-editor) figure > img {
+    max-width: 100%;
+    max-height: 40rem;
+    margin: 0 auto;
+    display: block;
+    border-radius: 2rem;
+}
+
+:is(.article-container, .trumbowyg-editor) figure > img + figcaption {
+    text-align: center;
+    font-size: 1.125rem;
+    color: var(--caption-gray);
+    font-style: italic;
+}
+
+:is(.article-container, .trumbowyg-editor) > :is(h2, h3) {
+    margin: 0 0 1.25rem;
+    line-height: 100%;
+}
+
+:is(.article-container, .trumbowyg-editor) > h2 {
+    font-size: 3.125rem;
+}
+
+:is(.article-container, .trumbowyg-editor) > h3 {
+    font-size: 1.875rem;
+}
+
+:is(.article-container, .trumbowyg-editor) > :is(ol, ul) {
+    padding-left: 1.75rem;
+    margin: 0 0 1.25rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    font-size: inherit;
+}
+
+:is(.article-container, .trumbowyg-editor) > :is(ol, ul) > li {
+    list-style: disc;
+    font-size: inherit;
+}
+
+:is(.article-container, .trumbowyg-editor) a {
+    color: var(--main_font);
+    font-size: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+:is(.article-container, .trumbowyg-editor) a::selection {
+    background-color: var(--holiday_red);
+    text-decoration-color: #FFFFFF;
+}
+
+:is(.article-container, .trumbowyg-editor) a:is(:hover, :focus) {
+    color: var(--dark_blue_font);
+}
+
+:is(.article-container, .trumbowyg-editor) a:active {
+    color: var(--holiday_red);
+}
+
+@media screen and (max-width: 1200px) {
+    .article-container {
+        padding: 0 2.5rem;
+    }
+
+    :is(.article-container, .trumbowyg-editor) {
+        font-size: 1rem;
+    }
+
+    :is(.article-container, .trumbowyg-editor) > h2 {
+        font-size: 1.5rem;
+    }
+
+    :is(.article-container, .trumbowyg-editor) > h3 {
+        font-size: 1.25rem;
+        line-height: 1.25;
+    }
+
+    :is(.article-container, .trumbowyg-editor) > p > figure {
+        row-gap: 0.5rem;
+    }
+
+    :is(.article-container, .trumbowyg-editor) > p > figure > img + figcaption {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .article-container {
+        padding: 0 1.25rem;
+    }
+
+    :is(.article-container, .trumbowyg-editor) > :is(p, h2, h3),
+    :is(.article-container, .trumbowyg-editor) > :is(ol, ul) {
+        margin-bottom: 0.625rem;
+    }
+
+    :is(.article-container, .trumbowyg-editor) > p > figure {
+        row-gap: 0.325rem;
+        margin: 0 auto 0.625rem;
+    }
+
+    :is(.article-container, .trumbowyg-editor) > p > figure > img + figcaption {
+        font-size: 0.75rem;
+    }
+}

@@ -23,14 +23,15 @@
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/choices.css') }}">
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/rich-text-editor.css') }}">
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/article.css') }}">
 @endpush
 
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/filepond.js') }}"></script>
-    <script type="module" src="{{ Vite::asset('resources/js/page/translit.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/article_choice.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/form/rich-text-editor.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/form/translit.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/blog/article.js') }}"></script>
 
     @if($article && $article->mainImage)
         <script type="module">
@@ -162,8 +163,7 @@
                 </div>
 
                 <div class="editor-container">
-                    <textarea class="rich-text-editor" name="text" id="text" form="article_form"
-                              placeholder="Текст статьи">
+                    <textarea class="rich-text-editor" name="text" id="text" form="article_form" placeholder="Куда деть морскую свинку на время отпуска?">
                         {{ trim( old('text', $article?->text) ) }}
                     </textarea>
                 </div>
@@ -187,6 +187,10 @@
             background-color: var(--light_blue);
             border-bottom-left-radius: 1rem;
             border-bottom-right-radius: 1rem;
+        }
+
+        .window-container {
+            background-color: rgba(50, 50, 50, 0.9);
         }
 
         #editor_window {
