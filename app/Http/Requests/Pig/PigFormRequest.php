@@ -29,7 +29,6 @@ class PigFormRequest extends FormRequest
         $formData['birthday'] = Carbon::parseFromLocale($formData['birthday']);
         $formData['sex'] = Sex::from($formData['sex']);
         $formData['fur'] = Fur::from($formData['fur']);
-        $formData['slug_name'] = Str::afterLast($formData['slug_name'], '/');
         $formData['city_id'] = (int) $formData['city'];
         $formData['companion_pig_id'] = $formData['companion'] ?? null;
 
@@ -78,5 +77,15 @@ class PigFormRequest extends FormRequest
             'companion.exists' => 'Свинка не найдена - убедитесь в правильности данных',
             'image' => 'Файл должен быть изображением',
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'slug_name' => Str::afterLast($this->slug_name, '/'),
+        ]);
     }
 }

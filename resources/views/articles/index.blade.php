@@ -28,6 +28,7 @@
 @push('js')
     <script type="module" src="{{ Vite::asset('resources/js/hashtags.js') }}"></script>
     <script type="module" src="{{ Vite::asset('resources/js/pageText.js') }}"></script>
+    <script type="module" src="{{ Vite::asset('resources/js/delete-handler.js') }}"></script>
 @endpush
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -84,10 +85,16 @@
                             </a>
 
                             @if($isAdmin)
-                                <a class="edit-icon-link" href="{{ route('blog.show.update', compact('article')) }}"
-                                   draggable="false">
-                                    <img src="{{ asset('images/icons/edit.svg') }}" alt="" draggable="false">
-                                </a>
+                                <div class="admin-buttons-wrapper">
+                                    <a class="edit-icon-link" href="{{ route('blog.show.update', compact('article')) }}"
+                                       draggable="false">
+                                        <img src="{{ asset('images/icons/edit.svg') }}" alt="" draggable="false">
+                                    </a>
+
+                                    <div class="delete-form-wrapper">
+                                        @include('components.buttons.article-delete-button', ['articleToDelete' => $article])
+                                    </div>
+                                </div>
                             @endif
 
                             <p class="card-description">{{ $article->description }}</p>
@@ -105,7 +112,7 @@
                     <ul class="pagination_list">
                         <a href="?page=1">
                             <li @class(['item_active' => $articles->currentPage() === 1])>
-                                    1
+                                1
                             </li>
                         </a>
 
@@ -122,7 +129,7 @@
                             @if($articles->currentPage() !== 1 && $articles->currentPage() - 1 !== 1 && $articles->currentPage() !== $articles->lastPage())
                                 <a href="{{ $articles->previousPageUrl() }}">
                                     <li>
-                                            {{ $articles->currentPage() - 1 }}
+                                        {{ $articles->currentPage() - 1 }}
                                     </li>
                                 </a>
                             @endif
@@ -130,19 +137,19 @@
                             @if($articles->currentPage() === 1)
                                 <a href="{{ $articles->nextPageUrl() }}">
                                     <li>
-                                            {{ $articles->currentPage() + 1 }}
+                                        {{ $articles->currentPage() + 1 }}
                                     </li>
                                 </a>
                             @elseif($articles->currentPage() === $articles->lastPage())
                                 <a href="{{ $articles->previousPageUrl() }}">
                                     <li>
-                                            {{ $articles->lastPage() - 1 }}
+                                        {{ $articles->lastPage() - 1 }}
                                     </li>
                                 </a>
                             @else
                                 <a>
                                     <li @class(['item_active'])>
-                                            {{ $articles->currentPage()}}
+                                        {{ $articles->currentPage()}}
                                     </li>
                                 </a>
                             @endif
@@ -150,7 +157,7 @@
                             @if($articles->currentPage() !== 1 && $articles->currentPage() + 1 !== $articles->lastPage() && $articles->currentPage() !== $articles->lastPage())
                                 <a href="{{ $articles->nextPageUrl() }}">
                                     <li>
-                                            {{ $articles->currentPage() + 1 }}
+                                        {{ $articles->currentPage() + 1 }}
                                     </li>
                                 </a>
                             @endif
@@ -166,7 +173,7 @@
 
                         <a href="{{ "?page=" . $articles->lastPage()  }}">
                             <li @class(['item_active' => $articles->currentPage() === $articles->lastPage()])>
-                                    {{ $articles->lastPage() }}
+                                {{ $articles->lastPage() }}
                             </li>
                         </a>
                     </ul>
@@ -178,15 +185,17 @@
         $footerContent = $pageTexts->where('text_key', '=', 'footer_text')->first();
     @endphp
     @if($footerContent)
-    <div class="footer_block">
-        <div class="footer_text">
-            <p class="footer_text" @if($isAdmin) contenteditable @endif data-page-text-id="{{ $footerContent->id }}">
-                {{ $footerContent->content }}
-            </p>
+        <div class="footer_block">
+            <div class="footer_text">
+                <p class="footer_text" @if($isAdmin) contenteditable
+                   @endif data-page-text-id="{{ $footerContent->id }}">
+                    {{ $footerContent->content }}
+                </p>
+            </div>
         </div>
-    </div>
     @endif
 
+    @include('components.modal.modal-delete-confirm')
     <style>
         h3 {
             margin: 0;
@@ -361,12 +370,18 @@
             position: relative;
         }
 
-        .edit-icon-link {
-            width: 1.75rem;
-            height: 1.75rem;
+        .admin-buttons-wrapper {
             position: absolute;
             top: 1rem;
             right: 1rem;
+            display: flex;
+            column-gap: 10px;
+            align-items: center;
+        }
+
+        .edit-icon-link {
+            width: 1.75rem;
+            height: 1.75rem;
             background-color: var(--main_green);
             border-radius: 0.5rem;
             user-select: none;

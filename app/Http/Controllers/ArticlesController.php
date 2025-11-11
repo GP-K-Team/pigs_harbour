@@ -105,7 +105,7 @@ class ArticlesController extends Controller
         return \response()->redirectToAction([self::class, 'index']);
     }
 
-    public function delete(Request $request, Article $article): RedirectResponse
+    public function delete(Article $article): RedirectResponse
     {
         return \response()->redirectToAction([self::class, 'index']);
     }
