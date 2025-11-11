@@ -29,9 +29,8 @@
 @push('js')
     @vite('resources/js/filepond.js')
     @vite('resources/js/article_choice.js')
-    @vite('resources/js/blog/article.js')
-    @vite('resources/js/form/translit.js')
     @vite('resources/js/form/rich-text-editor.js')
+    @vite('resources/js/form/translit.js')
 
     @if($article && $article->mainImage)
         <script type="module">
