@@ -6,10 +6,9 @@ namespace App\Traits;
 
 use App\Models\Image;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Psr\Http\Message\UploadedFileInterface;
+use Illuminate\Support\Str;
 
 trait HasImages
 {
@@ -36,15 +35,25 @@ trait HasImages
             }
 
             $newImage = Image::query()->create([
-                'link' => Storage::disk('public')->putFile(static::IMAGE_PATH, $file),
+                'link' => static::storeImage($file),
             ]);
 
             $this->images()->attach($newImage, ['is_main' => $key === 0]);
         }
     }
 
+    public static function storeImage(UploadedFile $file): string
+    {
+        return Storage::disk('public')->putFile(static::IMAGE_PATH, $file);
+    }
+
     public static function getDefaultImage(): string
     {
         return Storage::url(static::IMAGE_PATH . DIRECTORY_SEPARATOR . static::DEFAULT_IMAGE);
+    }
+
+    public static function getPublicUrl(string $filename): string
+    {
+        return Storage::url(static::IMAGE_PATH . DIRECTORY_SEPARATOR . Str::afterLast($filename, '/'));
     }
 }

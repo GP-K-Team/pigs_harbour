@@ -1,0 +1,100 @@
+.editor-container > :is(.trumbowyg-box, .trumbowyg-editor-box) {
+    height: 95%;
+    border: none;
+}
+
+.trumbowyg-editor-box, .trumbowyg-textarea {
+    overflow-y: scroll;
+}
+
+/* Editor control panel */
+.trumbowyg-box > .trumbowyg-button-pane {
+    background: var(--light_blue);
+}
+
+.trumbowyg-button-pane > .trumbowyg-button-group > button > svg,
+.trumbowyg-dropdown > button svg {
+    color: var(--dark_blue_font);
+    fill: var(--dark_blue_font);
+}
+
+.trumbowyg-button-pane > .trumbowyg-button-group > button:hover > svg,
+.trumbowyg-dropdown > button:hover svg {
+    color: var(--main_pink);
+    fill: var(--main_pink);
+}
+
+.trumbowyg-button-pane > .trumbowyg-button-group > button:active > svg,
+.trumbowyg-dropdown > button:active svg {
+    color: var(--holiday_red);
+    fill: var(--holiday_red);
+}
+
+.trumbowyg-button-pane.trumbowyg-disable .trumbowyg-not-disable svg {
+    color: var(--main_pink);
+    fill: var(--main_pink);
+}
+
+/* Modals */
+.trumbowyg-modal.trumbowyg-fixed-top {
+    height: 220px !important;
+}
+
+.trumbowyg-modal-box .trumbowyg-input-row {
+    min-height: 2rem;
+    border-radius: 0.25rem;
+    line-height: 1.75;
+}
+
+.trumbowyg-modal-box .trumbowyg-input-row .trumbowyg-input-html {
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+.trumbowyg-input-html input[type="file"] {
+    display: flex;
+    padding: 0 !important;
+    font-family: Nunito, Arial, sans-serif;
+    line-height: 1.9rem !important;
+}
+
+.trumbowyg-modal-box .trumbowyg-input-html input[type="file"]::file-selector-button,
+.trumbowyg-modal-box .trumbowyg-input-html input[type="file"]::-webkit-file-upload-button {
+    width: 99.75%;
+    height: 90%;
+    color: var(--main_font);
+    background-color: var(--light_blue);
+    border: none;
+    border-radius: 0.15rem;
+    cursor: pointer;
+}
+
+.trumbowyg-modal-box .trumbowyg-input-html input[type="file"]:is(:hover, :focus) {
+    outline: none;
+}
+
+.trumbowyg-modal-box .trumbowyg-input-html input[type="file"]:hover::file-selector-button {
+    background-color: var(--main_blue);
+}
+
+.trumbowyg-modal-box button.trumbowyg-modal-button {
+    font-family: Nunito, Arial, sans-serif;
+    border-radius: 0.25rem;
+    color: var(--main_font);
+}
+
+.trumbowyg-modal-box button.trumbowyg-modal-button.trumbowyg-modal-submit {
+    background-color: var(--main_blue);
+}
+
+.trumbowyg-modal-box button.trumbowyg-modal-button.trumbowyg-modal-submit:hover {
+    background-color: var(--dark_blue_font);
+    color: #FFFFFF;
+}
+
+.trumbowyg-modal-box button.trumbowyg-modal-button.trumbowyg-modal-reset:hover {
+    background-color: var(--holiday_red);
+    color: #FFFFFF;
+}
