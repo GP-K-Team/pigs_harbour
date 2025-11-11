@@ -34,10 +34,14 @@ $(document).ready(function () {
         },
         removeformatPasted: true, // prevent style carryover from other web pages or, say, Word
         tagsToRemove: ['script', 'iframe'],
-    }).on('tbwblur', function () {
+    })
+        .on('tbwinit', wrapImages)
+        .on('tbwblur', function () {
         if (!$(this).val().length) {
             $(this).trumbowyg('empty');
         }
+
+        wrapImages();
     });
 
     $('#editor_window').closest('.window-container').on('close', function () {
@@ -57,3 +61,11 @@ $(document).ready(function () {
         }
     });
 });
+
+function wrapImages() {
+    $('.trumbowyg-editor > p > img').each(function (i, img) {
+        const caption = $('<figcaption>').text( $(img).attr('alt') );
+
+        caption.insertAfter($(img).wrap('<figure>'));
+    });
+}
