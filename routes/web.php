@@ -41,7 +41,7 @@ Route::prefix('blog')->name('blog.')->group(function () {
         Route::get('/update/{article}', [ArticlesController::class, 'showUpdate'])->name('show.update');
         Route::post('/', [ArticlesController::class, 'create'])->name('create');
         Route::post('/{article}', [ArticlesController::class, 'update'])->name('update');
-        Route::delete('/{article}', [ArticlesController::class, 'delete'])->name('update');
+        Route::delete('/{article}', [ArticlesController::class, 'delete'])->name('delete');
     });
 
     Route::get('/', [ArticlesController::class, 'index'])->name('index');

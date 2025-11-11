@@ -52,8 +52,23 @@ trait HasImages
         return Storage::url(static::IMAGE_PATH . DIRECTORY_SEPARATOR . static::DEFAULT_IMAGE);
     }
 
+    /**
+     * @param string $filename
+     * @return string
+     */
     public static function getPublicUrl(string $filename): string
     {
         return Storage::url(static::IMAGE_PATH . DIRECTORY_SEPARATOR . Str::afterLast($filename, '/'));
+    }
+
+    /**
+     * @return void
+     */
+    public function deleteImages(): void
+    {
+        foreach ($this->images as $image) {
+            Storage::disk('public')->delete($image->link);
+            $image->delete();
+        }
     }
 }

@@ -52,7 +52,7 @@ class Pig extends Model
 
     public const IMAGE_PATH = 'pigs';
 
-    public const PAGINATE_ITEMS_COUNT = '3';
+    public const PAGINATE_ITEMS_COUNT = '6';
 
     protected $fillable = [
         'name',
@@ -65,6 +65,7 @@ class Pig extends Model
         'has_delivery',
         'is_active',
         'stopped_looking_date',
+        'companion_pig_id',
         'city_id',
     ];
 

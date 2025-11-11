@@ -29,9 +29,6 @@ class PigFormRequest extends FormRequest
         $formData['birthday'] = Carbon::parseFromLocale($formData['birthday']);
         $formData['sex'] = Sex::from($formData['sex']);
         $formData['fur'] = Fur::from($formData['fur']);
-        $formData['slug_name'] = Str::afterLast($formData['slug_name'], '/');
-        $formData['city_id'] = (int) $formData['city'];
-        $formData['companion_pig_id'] = $formData['companion'] ?? null;
 
         return $formData;
     }
@@ -50,8 +47,8 @@ class PigFormRequest extends FormRequest
             'description' => 'nullable|string',
             'sex' => ['required', Rule::enum(Sex::class)],
             'fur' => ['required', Rule::enum(Fur::class)],
-            'city' => 'required|int|exists:cities,id',
-            'companion' => 'nullable|int|exists:pigs,id',
+            'city_id' => 'required|int|exists:cities,id',
+            'companion_pig_id' => 'nullable|int|exists:pigs,id',
             'files' => 'nullable|array',
             'files.*' => [
                 'nullable',
@@ -74,9 +71,19 @@ class PigFormRequest extends FormRequest
         return [
             'required' => 'Это обязательное поле',
             'slug_name.unique' => 'Адрес уже занят!',
-            'city.exists' => 'Город не найден - убедитесь в правильности данных',
-            'companion.exists' => 'Свинка не найдена - убедитесь в правильности данных',
+            'city_id.exists' => 'Город не найден - убедитесь в правильности данных',
+            'companion_pig_id.exists' => 'Свинка не найдена - убедитесь в правильности данных',
             'image' => 'Файл должен быть изображением',
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'slug_name' => Str::afterLast($this->slug_name, '/'),
+        ]);
     }
 }

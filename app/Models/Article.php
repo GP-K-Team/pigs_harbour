@@ -10,6 +10,7 @@ use App\Models\Traits\IsIdentifiedBySlug;
 use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
 
 /**
  * @property int $id
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $meta_title
  * @property string $author
  * @property string $origin_link
+ * @property Collection|iterable<Image> $images
  * @property Image|null $mainImage
  * @mixin HasTimestamps
  */
@@ -33,7 +35,7 @@ class Article extends Model
 
     public const IMAGE_PATH = 'articles';
 
-    public const PAGINATE_ITEMS_COUNT = '1';
+    public const PAGINATE_ITEMS_COUNT = '6';
 
     protected $fillable = [
         'title',

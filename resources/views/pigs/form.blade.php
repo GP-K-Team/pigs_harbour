@@ -152,7 +152,7 @@
 
                 <div class="input-container has-select">
                     <label class="input-label" for="city">Город</label>
-                    <select name="city" id="city">
+                    <select name="city_id" id="city">
                         <option value="" disabled>Выберите город</option>
                         @foreach($cities as $id => $city)
                             <option value="{{ $id }}" @selected($id === $pig?->city_id)>
@@ -165,7 +165,7 @@
 
                 <div class="input-container has-select">
                     <label class="input-label" for="companion">Отдаётся вместе</label>
-                    <select name="companion" id="companion" data-search="true">
+                    <select name="companion_pig_id" id="companion" data-search="true">
                         <option value="" @selected(empty($pig) && empty($pig->companion_pig_id))>Без напарника</option>
                         @foreach($companionCandidates as $candidate)
                             <option

@@ -17,15 +17,6 @@ class ArticleFormRequest extends FormRequest
         return true;
     }
 
-    /** @inheritDoc */
-    public function validated($key = null, $default = null): array
-    {
-        $formData = parent::validated($key, $default);
-        $formData['slug_title'] = Str::afterLast($formData['slug_title'], '/');
-
-        return $formData;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      */
@@ -52,5 +43,15 @@ class ArticleFormRequest extends FormRequest
             'slug_title.unique' => 'Адрес уже занят!',
             'url' => 'Невалидная ссылка'
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'slug_title' => Str::afterLast($this->slug_title, '/'),
+        ]);
     }
 }

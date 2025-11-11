@@ -93,7 +93,9 @@ class ArticlesController extends Controller
         $article->fill($formData)->save();
 
         if ($request->has('cover')) {
-            $article->mainImage->delete();
+            if ($article->mainImage) {
+                $article->mainImage->delete();
+            }
             $article->uploadImages($formData['cover']);
         }
 
@@ -105,8 +107,11 @@ class ArticlesController extends Controller
         return \response()->redirectToAction([self::class, 'index']);
     }
 
-    public function delete(Request $request, Article $article): RedirectResponse
+    public function delete(Article $article): RedirectResponse
     {
+        $article->deleteImages();
+        $article->delete();
+
         return \response()->redirectToAction([self::class, 'index']);
     }
 }
