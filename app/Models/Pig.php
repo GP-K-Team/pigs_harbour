@@ -65,6 +65,7 @@ class Pig extends Model
         'has_delivery',
         'is_active',
         'stopped_looking_date',
+        'companion_pig_id',
         'city_id',
     ];
 

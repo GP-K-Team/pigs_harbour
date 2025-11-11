@@ -53,6 +53,15 @@ trait HasImages
     }
 
     /**
+     * @param string $filename
+     * @return string
+     */
+    public static function getPublicUrl(string $filename): string
+    {
+        return Storage::url(static::IMAGE_PATH . DIRECTORY_SEPARATOR . Str::afterLast($filename, '/'));
+    }
+
+    /**
      * @return void
      */
     public function deleteImages(): void

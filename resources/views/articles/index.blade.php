@@ -198,6 +198,7 @@
     @endif
 
     @include('components.modal.modal-delete-confirm')
+
     <style>
         h3 {
             margin: 0;
