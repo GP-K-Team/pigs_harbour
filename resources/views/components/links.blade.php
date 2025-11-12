@@ -5,13 +5,13 @@
         </a>
     </li>
     <li>
-        <a href="https://vk.com/pristansvinki" target="_blank">
+        <a href="https://t.me/pristansvinki " target="_blank">
             <div class="footer_icon_block footer_icon_telegram"></div>
         </a>
     </li>
     <li>
-        <a href="https://vk.com/pristansvinki" target="_blank">
-            <div class="footer_icon_block footer_icon_youtube"></div>
+        <a href="https://dzen.ru/pristansvinki" target="_blank">
+            <div class="footer_icon_block footer_icon_dzen"></div>
         </a>
     </li>
 </ul>
@@ -58,15 +58,15 @@
         background-image: url("/images/logo/footer/telegram/click.png");
     }
 
-    .footer_icon_block.footer_icon_youtube {
-        background-image: url("/images/logo/footer/youtube/default.png");
+    .footer_icon_block.footer_icon_dzen {
+        background-image: url("/images/logo/footer/dzen/default.png");
     }
 
-    .footer_icon_block.footer_icon_youtube:hover {
-        background-image: url("/images/logo/footer/youtube/hover.png");
+    .footer_icon_block.footer_icon_dzen:hover {
+        background-image: url("/images/logo/footer/dzen/hover.png");
     }
 
-    .footer_icon_block.footer_icon_youtube:active {
-        background-image: url("/images/logo/footer/youtube/click.png");
+    .footer_icon_block.footer_icon_dzen:active {
+        background-image: url("/images/logo/footer/dzen/click.png");
     }
 </style>
