@@ -32,7 +32,7 @@
     /** @var <Pig> $pig */
     /** @var Collection|iterable<Pig> $additionalPigs */
     /** @var Collection|iterable<City> $cities */
-    /** @var bool $admin */
+    /** @var bool $isAdmin */
 @endphp
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -43,7 +43,7 @@
         <div class="bread-crumbs">
             <ul>
                 <li><a href="/">Главная</a></li>
-                @if($pig->is_active || !$pig->is_active && !$admin)
+                @if($pig->is_active || !$pig->is_active && !$isAdmin)
                     <li><a href="/catalog">Ищут дом</a></li>
                 @else
                     <li><a href="{{ route('pigs.archive') }}">Архив</a></li>
@@ -77,7 +77,7 @@
             </div>
 
             <div class="pig_details_block">
-                @if($admin)
+                @if($isAdmin)
                 <div class="admin_controls_wrapper">
                     <div>
                         <a class="edit-icon-link" href="{{ route('catalog.show.update', compact('pig')) }}" draggable="false">
@@ -165,7 +165,7 @@
 
             <ul class="additional_pig_list">
                 @foreach($additionalPigs as $pig)
-                <li>
+                <li class="card">
                     <a href="{{ route('catalog.one', compact('pig')) }}">
                         <img class="additional_pig_image"
                              src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
@@ -447,6 +447,12 @@
         .button.pig_details_button {
             font-size: 20px;
         }
+    }
+
+    .card:hover {
+        opacity: 0.9;
+        scale: 1.01;
+        transition: 250ms;
     }
 
 </style>

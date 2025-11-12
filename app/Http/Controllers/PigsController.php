@@ -65,26 +65,28 @@ class PigsController extends Controller
 
     public function showOne(Pig $pig): View
     {
-        $admin = Auth::check() ?? false;
+        $isAdmin = Auth::check() ?? false;
         $additionalPigs = Pig::activeDesc()->where('id', '!=', $pig->id)->take(3)->get();
 
-        return \view('pigs.one', compact('pig', 'admin', 'additionalPigs'));
+        return \view('pigs.one', compact('pig', 'isAdmin', 'additionalPigs'));
     }
 
     public function showCreate(Request $request): View
     {
         $cities = City::query()->pluck('name', 'id');
         $companionCandidates = Pig::activeDesc()->get();
+        $isAdmin = true;
 
-        return \view('pigs.form', compact('cities', 'companionCandidates'));
+        return \view('pigs.form', compact('cities', 'companionCandidates', 'isAdmin'));
     }
 
     public function showUpdate(Request $request, Pig $pig): View
     {
         $cities = City::query()->pluck('name', 'id');
         $companionCandidates = Pig::activeDesc()->whereNot('id', '=', $pig->id)->get();
+        $isAdmin = true;
 
-        return \view('pigs.form', compact('pig', 'companionCandidates', 'cities'));
+        return \view('pigs.form', compact('pig', 'companionCandidates', 'cities', 'isAdmin'));
     }
 
     public function create(CreatePigFormRequest $request): RedirectResponse
