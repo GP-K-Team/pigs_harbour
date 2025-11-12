@@ -125,9 +125,9 @@ class Pig extends Model
                 default => $query->where($key, $value),
                 'city' => $query->whereHas('city', fn (Builder $cities) => $cities->where('name', $value)),
                 'age' => match ($value) {
-                    AgeFilter::Young => $query->where('birthday', '<', today()->subYear()),
-                    AgeFilter::Mid => $query->where('birthday', '<', today()->subYears(3)),
-                    AgeFilter::Old => $query->where('birthday', '>=', today()->subYears(3)),
+                    AgeFilter::Young => $query->where('birthday', '>', today()->subYear()),
+                    AgeFilter::Mid => $query->where('birthday', '>', today()->subYears(3)),
+                    AgeFilter::Old => $query->where('birthday', '<=', today()->subYears(3)),
                     default => $query->whereNull('birthday'),
                 },
             };
