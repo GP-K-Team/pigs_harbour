@@ -165,7 +165,7 @@
 
             <ul class="additional_pig_list">
                 @foreach($additionalPigs as $pig)
-                <li class="card">
+                <li>
                     <a href="{{ route('catalog.one', compact('pig')) }}">
                         <img class="additional_pig_image"
                              src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
@@ -448,11 +448,4 @@
             font-size: 20px;
         }
     }
-
-    .card:hover {
-        opacity: 0.9;
-        scale: 1.01;
-        transition: 250ms;
-    }
-
 </style>
