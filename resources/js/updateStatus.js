@@ -9,5 +9,7 @@ $(document).ready(function () {
                 is_active: $(this).val(),
             }
         });
+
+        location.reload();
     });
 });
