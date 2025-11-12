@@ -14,15 +14,22 @@ $(document).ready(function () {
         btns: [
             ['viewHTML'],
             ['undo', 'redo'], // Only supported in Blink browsers
-            ['formatting'],
+            ['formats'],
             ['strong', 'em', 'del'],
             ['superscript', 'subscript'],
             ['link'],
             ['insertImage', 'upload'],
             ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
             ['unorderedList', 'orderedList'],
+            ['blockquote'],
             ['emoji'],
         ],
+        btnsDef: {
+            formats: {
+                dropdown: ['p', 'h2', 'h3'],
+                ico: 'p',
+            },
+        },
         plugins: {
             upload: {
                 serverPath: '/editor/upload',
@@ -35,13 +42,17 @@ $(document).ready(function () {
         removeformatPasted: true, // prevent style carryover from other web pages or, say, Word
         tagsToRemove: ['script', 'iframe'],
     })
-        .on('tbwinit', wrapImages)
+        .on('tbwinit', function () {
+            clearEmptyBlocks();
+            wrapImages();
+        })
         .on('tbwblur', function () {
-        if (!$(this).val().length) {
-            $(this).trumbowyg('empty');
-        }
+            wrapImages();
+            clearEmptyBlocks();
 
-        wrapImages();
+            if (!$(this).val().length) {
+                $(this).trumbowyg('empty');
+            }
     });
 
     $('#editor_window').closest('.window-container').on('close', function () {
@@ -52,12 +63,11 @@ $(document).ready(function () {
         const filename = $(this).val();
 
         if (filename) {
+            // hide input button and display file name instead
             $('.trumbowyg-modal-box .trumbowyg-input-html input[type="file"]').css({visibility: 'hidden', height: 0})
                 .parent().append(
-                    filename.slice(
-                        filename.lastIndexOf('\\') + 1
-                    )
-                );
+                    filename.slice(filename.lastIndexOf('\\') + 1)
+            );
         }
     });
 });
@@ -68,4 +78,17 @@ function wrapImages() {
 
         caption.insertAfter($(img).wrap('<figure>'));
     });
+
+    updateEditorInnerValue();
+}
+
+function clearEmptyBlocks() {
+    $('.trumbowyg-editor br').remove();
+    $('.trumbowyg-editor > p:empty').remove();
+
+    updateEditorInnerValue();
+}
+
+function updateEditorInnerValue() {
+    $('.rich-text-editor').trigger('tbwchange');
 }

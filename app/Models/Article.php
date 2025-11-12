@@ -21,6 +21,7 @@ use Illuminate\Support\Collection;
  * @property string $meta_description
  * @property string $meta_title
  * @property string $author
+ * @property string $translated_by
  * @property string $origin_link
  * @property Collection|iterable<Image> $images
  * @property Image|null $mainImage
