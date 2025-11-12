@@ -56,15 +56,17 @@ class ArticlesController extends Controller
     public function showCreate(): View
     {
         $hashtags = Hashtag::query()->pluck('tag', 'id');
+        $isAdmin = true;
 
-        return \view('articles.form', compact('hashtags'));
+        return \view('articles.form', compact('hashtags', 'isAdmin'));
     }
 
     public function showUpdate(Article $article): View
     {
         $hashtags = Hashtag::query()->pluck('tag', 'id');
+        $isAdmin = true;
 
-        return \view('articles.form', compact('article', 'hashtags'));
+        return \view('articles.form', compact('article', 'hashtags', 'isAdmin'));
     }
 
     public function create(CreateArticleFormRequest $request): RedirectResponse

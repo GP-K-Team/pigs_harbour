@@ -231,6 +231,12 @@
         background-color: var(--light_pink);
     }
 
+    .card:hover {
+        opacity: 0.9;
+        scale: 1.01;
+        transition: 250ms;
+    }
+
     .card p {
         margin: 0;
         padding: 0;
