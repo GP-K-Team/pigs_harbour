@@ -194,19 +194,6 @@
         flex-direction: column;
     }
 
-    a {
-        color: var(--main_font);
-        text-decoration: none;
-    }
-
-    a:hover {
-        color: var(--dark_blue_font);
-    }
-
-    a:active {
-        color: var(--dark_blue_font);
-    }
-
     ul {
         padding: 0;
         margin: 0;

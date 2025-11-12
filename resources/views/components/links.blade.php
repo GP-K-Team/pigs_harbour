@@ -34,39 +34,34 @@
         }
     }
 
+    .footer_icon_block:hover {
+        background-color: #DE90B0;
+    }
+
+    .footer_icon_block:active::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        display: flex;
+        background-color: #DE90B0;
+        opacity: 0.5;
+    }
+
     .footer_icon_block.footer_icon_vk {
-        background-image: url("/images/logo/footer/vk/default.png");
-    }
-
-    .footer_icon_block.footer_icon_vk:hover {
-        background-image: url("/images/logo/footer/vk/hover.png");
-    }
-
-    .footer_icon_block.footer_icon_vk:active {
-        background-image: url("/images/logo/footer/vk/click.png");
+        background-repeat: no-repeat;
+        background-image: url("/images/logo/footer/vk.png");
+        background-position: center;
     }
 
     .footer_icon_block.footer_icon_telegram {
-        background-image: url("/images/logo/footer/telegram/default.png");
-    }
-
-    .footer_icon_block.footer_icon_telegram:hover {
-        background-image: url("/images/logo/footer/telegram/hover.png");
-    }
-
-    .footer_icon_block.footer_icon_telegram:active {
-        background-image: url("/images/logo/footer/telegram/click.png");
+        background-repeat: no-repeat;
+        background-image: url("/images/logo/footer/tg.png");
+        background-position: center;
     }
 
     .footer_icon_block.footer_icon_dzen {
-        background-image: url("/images/logo/footer/dzen/default.png");
-    }
-
-    .footer_icon_block.footer_icon_dzen:hover {
-        background-image: url("/images/logo/footer/dzen/hover.png");
-    }
-
-    .footer_icon_block.footer_icon_dzen:active {
-        background-image: url("/images/logo/footer/dzen/click.png");
+        background-repeat: no-repeat;
+        background-image: url("/images/logo/footer/dz.svg");
+        background-position: center;
     }
 </style>
