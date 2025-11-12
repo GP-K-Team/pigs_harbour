@@ -6,10 +6,12 @@
     /** @var Collection|iterable<Pig> $pigs */
 @endphp
 
-<div class="pigs_wrapper">
-    <h2 class="pigs_wrapper_header">Ищут дом →</h2>
+<div class="landing_wrapper pigs_wrapper">
+    <h2 class="landing_header pigs_wrapper_header">
+        <a href="{{ route('catalog.index') }}">Ищут дом →</a>
+    </h2>
 
-    <div>
+    <div class="list_wrapper">
         <ul class="list">
             @foreach($pigs as $pig)
                 <li @class(['card-pink' => ($pig->sex->value === 'female'), 'list-item', 'card'])>
@@ -91,18 +93,15 @@
             </div>
         </section>
 
-        <div class="button catalog_button">
-            <a href="{{ route('catalog.index') }}">
-                Смотреть всех
-            </a>
-        </div>
+        <a class="button landing_button catalog-button" href="{{ route('catalog.index') }}">
+            Смотреть всех
+        </a>
 
     </div>
 </div>
 
 <style>
     .pigs_wrapper {
-        padding: 40px;
         position: relative;
         overflow: hidden;
         min-height: 500px;
@@ -149,14 +148,10 @@
         }
     }
 
-    .pigs_wrapper_header {
-        font-family: '315karusel', sans-serif;
-        font-size: 50px;
-        text-align: center;
-
-        @media (max-width: 1300px) {
-            font-size: 25px;
-        }
+    .list_wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .list.list_mobile {
@@ -297,26 +292,8 @@
         }
     }
 
-    .catalog_button {
-        margin: 40px auto 20px;
-    }
-
-    .button {
-        position: relative;
-        width: fit-content;
-        padding: 0.25rem 1.5rem;
-        text-transform: uppercase;
-        font-family: inherit;
-        font-size: 2rem;
-        background-color: #C3E9EA;
-        border: solid 2px #000000;
-        border-radius: 0.75rem;
-        cursor: pointer;
-        z-index: 4;
-
-        @media (max-width: 450px) {
-            font-size: 20px;
-        }
+    #pigs_splide-track + .splide__pagination {
+        bottom: 2rem;
     }
 
     .splide__pagination__page.is-active {
@@ -326,10 +303,6 @@
     .splide__pagination__page {
         background-color: var(--main_blue);
         opacity: 1;
-    }
-
-    .splide__pagination {
-        bottom: -20px;
     }
 
     .splide__slide {

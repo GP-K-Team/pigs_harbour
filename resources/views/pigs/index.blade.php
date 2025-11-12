@@ -384,7 +384,7 @@
             }
         }
 
-        .button {
+        .list-filter-button {
             position: relative;
             width: fit-content;
             padding: 0.25rem 1.5rem;
@@ -399,7 +399,7 @@
         }
 
         @media (max-width: 768px) {
-            .button {
+            .list-filter-button {
                 font-size: 1.5rem;
             }
         }
@@ -630,7 +630,16 @@
         }
 
         .filter-reset-button {
-            background-color: var(--button_gray);
+            background-color: rgb(from var(--main_font) r g b / 10%);
+        }
+
+        .filter-reset-button:hover {
+            color: var(--main_font);
+            background-color: #E2E2E2;
+        }
+
+        .filter-reset-button:active {
+            color: rgb(from var(--main_font) r g b / 80%);
         }
 
         h3 {

@@ -6,28 +6,30 @@
     /** @var Collection|iterable<Article> $articles */
 @endphp
 
-<div class="main_articles_wrapper">
-    <h2 class="articles_wrapper_header">Все о морских свинках →</h2>
+<div class="landing_wrapper main_articles_wrapper">
+    <h2 class="landing_header articles_wrapper_header">
+        <a href="{{ route('blog.index') }}">Все о морских свинках →</a>
+    </h2>
 
     <ul class="article-list">
-    @foreach($articles as $article)
-        <li class="article-list-item article-card">
-            <a href="{{ route('blog.one', compact('article')) }}">
-                <img class="article-card-image" width="350" height="250" alt="Обложка статьи"
-                     src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage() }}">
-            </a>
-            <div class="article-card-bio">
+        @foreach($articles as $article)
+            <li class="article-list-item article-card">
                 <a href="{{ route('blog.one', compact('article')) }}">
-                    <h2 class="article-card-title">{{ $article->title }}</h2>
+                    <img class="article-card-image" width="350" height="250" alt="Обложка статьи"
+                         src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage() }}">
                 </a>
+                <div class="article-card-bio">
+                    <a href="{{ route('blog.one', compact('article')) }}">
+                        <h2 class="article-card-title">{{ $article->title }}</h2>
+                    </a>
 
-                <p class="article-card-description">{{ $article->description }}</p>
+                    <p class="article-card-description">{{ $article->description }}</p>
 
-                <a class="button article-card-button" href="{{ route('blog.one', compact('article')) }}">
-                    Читать
-                </a>
-            </div>
-        </li>
+                    <a class="button article-card-button" href="{{ route('blog.one', compact('article')) }}">
+                        Читать
+                    </a>
+                </div>
+            </li>
         @endforeach
     </ul>
 
@@ -59,20 +61,13 @@
         </div>
     </section>
 
-    <div class="button show_more_button">
-        <a href="{{ route('blog.index') }}">
-            Смотреть все
-        </a>
-    </div>
+    <a class="button landing_button blog_button" href="{{ route('blog.index') }}">
+        Больше статей
+    </a>
 </div>
 
 <style>
     .main_articles_wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0 1rem 1rem;
-        row-gap: 5rem;
         background-image: url("/images/texture-light.png");
         border-top: 10px solid var(--main_pink);
     }
@@ -82,38 +77,6 @@
 
         @media (max-width: 768px) {
             display: block;
-        }
-    }
-
-    .articles_wrapper_header {
-        font-family: '315karusel', sans-serif;
-        font-size: 50px;
-        text-align: center;
-
-        @media (max-width: 1300px) {
-            font-size: 25px;
-        }
-    }
-
-    .show_more_button {
-        margin: 40px auto 20px;
-    }
-
-    .button {
-        position: relative;
-        width: fit-content;
-        padding: 0.25rem 1.5rem;
-        text-transform: uppercase;
-        font-family: inherit;
-        font-size: 2rem;
-        background-color: #C3E9EA;
-        border: solid 2px #000000;
-        border-radius: 0.75rem;
-        cursor: pointer;
-        z-index: 4;
-
-        @media (max-width: 450px) {
-            font-size: 20px;
         }
     }
 
@@ -130,10 +93,6 @@
         @media (max-width: 768px) {
             display: none;
         }
-    }
-
-    .article-list > li:empty {
-        display: none;
     }
 
     .article-list-item.article-card {
@@ -167,7 +126,7 @@
     .article-list-item.article-card > a {
         display: flex;
         flex-direction: row;
-        color: var(--main_font) !important;
+        color: var(--main_font);
     }
 
     .article-card .article-card-description {
@@ -235,7 +194,10 @@
 
     .article-card-button {
         align-self: flex-end;
-        font-size: 1.5rem;
+    }
+
+    #articles_splide-track + .splide__pagination {
+        bottom: -2rem;
     }
 
     @media (max-width: 1200px) {
