@@ -48,7 +48,7 @@ class ArticlesController extends Controller
         $hashtags = Hashtag::query()->get();
         $additionalArticles = Article::query()->whereHas('hashtags', function (Builder $query) use ($article) {
             $query->whereIn('tag', $article->hashtags()->pluck('tag')->toArray() ?? []);
-        })->inRandomOrder()->take(3)->get();
+        })->where('id', '!=', $article->id)->inRandomOrder()->take(3)->get();
 
         return \view('articles.one', compact('article', 'isAdmin', 'hashtags', 'additionalArticles'));
     }
