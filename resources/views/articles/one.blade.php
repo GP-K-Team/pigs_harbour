@@ -94,7 +94,7 @@
 
             <ul class="article-list">
                 @foreach($additionalArticles as $additionalArticle)
-                    <li class="article-list-item article-card">
+                    <li class="article-list-item article-card" onclick="location.replace('{{ route('blog.one', ['article' => $additionalArticle]) }}')">
                         <a href="{{ route('blog.one', ['article' => $additionalArticle]) }}">
                             <img class="article-card-image" width="350" height="250" alt="Обложка статьи"
                                  src="{{ $additionalArticle->mainImage?->getFullUrl() ?? $additionalArticle::getDefaultImage() }}">
@@ -119,7 +119,7 @@
                 <div class="splide__track">
                     <ul class="splide__list">
                         @foreach($additionalArticles as $additionalArticle)
-                            <li class="splide__slide">
+                            <li class="splide__slide" onclick="location.replace('{{ route('blog.one', ['article' => $additionalArticle]) }}')">
                                 <div class="article-list-item article-card">
                                     <a href="{{ route('blog.one', ['article' => $additionalArticle]) }}">
                                         <img class="article-card-image" width="350" height="250" alt="Обложка статьи"

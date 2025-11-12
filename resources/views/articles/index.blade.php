@@ -86,7 +86,7 @@
                 @endif
 
                 @foreach($articles as $article)
-                    <li class="list-item card @if($isAdmin) can-edit @endif">
+                    <li class="list-item card @if($isAdmin) can-edit @endif" onclick="location.replace('{{ route('blog.one', compact('article')) }}')">
                         <a href="{{ route('blog.one', compact('article')) }}">
                             <img class="card-image" width="350" height="250" alt="Обложка статьи"
                                  src="{{ $article->mainImage?->getFullUrl() ?? $article->getDefaultImage() }}">
