@@ -105,6 +105,7 @@
         flex-direction: column;
         max-width: 1400px;
         flex-grow: 1;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     }
 
     header {
@@ -136,6 +137,7 @@
         align-items: center;
         border-top: 10px solid var(--main_blue);
         box-sizing: border-box;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 
         @media (max-width: 768px) {
             justify-content: center;
