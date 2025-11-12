@@ -38,4 +38,13 @@ class AuthController extends Controller
 
         return back()->withInput(['login' => $request->get('login')])->withErrors(['password' => 'Неверное имя пользователя или пароль']);
     }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function logout(): RedirectResponse
+    {
+        Auth::logout();
+        return redirect()->back();
+    }
 }

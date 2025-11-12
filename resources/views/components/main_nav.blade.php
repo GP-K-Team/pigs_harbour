@@ -1,3 +1,7 @@
+@php
+    /** @var bool $isAdmin */
+@endphp
+
 <nav class="nav_bar">
     <div>
         <ul class="nav_list">
@@ -56,6 +60,13 @@
         </ul>
     </div>
 </nav>
+
+@if($isAdmin)
+    <div class="logout-button_wrapper">
+        @include('components.buttons.logout-button')
+    </div>
+@endif
+
 <div class="menu_burger">
     <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path class="burger_menu_line" d="M25 2.75H0V5.25H25V2.75Z" fill="#323232"/>
@@ -140,6 +151,11 @@
         display: flex;
         column-gap: 10px;
         align-items: center;
+    }
+
+    .logout-button_wrapper {
+        position: absolute;
+        left: 15px;
     }
 
     @media (max-width: 1200px) {
