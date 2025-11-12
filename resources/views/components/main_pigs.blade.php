@@ -184,6 +184,7 @@
         box-shadow: 0 4px 4px 0 var(--shadow_drop);
         cursor: pointer;
         z-index: 2;
+        transition: 250ms;
     }
 
     @media (max-width: 1200px) {
