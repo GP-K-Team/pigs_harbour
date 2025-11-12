@@ -15,6 +15,7 @@ Route::get('/', [MainController::class, 'index'])->name('home');
 
 Route::get('/admin', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 Route::get('/ajax', [AjaxController::class, 'index']);
 Route::post('/editor/upload', [AjaxController::class, 'uploadEditorImage']);
