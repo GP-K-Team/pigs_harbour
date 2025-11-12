@@ -27,7 +27,7 @@
                     </a>
                 </div>
                 <div class="link_wrapper">
-                    <a>
+                    <a href="/blog/kak-vzyat">
                         Как взять морскую свинку у нас
                     </a>
                 </div>
@@ -37,7 +37,7 @@
                     </a>
                 </div>
                 <div class="link_wrapper">
-                    <a>
+                    <a href="/blog/o-nas">
                         О нас
                     </a>
                 </div>
