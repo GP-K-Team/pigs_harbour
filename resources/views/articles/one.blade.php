@@ -70,10 +70,10 @@
             </div>
         @endif
 
-        @if($article->translation)
+        @if($article->translated_by)
             <div class="article-info-item">
                 <dt>Перевод:</dt>
-                <dd>{{ $article->translation }}</dd>
+                <dd>{{ $article->translated_by }}</dd>
             </div>
         @endif
 
