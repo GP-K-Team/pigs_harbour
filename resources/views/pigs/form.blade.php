@@ -208,9 +208,7 @@
                     <x-error-bag name="files"/>
                 </div>
 
-                <div class="form-button">
-                    <button type="submit">Отправить</button>
-                </div>
+                <button class="button form-button" type="submit">Сохранить</button>
 
                 @csrf
             </form>

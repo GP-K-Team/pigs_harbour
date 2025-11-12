@@ -154,9 +154,7 @@
                     <x-error-bag name="cover"/>
                 </div>
 
-                <div class="form-button">
-                    <button type="submit">Отправить</button>
-                </div>
+                <button class="button form-button" type="submit">Отправить</button>
 
                 @csrf
             </form>

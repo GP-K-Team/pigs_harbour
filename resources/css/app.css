@@ -83,6 +83,19 @@ p {
     color: rgb(from var(--dark_blue_font) r g b / 50%);
 }
 
+a {
+    color: var(--main_font);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--dark_blue_font);
+}
+
+a:active {
+    color: rgb(from var(--dark_blue_font) r g b / 50%);
+}
+
 .splide__arrow {
     background-color: var(--main_blue) !important;
 }
