@@ -29,6 +29,7 @@ class ArticleFormRequest extends FormRequest
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
             'author' => 'nullable|string',
+            'translated_by' => 'nullable|string',
             'origin_link' => 'nullable|url',
             'cover' => 'nullable',
             'hashtags' => 'nullable|array',

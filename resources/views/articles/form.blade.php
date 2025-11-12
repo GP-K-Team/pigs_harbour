@@ -95,7 +95,7 @@
                     <label class="input-label" for="origin_link">Ссылка на источник</label>
                     <input type="text" name="origin_link" id="origin_link"
                            value="{{ old('origin_link', $article?->origin_link) }}"
-                           placeholder="Краткое описание">
+                           placeholder="Ссылка на источник">
                     <x-error-bag name="origin_link"/>
                 </div>
 
@@ -121,6 +121,14 @@
                            value="{{ old('author', $article?->author) }}"
                            placeholder="Автор">
                     <x-error-bag name="author"/>
+                </div>
+
+                <div class="input-container has-input-prefix">
+                    <label class="input-label" for="translated_by">Переводчик</label>
+                    <input type="text" name="translated_by" id="translated_by"
+                           value="{{ old('translated_by', $article?->translated_by) }}"
+                           placeholder="Переводчик">
+                    <x-error-bag name="translated_by"/>
                 </div>
 
                 <div class="input-container">

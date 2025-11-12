@@ -45,6 +45,7 @@ class Article extends Model
         'meta_title',
         'meta_description',
         'author',
+        'translated_by',
         'origin_link',
     ];
 
