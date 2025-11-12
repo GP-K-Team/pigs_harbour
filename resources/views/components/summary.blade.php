@@ -32,7 +32,7 @@
         <li>
             <div class="summary_block">
                 <p class="summary_number">
-                    {{ $pigs->count() > 50 ? $pigs->count() : '50' }}+
+                    {{ $pigs->count() > 100 ? $pigs->count() : '100' }}+
                 </p>
                 <p>
                     счастливых свинок
