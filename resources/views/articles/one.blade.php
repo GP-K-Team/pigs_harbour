@@ -28,7 +28,6 @@
 @endpush
 
 @push('js')
-    @vite('resources/js/blog/article.js')
     @vite('resources/js/delete-handler.js')
 @endpush
 

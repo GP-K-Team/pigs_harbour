@@ -1,19 +1,19 @@
-.article-container {
-    width: 100%;
-    padding: 0 3.75rem;
+:is(.article-container, .trumbowyg-editor) {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    align-self: center;
 
     --caption-gray: #838383;
 }
 
+.article-container {
+    width: 100%;
+    padding: 0 3.75rem;
+    align-self: center;
+}
+
 .trumbowyg-editor {
     padding: 2.25%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
 }
 
 :is(.article-container, .trumbowyg-editor),
@@ -109,6 +109,23 @@
 
 :is(.article-container, .trumbowyg-editor) a:active {
     color: var(--holiday_red);
+}
+
+:is(.article-container, .trumbowyg-editor) blockquote {
+    margin: 0 0 1.25rem;
+    padding: 0.5rem 0.75rem;
+    font-size: inherit;
+    font-style: italic;
+    background-color: var(--light_blue);
+    border-radius: 0.25rem;
+}
+
+:is(.article-container, .trumbowyg-editor) blockquote::before {
+    content: "„";
+}
+
+:is(.article-container, .trumbowyg-editor) blockquote::after {
+    content: "”";
 }
 
 @media screen and (max-width: 1200px) {
