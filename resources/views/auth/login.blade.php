@@ -12,12 +12,12 @@
 <div class="login_form_wrapper">
     <form class="login_form" action="{{ route('auth.login') }}" method="POST">
         <div class="input-container">
-            <input type="text" name="login" id="login" placeholder="Логин" value="{{ old('login', '') }}">
+            <input type="text" name="login" id="login" placeholder="Логин" value="{{ old('login', '') }}" autocomplete="username">
             <x-error-bag name="login"/>
         </div>
 
         <div class="input-container">
-            <input type="password" name="password" id="password" placeholder="Пароль">
+            <input type="password" name="password" id="password" placeholder="Пароль" autocomplete="current-password">
             <x-error-bag name="password"/>
         </div>
 
