@@ -131,33 +131,37 @@
                     @endif
 
                 </div>
-                <div class="button pig_details_button">
-                    <a href="{{ route('catalog.index') }}">
-                        Как взять свинку
-                    </a>
-                </div>
+                @if($pig->is_active)
+                    <div class="button pig_details_button">
+                        <a href="{{ route('catalog.index') }}">
+                            Как взять свинку
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
-
 
         <div class="pig_description">
             {{ $pig->description }}
         </div>
     </div>
-    <div class="additional_text">
-        <p>
-            Все наши животные обработаны от паразитов. Отдаются в готовые условия в обмен на корм или другие нужности для будущих подопечных, после заполнения анкеты. Волонтеры остаются на связи для поддержки будущих владельцев.
-        </p>
-        <div class="button">
-            <a href="{{ route('catalog.index') }}">
-                Как взять свинку
-            </a>
+
+    @if($pig->is_active)
+        <div class="additional_text">
+            <p>
+                Все наши животные обработаны от паразитов. Отдаются в готовые условия в обмен на корм или другие нужности для будущих подопечных, после заполнения анкеты. Волонтеры остаются на связи для поддержки будущих владельцев.
+            </p>
+            <div class="button">
+                <a href="{{ route('catalog.index') }}">
+                    Как взять свинку
+                </a>
+            </div>
         </div>
-    </div>
+    @endif
 
     @if($additionalPigs->count())
         <div class="additional_pigs_wrapper">
-            <h2 class="additional_pigs_header">Еще свинки в поисках дома →</h2>
+            <h2 class="additional_pigs_header">{{ $pig->is_active ? 'Ещё свинки' : 'Свинки' }} в поисках дома →</h2>
 
             <ul class="additional_pig_list">
                 @foreach($additionalPigs as $pig)

@@ -47,7 +47,6 @@
         width: 45%;
         padding: 30px 20px;
         border-radius: 20px;
-        text-align: justify;
         background-color: white;
         font-size: 25px;
     }

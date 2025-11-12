@@ -202,6 +202,7 @@
             width: 90%;
             max-width: 400px;
             height: 380px;
+            overflow: hidden;
         }
     }
 

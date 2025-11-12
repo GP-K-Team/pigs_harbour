@@ -8,7 +8,9 @@
                 <img src="/images/icons/dot.svg" alt="Круглый элемент">
             </span>
             <li>
-                Как взять
+                <a href="/blog/kak-vzyat">
+                    Как взять
+                </a>
             </li>
         </ul>
     </div>
@@ -27,7 +29,9 @@
                 <img src="/images/icons/dot.svg" alt="Круглый элемент">
             </span>
             <li>
-                О нас
+                <a href="/blog/o-nas">
+                    О нас
+                </a>
             </li>
             <li>
                 <div class="special_link">

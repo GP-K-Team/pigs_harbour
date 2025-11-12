@@ -9,7 +9,9 @@
             </a>
         </li>
         <li>
-            Как взять
+            <a href="/blog/kak-vzyat">
+                Как взять
+            </a>
         </li>
         <li>
             <a href="{{ route('blog.index') }}">
@@ -17,7 +19,9 @@
             </a>
         </li>
         <li>
-            О нас
+            <a href="/blog/o-nas">
+                О нас
+            </a>
         </li>
         <li>
             <a href="https://vk.com/pristansvinki" target="_blank" class="vk_link">
