@@ -60,19 +60,23 @@ p {
     padding: 0.5rem 1.5rem;
     text-transform: uppercase;
     font-family: inherit;
-    font-size: 2rem;
+    font-size: 1rem;
     line-height: 1;
     font-weight: 400;
+    color: #000;
     background-color: #C3E9EA;
-    border: solid 2px #000000;
+    border: groove 2px #000000;
     border-radius: 0.75rem;
     cursor: pointer;
 }
 
-@media (max-width: 768px) {
-    .button {
-        font-size: 1.5rem;
-    }
+.button:hover {
+    color: var(--dark_blue_font);
+    background-color: var(--light_blue);
+}
+
+.button:active {
+    color: rgb(from var(--dark_blue_font) r g b / 50%);
 }
 
 .splide__arrow {

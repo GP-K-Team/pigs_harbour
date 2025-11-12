@@ -1,7 +1,7 @@
-
-
-<div class="steps_wrapper">
-    <h2 class="steps_wrapper_header">Если вы хотите взять у нас свинку</h2>
+<div class="landing_wrapper steps_wrapper">
+    <h2 class="landing_header steps_wrapper_header">
+        <a href="/blog/kak-vzyat">Если вы хотите взять у нас свинку</a>
+    </h2>
 
     <div class="steps_main_wrapper">
         <ul class="steps_list">
@@ -88,7 +88,7 @@
         </div>
     </section>
 
-    <div class="button steps_button">
+    <div class="button landing_button steps_button">
         <a href="{{ route('catalog.index') }}">
             Подробнее
         </a>
@@ -97,9 +97,8 @@
 
 <style>
     .steps_wrapper {
-        border-top: 10px solid var(--pale_orange);
-        padding: 20px 40px;
         background-image: url("/images/bright_dark.png");
+        border-top: 10px solid var(--pale_orange);
     }
 
     .steps_splide_wrapper {
@@ -123,38 +122,6 @@
 
         .steps_splide_wrapper {
             display: none;
-        }
-    }
-
-    .steps_wrapper_header {
-        font-family: '315karusel', sans-serif;
-        font-size: 50px;
-        text-align: center;
-
-        @media (max-width: 1300px) {
-            font-size: 25px;
-        }
-    }
-
-    .steps_button {
-        margin: 40px auto 20px;
-    }
-
-    .button {
-        position: relative;
-        width: fit-content;
-        padding: 0.25rem 1.5rem;
-        text-transform: uppercase;
-        font-family: inherit;
-        font-size: 2rem;
-        background-color: #C3E9EA;
-        border: solid 2px #000000;
-        border-radius: 0.75rem;
-        cursor: pointer;
-        z-index: 4;
-
-        @media (max-width: 450px) {
-            font-size: 20px;
         }
     }
 
