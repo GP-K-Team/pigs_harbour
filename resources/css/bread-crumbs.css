@@ -12,12 +12,12 @@
 }
 
 .bread-crumbs > ul :is(li, a) {
-    color: var(--brown_gray);
+    color: var(--brown-gray);
     font-size: 1rem;
 }
 
 .bread-crumbs > ul > li > a:hover {
-    color: var(--dark_blue_font);
+    color: var(--dark-blue-font);
 }
 
 .bread-crumbs > ul > li:not(:last-child)::after {

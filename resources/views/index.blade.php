@@ -14,7 +14,7 @@
     @include('components.badge')
 
     <div class="animated-block">
-        @include('components.main_pigs')
+        @include('components.main-pigs')
     </div>
 
     <div class="animated-block">
@@ -22,7 +22,7 @@
     </div>
 
     <div class="animated-block">
-        @include('components.main_articles')
+        @include('components.main-articles')
     </div>
 
     @include('components.summary')
@@ -30,14 +30,14 @@
 
 @prepend('styles')
     <style>
-        .landing_wrapper {
+        .landing-wrapper {
             padding: 2.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .landing_header {
+        .landing-header {
             margin-top: 0;
             margin-bottom: 3.75rem;
             font-family: '315karusel', sans-serif;
@@ -45,15 +45,15 @@
             text-align: center;
         }
 
-        .landing_header:hover {
-            color: var(--dark_blue_font);
+        .landing-header:hover {
+            color: var(--dark-blue-font);
         }
 
-        .landing_header:active {
-            color: rgb(from var(--dark_blue_font) r g b / 50%);
+        .landing-header:active {
+            color: rgb(from var(--dark-blue-font) r g b / 50%);
         }
 
-        .landing_button {
+        .landing-button {
             width: 90%;
             max-width: 215px;
             margin: 40px 0 0;
@@ -65,22 +65,22 @@
         }
 
         @media screen and (max-width: 768px) {
-            .landing_wrapper {
+            .landing-wrapper {
                 padding: 1.25rem 0;
             }
 
-            .landing_header {
+            .landing-header {
                 margin-bottom: 1.75rem;
                 font-size: 1.5rem;
             }
 
-            .landing_button {
+            .landing-button {
                 max-width: 300px;
             }
         }
 
         @media screen and (max-width: 1200px) {
-            .landing_header {
+            .landing-header {
                 margin-bottom: 2.5rem;
                 font-size: 2.5rem;
             }

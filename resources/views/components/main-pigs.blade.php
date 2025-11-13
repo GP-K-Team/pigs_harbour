@@ -6,12 +6,12 @@
     /** @var Collection|iterable<Pig> $pigs */
 @endphp
 
-<div class="landing_wrapper pigs_wrapper">
-    <h2 class="landing_header pigs_wrapper_header">
+<div class="landing-wrapper pigs-wrapper">
+    <h2 class="landing-header pigs-wrapper-header">
         <a href="{{ route('catalog.index') }}">Ищут дом →</a>
     </h2>
 
-    <div class="list_wrapper">
+    <div class="list-wrapper">
         <ul class="list">
             @foreach($pigs as $pig)
                 <li @class(['card-pink' => ($pig->sex->value === 'female'), 'list-item', 'card'])>
@@ -37,7 +37,7 @@
             @endforeach
         </ul>
 
-        <ul class="list list_mobile">
+        <ul class="list list-mobile">
             @foreach($pigs->take(3) as $pig)
                 <li class="list-item card">
                     <a href="{{ route('catalog.one', compact('pig')) }}">
@@ -62,7 +62,7 @@
             @endforeach
         </ul>
 
-        <section id="pigs_splide" class="splide pigs_splide_wrapper list_mobile_splide" aria-label="Splide Basic HTML Example">
+        <section id="pigs_splide" class="splide pigs-splide-wrapper list-mobile-splide" aria-label="Splide">
             <div class="splide__track">
                 <ul class="splide__list">
                     @foreach($pigs->take(3) as $pig)
@@ -93,7 +93,7 @@
             </div>
         </section>
 
-        <a class="button landing_button catalog-button" href="{{ route('catalog.index') }}">
+        <a class="button landing-button catalog-button" href="{{ route('catalog.index') }}">
             Смотреть всех
         </a>
 
@@ -101,28 +101,28 @@
 </div>
 
 <style>
-    .pigs_wrapper {
+    .pigs-wrapper {
         position: relative;
         overflow: hidden;
         min-height: 500px;
         background-image: url("/images/texture-light.png");
-        border-top: 10px solid var(--pale_yellow);
+        border-top: 10px solid var(--pale-yellow);
     }
 
-    .pigs_wrapper:before,
-    .pigs_wrapper:after {
+    .pigs-wrapper:before,
+    .pigs-wrapper:after {
         content: '';
         position: absolute;
         z-index: 0;
     }
 
-    .pigs_wrapper:before {
+    .pigs-wrapper:before {
         top: 20%;
         left: 10%;
         height: 40vh;
         width: 40vh;
         border-radius: 50%;
-        background-color: var(--pale_orange);
+        background-color: var(--pale-orange);
 
         @media (max-width: 768px) {
             top: 15%;
@@ -132,13 +132,13 @@
         }
     }
 
-    .pigs_wrapper:after {
+    .pigs-wrapper:after {
         bottom: -20%;
         right: -15%;
         height: 50vh;
         width: 50vh;
         border-radius: 50%;
-        background-color: var(--pale_yellow);
+        background-color: var(--pale-yellow);
 
         @media (max-width: 768px) {
             bottom: 5%;
@@ -148,17 +148,17 @@
         }
     }
 
-    .list_wrapper {
+    .list-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 
-    .list.list_mobile {
+    .list.list-mobile {
         display: none;
     }
 
-    .list_mobile_splide {
+    .list-mobile-splide {
         display: none;
         z-index: 5;
     }
@@ -179,9 +179,9 @@
         flex-direction: column;
         width: 350px;
         height: 430px;
-        background-color: var(--light_blue);
+        background-color: var(--light-blue);
         border-radius: 1rem;
-        box-shadow: 0 4px 4px 0 var(--shadow_drop);
+        box-shadow: 0 4px 4px 0 var(--shadow-drop);
         cursor: pointer;
         z-index: 2;
         transition: 250ms;
@@ -229,7 +229,7 @@
     }
 
     .list-item.card.card-pink {
-        background-color: var(--light_pink);
+        background-color: var(--light-pink);
     }
 
     .card:hover {
@@ -261,17 +261,17 @@
             display: none;
         }
 
-        .list_mobile_splide {
+        .list-mobile-splide {
             display: block;
         }
     }
 
     @media (max-width: 500px) {
-        .list.list_mobile {
+        .list.list-mobile {
             display: flex;
         }
 
-        .list_mobile_splide {
+        .list-mobile-splide {
             display: none;
         }
     }
@@ -299,16 +299,16 @@
         }
     }
 
-    #pigs_splide-track + .splide__pagination {
+    .pigs-splide-wrapper.list-mobile-splide .splide__track + .splide__pagination {
         bottom: 2rem;
     }
 
     .splide__pagination__page.is-active {
-        background-color: var(--main_pink);
+        background-color: var(--main-pink);
     }
 
     .splide__pagination__page {
-        background-color: var(--main_blue);
+        background-color: var(--main-blue);
         opacity: 1;
     }
 

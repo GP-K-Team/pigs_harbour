@@ -3,8 +3,6 @@ $(document).ready(function () {
         const scrollTop = $(window).scrollTop();
         const scrollBottom = scrollTop + $(window).height();
 
-        console.log('toggle');
-
         $('.animated-block').each(function () {
             const blockTop = $(this).offset().top;
 

@@ -89,8 +89,8 @@
     </dl>
 
     @if($additionalArticles->count())
-        <div class="additional_articles_wrapper">
-            <h2 class="additional_articles_header">Еще по теме →</h2>
+        <div class="additional-articles-wrapper">
+            <h2 class="additional-articles-header">Еще по теме →</h2>
 
             <ul class="article-list">
                 @foreach($additionalArticles as $additionalArticle)
@@ -115,7 +115,7 @@
                 @endforeach
             </ul>
 
-            <section id="articles_splide" class="splide articles_splide_wrapper" aria-label="Splide">
+            <section id="articles_splide" class="splide articles-splide-wrapper" aria-label="Splide">
                 <div class="splide__track">
                     <ul class="splide__list">
                         @foreach($additionalArticles as $additionalArticle)
@@ -177,7 +177,7 @@
 
     .edit-icon-link:hover {
         border-radius: 0.5rem;
-        background-color: var(--pale_yellow);
+        background-color: var(--pale-yellow);
     }
 
     .article-date {
@@ -186,7 +186,7 @@
         text-align: right;
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--brown_gray);
+        color: var(--brown-gray);
     }
 
     @media screen and (max-width: 1200px) {
@@ -205,7 +205,7 @@
     .article-info {
         width: 100%;
         margin: 0 3.75rem 1.25rem;
-        color: var(--brown_gray);
+        color: var(--brown-gray);
         font-size: 1.25rem;
         font-style: italic;
     }
@@ -224,21 +224,21 @@
     }
 
     .article-info-item a:hover {
-        color: var(--dark_blue_font);
+        color: var(--dark-blue-font);
     }
 
     /* Additional articles list */
-    .additional_articles_wrapper {
+    .additional-articles-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         row-gap: 35px;
-        border-top: 10px solid var(--pale_orange);
+        border-top: 10px solid var(--pale-orange);
         background-image: url("/images/texture-light.png");
     }
 
-    .additional_articles_header {
+    .additional-articles-header {
         font-family: '315karusel', sans-serif;
         font-size: 50px;
         text-align: center;
@@ -290,7 +290,7 @@
         opacity: 0.7;
     }
 
-    .articles_splide_wrapper {
+    .articles-splide-wrapper {
         display: none;
 
         @media (max-width: 768px) {
@@ -324,7 +324,7 @@
         height: 300px;
         background-color: white;
         border-radius: 1.5rem;
-        box-shadow: 0 4px 4px 0 var(--shadow_drop);
+        box-shadow: 0 4px 4px 0 var(--shadow-drop);
         cursor: pointer;
         transition: 250ms;
     }
@@ -348,7 +348,7 @@
     .article-list-item.article-card > a {
         display: flex;
         flex-direction: row;
-        color: var(--main_font) !important;
+        color: var(--main-font) !important;
     }
 
     .article-card .article-card-description {
@@ -377,7 +377,7 @@
         padding: 1rem 0.5rem 0;
         display: inline-flex;
         align-items: center;
-        color: var(--dark_blue_font);
+        color: var(--dark-blue-font);
         text-align: center;
     }
 

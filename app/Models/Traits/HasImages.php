@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Traits;
+namespace App\Models\Traits;
 
 use App\Models\Image;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -52,18 +52,11 @@ trait HasImages
         return Storage::url(static::IMAGE_PATH . DIRECTORY_SEPARATOR . static::DEFAULT_IMAGE);
     }
 
-    /**
-     * @param string $filename
-     * @return string
-     */
     public static function getPublicUrl(string $filename): string
     {
         return Storage::url(static::IMAGE_PATH . DIRECTORY_SEPARATOR . Str::afterLast($filename, '/'));
     }
 
-    /**
-     * @return void
-     */
     public function deleteImages(): void
     {
         foreach ($this->images as $image) {

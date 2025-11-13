@@ -10,19 +10,20 @@ use App\Models\Pig;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
-class MainController
+class MainController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
-        return view('index', [
+        return \view('index', [
             'title' => 'Приют для морских свинок',
-            'isAdmin' => Auth::id(),
             'cities' => City::all(),
             'pigs' => Pig::query()->orderBy('created_at')->limit(6)->with(['city', 'companion', 'companionOf'])->get(),
-            'articles' => Article::inRandomOrder()->take(3)->get(),
+            'articles' => Article::query()->inRandomOrder()->take(3)->get(),
         ]);
+    }
+
+    public function showError(): View
+    {
+        return \view('errors.404');
     }
 }

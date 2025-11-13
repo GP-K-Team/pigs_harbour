@@ -3,34 +3,34 @@
     'desc',
 ])
 
-<div class="badge_image_block">
-    <div class="badge_image_wrapper">
+<div class="badge-image-block">
+    <div class="badge-image-wrapper">
         <img src="/images/badge/{{$src}}" alt="Изображение со свинкой">
     </div>
-    <div class="badge_image_caption">
+    <div class="badge-image-caption">
         <p>{{ $desc }}</p>
     </div>
 </div>
 
 <style>
-    .badge_image_block {
+    .badge-image-block {
         display: flex;
         flex-direction: column;
         align-items: center;
         row-gap: 10px;
     }
 
-    .badge_image_block img {
+    .badge-image-block img {
         width: 250px;
     }
 
-    .badge_image_caption {
+    .badge-image-caption {
         width: 200px;
         font-size: 25px;
         text-align: center;
     }
 
-    .badge_image_wrapper img{
+    .badge-image-wrapper img{
         transition: transform 0.4s ease-in-out;
         animation: scale 3s ease-in-out infinite;
     }
@@ -48,17 +48,17 @@
     }
 
     @media (max-width: 1000px) {
-        .badge_image_caption {
+        .badge-image-caption {
             font-size: 15px;
         }
 
-        .badge_image_block img {
+        .badge-image-block img {
             width: 140px;
         }
     }
 
     @media (max-width: 768px) {
-        .badge_image_caption {
+        .badge-image-caption {
             width: 150px;
         }
     }

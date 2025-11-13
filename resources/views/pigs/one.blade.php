@@ -15,7 +15,7 @@
 
 @push('js')
     @vite('resources/js/thumbnails.js')
-    @vite('resources/js/updateStatus.js')
+    @vite('resources/js/update-status.js')
 @endpush
 
 @php
@@ -39,7 +39,7 @@
 
 @section('content')
     @include('components.banner', ['showPigs' => false, 'specialHeader' => 'Морская свинка', 'specialSubHeader' => $pig->name, 'specialText' => 'в добрые руки'])
-    <div class="pig_wrapper" data-pig-slug="{{$pig->slug_name}}">
+    <div class="pig-wrapper" data-pig-slug="{{$pig->slug_name}}">
         <div class="bread-crumbs">
             <ul>
                 <li><a href="/">Главная</a></li>
@@ -52,22 +52,22 @@
             </ul>
         </div>
 
-        <div class="pig_main_block_wrapper">
+        <div class="pig-main-block-wrapper">
 
-            <div class="pig_image_block">
-                <div class="main_image_wrapper">
-                    <img class="blurred_main_pig_image"
+            <div class="pig-image-block">
+                <div class="main-image-wrapper">
+                    <img class="main-image_blurred"
                          src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
                          alt="Фон для фотографии свинки по имени {{ $pig->name }}">
-                    <img class="main_pig_image"
+                    <img class="main-pig-image"
                          src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
                          alt="Фотография морской свинки по имени {{ $pig->name }}">
                 </div>
                 @if($pig->images()->count() > 1)
                     <div class="thumbnails">
-                        <ul class="thumbnail_list">
+                        <ul class="thumbnail-list">
                             @foreach($pig->images as $image)
-                                <li class="thumbnail_element">
+                                <li class="thumbnail-element">
                                     <img src="{{ asset($image->getFullUrl()) }}" alt="Изображение морской свинки">
                                 </li>
                             @endforeach
@@ -76,35 +76,36 @@
                 @endif
             </div>
 
-            <div class="pig_details_block">
+            <div class="pig-details-block">
                 @if($isAdmin)
-                <div class="admin_controls_wrapper">
-                    <div>
-                        <a class="edit-icon-link" href="{{ route('catalog.show.update', compact('pig')) }}" draggable="false">
-                            <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
-                        </a>
-                    </div>
-                    <div class="input-container has-radio">
-                        <fieldset>
-                            <legend class="input-label">
-                                Ищет дом
-                            </legend>
-                            <div class="radio-group">
-                                <div class="radio-item">
-                                    <input type="radio" name="is_active" id="1"
-                                           value="1" checked>
-                                    <label for="1">Да</label>
+                    <div class="admin-controls-wrapper">
+                        <div>
+                            <a class="edit-icon-link" href="{{ route('catalog.show.update', compact('pig')) }}" draggable="false">
+                                <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
+                            </a>
+                        </div>
+                        <div class="input-container has-radio">
+                            <fieldset>
+                                <legend class="input-label">
+                                    Ищет дом
+                                </legend>
+                                <div class="radio-group">
+                                    <div class="radio-item">
+                                        <input type="radio" name="is_active" id="1"
+                                               value="1" checked>
+                                        <label for="1">Да</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" name="is_active" id="0"
+                                               value="0" @checked(isset($pig) && !$pig->is_active)>
+                                        <label for="0">Нет</label>
+                                    </div>
                                 </div>
-                                <div class="radio-item">
-                                    <input type="radio" name="is_active" id="0"
-                                           value="0" @checked(isset($pig) && !$pig->is_active)>
-                                    <label for="0">Нет</label>
-                                </div>
-                            </div>
-                        </fieldset>
+                            </fieldset>
+                        </div>
                     </div>
-                </div>
                 @endif
+
                 <div>
                     <p>
                         <b>Пол</b>: <span>{{ $pig->sex->getLabel() }}</span>
@@ -125,14 +126,14 @@
                         @endphp
                         <p>
                             <b>
-                                Пристраивается в паре со свинкой <a class="companion_link" href="{{ route('catalog.one', [$companion]) }}">{{ $companion->name }}</a>
+                                Пристраивается в паре со свинкой <a class="companion-link" href="{{ route('catalog.one', [$companion]) }}">{{ $companion->name }}</a>
                             </b>
                         </p>
                     @endif
 
                 </div>
                 @if($pig->is_active)
-                    <div class="button pig_details_button">
+                    <div class="button pig-details-button">
                         <a href="/blog/kak-vzyat">
                             Как взять свинку
                         </a>
@@ -141,13 +142,13 @@
             </div>
         </div>
 
-        <div class="pig_description">
+        <div class="pig-description">
             {{ $pig->description }}
         </div>
     </div>
 
     @if($pig->is_active)
-        <div class="additional_text">
+        <div class="additional-text">
             <p>
                 Все наши животные обработаны от паразитов. Отдаются в готовые условия в обмен на корм или другие нужности для будущих подопечных, после заполнения анкеты. Волонтеры остаются на связи для поддержки будущих владельцев.
             </p>
@@ -160,14 +161,14 @@
     @endif
 
     @if($additionalPigs->count())
-        <div class="additional_pigs_wrapper">
-            <h2 class="additional_pigs_header">{{ $pig->is_active ? 'Ещё свинки' : 'Свинки' }} в поисках дома →</h2>
+        <div class="additional-pigs-wrapper">
+            <h2 class="additional-pigs-header">{{ $pig->is_active ? 'Ещё свинки' : 'Свинки' }} в поисках дома →</h2>
 
-            <ul class="additional_pig_list">
+            <ul class="additional-pig-list">
                 @foreach($additionalPigs as $pig)
                 <li>
                     <a href="{{ route('catalog.one', compact('pig')) }}">
-                        <img class="additional_pig_image"
+                        <img class="additional-pig-image"
                              src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
                              alt="Фотография морской свинки по имени {{ $pig->name }}">
                     </a>
@@ -185,7 +186,7 @@
 @endsection
 
 <style>
-    .pig_wrapper {
+    .pig-wrapper {
         padding: 40px;
         position: relative;
         overflow: hidden;
@@ -194,20 +195,20 @@
         z-index: 0;
     }
 
-    .pig_wrapper:before,
-    .pig_wrapper:after {
+    .pig-wrapper:before,
+    .pig-wrapper:after {
         content: '';
         position: absolute;
         z-index: -1;
     }
 
-    .pig_wrapper:before {
+    .pig-wrapper:before {
         top: -50px;
         left: -10%;
         height: 40vh;
         width: 40vh;
         border-radius: 50%;
-        background-color: var(--pale_orange);
+        background-color: var(--pale-orange);
 
         @media (max-width: 768px) {
             top: 15%;
@@ -217,13 +218,13 @@
         }
     }
 
-    .pig_wrapper:after {
+    .pig-wrapper:after {
         bottom: -20%;
         right: -15%;
         height: 50vh;
         width: 50vh;
         border-radius: 50%;
-        background-color: var(--pale_yellow);
+        background-color: var(--pale-yellow);
 
         @media (max-width: 768px) {
             bottom: 5%;
@@ -233,8 +234,8 @@
         }
     }
 
-    .additional_text {
-        border-top: 10px solid var(--main_pink);
+    .additional-text {
+        border-top: 10px solid var(--main-pink);
         padding: 20px 40px;
         text-align: justify;
         background-image: url("/images/bright_dark.png");
@@ -264,12 +265,12 @@
         }
     }
 
-    .additional_pigs_wrapper {
-        border-top: 10px solid var(--pale_orange);
+    .additional-pigs-wrapper {
+        border-top: 10px solid var(--pale-orange);
         background-image: url("/images/texture-light.png");
     }
 
-    .additional_pigs_header {
+    .additional-pigs-header {
         font-family: '315karusel', sans-serif;
         font-size: 50px;
         text-align: center;
@@ -279,22 +280,22 @@
         }
     }
 
-    .additional_pig_list {
+    .additional-pig-list {
         display: flex;
         column-gap: 30px;
         justify-content: center;
     }
 
-    .additional_pig_list li {
+    .additional-pig-list li {
         cursor: pointer;
         transition: transform 0.2s ease-in-out;
     }
 
-    .additional_pig_list li:hover {
+    .additional-pig-list li:hover {
         transform: scale(1.1);
     }
 
-    .additional_pig_image {
+    .additional-pig-image {
         width: 300px;
         height: 200px;
         object-fit: cover;
@@ -312,7 +313,7 @@
         }
     }
 
-    .pig_description {
+    .pig-description {
         position: relative;
         padding: 20px 0;
         text-align: justify;
@@ -324,7 +325,7 @@
         }
     }
 
-    .pig_main_block_wrapper {
+    .pig-main-block-wrapper {
         display: flex;
         column-gap: 50px;
 
@@ -334,7 +335,7 @@
         }
     }
 
-    .pig_image_block, .pig_details_block {
+    .pig-image-block, .pig-details-block {
         width: 50%;
         z-index: 2;
 
@@ -343,14 +344,14 @@
         }
     }
 
-    .pig_image_block {
+    .pig-image-block {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
     }
 
-    .main_image_wrapper {
+    .main-image-wrapper {
         position: relative;
         display: flex;
         width: 400px;
@@ -365,14 +366,14 @@
         }
     }
 
-    .main_pig_image {
+    .main-pig-image {
         margin: auto;
         width: 100%;
         height: 100%;
         object-fit: contain;
     }
 
-    .blurred_main_pig_image {
+    .main-image_blurred {
         display: block;
         position: absolute;
         left: 0;
@@ -384,7 +385,7 @@
         z-index: -1;
     }
 
-    .thumbnail_list {
+    .thumbnail-list {
         margin-top: 50px;
         padding: 10px;
         max-width: 400px;
@@ -398,7 +399,7 @@
         }
     }
 
-    .thumbnail_element img {
+    .thumbnail-element img {
         width: 100px;
         height: 100px;
         border-radius: 10px;
@@ -411,11 +412,11 @@
         }
     }
 
-    .thumbnail_element:hover img {
+    .thumbnail-element:hover img {
         transform: scale(1.02);
     }
 
-    .pig_details_block {
+    .pig-details-block {
         position: relative;
         z-index: 2;
         font-size: 25px;
@@ -425,15 +426,15 @@
         }
     }
 
-    .companion_link {
+    .companion-link {
         text-decoration: underline;
     }
 
-    .admin_controls_wrapper {
+    .admin-controls-wrapper {
         position: relative;
     }
 
-    .admin_controls_wrapper fieldset {
+    .admin-controls-wrapper fieldset {
         padding: 0.125rem 1rem 0.5rem;
     }
 
@@ -444,7 +445,7 @@
     }
 
     @media (max-width: 880px) {
-        .button.pig_details_button {
+        .button.pig-details-button {
             font-size: 20px;
         }
     }

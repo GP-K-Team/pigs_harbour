@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Article;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
@@ -33,6 +34,7 @@ class ArticleFormRequest extends FormRequest
             'origin_link' => 'nullable|url',
             'cover' => 'nullable',
             'hashtags' => 'nullable|array',
+            'created_at' => 'nullable|date|before:tomorrow',
         ];
     }
 
@@ -53,6 +55,7 @@ class ArticleFormRequest extends FormRequest
     {
         $this->merge([
             'slug_title' => Str::afterLast($this->slug_title, '/'),
+            'created_at' => Carbon::parseFromLocale($this['created_at']),
         ]);
     }
 }

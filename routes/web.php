@@ -28,7 +28,7 @@ Route::prefix('catalog')->name('catalog.')->group(function () {
         Route::get('/create', [PigsController::class, 'showCreate'])->name('show.create');
         Route::post('/', [PigsController::class, 'create'])->name('create');
         Route::post('/{pig}', [PigsController::class, 'update'])->name('update');
-        Route::delete('/{pig}', [PigsController::class, 'delete'])->name('update');
+        Route::delete('/', [PigsController::class, 'delete'])->name('delete');
         Route::post('/status/{pig}', [PigsController::class, 'updateStatus'])->name('status');
     });
 
@@ -51,5 +51,7 @@ Route::prefix('blog')->name('blog.')->group(function () {
 
 Route::middleware('auth:web')->group(function () {
    Route::delete('files/{file}', [FileController::class, 'delete']);
-   Route::put('page_text/{pageText}', [PageTextController::class, 'update']);
+   Route::put('page-text/{pageText}', [PageTextController::class, 'update']);
 });
+
+Route::fallback([MainController::class, 'showError']);

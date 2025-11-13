@@ -18,7 +18,7 @@
 
 <style>
     .permanent-text-marker {
-        color: var(--holiday_red);
+        color: var(--holiday-red);
     }
 
     .window.delete-modal {
@@ -42,18 +42,18 @@
     }
 
     .delete-modal .button.orange-button {
-        background-color: var(--pale_orange);
+        background-color: var(--pale-orange);
     }
 
     .delete-modal .button.orange-button:hover {
-        background-color: var(--main_green);
+        background-color: var(--main-green);
     }
 
     .delete-modal .button:not(.orange-button):hover {
-        background-color: var(--pale_yellow);
+        background-color: var(--pale-yellow);
     }
 
     .delete-text-slot {
-        color: var(--dark_blue_font);
+        color: var(--dark-blue-font);
     }
 </style>

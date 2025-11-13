@@ -13,7 +13,6 @@ use App\Models\PageText;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ArticlesController extends Controller
@@ -36,21 +35,19 @@ class ArticlesController extends Controller
 
         $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT);
         $hashtags = Hashtag::query()->get();
-        $isAdmin = Auth::check() ?? false;
         $pageTexts = PageText::where('page_base_url', '=', $urlHelper->getCurrentPage())->get();
 
-        return \view('articles.index', compact('articles', 'isAdmin', 'hashtags', 'activeHashtags', 'pageTexts'));
+        return \view('articles.index', compact('articles', 'hashtags', 'activeHashtags', 'pageTexts'));
     }
 
     public function showOne(Article $article): View
     {
-        $isAdmin = Auth::check() ?? false;
         $hashtags = Hashtag::query()->get();
         $additionalArticles = Article::query()->whereHas('hashtags', function (Builder $query) use ($article) {
             $query->whereIn('tag', $article->hashtags()->pluck('tag')->toArray() ?? []);
         })->where('id', '!=', $article->id)->inRandomOrder()->take(3)->get();
 
-        return \view('articles.one', compact('article', 'isAdmin', 'hashtags', 'additionalArticles'));
+        return \view('articles.one', compact('article', 'hashtags', 'additionalArticles'));
     }
 
     public function showCreate(): View
