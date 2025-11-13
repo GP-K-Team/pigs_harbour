@@ -7,12 +7,13 @@ $(document).ready(function () {
             console.log(scrollBottom);
             console.log(blockTop);
 
-            if (scrollBottom > blockTop + 100 && !$(this).hasClass('active')) {
+            if (scrollBottom > blockTop + 50 && !$(this).hasClass('active')) {
                 $(this).addClass('active');
             }
         });
     }
 
-    $(window).on('scroll mousewheel', toggleActive);
     toggleActive();
+
+    $(window).on('scroll mousewheel', toggleActive);
 });
