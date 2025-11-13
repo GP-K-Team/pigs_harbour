@@ -27,7 +27,7 @@
 
 @push('js')
     @vite('resources/js/hashtags.js')
-    @vite('resources/js/pageText.js')
+    @vite('resources/js/page-text.js')
     @vite('resources/js/delete-handler.js')
     @vite('resources/js/main-animation.js')
 @endpush

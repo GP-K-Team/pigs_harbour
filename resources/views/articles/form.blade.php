@@ -28,7 +28,7 @@
 
 @push('js')
     @vite('resources/js/filepond.js')
-    @vite('resources/js/article_choice.js')
+    @vite('resources/js/article-choice.js')
     @vite('resources/js/form/rich-text-editor.js')
     @vite('resources/js/form/translit.js')
 

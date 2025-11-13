@@ -15,7 +15,7 @@
 
 @push('js')
     @vite('resources/js/thumbnails.js')
-    @vite('resources/js/updateStatus.js')
+    @vite('resources/js/update-status.js')
 @endpush
 
 @php
