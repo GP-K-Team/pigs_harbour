@@ -55,7 +55,7 @@ class ArticleFormRequest extends FormRequest
     {
         $this->merge([
             'slug_title' => Str::afterLast($this->slug_title, '/'),
-            'created_at' => Carbon::parseFromLocale($this['created_at']),
+            'created_at' => is_null($this['created_at']) ? now() : Carbon::parseFromLocale($this['created_at']),
         ]);
     }
 }
