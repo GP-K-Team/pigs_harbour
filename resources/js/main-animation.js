@@ -1,13 +1,17 @@
 $(document).ready(function () {
     function toggleActive() {
+        const scrollTop = $(window).scrollTop();
+        const scrollBottom = scrollTop + $(window).height();
+
+        console.log('toggle');
+
         $('.animated-block').each(function () {
             const blockTop = $(this).offset().top;
-            const scrollBottom = $(window).scrollTop() + $(window).height();
 
             console.log(scrollBottom);
             console.log(blockTop);
 
-            if (scrollBottom > blockTop + 50 && !$(this).hasClass('active')) {
+            if (scrollBottom >= blockTop + 50 && !$(this).hasClass('active')) {
                 $(this).addClass('active');
             }
         });
@@ -15,5 +19,5 @@ $(document).ready(function () {
 
     toggleActive();
 
-    $(window).on('scroll mousewheel', toggleActive);
+    $(window).on('scroll mousewheel resize', toggleActive);
 });
