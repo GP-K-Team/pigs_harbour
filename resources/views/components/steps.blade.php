@@ -89,7 +89,7 @@
     </section>
 
     <div class="button landing_button steps_button">
-        <a href="{{ route('catalog.index') }}">
+        <a href="/blog/kak-vzyat">
             Подробнее
         </a>
     </div>
