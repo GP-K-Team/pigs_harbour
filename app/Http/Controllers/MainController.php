@@ -10,7 +10,7 @@ use App\Models\Pig;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
-class MainController
+class MainController extends Controller
 {
     public function index(): View
     {

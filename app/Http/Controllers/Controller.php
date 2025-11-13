@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\View;
 
 abstract class Controller extends \Illuminate\Routing\Controller
 {
+    /** @inheritDoc */
     public function callAction($method, $parameters)
     {
         View::share('isAdmin', Auth::check() ?? false);
