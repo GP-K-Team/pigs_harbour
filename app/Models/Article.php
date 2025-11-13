@@ -48,6 +48,7 @@ class Article extends Model
         'author',
         'translated_by',
         'origin_link',
+        'created_at',
     ];
 
     /**

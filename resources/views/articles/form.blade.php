@@ -31,6 +31,7 @@
     @vite('resources/js/article-choice.js')
     @vite('resources/js/form/rich-text-editor.js')
     @vite('resources/js/form/translit.js')
+    @vite('resources/js/zebra.js')
 
     @if($article && $article->mainImage)
         <script type="module">
@@ -129,6 +130,14 @@
                            value="{{ old('translated_by', $article?->translated_by) }}"
                            placeholder="Переводчик">
                     <x-error-bag name="translated_by"/>
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label" for="created_at">Дата публикации</label>
+                    <input class="datepick" type="text" name="created_at" id="created_at"
+                           value="{{ old('created_at', Str::headline($article?->created_at?->translatedFormat('d M Y'))) }}"
+                           placeholder="Дата публикации">
+                    <x-error-bag name="created_at"/>
                 </div>
 
                 <div class="input-container">
