@@ -28,7 +28,7 @@ use Illuminate\Support\Collection;
  * @property string $age
  * @property Carbon $birthday
  * @property Carbon $stopped_looking_date
- * @property bool $available_for_other_cities
+ * @property bool $has_delivery
  * @property bool $is_active
  * @property City $city
  * @property Pig $companion
