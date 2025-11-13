@@ -8,9 +8,6 @@ $(document).ready(function () {
         $('.animated-block').each(function () {
             const blockTop = $(this).offset().top;
 
-            console.log(scrollBottom);
-            console.log(blockTop);
-
             if (scrollBottom >= blockTop + 50 && !$(this).hasClass('active')) {
                 $(this).addClass('active');
             }

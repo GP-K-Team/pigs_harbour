@@ -13,7 +13,7 @@
 
     <ul class="article-list">
         @foreach($articles as $article)
-            <li class="article-list-item article-card" onclick="location.replace('{{ route('blog.one', compact('article')) }}')">
+            <li class="article-list-item article-card animated-block" onclick="location.replace('{{ route('blog.one', compact('article')) }}')">
                 <a href="{{ route('blog.one', compact('article')) }}">
                     <img class="article-card-image" width="350" height="250" alt="Обложка статьи"
                          src="{{ $article->mainImage?->getFullUrl() ?? $article::getDefaultImage() }}">
@@ -236,5 +236,32 @@
             align-self: unset;
             font-size: 1rem;
         }
+    }
+
+    /** Animation **/
+
+    .article-list-item.article-card.animated-block {
+        opacity: 0;
+        translate: -30%;
+        transition: opacity 400ms ease-in-out, translate 600ms ease, scale 250ms ease;
+
+        @media (max-width: 768px) {
+            opacity: 1;
+            translate: initial;
+        }
+    }
+
+    .article-list-item.article-card.animated-block:nth-child(odd) {
+        translate: 130%;
+
+        @media (max-width: 768px) {
+            opacity: 1;
+            translate: initial;
+        }
+    }
+
+    .article-list-item.article-card.animated-block.active {
+        opacity: 1;
+        translate: 0;
     }
 </style>
