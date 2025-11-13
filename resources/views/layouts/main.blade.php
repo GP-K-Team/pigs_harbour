@@ -9,6 +9,14 @@
         <meta name="viewport" content="width=device-width" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <script src="https://vk.com/js/api/openapi.js?169"></script>
+
+        <script>
+            VK.Widgets.CommunityMessages("vk_community_messages", 229736671, {
+                tooltipButtonText: 'Связаться с нами'
+            });
+        </script>
+
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         @stack('styles')
@@ -19,8 +27,6 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="apple-mobile-web-app-title" content="Пристань Пушистых Сердец" />
-
-        <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
     </head>
 
     <body>
@@ -69,10 +75,6 @@
                     $(this).closest('.window-container').hide().trigger('close');
 
                     return false;
-                });
-
-                VK.Widgets.CommunityMessages("vk_community_messages", 229736671, {
-                    tooltipButtonText: 'Связаться с нами'
                 });
             });
         </script>

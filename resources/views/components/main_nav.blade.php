@@ -61,7 +61,7 @@
     </div>
 </nav>
 
-@if($isAdmin)
+@if(isset($isAdmin) && $isAdmin)
     <div class="logout-button_wrapper">
         @include('components.buttons.logout-button')
     </div>
