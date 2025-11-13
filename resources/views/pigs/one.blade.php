@@ -133,7 +133,7 @@
                 </div>
                 @if($pig->is_active)
                     <div class="button pig_details_button">
-                        <a href="{{ route('catalog.index') }}">
+                        <a href="/blog/kak-vzyat">
                             Как взять свинку
                         </a>
                     </div>
@@ -152,7 +152,7 @@
                 Все наши животные обработаны от паразитов. Отдаются в готовые условия в обмен на корм или другие нужности для будущих подопечных, после заполнения анкеты. Волонтеры остаются на связи для поддержки будущих владельцев.
             </p>
             <div class="button">
-                <a href="{{ route('catalog.index') }}">
+                <a href="/blog/kak-vzyat">
                     Как взять свинку
                 </a>
             </div>
