@@ -91,10 +91,20 @@
             translate: -30%;
             transition-duration: 700ms;
             transition-property: opacity, translate;
+
+            @media (max-width: 768px) {
+                opacity: 1;
+                translate: initial;
+            }
         }
 
         .animated-block:nth-child(odd) {
             translate: 130%;
+
+            @media (max-width: 768px) {
+                opacity: 1;
+                translate: initial;
+            }
         }
 
         .animated-block.active {
