@@ -31,8 +31,8 @@ Route::prefix('catalog')->name('catalog.')->group(function () {
         Route::post('/status/{pig}', [PigsController::class, 'updateStatus'])->name('status');
     });
 
-    Route::get('show/{pig}', [PigsController::class, 'showOne'])->name('one');
     Route::get('/{city?}/{sex?}/{age?}/{fur?}', [PigsController::class, 'index'])->name('index');
+    Route::get('/{pig}', [PigsController::class, 'showOne'])->name('one');
 });
 
 Route::prefix('blog')->name('blog.')->group(function () {

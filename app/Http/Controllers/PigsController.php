@@ -20,21 +20,28 @@ use Illuminate\View\View;
 
 class PigsController extends Controller
 {
-    public function index(Request $request, UrlHelper $urlHelper): View
+    public function index(Request $request, UrlHelper $urlHelper): RedirectResponse|View
     {
         $cities = City::query()->pluck('name');
         $filters = $urlHelper->collectFilters();
-        $showMore = $request->get('show_more', 1);
+
+        if (count($filters) === 1) {
+            $slug = head($filters);
+
+            if ($pigFoundBySlug = Pig::query()->firstWhere('slug_name', $slug)) {
+                return $this->showOne($pigFoundBySlug);
+            }
+        }
 
         if (array_key_exists('city', $filters)) {
             $filters['city'] = $cities->firstWhere(fn (string $city) => LinguisticsHelper::transliterate($city) === $filters['city']);
         }
 
-        $pigs = Pig::activeDesc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT * $showMore));
+        $pigs = Pig::activeDesc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT));
         $isAdmin = Auth::check() ?? false;
         $state = 'catalog';
 
-        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin', 'showMore', 'state'));
+        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin', 'state'));
     }
 
     /**
@@ -56,11 +63,6 @@ class PigsController extends Controller
         $state = 'archive';
 
         return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin', 'state'));
-    }
-
-    public function filteredList(string $city, string $sex, string $age, string $fur): View
-    {
-
     }
 
     public function showOne(Pig $pig): View
