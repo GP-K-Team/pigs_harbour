@@ -16,7 +16,7 @@ $(document).ready(function () {
 
     toggleActive();
 
-    $(document).on('scroll mousewheel resize', toggleActive);
-    $(window).on('scroll mousewheel resize', toggleActive);
-    $('body').on('scroll mousewheel resize', toggleActive);
+    $(document).on('scroll mousewheel wheel resize', toggleActive);
+    $(window).on('scroll mousewheel wheel resize', toggleActive);
+    $('body').on('scroll mousewheel wheel resize', toggleActive);
 });
