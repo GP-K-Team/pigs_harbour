@@ -1,5 +1,7 @@
 @php
     /** @var bool $isAdmin */
+
+    use Illuminate\Support\Facades\Auth;
 @endphp
 
 <nav class="nav-bar">
@@ -61,7 +63,7 @@
     </div>
 </nav>
 
-@if($isAdmin)
+@if($isAdmin ?? Auth::check() ?? false)
     <div class="logout-button-wrapper">
         @include('components.buttons.logout-button')
     </div>
