@@ -14,5 +14,5 @@ $(document).ready(function () {
 
     toggleActive();
 
-    $(document).on('scroll mousewheel resize', toggleActive);
+    $(document).on('scroll mousewheel wheel resize', toggleActive);
 });
