@@ -105,6 +105,7 @@
         box-shadow: 0 4px 4px 0 var(--shadow_drop);
         cursor: pointer;
         transition: 250ms;
+        overflow: hidden;
     }
 
     .article-card:hover {
