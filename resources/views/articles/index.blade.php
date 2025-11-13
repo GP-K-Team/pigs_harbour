@@ -268,6 +268,7 @@
                 height: 340px;
                 flex-direction: column;
                 border-radius: 0.75rem;
+                overflow: hidden;
             }
         }
 
