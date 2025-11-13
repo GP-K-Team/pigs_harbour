@@ -291,6 +291,7 @@
 
         @media (max-width: 768px) {
             .card-image {
+                width: 100%;
                 height: 200px;
                 border-radius: 0.75rem 0.75rem 0 0;
             }
