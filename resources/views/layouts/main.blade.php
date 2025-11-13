@@ -19,6 +19,8 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="apple-mobile-web-app-title" content="Пристань Пушистых Сердец" />
+
+        <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
     </head>
 
     <body>
@@ -68,8 +70,14 @@
 
                     return false;
                 });
+
+                VK.Widgets.CommunityMessages("vk_community_messages", 229736671, {
+                    tooltipButtonText: 'Связаться с нами'
+                });
             });
         </script>
+
+        <div id="vk_community_messages"></div>
     </body>
 </html>
 
