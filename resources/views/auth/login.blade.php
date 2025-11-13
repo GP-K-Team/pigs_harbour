@@ -22,7 +22,7 @@
         </div>
 
         <div class="form-button">
-            <button type="submit">Войти</button>
+            <button class="button" type="submit">Войти</button>
         </div>
 
         @csrf
