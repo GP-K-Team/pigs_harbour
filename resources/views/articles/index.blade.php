@@ -29,6 +29,7 @@
     @vite('resources/js/hashtags.js')
     @vite('resources/js/pageText.js')
     @vite('resources/js/delete-handler.js')
+    @vite('resources/js/main-animation.js')
 @endpush
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -86,7 +87,7 @@
                 @endif
 
                 @foreach($articles as $article)
-                    <li class="list-item card @if($isAdmin) can-edit @endif" onclick="location.replace('{{ route('blog.one', compact('article')) }}')">
+                    <li class="list-item card animated-block @if($isAdmin) can-edit @endif" onclick="location.replace('{{ route('blog.one', compact('article')) }}')">
                         <a href="{{ route('blog.one', compact('article')) }}">
                             <img class="card-image" width="350" height="250" alt="Обложка статьи"
                                  src="{{ $article->mainImage?->getFullUrl() ?? $article->getDefaultImage() }}">
@@ -610,6 +611,33 @@
             @media (max-width: 768px) {
                 display: block;
             }
+        }
+
+        /** Animation **/
+
+        .list-item.card.animated-block {
+            opacity: 0;
+            translate: -30%;
+            transition: opacity 400ms ease-in-out, translate 600ms ease, scale 250ms ease;
+
+            @media (max-width: 768px) {
+                opacity: 1;
+                translate: initial;
+            }
+        }
+
+        .list-item.card.animated-block:nth-child(odd) {
+            translate: 130%;
+
+            @media (max-width: 768px) {
+                opacity: 1;
+                translate: initial;
+            }
+        }
+
+        .list-item.card.animated-block.active {
+            opacity: 1;
+            translate: 0;
         }
     </style>
 @endsection
