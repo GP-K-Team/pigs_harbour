@@ -40,6 +40,7 @@ class AuthController extends Controller
     public function logout(): RedirectResponse
     {
         Auth::logout();
+
         return redirect()->back();
     }
 }
