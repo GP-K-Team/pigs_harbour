@@ -5,6 +5,7 @@ import Splide from '@splidejs/splide';
 $(document).ready(function () {
 
     let windowWidth = $(window).width();
+    let articlesSplide;
 
     if (windowWidth < 768) {
         initateSplide();
@@ -19,6 +20,9 @@ $(document).ready(function () {
     });
 
     function initateSplide() {
-        new Splide('#articles_splide').mount();
+
+        if (!articlesSplide) {
+            articlesSplide = new Splide('#articles_splide').mount();
+        }
     }
 });

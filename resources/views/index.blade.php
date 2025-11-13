@@ -2,6 +2,7 @@
 
 @push('js')
     @vite('resources/js/splide.js')
+    @vite('resources/js/main-animation.js')
 @endpush
 
 @section('title')
@@ -11,9 +12,19 @@
 @section('content')
     @include('components.banner')
     @include('components.badge')
-    @include('components.main_pigs')
-    @include('components.steps')
-    @include('components.main_articles')
+
+    <div class="animated-block">
+        @include('components.main_pigs')
+    </div>
+
+    <div class="animated-block">
+        @include('components.steps')
+    </div>
+
+    <div class="animated-block">
+        @include('components.main_articles')
+    </div>
+
     @include('components.summary')
 @endsection
 
@@ -73,6 +84,22 @@
                 margin-bottom: 2.5rem;
                 font-size: 2.5rem;
             }
+        }
+
+        .animated-block {
+            opacity: 0;
+            translate: -30%;
+            transition-duration: 700ms;
+            transition-property: opacity, translate;
+        }
+
+        .animated-block:nth-child(odd) {
+            translate: 130%;
+        }
+
+        .animated-block.active {
+            opacity: 1;
+            translate: 0;
         }
     </style>
 @endprepend
