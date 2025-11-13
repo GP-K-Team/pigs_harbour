@@ -53,3 +53,7 @@ Route::middleware('auth:web')->group(function () {
    Route::delete('files/{file}', [FileController::class, 'delete']);
    Route::put('page_text/{pageText}', [PageTextController::class, 'update']);
 });
+
+Route::fallback(function () {
+    return \view('errors.404');
+});
