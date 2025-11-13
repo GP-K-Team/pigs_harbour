@@ -61,7 +61,7 @@
 
     .footer_icon_block.footer_icon_dzen {
         background-repeat: no-repeat;
-        background-image: url("/images/logo/footer/block.svg");
+        background-image: url("/images/logo/footer/dz.svg");
         background-position: center;
     }
 </style>
