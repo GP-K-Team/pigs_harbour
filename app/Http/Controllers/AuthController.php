@@ -10,9 +10,6 @@ use Illuminate\View\View;
 
 class AuthController extends Controller
 {
-    /**
-     * @return View|RedirectResponse
-     */
     public function index(): View|RedirectResponse
     {
         if (Auth::user()) {
@@ -24,10 +21,6 @@ class AuthController extends Controller
         return view('auth.login', compact('isAdmin'));
     }
 
-    /**
-     * @param AuthRequest $request
-     * @return RedirectResponse
-     */
     public function login(AuthRequest $request): RedirectResponse
     {
         $data = $request->validated();

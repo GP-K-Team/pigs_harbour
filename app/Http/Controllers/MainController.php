@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class MainController
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         return view('index', [
@@ -22,7 +19,7 @@ class MainController
             'isAdmin' => Auth::id(),
             'cities' => City::all(),
             'pigs' => Pig::query()->orderBy('created_at')->limit(6)->with(['city', 'companion', 'companionOf'])->get(),
-            'articles' => Article::inRandomOrder()->take(3)->get(),
+            'articles' => Article::query()->inRandomOrder()->take(3)->get(),
         ]);
     }
 }

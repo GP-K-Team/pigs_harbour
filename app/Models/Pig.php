@@ -8,9 +8,9 @@ use App\Attributes\RouteSlug;
 use App\Enum\AgeFilter;
 use App\Enum\Fur;
 use App\Enum\Sex;
+use App\Models\Traits\HasImages;
 use App\Models\Traits\HasTimestamps;
 use App\Models\Traits\IsIdentifiedBySlug;
-use App\Traits\HasImages;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +27,7 @@ use Illuminate\Support\Collection;
  * @property Fur $fur
  * @property string $age
  * @property Carbon $birthday
+ * @property Carbon $stopped_looking_date
  * @property bool $available_for_other_cities
  * @property bool $is_active
  * @property City $city
@@ -73,6 +74,7 @@ class Pig extends Model
         'fur' => Fur::class,
         'sex' => Sex::class,
         'birthday' => 'date:Y-m-d',
+        'stopped_looking_date' => 'date',
         'is_active' => 'boolean',
     ];
 
@@ -116,6 +118,15 @@ class Pig extends Model
         $query->where('is_active', false)->orderBy('created_at');
     }
 
+    /**
+     * @param Builder $query Pig query
+     * @param array{
+     *     city: string,
+     *     age: AgeFilter,
+     *     sex: Sex|string,
+     *     fur: Fur|string,
+     * } $params
+     */
     public function scopeFilter(Builder $query, array $params = []): void
     {
         $params = array_filter($params);
