@@ -19,7 +19,9 @@ class AuthController extends Controller
             return redirect()->route('home');
         }
 
-        return view('auth.login');
+        $isAdmin = false;
+
+        return view('auth.login', compact('isAdmin'));
     }
 
     /**
