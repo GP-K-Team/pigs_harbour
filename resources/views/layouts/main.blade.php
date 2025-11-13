@@ -70,14 +70,18 @@
 
                     return false;
                 });
+            });
+        </script>
 
+        <div id="vk_community_messages"></div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
                 VK.Widgets.CommunityMessages("vk_community_messages", 229736671, {
                     tooltipButtonText: 'Связаться с нами'
                 });
             });
         </script>
-
-        <div id="vk_community_messages"></div>
     </body>
 </html>
 
