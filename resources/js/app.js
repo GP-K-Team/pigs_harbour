@@ -1,12 +1,12 @@
 import './bootstrap';
 
 $(document).ready(function() {
-    $('.menu_burger').on('click', function() {
-        $('.mobile_nav_wrapper').show();
+    $('.menu-burger').on('click', function() {
+        $('.mobile-nav-wrapper').show();
     });
 
-    $('.close_nav_button').on('click', function() {
-        $('.mobile_nav_wrapper').hide();
+    $('.close-nav-button').on('click', function() {
+        $('.mobile-nav-wrapper').hide();
     });
 
     $('img').on('error', function () {

@@ -13,14 +13,12 @@ use App\Models\City;
 use App\Models\Pig;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class PigsController extends Controller
 {
-    public function index(Request $request, UrlHelper $urlHelper): RedirectResponse|View
+    public function index(UrlHelper $urlHelper): RedirectResponse|View
     {
         $cities = City::query()->pluck('name');
         $filters = $urlHelper->collectFilters();
@@ -38,18 +36,12 @@ class PigsController extends Controller
         }
 
         $pigs = Pig::activeDesc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT));
-        $isAdmin = Auth::check() ?? false;
         $state = 'catalog';
 
-        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin', 'state'));
+        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'state'));
     }
 
-    /**
-     * @param Request $request
-     * @param UrlHelper $urlHelper
-     * @return View
-     */
-    public function archive(Request $request, UrlHelper $urlHelper): View
+    public function archive(UrlHelper $urlHelper): View
     {
         $cities = City::query()->pluck('name');
         $filters = $urlHelper->collectFilters();
@@ -59,36 +51,32 @@ class PigsController extends Controller
         }
 
         $pigs = Pig::notActiveAsc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT));
-        $isAdmin = Auth::check() ?? false;
         $state = 'archive';
 
-        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'isAdmin', 'state'));
+        return \view('pigs.index', compact('filters', 'cities', 'pigs', 'state'));
     }
 
     public function showOne(Pig $pig): View
     {
-        $isAdmin = Auth::check() ?? false;
         $additionalPigs = Pig::activeDesc()->where('id', '!=', $pig->id)->take(3)->get();
 
-        return \view('pigs.one', compact('pig', 'isAdmin', 'additionalPigs'));
+        return \view('pigs.one', compact('pig', 'additionalPigs'));
     }
 
-    public function showCreate(Request $request): View
+    public function showCreate(): View
     {
         $cities = City::query()->pluck('name', 'id');
         $companionCandidates = Pig::activeDesc()->get();
-        $isAdmin = true;
 
-        return \view('pigs.form', compact('cities', 'companionCandidates', 'isAdmin'));
+        return \view('pigs.form', compact('cities', 'companionCandidates'));
     }
 
-    public function showUpdate(Request $request, Pig $pig): View
+    public function showUpdate(Pig $pig): View
     {
         $cities = City::query()->pluck('name', 'id');
         $companionCandidates = Pig::activeDesc()->whereNot('id', '=', $pig->id)->get();
-        $isAdmin = true;
 
-        return \view('pigs.form', compact('pig', 'companionCandidates', 'cities', 'isAdmin'));
+        return \view('pigs.form', compact('pig', 'companionCandidates', 'cities'));
     }
 
     public function create(CreatePigFormRequest $request): RedirectResponse
@@ -136,16 +124,11 @@ class PigsController extends Controller
         return \response()->redirectToAction([self::class, 'showOne'], compact('pig'));
     }
 
-    public function delete(Request $request, Pig $pig): RedirectResponse
+    public function delete(): RedirectResponse
     {
         return \response()->redirectToAction([self::class, 'index']);
     }
 
-    /**
-     * @param UpdatePigStatusRequest $request
-     * @param Pig $pig
-     * @return JsonResponse
-     */
     public function updateStatus(UpdatePigStatusRequest $request, Pig $pig): JsonResponse
     {
         $pig->is_active = $request->validated('is_active');

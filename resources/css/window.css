@@ -20,9 +20,9 @@
     left: 0;
     right: 0;
     background-color: white;
-    border: 1px solid var(--main_font_trp);
+    border: 1px solid var(--main-font-trp);
     border-radius: 0.75rem;
-    box-shadow: 0 4px 4px 0 var(--shadow_drop);
+    box-shadow: 0 4px 4px 0 var(--shadow-drop);
     transform: translateY(-50%);
 }
 

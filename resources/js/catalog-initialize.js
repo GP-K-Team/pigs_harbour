@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
     $('html, body').animate({
-        scrollTop: $('.catalog_wrapper').offset().top
+        scrollTop: $('.catalog-wrapper').offset().top
     }, 500);
 });

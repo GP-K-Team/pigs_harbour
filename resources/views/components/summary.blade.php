@@ -7,11 +7,11 @@
     /** @var Collection|iterable<City> $cities */
 @endphp
 
-<div class="summary_wrapper">
-    <ul class="summary_list">
+<div class="summary-wrapper">
+    <ul class="summary-list">
         <li>
-            <div class="summary_block">
-                <p class="summary_number">
+            <div class="summary-block">
+                <p class="summary-number">
                     {{ $cities->count() }}
                 </p>
                 <p>
@@ -20,8 +20,8 @@
             </div>
         </li>
         <li>
-            <div class="summary_block">
-                <p class="summary_number">
+            <div class="summary-block">
+                <p class="summary-number">
                     15+
                 </p>
                 <p>
@@ -30,9 +30,9 @@
             </div>
         </li>
         <li>
-            <div class="summary_block">
-                <p class="summary_number">
-                    {{ $pigs->count() > 100 ? $pigs->count() : '100' }}+
+            <div class="summary-block">
+                <p class="summary-number">
+                    {{ max($pigs->count(), 100) }}+
                 </p>
                 <p>
                     счастливых свинок
@@ -43,14 +43,14 @@
 </div>
 
 <style>
-    .summary_wrapper {
+    .summary-wrapper {
         padding: 20px 40px;
-        border-top: 10px solid var(--pale_orange);
+        border-top: 10px solid var(--pale-orange);
         background-image: url("/images/bright_dark.png");
         background-size: contain;
     }
 
-    .summary_list {
+    .summary-list {
         margin: auto;
         width: 50%;
         display: flex;
@@ -68,7 +68,7 @@
         }
     }
 
-    .summary_block {
+    .summary-block {
         display: flex;
         flex-direction: column;
         row-gap: 5px;
@@ -77,14 +77,14 @@
         font-size: 15px;
     }
 
-    .summary_block p {
+    .summary-block p {
         margin: 0;
     }
 
-    .summary_number {
+    .summary-number {
         font-family: '315karusel', sans-serif;
         font-size: 30px;
-        color: var(--main_pink);
+        color: var(--main-pink);
         font-weight: bold;
     }
 </style>

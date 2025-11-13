@@ -13,7 +13,7 @@
     padding: 1rem;
     gap: 1rem;
     background-color: #ffffff;
-    border: 1px solid var(--main_font);
+    border: 1px solid var(--main-font);
     border-radius: 1rem;
 }
 
@@ -57,26 +57,26 @@
     overflow-x: hidden;
     text-overflow: '...';
     font-size: 1rem;
-    border-bottom: 1px solid var(--main_font);
+    border-bottom: 1px solid var(--main-font);
 }
 
 .input-container :is(input, textarea, fieldset) {
     margin: 0;
-    color: var(--main_font);
-    border: 2px solid var(--main_blue);
+    color: var(--main-font);
+    border: 2px solid var(--main-blue);
     border-radius: 0.5rem;
 }
 
 .input-container :is(input:not([type="radio"]), textarea):focus {
     outline: none;
-    border-color: var(--main_pink);
+    border-color: var(--main-pink);
 }
 
 .filepond {
     width: 100%;
     height: 10rem;
     padding: 0.25rem;
-    background-color: var(--light_blue);
+    background-color: var(--light-blue);
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
 }
@@ -125,7 +125,7 @@ input[type="radio"] {
     border-radius: 50%;
     background: white;
     border: none;
-    outline: 1px solid var(--main_font);
+    outline: 1px solid var(--main-font);
     outline-offset: 3px;
 }
 
@@ -137,13 +137,13 @@ input[type="checkbox"] {
     appearance: none;
     background: white;
     border: none;
-    outline: 2px solid var(--main_blue);
+    outline: 2px solid var(--main-blue);
     outline-offset: 3px;
     transition: background-color 0.25s linear;
 }
 
 input[type="checkbox"]:checked {
-    background: var(--main_pink);
+    background: var(--main-pink);
     transition: background-color 0.25s linear;
 }
 
@@ -161,11 +161,11 @@ input[type="checkbox"]:checked {
 }
 
 input[type="radio"]:hover {
-    background-color: var(--light_blue);
+    background-color: var(--light-blue);
 }
 
 input[type="radio"]:checked {
-    background: var(--main_blue);
+    background: var(--main-blue);
 }
 
 input[type="file"] {
@@ -175,11 +175,11 @@ input[type="file"] {
 .select-input .select-input__dropdown {
     width: 100%;
     max-height: 10rem;
-    border: 1px solid var(--main_font);
+    border: 1px solid var(--main-font);
     border-radius: 0.5rem;
     overflow-y: scroll;
     scrollbar-width: thin;
-    scrollbar-color: var(--main_pink) var(--light_blue);
+    scrollbar-color: var(--main-pink) var(--light-blue);
 }
 
 .form-button {
@@ -188,5 +188,5 @@ input[type="file"] {
 }
 
 span.input-error {
-    color: var(--holiday_red);
+    color: var(--holiday-red);
 }

@@ -28,9 +28,10 @@
 
 @push('js')
     @vite('resources/js/filepond.js')
-    @vite('resources/js/article_choice.js')
+    @vite('resources/js/article-choice.js')
     @vite('resources/js/form/rich-text-editor.js')
     @vite('resources/js/form/translit.js')
+    @vite('resources/js/zebra.js')
 
     @if($article && $article->mainImage)
         <script type="module">
@@ -132,6 +133,14 @@
                 </div>
 
                 <div class="input-container">
+                    <label class="input-label" for="created_at">Дата публикации</label>
+                    <input class="datepick" type="text" name="created_at" id="created_at"
+                           value="{{ old('created_at', Str::headline($article?->created_at?->translatedFormat('d M Y'))) }}"
+                           placeholder="Дата публикации">
+                    <x-error-bag name="created_at"/>
+                </div>
+
+                <div class="input-container">
                     <label class="input-label" for="hashtags">Категории</label>
                     <select name="hashtags[]" id="hashtags" multiple>
                         <option value="" disabled>Выберите категории</option>
@@ -189,7 +198,7 @@
             width: 100%;
             height: 10rem;
             padding: 0.25rem;
-            background-color: var(--light_blue);
+            background-color: var(--light-blue);
             border-bottom-left-radius: 1rem;
             border-bottom-right-radius: 1rem;
         }

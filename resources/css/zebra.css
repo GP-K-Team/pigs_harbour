@@ -14,7 +14,7 @@
 .Zebra_DatePicker.Zebra_DatePicker {
     padding: 0;
     font-family: Nunito, Arial, sans-serif;
-    background-color: var(--main_blue);
+    background-color: var(--main-blue);
 }
 
 .Zebra_DatePicker .dp_header.dp_actions,
@@ -24,28 +24,28 @@
 }
 
 .Zebra_DatePicker .dp_actions .dp_hover {
-    background-color: var(--light_blue) !important;
-    color: var(--main_font) !important;
+    background-color: var(--light-blue) !important;
+    color: var(--main-font) !important;
     font-weight: 750;
 }
 
 .Zebra_DatePicker table.dp_actions td {
-    color: var(--main_font);
+    color: var(--main-font);
 }
 
 .Zebra_DatePicker table.dp_daypicker th {
-    background-color: var(--main_pink);
-    color: var(--main_font);
+    background-color: var(--main-pink);
+    color: var(--main-font);
 }
 
 .Zebra_DatePicker table.dp_body td {
     font-family: inherit;
-    background-color: var(--white_trp);
+    background-color: var(--white-trp);
 }
 
 .Zebra_DatePicker table.dp_body td.dp_hover {
-    color: var(--light_blue);
-    background-color: var(--dark_blue_font);
+    color: var(--light-blue);
+    background-color: var(--dark-blue-font);
 }
 
 .Zebra_DatePicker table.dp_body td.dp_disabled {
@@ -53,10 +53,10 @@
 }
 
 .Zebra_DatePicker .dp_body td.dp_weekend {
-    background-color: var(--pale_yellow);
+    background-color: var(--pale-yellow);
 }
 
 .Zebra_DatePicker .dp_body td.dp_weekend.dp_hover {
-    color: var(--holiday_red);
-    background-color: var(--main_pink);
+    color: var(--holiday-red);
+    background-color: var(--main-pink);
 }

@@ -27,7 +27,7 @@
 
 @push('js')
     @vite('resources/js/hashtags.js')
-    @vite('resources/js/pageText.js')
+    @vite('resources/js/page-text.js')
     @vite('resources/js/delete-handler.js')
     @vite('resources/js/main-animation.js')
 @endpush
@@ -120,10 +120,10 @@
             </ul>
 
             @if($articles->total() > 1 && $articles->lastPage() !== 1)
-                <div class="pagination_wrapper">
-                    <ul class="pagination_list">
+                <div class="pagination-wrapper">
+                    <ul class="pagination-list">
                         <a href="?page=1">
-                            <li @class(['item_active' => $articles->currentPage() === 1])>
+                            <li @class(['item-active' => $articles->currentPage() === 1])>
                                 1
                             </li>
                         </a>
@@ -160,7 +160,7 @@
                                 </a>
                             @else
                                 <a>
-                                    <li @class(['item_active'])>
+                                    <li @class(['item-active'])>
                                         {{ $articles->currentPage()}}
                                     </li>
                                 </a>
@@ -184,7 +184,7 @@
                         @endif
 
                         <a href="{{ "?page=" . $articles->lastPage()  }}">
-                            <li @class(['item_active' => $articles->currentPage() === $articles->lastPage()])>
+                            <li @class(['item-active' => $articles->currentPage() === $articles->lastPage()])>
                                 {{ $articles->lastPage() }}
                             </li>
                         </a>
@@ -195,13 +195,13 @@
     </div>
 
     @php
-        $footerContent = $pageTexts->firstWhere('text_key', 'footer_text');
+        $footerContent = $pageTexts->firstWhere('text_key', 'footer-text');
     @endphp
 
     @if($footerContent)
-        <div class="footer_block">
-            <div class="footer_text">
-                <p class="footer_text" @if($isAdmin) contenteditable
+        <div class="footer-block">
+            <div class="footer-text">
+                <p class="footer-text" @if($isAdmin) contenteditable
                    @endif data-page-text-id="{{ $footerContent->id }}">
                     {{ $footerContent->content }}
                 </p>
@@ -249,7 +249,7 @@
             height: 300px;
             background-color: white;
             border-radius: 1.5rem;
-            box-shadow: 0 4px 4px 0 var(--shadow_drop);
+            box-shadow: 0 4px 4px 0 var(--shadow-drop);
             cursor: pointer;
             transition: 250ms;
             overflow-x: hidden;
@@ -275,7 +275,7 @@
         .list-item.card > a {
             display: flex;
             flex-direction: row;
-            color: var(--main_font) !important;
+            color: var(--main-font) !important;
         }
 
         .card .card-description {
@@ -305,7 +305,7 @@
             padding: 1rem 0.5rem 0;
             display: inline-flex;
             align-items: center;
-            color: var(--dark_blue_font);
+            color: var(--dark-blue-font);
             text-align: center;
         }
 
@@ -348,8 +348,8 @@
         }
 
         .card-button:hover {
-            background-color: var(--main_green);
-            color: var(--main_font);
+            background-color: var(--main-green);
+            color: var(--main-font);
         }
 
         @media (max-width: 1200px) {
@@ -422,14 +422,14 @@
         }
 
         .edit-icon-link:hover {
-            background-color: var(--pale_yellow);
+            background-color: var(--pale-yellow);
         }
 
         .card.add-card {
             width: fit-content;
             margin-left: 0;
             margin-right: auto;
-            background-color: var(--white_trp);
+            background-color: var(--white-trp);
         }
 
         .card.add-card:hover {
@@ -486,7 +486,7 @@
         }
 
         .add-card-link:hover svg {
-            color: var(--main_green);
+            color: var(--main-green);
             opacity: 0.6;
         }
 
@@ -514,13 +514,13 @@
         }
 
 
-        .footer_block {
+        .footer-block {
             padding: 40px;
-            border-top: 10px solid var(--main_pink);
+            border-top: 10px solid var(--main-pink);
             background-image: url("/images/bright_dark.png");
         }
 
-        .footer_text {
+        .footer-text {
             display: flex;
             flex-direction: column;
             row-gap: 25px;
@@ -532,12 +532,12 @@
             }
         }
 
-        .pagination_list {
+        .pagination-list {
             display: flex;
             column-gap: 20px;
         }
 
-        .pagination_list li {
+        .pagination-list li {
             padding: 10px 20px;
             font-size: 25px;
             cursor: pointer;
@@ -549,16 +549,16 @@
             }
         }
 
-        .pagination_list li:hover a {
-            color: var(--main_blue);
+        .pagination-list li:hover a {
+            color: var(--main-blue);
         }
 
-        .item_active {
-            background-color: var(--light_blue);
+        .item-active {
+            background-color: var(--light-blue);
         }
 
-        .pagination_list .item_active:hover a {
-            color: var(--main_font);
+        .pagination-list .item-active:hover a {
+            color: var(--main-font);
         }
 
         .list-header {
@@ -602,7 +602,7 @@
 
         .hashtag-item-active {
             color: white;
-            background-color: var(--main_pink);
+            background-color: var(--main-pink);
             font-weight: bold;
         }
 

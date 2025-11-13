@@ -6,8 +6,8 @@
     /** @var Collection|iterable<Article> $articles */
 @endphp
 
-<div class="landing_wrapper main_articles_wrapper">
-    <h2 class="landing_header articles_wrapper_header">
+<div class="landing-wrapper main-articles-wrapper">
+    <h2 class="landing-header articles-wrapper-header">
         <a href="{{ route('blog.index') }}">Все о морских свинках →</a>
     </h2>
 
@@ -33,7 +33,7 @@
         @endforeach
     </ul>
 
-    <section id="articles_splide" class="splide articles_splide_wrapper" aria-label="Splide">
+    <section id="articles_splide" class="splide articles-splide-wrapper" aria-label="Splide">
         <div class="splide__track">
             <ul class="splide__list">
                 @foreach($articles as $article)
@@ -61,18 +61,18 @@
         </div>
     </section>
 
-    <a class="button landing_button blog_button" href="{{ route('blog.index') }}">
+    <a class="button landing-button blog-button" href="{{ route('blog.index') }}">
         Больше статей
     </a>
 </div>
 
 <style>
-    .main_articles_wrapper {
+    .main-articles-wrapper {
         background-image: url("/images/texture-light.png");
-        border-top: 10px solid var(--main_pink);
+        border-top: 10px solid var(--main-pink);
     }
 
-    .articles_splide_wrapper {
+    .articles-splide-wrapper {
         display: none;
 
         @media (max-width: 768px) {
@@ -102,7 +102,7 @@
         height: 300px;
         background-color: white;
         border-radius: 1.5rem;
-        box-shadow: 0 4px 4px 0 var(--shadow_drop);
+        box-shadow: 0 4px 4px 0 var(--shadow-drop);
         cursor: pointer;
         transition: 250ms;
         overflow: hidden;
@@ -127,7 +127,7 @@
     .article-list-item.article-card > a {
         display: flex;
         flex-direction: row;
-        color: var(--main_font);
+        color: var(--main-font);
     }
 
     .article-card .article-card-description {
@@ -156,7 +156,7 @@
         padding: 1rem 0.5rem 0;
         display: inline-flex;
         align-items: center;
-        color: var(--dark_blue_font);
+        color: var(--dark-blue-font);
         text-align: center;
     }
 

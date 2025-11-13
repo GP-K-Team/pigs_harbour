@@ -1,17 +1,17 @@
 .choices__inner {
     box-sizing: border-box;
     background-color: white !important;
-    border-color: var(--main_blue) !important;
-    border: 2px solid var(--main_blue) !important;
+    border-color: var(--main-blue) !important;
+    border: 2px solid var(--main-blue) !important;
     border-radius: 0.5rem !important;
 }
 
 .choices__input {
-    border-color: var(--main_pink) !important;
+    border-color: var(--main-pink) !important;
 }
 
 .choices__list--multiple .choices__item {
-    background-color: var(--main_blue) !important;
+    background-color: var(--main-blue) !important;
     color: white !important;
 }
 

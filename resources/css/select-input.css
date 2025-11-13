@@ -59,7 +59,7 @@
 }
 
 .select-input .select-input__option:not(.select-input__option--value):not(:first-child):hover {
-    background-color: var(--light_blue);
+    background-color: var(--light-blue);
 }
 
 .select-input .select-input__input {
