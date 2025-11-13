@@ -9,6 +9,14 @@
         <meta name="viewport" content="width=device-width" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <script src="https://vk.com/js/api/openapi.js?169"></script>
+
+        <script>
+            VK.Widgets.CommunityMessages("vk_community_messages", 229736671, {
+                tooltipButtonText: 'Связаться с нами'
+            });
+        </script>
+
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         @stack('styles')
@@ -70,6 +78,8 @@
                 });
             });
         </script>
+
+        <div id="vk_community_messages"></div>
     </body>
 </html>
 
