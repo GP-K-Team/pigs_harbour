@@ -30,11 +30,22 @@
         text-align: center;
     }
 
-    /*@media (max-width: 1300px) {*/
-    /*    .badge_image_block img {*/
-    /*        width: 200px;*/
-    /*    }*/
-    /*}*/
+    .badge_image_wrapper img{
+        transition: transform 0.4s ease-in-out;
+        animation: scale 3s ease-in-out infinite;
+    }
+
+    @keyframes scale {
+        0% {
+            transform: scale(1) translate(0);
+        }
+        50% {
+            transform: scale(1.01) translate(2px);
+        }
+        100% {
+            transform: scale(1) translate(0px);
+        }
+    }
 
     @media (max-width: 1000px) {
         .badge_image_caption {
