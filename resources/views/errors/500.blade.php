@@ -21,22 +21,22 @@
                 </a>
             </div>
             <div class="additional-links">
-                <div class="link_wrapper">
+                <div class="link-wrapper">
                     <a href="{{ route('catalog.index') }}">
                         Морские свинки в поиске дома
                     </a>
                 </div>
-                <div class="link_wrapper">
+                <div class="link-wrapper">
                     <a href="/blog/kak-vzyat">
                         Как взять морскую свинку у нас
                     </a>
                 </div>
-                <div class="link_wrapper">
+                <div class="link-wrapper">
                     <a href="{{ route('blog.index') }}">
                         Полезные статьи
                     </a>
                 </div>
-                <div class="link_wrapper">
+                <div class="link-wrapper">
                     <a href="/blog/o-nas">
                         О нас
                     </a>
@@ -83,18 +83,18 @@
         text-align: center;
     }
 
-    .additional-links .link_wrapper {
+    .additional-links .link-wrapper {
         width: fit-content;
         padding: 2px 1px;
-        border-bottom: 1px solid var(--main_font);
+        border-bottom: 1px solid var(--main-font);
     }
 
-    .link_wrapper {
+    .link-wrapper {
         cursor: pointer;
     }
 
-    .link_wrapper:hover, .link_wrapper:has(a:hover) {
-        border-bottom: 1px solid var(--dark_blue_font);
+    .link-wrapper:hover, .link-wrapper:has(a:hover) {
+        border-bottom: 1px solid var(--dark-blue-font);
     }
 
     .home-button {
@@ -104,10 +104,10 @@
     }
 
     .home-button:hover {
-        border-color: var(--dark_blue_font);
+        border-color: var(--dark-blue-font);
     }
 
     .home-button:hover a {
-        color: var(--dark_blue_font);
+        color: var(--dark-blue-font);
     }
 </style>

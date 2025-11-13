@@ -98,7 +98,7 @@
 <style>
     .steps_wrapper {
         background-image: url("/images/bright_dark.png");
-        border-top: 10px solid var(--pale_orange);
+        border-top: 10px solid var(--pale-orange);
     }
 
     .steps_splide_wrapper {
@@ -160,32 +160,32 @@
 
     .step_detail:nth-child(1),
     .steps_splide_wrapper li:nth-child(1) .step_detail {
-        background-color: var(--darker_green);
+        background-color: var(--darker-green);
     }
 
     .step_detail:nth-child(2),
     .steps_splide_wrapper li:nth-child(2) .step_detail {
-        background-color: var(--main_pink);
+        background-color: var(--main-pink);
     }
 
     .step_detail:nth-child(3),
     .steps_splide_wrapper li:nth-child(3) .step_detail {
-        background-color: var(--main_blue);
+        background-color: var(--main-blue);
     }
 
     .step_detail:nth-child(4),
     .steps_splide_wrapper li:nth-child(4) .step_detail {
-        background-color: var(--bright_blue);
+        background-color: var(--bright-blue);
     }
 
     .step_detail:nth-child(5),
     .steps_splide_wrapper li:nth-child(5) .step_detail {
-        background-color: var(--pale_orange);
+        background-color: var(--pale-orange);
     }
 
     .step_detail:nth-child(6),
     .steps_splide_wrapper li:nth-child(6) .step_detail {
-        background-color: var(--pale_yellow);
+        background-color: var(--pale-yellow);
     }
 
     .step_detail:nth-child(1):before,
@@ -219,11 +219,11 @@
     }
 
     .splide__pagination__page.is-active {
-        background-color: var(--main_pink);
+        background-color: var(--main-pink);
     }
 
     .splide__pagination__page {
-        background-color: var(--main_blue);
+        background-color: var(--main-blue);
         opacity: 1;
     }
 

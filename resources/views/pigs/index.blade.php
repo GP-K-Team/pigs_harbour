@@ -46,13 +46,17 @@
     <div class="catalog_wrapper">
         <div class="bread-crumbs">
             <ul>
-                <li><a href="/">Главная</a></li>
+                <li>
+                    <a href="/">Главная</a>
+                </li>
+
                 @if($state === 'catalog')
                     <li>Ищут дом</li>
                 @else
                     <li>Архив</li>
                 @endif
             </ul>
+
             @if($isAdmin)
                 <div class="admin_links">
                     @if($state === 'catalog')
@@ -66,8 +70,7 @@
 
         <div class="list-container">
             <div class="list-header">
-                <button class="button list-filter-button" type="button"
-                        onclick="$('#filter_window').closest('.window-container').show()">
+                <button class="button list-filter-button" type="button" onclick="$('#filter_window').closest('.window-container').show()">
                     Фильтры
                 </button>
                 @if($filterCount = count(array_filter($filters)))
@@ -358,7 +361,7 @@
             height: 40vh;
             width: 40vh;
             border-radius: 50%;
-            background-color: var(--pale_orange);
+            background-color: var(--pale-orange);
 
             @media (max-width: 768px) {
                 top: 15%;
@@ -374,7 +377,7 @@
             height: 50vh;
             width: 50vh;
             border-radius: 50%;
-            background-color: var(--pale_yellow);
+            background-color: var(--pale-yellow);
 
             @media (max-width: 768px) {
                 bottom: 5%;
@@ -417,12 +420,12 @@
         }
 
         .bread-crumbs > ul :is(li, a) {
-            color: var(--brown_gray);
+            color: var(--brown-gray);
             font-size: 1rem;
         }
 
         .bread-crumbs > ul > li > a:hover {
-            color: var(--main_blue);
+            color: var(--main-blue);
         }
 
         .bread-crumbs > ul > li:not(:last-child)::after {
@@ -438,7 +441,7 @@
             justify-content: center;
             background-image: url("{{ asset('images/dots.jpg') }}");
             background-size: 25%;
-            box-shadow: 0 4px 4px 0 var(--shadow_drop);
+            box-shadow: 0 4px 4px 0 var(--shadow-drop);
 
             @media (max-width: 1000px) {
                 min-height: 300px;
@@ -447,7 +450,7 @@
 
         .footer_block {
             padding: 40px;
-            border-top: 10px solid var(--main_pink);
+            border-top: 10px solid var(--main-pink);
             background-image: url("/images/texture-light.png");
         }
 
@@ -539,9 +542,9 @@
             color: white;
             font-family: inherit;
             font-size: 1.25rem;
-            background: var(--holiday_red);
+            background: var(--holiday-red);
             border-radius: 50%;
-            border: 1px solid var(--main_font);
+            border: 1px solid var(--main-font);
             cursor: default;
             user-select: none;
             z-index: 4;
@@ -569,7 +572,7 @@
             height: 1px;
             margin: 0;
             border: none;
-            border-bottom: 1px solid var(--main_font);
+            border-bottom: 1px solid var(--main-font);
         }
 
         .filter-container {
@@ -602,7 +605,7 @@
             width: 75%;
             margin-bottom: 0.25rem;
             line-height: 1.75;
-            border-bottom: 1px solid var(--main_font_trp);
+            border-bottom: 1px solid var(--main-font-trp);
         }
 
         .filter-container fieldset .radio-group {
@@ -630,16 +633,16 @@
         }
 
         .filter-reset-button {
-            background-color: rgb(from var(--main_font) r g b / 10%);
+            background-color: rgb(from var(--main-font) r g b / 10%);
         }
 
         .filter-reset-button:hover {
-            color: var(--main_font);
+            color: var(--main-font);
             background-color: #E2E2E2;
         }
 
         .filter-reset-button:active {
-            color: rgb(from var(--main_font) r g b / 80%);
+            color: rgb(from var(--main-font) r g b / 80%);
         }
 
         h3 {
@@ -679,9 +682,9 @@
             flex-direction: column;
             width: 350px;
             height: 430px;
-            background-color: var(--light_blue);
+            background-color: var(--light-blue);
             border-radius: 1rem;
-            box-shadow: 0 4px 4px 0 var(--shadow_drop);
+            box-shadow: 0 4px 4px 0 var(--shadow-drop);
             cursor: pointer;
             transition: 250ms;
         }
@@ -693,7 +696,7 @@
         }
 
         .card a {
-            color: var(--main_font) !important;
+            color: var(--main-font) !important;
         }
 
         .card p {
@@ -704,7 +707,7 @@
         }
 
         .list-item.card.card-pink {
-            background-color: var(--light_pink);
+            background-color: var(--light-pink);
         }
 
         @media (max-width: 1200px) {
@@ -760,7 +763,7 @@
             padding: 1rem 0.5rem 0;
             display: inline-flex;
             align-items: center;
-            color: var(--dark_blue_font);
+            color: var(--dark-blue-font);
             text-align: center;
         }
 
@@ -797,7 +800,7 @@
             position: absolute;
             top: 0.5rem;
             right: 0.5rem;
-            background-color: var(--light_pink);
+            background-color: var(--light-pink);
             border-radius: 0.5rem;
             user-select: none;
             z-index: 5;
@@ -806,16 +809,16 @@
         .edit-icon-link img {
             width: 100%;
             height: 100%;
-            box-shadow: 0 4px 4px 0 var(--shadow_drop);
+            box-shadow: 0 4px 4px 0 var(--shadow-drop);
             border-radius: 10px;
         }
 
         .edit-icon-link:hover {
-            background-color: var(--pale_yellow);
+            background-color: var(--pale-yellow);
         }
 
         .card.add-card {
-            background-color: var(--light_blue);
+            background-color: var(--light-blue);
         }
 
         .card.add-card:hover {
@@ -843,7 +846,7 @@
         }
 
         .add-card-link:hover svg {
-            color: var(--main_green);
+            color: var(--main-green);
             opacity: 0.6;
         }
 
@@ -862,7 +865,7 @@
         /** Page footer **/
         .footer_block {
             padding: 40px;
-            border-top: 10px solid var(--main_pink);
+            border-top: 10px solid var(--main-pink);
             background-image: url("/images/texture-light.png");
         }
 
@@ -896,15 +899,15 @@
         }
 
         .pagination_list li:hover a {
-            color: var(--main_blue);
+            color: var(--main-blue);
         }
 
         .item_active {
-            background-color: var(--light_blue);
+            background-color: var(--light-blue);
         }
 
         .pagination_list .item_active:hover a {
-            color: var(--main_font);
+            color: var(--main-font);
         }
 
         .admin_links {
@@ -913,7 +916,7 @@
         }
 
         .admin_links a {
-            color: var(--main_pink);
+            color: var(--main-pink);
         }
     </style>
 @endsection

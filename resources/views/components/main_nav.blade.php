@@ -99,7 +99,7 @@
     }
 
     .nav_list li:hover {
-        color: var(--dark_blue_font);
+        color: var(--dark-blue-font);
     }
 
     .menu_burger {
@@ -134,17 +134,17 @@
 
     .special_link {
         padding: 5px 10px;
-        border: 2px solid var(--main_font);
+        border: 2px solid var(--main-font);
         border-radius: 10px;
     }
 
     li .special_link:hover {
-        border-color: var(--dark_blue_font);
+        border-color: var(--dark-blue-font);
     }
 
     li .special_link:hover .main_vk_logo,
     .menu_burger:hover .burger_menu_line {
-        fill: var(--dark_blue_font);
+        fill: var(--dark-blue-font);
     }
 
     .vk_link {

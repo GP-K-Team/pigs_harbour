@@ -78,33 +78,34 @@
 
             <div class="pig_details_block">
                 @if($isAdmin)
-                <div class="admin_controls_wrapper">
-                    <div>
-                        <a class="edit-icon-link" href="{{ route('catalog.show.update', compact('pig')) }}" draggable="false">
-                            <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
-                        </a>
-                    </div>
-                    <div class="input-container has-radio">
-                        <fieldset>
-                            <legend class="input-label">
-                                Ищет дом
-                            </legend>
-                            <div class="radio-group">
-                                <div class="radio-item">
-                                    <input type="radio" name="is_active" id="1"
-                                           value="1" checked>
-                                    <label for="1">Да</label>
+                    <div class="admin_controls_wrapper">
+                        <div>
+                            <a class="edit-icon-link" href="{{ route('catalog.show.update', compact('pig')) }}" draggable="false">
+                                <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
+                            </a>
+                        </div>
+                        <div class="input-container has-radio">
+                            <fieldset>
+                                <legend class="input-label">
+                                    Ищет дом
+                                </legend>
+                                <div class="radio-group">
+                                    <div class="radio-item">
+                                        <input type="radio" name="is_active" id="1"
+                                               value="1" checked>
+                                        <label for="1">Да</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" name="is_active" id="0"
+                                               value="0" @checked(isset($pig) && !$pig->is_active)>
+                                        <label for="0">Нет</label>
+                                    </div>
                                 </div>
-                                <div class="radio-item">
-                                    <input type="radio" name="is_active" id="0"
-                                           value="0" @checked(isset($pig) && !$pig->is_active)>
-                                    <label for="0">Нет</label>
-                                </div>
-                            </div>
-                        </fieldset>
+                            </fieldset>
+                        </div>
                     </div>
-                </div>
                 @endif
+
                 <div>
                     <p>
                         <b>Пол</b>: <span>{{ $pig->sex->getLabel() }}</span>
@@ -207,7 +208,7 @@
         height: 40vh;
         width: 40vh;
         border-radius: 50%;
-        background-color: var(--pale_orange);
+        background-color: var(--pale-orange);
 
         @media (max-width: 768px) {
             top: 15%;
@@ -223,7 +224,7 @@
         height: 50vh;
         width: 50vh;
         border-radius: 50%;
-        background-color: var(--pale_yellow);
+        background-color: var(--pale-yellow);
 
         @media (max-width: 768px) {
             bottom: 5%;
@@ -234,7 +235,7 @@
     }
 
     .additional_text {
-        border-top: 10px solid var(--main_pink);
+        border-top: 10px solid var(--main-pink);
         padding: 20px 40px;
         text-align: justify;
         background-image: url("/images/bright_dark.png");
@@ -265,7 +266,7 @@
     }
 
     .additional_pigs_wrapper {
-        border-top: 10px solid var(--pale_orange);
+        border-top: 10px solid var(--pale-orange);
         background-image: url("/images/texture-light.png");
     }
 

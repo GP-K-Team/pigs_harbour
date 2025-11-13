@@ -106,7 +106,7 @@
         overflow: hidden;
         min-height: 500px;
         background-image: url("/images/texture-light.png");
-        border-top: 10px solid var(--pale_yellow);
+        border-top: 10px solid var(--pale-yellow);
     }
 
     .pigs_wrapper:before,
@@ -122,7 +122,7 @@
         height: 40vh;
         width: 40vh;
         border-radius: 50%;
-        background-color: var(--pale_orange);
+        background-color: var(--pale-orange);
 
         @media (max-width: 768px) {
             top: 15%;
@@ -138,7 +138,7 @@
         height: 50vh;
         width: 50vh;
         border-radius: 50%;
-        background-color: var(--pale_yellow);
+        background-color: var(--pale-yellow);
 
         @media (max-width: 768px) {
             bottom: 5%;
@@ -179,9 +179,9 @@
         flex-direction: column;
         width: 350px;
         height: 430px;
-        background-color: var(--light_blue);
+        background-color: var(--light-blue);
         border-radius: 1rem;
-        box-shadow: 0 4px 4px 0 var(--shadow_drop);
+        box-shadow: 0 4px 4px 0 var(--shadow-drop);
         cursor: pointer;
         z-index: 2;
         transition: 250ms;
@@ -229,7 +229,7 @@
     }
 
     .list-item.card.card-pink {
-        background-color: var(--light_pink);
+        background-color: var(--light-pink);
     }
 
     .card:hover {
@@ -304,11 +304,11 @@
     }
 
     .splide__pagination__page.is-active {
-        background-color: var(--main_pink);
+        background-color: var(--main-pink);
     }
 
     .splide__pagination__page {
-        background-color: var(--main_blue);
+        background-color: var(--main-blue);
         opacity: 1;
     }
 

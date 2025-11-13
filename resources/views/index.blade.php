@@ -46,11 +46,11 @@
         }
 
         .landing_header:hover {
-            color: var(--dark_blue_font);
+            color: var(--dark-blue-font);
         }
 
         .landing_header:active {
-            color: rgb(from var(--dark_blue_font) r g b / 50%);
+            color: rgb(from var(--dark-blue-font) r g b / 50%);
         }
 
         .landing_button {

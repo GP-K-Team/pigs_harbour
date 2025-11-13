@@ -88,7 +88,7 @@
         display: flex;
         flex-direction: column;
         font-family: Nunito, Arial, sans-serif;
-        color: var(--main_font);
+        color: var(--main-font);
         overflow-x: hidden;
     }
 
@@ -118,7 +118,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: var(--main_blue);
+        background-color: var(--main-blue);
         font-size: 18px;
         /*box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.06);*/
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -131,11 +131,11 @@
         width: 100%;
         max-width: 1400px;
         min-height: 120px;
-        background-color: var(--light_blue);
+        background-color: var(--light-blue);
         display:flex;
         justify-content: space-between;
         align-items: center;
-        border-top: 10px solid var(--main_blue);
+        border-top: 10px solid var(--main-blue);
         box-sizing: border-box;
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 

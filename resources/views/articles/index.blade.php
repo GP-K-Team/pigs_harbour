@@ -249,7 +249,7 @@
             height: 300px;
             background-color: white;
             border-radius: 1.5rem;
-            box-shadow: 0 4px 4px 0 var(--shadow_drop);
+            box-shadow: 0 4px 4px 0 var(--shadow-drop);
             cursor: pointer;
             transition: 250ms;
             overflow-x: hidden;
@@ -275,7 +275,7 @@
         .list-item.card > a {
             display: flex;
             flex-direction: row;
-            color: var(--main_font) !important;
+            color: var(--main-font) !important;
         }
 
         .card .card-description {
@@ -305,7 +305,7 @@
             padding: 1rem 0.5rem 0;
             display: inline-flex;
             align-items: center;
-            color: var(--dark_blue_font);
+            color: var(--dark-blue-font);
             text-align: center;
         }
 
@@ -348,8 +348,8 @@
         }
 
         .card-button:hover {
-            background-color: var(--main_green);
-            color: var(--main_font);
+            background-color: var(--main-green);
+            color: var(--main-font);
         }
 
         @media (max-width: 1200px) {
@@ -422,14 +422,14 @@
         }
 
         .edit-icon-link:hover {
-            background-color: var(--pale_yellow);
+            background-color: var(--pale-yellow);
         }
 
         .card.add-card {
             width: fit-content;
             margin-left: 0;
             margin-right: auto;
-            background-color: var(--white_trp);
+            background-color: var(--white-trp);
         }
 
         .card.add-card:hover {
@@ -486,7 +486,7 @@
         }
 
         .add-card-link:hover svg {
-            color: var(--main_green);
+            color: var(--main-green);
             opacity: 0.6;
         }
 
@@ -516,7 +516,7 @@
 
         .footer_block {
             padding: 40px;
-            border-top: 10px solid var(--main_pink);
+            border-top: 10px solid var(--main-pink);
             background-image: url("/images/bright_dark.png");
         }
 
@@ -550,15 +550,15 @@
         }
 
         .pagination_list li:hover a {
-            color: var(--main_blue);
+            color: var(--main-blue);
         }
 
         .item_active {
-            background-color: var(--light_blue);
+            background-color: var(--light-blue);
         }
 
         .pagination_list .item_active:hover a {
-            color: var(--main_font);
+            color: var(--main-font);
         }
 
         .list-header {
@@ -602,7 +602,7 @@
 
         .hashtag-item-active {
             color: white;
-            background-color: var(--main_pink);
+            background-color: var(--main-pink);
             font-weight: bold;
         }
 

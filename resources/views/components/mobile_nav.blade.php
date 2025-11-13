@@ -55,7 +55,7 @@
         position: absolute;
         top: 0;
         width: 100%;
-        background-color: var(--main_blue);
+        background-color: var(--main-blue);
         z-index: 6;
     }
 
@@ -91,11 +91,11 @@
 
     .close_nav_button:hover .close_menu_svg,
     li .vk_link:hover .main_vk_logo {
-        fill: var(--dark_blue_font);
+        fill: var(--dark-blue-font);
     }
 
     .mobile_nav_wrapper li:hover,
     .vk_link:hover {
-        color: var(--dark_blue_font);
+        color: var(--dark-blue-font);
     }
 </style>

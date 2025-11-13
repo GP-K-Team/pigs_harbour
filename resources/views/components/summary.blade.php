@@ -45,7 +45,7 @@
 <style>
     .summary_wrapper {
         padding: 20px 40px;
-        border-top: 10px solid var(--pale_orange);
+        border-top: 10px solid var(--pale-orange);
         background-image: url("/images/bright_dark.png");
         background-size: contain;
     }
@@ -84,7 +84,7 @@
     .summary_number {
         font-family: '315karusel', sans-serif;
         font-size: 30px;
-        color: var(--main_pink);
+        color: var(--main-pink);
         font-weight: bold;
     }
 </style>

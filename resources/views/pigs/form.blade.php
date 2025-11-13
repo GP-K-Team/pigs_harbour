@@ -228,7 +228,7 @@
             width: 100%;
             height: 10rem;
             padding: 0.25rem;
-            background-color: var(--light_blue);
+            background-color: var(--light-blue);
             border-bottom-left-radius: 1rem;
             border-bottom-right-radius: 1rem;
         }

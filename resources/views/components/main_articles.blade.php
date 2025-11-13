@@ -69,7 +69,7 @@
 <style>
     .main_articles_wrapper {
         background-image: url("/images/texture-light.png");
-        border-top: 10px solid var(--main_pink);
+        border-top: 10px solid var(--main-pink);
     }
 
     .articles_splide_wrapper {
@@ -102,7 +102,7 @@
         height: 300px;
         background-color: white;
         border-radius: 1.5rem;
-        box-shadow: 0 4px 4px 0 var(--shadow_drop);
+        box-shadow: 0 4px 4px 0 var(--shadow-drop);
         cursor: pointer;
         transition: 250ms;
         overflow: hidden;
@@ -127,7 +127,7 @@
     .article-list-item.article-card > a {
         display: flex;
         flex-direction: row;
-        color: var(--main_font);
+        color: var(--main-font);
     }
 
     .article-card .article-card-description {
@@ -156,7 +156,7 @@
         padding: 1rem 0.5rem 0;
         display: inline-flex;
         align-items: center;
-        color: var(--dark_blue_font);
+        color: var(--dark-blue-font);
         text-align: center;
     }
 

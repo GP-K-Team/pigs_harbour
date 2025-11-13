@@ -23,7 +23,7 @@
     .delete-button-icon {
         padding: 5px;
         height: 28px;
-        background-color: var(--main_pink);
+        background-color: var(--main-pink);
         border-radius: 0.5rem;
         border: none;
         user-select: none;
@@ -42,6 +42,6 @@
     }
 
     .delete-button-icon:hover {
-        background-color: var(--holiday_red);
+        background-color: var(--holiday-red);
     }
 </style>
