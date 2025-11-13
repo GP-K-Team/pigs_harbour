@@ -76,6 +76,8 @@
                 });
             });
         </script>
+
+        <div id="vk_community_messages"></div>
     </body>
 </html>
 
