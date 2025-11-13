@@ -23,7 +23,7 @@
 
     <body>
         <header>
-           @include('components.main_nav')
+           @include('components.main-nav')
         </header>
 
         <main class="main {{ isset($background) ? "bg-$background" : '' }}">
@@ -31,16 +31,16 @@
         </main>
 
         <footer>
-            <div class="footer_logo_wrapper">
+            <div class="footer-logo-wrapper">
                 <a href="{{ route('home') }}">
                     <img src="/images/logo.svg" alt="Логотип пристани" width="80">
                 </a>
             </div>
-            <div class="footer_links">
+            <div class="footer-links">
                 <div class="links">
                     @include('components.links')
                 </div>
-                <div class="footer_small_logo_wrapper">
+                <div class="footer-small-logo-wrapper">
                     <a href="{{ route('home') }}">
                         <img src="/images/logo.svg" alt="Логотип пристани">
                     </a>
@@ -85,8 +85,6 @@
         margin: 0;
         padding: 0;
         min-height: 100%;
-        display: flex;
-        flex-direction: column;
         font-family: Nunito, Arial, sans-serif;
         color: var(--main-font);
         overflow-x: hidden;
@@ -132,7 +130,7 @@
         max-width: 1400px;
         min-height: 120px;
         background-color: var(--light-blue);
-        display:flex;
+        display: flex;
         justify-content: space-between;
         align-items: center;
         border-top: 10px solid var(--main-blue);
@@ -148,13 +146,13 @@
         margin: 0;
     }
 
-    .footer_small_logo_wrapper {
+    .footer-small-logo-wrapper {
         display: flex;
         align-items: center;
         column-gap: 10px;
     }
 
-    .footer_small_logo_wrapper a {
+    .footer-small-logo-wrapper a {
         display: none;
 
         @media (max-width: 768px) {
@@ -162,7 +160,7 @@
         }
     }
 
-    .footer_small_logo_wrapper img {
+    .footer-small-logo-wrapper img {
         width: 40px;
 
         @media (max-width: 400px) {
@@ -170,7 +168,7 @@
         }
     }
 
-    .footer_links {
+    .footer-links {
         display: flex;
         column-gap: 20px;
         align-items: center;
@@ -182,7 +180,7 @@
     }
 
     @media (max-width: 768px) {
-        .footer_logo_wrapper {
+        .footer-logo-wrapper {
             display: none;
         }
     }

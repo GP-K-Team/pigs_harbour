@@ -89,8 +89,8 @@
     </dl>
 
     @if($additionalArticles->count())
-        <div class="additional_articles_wrapper">
-            <h2 class="additional_articles_header">Еще по теме →</h2>
+        <div class="additional-articles-wrapper">
+            <h2 class="additional-articles-header">Еще по теме →</h2>
 
             <ul class="article-list">
                 @foreach($additionalArticles as $additionalArticle)
@@ -115,7 +115,7 @@
                 @endforeach
             </ul>
 
-            <section id="articles_splide" class="splide articles_splide_wrapper" aria-label="Splide">
+            <section id="articles_splide" class="splide articles-splide-wrapper" aria-label="Splide">
                 <div class="splide__track">
                     <ul class="splide__list">
                         @foreach($additionalArticles as $additionalArticle)
@@ -228,7 +228,7 @@
     }
 
     /* Additional articles list */
-    .additional_articles_wrapper {
+    .additional-articles-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -238,7 +238,7 @@
         background-image: url("/images/texture-light.png");
     }
 
-    .additional_articles_header {
+    .additional-articles-header {
         font-family: '315karusel', sans-serif;
         font-size: 50px;
         text-align: center;
@@ -290,7 +290,7 @@
         opacity: 0.7;
     }
 
-    .articles_splide_wrapper {
+    .articles-splide-wrapper {
         display: none;
 
         @media (max-width: 768px) {

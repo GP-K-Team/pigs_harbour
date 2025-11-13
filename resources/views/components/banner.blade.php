@@ -7,24 +7,31 @@
     'imageCaption',
 ])
 
-<div class="banner_wrapper">
-    <div @class(['with_pigs' => $showPigs, "banner_text_wrapper"])>
+<div class="banner-wrapper">
+    <div @class(['with-pigs' => $showPigs, 'banner-text-wrapper'])>
         @if($showPigs)
-            <div class="banner_main_text_wrapper">
+            <div class="banner-main-text-wrapper">
                 <h1>Пристань <br> пушистых сердец</h1>
-                <p class="special_text">
+                <p class="special-text">
                     Группа помощи морским <br>свинкам
                 </p>
             </div>
         @elseif (isset($imageSrc))
-            <div class="banner_image">
+            <div class="banner-image">
                 <img src="{{'/images/' . $imageSrc }}" alt="{{ $imageCaption ?? '' }}">
             </div>
         @else
-            <div class="banner_side_text_wrapper">
-                <h1>{{ $specialHeader }}@if(isset($specialSubHeader))<br>{{ $specialSubHeader }}@endif</h1>
+            <div class="banner-side-text-wrapper">
+                <h1>
+                    {{ $specialHeader }}
+                    @if(isset($specialSubHeader))
+                        <br>
+                        {{ $specialSubHeader }}
+                    @endif
+                </h1>
+
                 @if(isset($specialText))
-                    <p class="special_text">
+                    <p class="special-text">
                         {{ $specialText }}
                     </p>
                 @endif
@@ -32,14 +39,14 @@
         @endif
     </div>
     @if ($showPigs)
-        <div class="pigs_banner">
-            <img src="/images/3_pigs.svg">
+        <div class="pigs-banner">
+            <img src="/images/3_pigs.svg" alt="">
         </div>
     @endif
 </div>
 
 <style>
-    .banner_wrapper {
+    .banner-wrapper {
         position: relative;
         margin: 0 auto;
         width: 100%;
@@ -51,7 +58,7 @@
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     }
 
-    .banner_text_wrapper {
+    .banner-text-wrapper {
         display: flex;
         justify-content: center;
         width: 100%;
@@ -59,22 +66,22 @@
         background: rgba(255, 255, 255, 0.8);
     }
 
-    .banner_text_wrapper.with_pigs {
+    .banner-text-wrapper.with-pigs {
         width: 50%;
     }
 
-    .banner_main_text_wrapper {
+    .banner-main-text-wrapper {
         text-align: center;
     }
 
-    .banner_main_text_wrapper h1,
-    .banner_side_text_wrapper h1 {
+    .banner-main-text-wrapper h1,
+    .banner-side-text-wrapper h1 {
         font-family: '315karusel', sans-serif;
         font-size: 50px;
         font-weight: bold;
     }
 
-    .banner_side_text_wrapper {
+    .banner-side-text-wrapper {
         width: 100%;
         min-height: 50%;
         display: flex;
@@ -84,7 +91,7 @@
         text-align: center;
     }
 
-    .pigs_banner {
+    .pigs-banner {
         position: absolute;
         right: 0;
         bottom: -15%;
@@ -96,68 +103,68 @@
         }
     }
 
-    .pigs_banner img {
+    .pigs-banner img {
         width: 100%;
     }
 
-    .special_text {
+    .special-text {
         font-family: 'overdoze sans', sans-serif;
         font-size: 40px;
     }
 
-    .banner_image {
+    .banner-image {
         margin: auto;
         display: flex;
         justify-content: center;
     }
 
     @media (min-width: 1400px) {
-        .pigs_banner {
+        .pigs-banner {
             right: 10%;
             width: 600px;
         }
     }
 
     @media (max-width: 1000px) {
-        .banner_main_text_wrapper h1 {
+        .banner-main-text-wrapper h1 {
             font-size: 35px;
         }
 
-        .special_text {
+        .special-text {
             font-size: 30px;
         }
 
-        .banner_image img {
+        .banner-image img {
             max-width: 50%;
         }
 
     }
 
     @media (max-width: 768px) {
-        .banner_wrapper {
+        .banner-wrapper {
             min-height: 300px;
         }
 
-        .banner_text_wrapper.with_pigs  {
+        .banner-text-wrapper.with-pigs  {
             width: 100%;
         }
 
-        .pigs_banner {
+        .pigs-banner {
             bottom: -55%;
             width: 100%;
             display: flex;
             justify-content: center;
         }
 
-        .pigs_banner img {
+        .pigs-banner img {
             width: 300px;
         }
 
-        .banner_main_text_wrapper h1 {
+        .banner-main-text-wrapper h1 {
             font-size: 25px;
         }
 
-        .special_text {
+        .special-text {
             font-size: 20px;
         }
     }

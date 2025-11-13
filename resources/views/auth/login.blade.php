@@ -9,8 +9,8 @@
 @endsection
 
 @section('content')
-<div class="login_form_wrapper">
-    <form class="login_form" action="{{ route('auth.login') }}" method="POST">
+<div class="login-form-wrapper">
+    <form class="login-form" action="{{ route('auth.login') }}" method="POST">
         <div class="input-container">
             <input type="text" name="login" id="login" placeholder="Логин" value="{{ old('login', '') }}" autocomplete="username">
             <x-error-bag name="login"/>
@@ -31,20 +31,20 @@
 @endsection
 
 <style>
-    .login_form_wrapper {
+    .login-form-wrapper {
         width: 50vw;
         max-width: 350px;
         margin: auto;
     }
 
-    .login_form {
+    .login-form {
         display: flex;
         flex-direction: column;
         row-gap: 25px;
     }
 
     @media (max-width: 768px) {
-        .login_form_wrapper {
+        .login-form-wrapper {
             width: 80vw;
         }
     }

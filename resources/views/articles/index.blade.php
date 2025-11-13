@@ -120,10 +120,10 @@
             </ul>
 
             @if($articles->total() > 1 && $articles->lastPage() !== 1)
-                <div class="pagination_wrapper">
-                    <ul class="pagination_list">
+                <div class="pagination-wrapper">
+                    <ul class="pagination-list">
                         <a href="?page=1">
-                            <li @class(['item_active' => $articles->currentPage() === 1])>
+                            <li @class(['item-active' => $articles->currentPage() === 1])>
                                 1
                             </li>
                         </a>
@@ -160,7 +160,7 @@
                                 </a>
                             @else
                                 <a>
-                                    <li @class(['item_active'])>
+                                    <li @class(['item-active'])>
                                         {{ $articles->currentPage()}}
                                     </li>
                                 </a>
@@ -184,7 +184,7 @@
                         @endif
 
                         <a href="{{ "?page=" . $articles->lastPage()  }}">
-                            <li @class(['item_active' => $articles->currentPage() === $articles->lastPage()])>
+                            <li @class(['item-active' => $articles->currentPage() === $articles->lastPage()])>
                                 {{ $articles->lastPage() }}
                             </li>
                         </a>
@@ -195,13 +195,13 @@
     </div>
 
     @php
-        $footerContent = $pageTexts->firstWhere('text_key', 'footer_text');
+        $footerContent = $pageTexts->firstWhere('text_key', 'footer-text');
     @endphp
 
     @if($footerContent)
-        <div class="footer_block">
-            <div class="footer_text">
-                <p class="footer_text" @if($isAdmin) contenteditable
+        <div class="footer-block">
+            <div class="footer-text">
+                <p class="footer-text" @if($isAdmin) contenteditable
                    @endif data-page-text-id="{{ $footerContent->id }}">
                     {{ $footerContent->content }}
                 </p>
@@ -514,13 +514,13 @@
         }
 
 
-        .footer_block {
+        .footer-block {
             padding: 40px;
             border-top: 10px solid var(--main-pink);
             background-image: url("/images/bright_dark.png");
         }
 
-        .footer_text {
+        .footer-text {
             display: flex;
             flex-direction: column;
             row-gap: 25px;
@@ -532,12 +532,12 @@
             }
         }
 
-        .pagination_list {
+        .pagination-list {
             display: flex;
             column-gap: 20px;
         }
 
-        .pagination_list li {
+        .pagination-list li {
             padding: 10px 20px;
             font-size: 25px;
             cursor: pointer;
@@ -549,15 +549,15 @@
             }
         }
 
-        .pagination_list li:hover a {
+        .pagination-list li:hover a {
             color: var(--main-blue);
         }
 
-        .item_active {
+        .item-active {
             background-color: var(--light-blue);
         }
 
-        .pagination_list .item_active:hover a {
+        .pagination-list .item-active:hover a {
             color: var(--main-font);
         }
 

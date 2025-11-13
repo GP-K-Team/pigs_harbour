@@ -1,28 +1,28 @@
-<ul class="social_links_wrapper">
+<ul class="social-links-wrapper">
     <li>
         <a href="https://vk.com/pristansvinki" target="_blank">
-            <div class="footer_icon_block footer_icon_vk"></div>
+            <div class="footer-icon-block footer-icon-vk"></div>
         </a>
     </li>
     <li>
         <a href="https://t.me/pristansvinki " target="_blank">
-            <div class="footer_icon_block footer_icon_telegram"></div>
+            <div class="footer-icon-block footer-icon-telegram"></div>
         </a>
     </li>
     <li>
         <a href="https://dzen.ru/pristansvinki" target="_blank">
-            <div class="footer_icon_block footer_icon_dzen"></div>
+            <div class="footer-icon-block footer-icon-dzen"></div>
         </a>
     </li>
 </ul>
 
 <style>
-    .social_links_wrapper {
+    .social-links-wrapper {
         display: flex;
         column-gap: 20px;
     }
 
-    .footer_icon_block {
+    .footer-icon-block {
         width: 48px;
         height: 48px;
         background-color: #EAB0C8;
@@ -34,11 +34,11 @@
         }
     }
 
-    .footer_icon_block:hover {
+    .footer-icon-block:hover {
         background-color: #DE90B0;
     }
 
-    .footer_icon_block:active::after {
+    .footer-icon-block:active::after {
         content: "";
         width: 100%;
         height: 100%;
@@ -47,19 +47,19 @@
         opacity: 0.5;
     }
 
-    .footer_icon_block.footer_icon_vk {
+    .footer-icon-block.footer-icon-vk {
         background-repeat: no-repeat;
         background-image: url("/images/logo/footer/vk.png");
         background-position: center;
     }
 
-    .footer_icon_block.footer_icon_telegram {
+    .footer-icon-block.footer-icon-telegram {
         background-repeat: no-repeat;
         background-image: url("/images/logo/footer/tg.png");
         background-position: center;
     }
 
-    .footer_icon_block.footer_icon_dzen {
+    .footer-icon-block.footer-icon-dzen {
         background-repeat: no-repeat;
         background-image: url("/images/logo/footer/dz.svg");
         background-position: center;

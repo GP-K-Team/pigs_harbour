@@ -43,7 +43,7 @@
 @section('content')
     @include('components.banner', ['showPigs' => false, 'specialHeader' => 'Морские свинки в добрые руки', 'specialText' => 'Выберите себе милого друга'])
 
-    <div class="catalog_wrapper">
+    <div class="catalog-wrapper">
         <div class="bread-crumbs">
             <ul>
                 <li>
@@ -58,7 +58,7 @@
             </ul>
 
             @if($isAdmin)
-                <div class="admin_links">
+                <div class="admin-links">
                     @if($state === 'catalog')
                         <a href="{{ route('pigs.archive') }}">Архив</a>
                     @else
@@ -237,28 +237,30 @@
             @endif
 
             @if($pigs->total() > 1 && $pigs->lastPage() !== 1)
-                <div class="pagination_wrapper">
-                    <ul class="pagination_list">
+                <div class="pagination-wrapper">
+                    <ul class="pagination-list">
                         <a href="?page=1">
-                            <li @class(['item_active' => $pigs->currentPage() === 1])>
+                            <li @class(['item-active' => $pigs->currentPage() === 1])>
                                     1
                             </li>
                         </a>
 
                         @if($pigs->lastPage() > 2)
 
-                            @if($pigs->currentPage() !== 1 &&
-                                           $pigs->currentPage() - 1 != 1 &&
-                                                $pigs->currentPage() - 2 != 1)
+                            @if($pigs->currentPage() !== 1
+                                    && $pigs->currentPage() - 1 != 1
+                                        && $pigs->currentPage() - 2 != 1)
                                 <li>
                                     ...
                                 </li>
                             @endif
 
-                            @if($pigs->currentPage() !== 1 && $pigs->currentPage() - 1 !== 1 && $pigs->currentPage() !== $pigs->lastPage())
+                            @if($pigs->currentPage() !== 1
+                                    && $pigs->currentPage() - 1 !== 1
+                                        && $pigs->currentPage() !== $pigs->lastPage())
                                 <a href="{{ $pigs->previousPageUrl() }}">
                                     <li>
-                                            {{ $pigs->currentPage() - 1 }}
+                                        {{ $pigs->currentPage() - 1 }}
                                     </li>
                                 </a>
                             @endif
@@ -266,34 +268,36 @@
                             @if($pigs->currentPage() === 1)
                                     <a href="{{ $pigs->nextPageUrl() }}">
                                         <li>
-                                                {{ $pigs->currentPage() + 1 }}
+                                            {{ $pigs->currentPage() + 1 }}
                                         </li>
                                     </a>
                                 @elseif($pigs->currentPage() === $pigs->lastPage())
                                     <a href="{{ $pigs->previousPageUrl() }}">
                                         <li>
-                                                {{ $pigs->lastPage() - 1 }}
+                                            {{ $pigs->lastPage() - 1 }}
                                         </li>
                                     </a>
                                 @else
                                     <a>
-                                        <li @class(['item_active'])>
-                                                {{ $pigs->currentPage()}}
+                                        <li @class(['item-active'])>
+                                            {{ $pigs->currentPage()}}
                                         </li>
                                     </a>
                             @endif
 
-                            @if($pigs->currentPage() !== 1 && $pigs->currentPage() + 1 !== $pigs->lastPage() && $pigs->currentPage() !== $pigs->lastPage())
+                            @if($pigs->currentPage() !== 1
+                                    && $pigs->currentPage() + 1 !== $pigs->lastPage()
+                                        && $pigs->currentPage() !== $pigs->lastPage())
                                 <a href="{{ $pigs->nextPageUrl() }}">
                                     <li>
-                                            {{ $pigs->currentPage() + 1 }}
+                                        {{ $pigs->currentPage() + 1 }}
                                     </li>
                                 </a>
                             @endif
 
-                            @if($pigs->currentPage() + 1 != $pigs->lastPage() &&
-                                                $pigs->currentPage() + 2 != $pigs->lastPage() &&
-                                                                        $pigs->currentPage() !== $pigs->lastPage())
+                            @if($pigs->currentPage() + 1 != $pigs->lastPage()
+                                    && $pigs->currentPage() + 2 != $pigs->lastPage()
+                                        && $pigs->currentPage() !== $pigs->lastPage())
                                 <li>
                                     ...
                                 </li>
@@ -301,8 +305,8 @@
                         @endif
 
                         <a href="{{ "?page=" . $pigs->lastPage()  }}">
-                            <li @class(['item_active' => $pigs->currentPage() === $pigs->lastPage()])>
-                                    {{ $pigs->lastPage() }}
+                            <li @class(['item-active' => $pigs->currentPage() === $pigs->lastPage()])>
+                                {{ $pigs->lastPage() }}
                             </li>
                         </a>
                     </ul>
@@ -311,8 +315,8 @@
         </div>
     </div>
 
-    <div class="footer_block">
-        <div class="footer_text">
+    <div class="footer-block">
+        <div class="footer-text">
             <p>
                 На нашей Пристани временно обрели пристанище очаровательные морские свинки, мечтающие о любящей семье.
                 Эти маленькие пушистые комочки энергии ищут добрые руки, готовые подарить им тепло, заботу и
@@ -342,20 +346,20 @@
     @include('components.summary')
 
     <style>
-        .catalog_wrapper {
+        .catalog-wrapper {
             position: relative;
             overflow: hidden;
             min-height: 800px;
         }
 
-        .catalog_wrapper:before,
-        .catalog_wrapper:after {
+        .catalog-wrapper:before,
+        .catalog-wrapper:after {
             content: '';
             position: absolute;
             z-index: 0;
         }
 
-        .catalog_wrapper:before {
+        .catalog-wrapper:before {
             top: 20%;
             left: 10%;
             height: 40vh;
@@ -371,7 +375,7 @@
             }
         }
 
-        .catalog_wrapper:after {
+        .catalog-wrapper:after {
             bottom: -20%;
             right: -15%;
             height: 50vh;
@@ -448,13 +452,13 @@
             }
         }
 
-        .footer_block {
+        .footer-block {
             padding: 40px;
             border-top: 10px solid var(--main-pink);
             background-image: url("/images/texture-light.png");
         }
 
-        .footer_text {
+        .footer-text {
             display: flex;
             flex-direction: column;
             row-gap: 25px;
@@ -863,13 +867,13 @@
         }
 
         /** Page footer **/
-        .footer_block {
+        .footer-block {
             padding: 40px;
             border-top: 10px solid var(--main-pink);
             background-image: url("/images/texture-light.png");
         }
 
-        .footer_text {
+        .footer-text {
             display: flex;
             flex-direction: column;
             row-gap: 25px;
@@ -881,12 +885,12 @@
             }
         }
 
-        .pagination_list {
+        .pagination-list {
             display: flex;
             column-gap: 20px;
         }
 
-        .pagination_list li {
+        .pagination-list li {
             padding: 10px 20px;
             font-size: 25px;
             cursor: pointer;
@@ -898,24 +902,24 @@
             }
         }
 
-        .pagination_list li:hover a {
+        .pagination-list li:hover a {
             color: var(--main-blue);
         }
 
-        .item_active {
+        .item-active {
             background-color: var(--light-blue);
         }
 
-        .pagination_list .item_active:hover a {
+        .pagination-list .item-active:hover a {
             color: var(--main-font);
         }
 
-        .admin_links {
+        .admin-links {
             top: 30px;
             position: absolute;
         }
 
-        .admin_links a {
+        .admin-links a {
             color: var(--main-pink);
         }
     </style>
