@@ -30,7 +30,6 @@
         @media (max-width: 768px) {
             width: 36px;
             height: 36px;
-            background-size: contain;
         }
     }
 
