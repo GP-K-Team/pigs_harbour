@@ -327,6 +327,7 @@
         box-shadow: 0 4px 4px 0 var(--shadow-drop);
         cursor: pointer;
         transition: 250ms;
+        overflow: hidden;
     }
 
     .article-card:hover {
@@ -368,6 +369,7 @@
         .article-card-image {
             height: 200px;
             border-radius: 0.75rem 0.75rem 0 0;
+            width: 100%;
         }
     }
 
