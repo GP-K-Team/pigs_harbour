@@ -3,7 +3,7 @@ $(document).ready(function () {
     $('input[name="status"]').on('change', function (e) {
 
         $.ajax({
-            url: '/pigs/status/' + $('.pig-wrapper').data('pig-slug'),
+            url: '/catalog/status/' + $('.pig-wrapper').data('pig-slug'),
             type: 'POST',
             data: {
                 status: $(this).val(),
