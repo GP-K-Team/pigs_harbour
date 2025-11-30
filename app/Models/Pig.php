@@ -81,12 +81,112 @@ class Pig extends Model
         'status' => PigStatus::class,
     ];
 
+    protected $ageCast = [
+        [
+            'maxAge' => 76,
+            'stringAge' => '2 месяца'
+        ],
+        [
+            'maxAge' => 105,
+            'stringAge' => '3 месяца'
+        ],
+        [
+            'maxAge' => 135,
+            'stringAge' => '4 месяца'
+        ],
+        [
+            'maxAge' => 166,
+            'stringAge' => '5 месяцев'
+        ],
+        [
+            'maxAge' => 227,
+            'stringAge' => '7 месяцев'
+        ],
+        [
+            'maxAge' => 257,
+            'stringAge' => '8 месяцев'
+        ],
+        [
+            'maxAge' => 288,
+            'stringAge' => '9 месяцев'
+        ],
+        [
+            'maxAge' => 318,
+            'stringAge' => '10 месяцев'
+        ],
+        [
+            'maxAge' => 365,
+            'stringAge' => '11 месяцев'
+        ],
+        [
+            'maxAge' => 548,
+            'stringAge' => '1 год'
+        ],
+        [
+            'maxAge' => 685,
+            'stringAge' => '1,5 года'
+        ],
+        [
+            'maxAge' => 900,
+            'stringAge' => '2 года'
+        ],
+        [
+            'maxAge' => 1050,
+            'stringAge' => '2,5 года'
+        ],
+        [
+            'maxAge' => 1460,
+            'stringAge' => '3 года'
+        ],
+        [
+            'maxAge' => 1825,
+            'stringAge' => '4 года'
+        ],
+        [
+            'maxAge' => 2190,
+            'stringAge' => '5 лет'
+        ],
+        [
+            'maxAge' => 2555,
+            'stringAge' => '6 лет'
+        ],
+        [
+            'maxAge' => 2920,
+            'stringAge' => '7 лет'
+        ],
+        [
+            'maxAge' => 3285,
+            'stringAge' => '8 лет'
+        ],
+    ];
+
     /**
      * @return bool
      */
     public function isActive(): bool
     {
         return $this->status === PigStatus::ACTIVE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAgeString(): string
+    {
+        $ageString = '';
+
+        if ($this->birthday) {
+            $daysDifference = $this->birthday->diffInDays(today());
+
+            foreach ($this->ageCast as $ageCast) {
+                if ($daysDifference <= $ageCast['maxAge']) {
+                    $ageString = $ageCast['stringAge'];
+                    break;
+                }
+            }
+        }
+
+        return $ageString;
     }
 
     /**

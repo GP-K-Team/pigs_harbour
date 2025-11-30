@@ -112,6 +112,9 @@
                         <b>ДР</b>: <span>~ {{ $pig->birthday?->translatedFormat('d F Y') ?? 'Неизвестно' }}</span>
                     </p>
                     <p>
+                        <b>Возраст</b>: <span>{{ $pig->getAgeString() ?? 'Неизвестен' }}</span>
+                    </p>
+                    <p>
                         <b>Город</b>: <span>{{ $pig->city->name }}</span>
                     </p>
                     <p>
