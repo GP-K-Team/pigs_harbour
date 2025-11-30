@@ -136,14 +136,30 @@ input[type="checkbox"] {
 
     appearance: none;
     background: white;
-    border: none;
-    outline: 2px solid var(--main-blue);
-    outline-offset: 3px;
     transition: background-color 0.25s linear;
 }
 
-input[type="checkbox"]:checked {
-    background: var(--main-pink);
+input[type="checkbox"]::before {
+    content: "";
+    width: 1.25rem;
+    margin: -5px 0 0 -5px;
+    display: block;
+    height: 1.25rem;
+    border: 1px solid var(--main-font);
+    border-radius: 2px;
+}
+
+input[type="checkbox"]:hover::before {
+    border-color: var(--dark-blue-font);
+}
+
+input[type="checkbox"]:active::before {
+    border-color: rgb(from var(--dark-blue-font) r g b / 50%);
+}
+
+input[type="checkbox"]:checked::before {
+    background: url("/public/images/icons/check.svg") no-repeat 50% 50%;
+    background-size: 90% 95%;
     transition: background-color 0.25s linear;
 }
 
