@@ -107,3 +107,12 @@ a:active {
 [draggable="false"] {
     user-select: none;
 }
+
+.hashtag-list-header::-webkit-scrollbar {
+    display: none;
+}
+
+.hashtag-list-header {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

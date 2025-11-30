@@ -76,6 +76,7 @@
 
     .banner-main-text-wrapper h1,
     .banner-side-text-wrapper h1 {
+        padding: 10px 15px;
         font-family: '315karusel', sans-serif;
         font-size: 50px;
         font-weight: bold;
@@ -126,6 +127,11 @@
     }
 
     @media (max-width: 1000px) {
+        .banner-main-text-wrapper h1,
+        .banner-side-text-wrapper h1 {
+            padding: 5px 10px;
+        }
+
         .banner-main-text-wrapper h1 {
             font-size: 35px;
         }
@@ -165,6 +171,10 @@
         }
 
         .special-text {
+            font-size: 20px;
+        }
+
+        .banner-side-text-wrapper h1 {
             font-size: 20px;
         }
     }

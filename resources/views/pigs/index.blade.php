@@ -110,8 +110,8 @@
                                     </legend>
                                     <div class="radio-group">
                                         <div class="radio-item">
-                                            <input type="radio" name="sex" value="" @checked(empty($filters['sex'])) id="sex-empty">
-                                            <label for="sex-empty">Любой</label>
+                                            <input type="radio" name="sex" value="" @checked(empty($filters['sex'])) id="sex_empty">
+                                            <label for="sex_empty">Любой</label>
                                         </div>
 
                                         @foreach(Sex::cases() as $sex)
@@ -131,8 +131,8 @@
                                     </legend>
                                     <div class="radio-group">
                                         <div class="radio-item">
-                                            <input type="radio" name="age" value="" checked id="age-empty">
-                                            <label for="age-empty">Любой</label>
+                                            <input type="radio" name="age" value="" checked id="age_empty">
+                                            <label for="age_empty">Любой</label>
                                         </div>
 
                                         @foreach(AgeFilter::cases() as $age)
@@ -152,8 +152,8 @@
                                     </legend>
                                     <div class="radio-group">
                                         <div class="radio-item">
-                                            <input type="radio" name="fur" value="" checked id="fur-empty">
-                                            <label for="fur-empty">Любые</label>
+                                            <input type="radio" name="fur" value="" checked id="fur_empty">
+                                            <label for="fur_empty">Любые</label>
                                         </div>
 
                                         @foreach(Fur::cases() as $fur)
@@ -164,6 +164,13 @@
                                         @endforeach
                                     </div>
                                 </fieldset>
+                            </div>
+
+                            <div class="filter-input-container">
+                                <input type="checkbox" id="delivery" name="delivery" value="{{ Pig::getDeliveryLabel() }}" @checked($filters['has_delivery'] ?? false)>
+                                <label for="delivery" style="vertical-align: middle;">
+                                    Только с доставкой по РФ
+                                </label>
                             </div>
                         </div>
 
@@ -219,7 +226,7 @@
                                      width="350" height="250" alt="Фотография морской свинки по имени {{ $pig->name }}">
                                 <div class="card-bio">
                                     <h2 class="card-title">{{ $pig->name }}</h2>
-                                    <p class="card-age">{{ $pig->age ?? 'Возраст неизвестен' }}</p>
+                                    <p class="card-age">{{ $pig->getAgeString() ?? 'Возраст неизвестен' }}</p>
 
                                     @if($pig->city)
                                         <p class="card-city">Находится
@@ -241,7 +248,7 @@
                     <ul class="pagination-list">
                         <a href="?page=1">
                             <li @class(['item-active' => $pigs->currentPage() === 1])>
-                                    1
+                                1
                             </li>
                         </a>
 
@@ -266,23 +273,23 @@
                             @endif
 
                             @if($pigs->currentPage() === 1)
-                                    <a href="{{ $pigs->nextPageUrl() }}">
-                                        <li>
-                                            {{ $pigs->currentPage() + 1 }}
-                                        </li>
-                                    </a>
-                                @elseif($pigs->currentPage() === $pigs->lastPage())
-                                    <a href="{{ $pigs->previousPageUrl() }}">
-                                        <li>
-                                            {{ $pigs->lastPage() - 1 }}
-                                        </li>
-                                    </a>
-                                @else
-                                    <a>
-                                        <li @class(['item-active'])>
-                                            {{ $pigs->currentPage()}}
-                                        </li>
-                                    </a>
+                                <a href="{{ $pigs->nextPageUrl() }}">
+                                    <li>
+                                        {{ $pigs->currentPage() + 1 }}
+                                    </li>
+                                </a>
+                            @elseif($pigs->currentPage() === $pigs->lastPage())
+                                <a href="{{ $pigs->previousPageUrl() }}">
+                                    <li>
+                                        {{ $pigs->lastPage() - 1 }}
+                                    </li>
+                                </a>
+                            @else
+                                <a>
+                                    <li @class(['item-active'])>
+                                        {{ $pigs->currentPage()}}
+                                    </li>
+                                </a>
                             @endif
 
                             @if($pigs->currentPage() !== 1
@@ -546,7 +553,7 @@
             color: white;
             font-family: inherit;
             font-size: 1.25rem;
-            background: var(--holiday-red);
+            background: var(--main-pink);
             border-radius: 50%;
             border: 1px solid var(--main-font);
             cursor: default;
@@ -607,6 +614,7 @@
 
         .filter-container fieldset > legend {
             width: 75%;
+            min-width: 146px;
             margin-bottom: 0.25rem;
             line-height: 1.75;
             border-bottom: 1px solid var(--main-font-trp);
@@ -724,7 +732,7 @@
             .list-item.card {
                 width: 90%;
                 max-width: 300px;
-                height: 340px;
+                height: 400px;
             }
         }
 

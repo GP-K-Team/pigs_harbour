@@ -3,9 +3,7 @@
         <p>
             Мы — команда единомышленников, оказывающая помощь морским свинкам в беде. Мы даём им временный приют, лечим
             и находим новый уютный дом у любящих хозяев.
-            Наши волонтеры есть в @foreach($cities as $index => $city)
-                {{ ($index === 0 ? '' : ', ') . \App\Helpers\LinguisticsHelper::getCityLocativeForm($city->name) }}
-            @endforeach.
+            Наши волонтеры есть в @foreach($cities as $index => $city){{ ($index === 0 ? '' : ', ') . \App\Helpers\LinguisticsHelper::getCityLocativeForm($city->name) }}@endforeach.
         </p>
         <div class="heart-icon-wrapper">
             <img src="/images/heart.png" alt="Иконка сердечка">

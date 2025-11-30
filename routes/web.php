@@ -38,6 +38,8 @@ Route::prefix('catalog')->name('catalog.')->group(function () {
 
 Route::prefix('blog')->name('blog.')->group(function () {
     Route::middleware('auth:web')->group(function () {
+        Route::get('/unpublished', [ArticlesController::class, 'showUnpublished'])->name('unpublished');
+
         Route::get('/create', [ArticlesController::class, 'showCreate'])->name('show.create');
         Route::get('/update/{article}', [ArticlesController::class, 'showUpdate'])->name('show.update');
         Route::post('/', [ArticlesController::class, 'create'])->name('create');
@@ -45,7 +47,7 @@ Route::prefix('blog')->name('blog.')->group(function () {
         Route::delete('/{article}', [ArticlesController::class, 'delete'])->name('delete');
     });
 
-    Route::get('/', [ArticlesController::class, 'index'])->name('index');
+    Route::get('/{slug?}', [ArticlesController::class, 'index'])->name('index');
     Route::get('/{article}', [ArticlesController::class, 'showOne'])->name('one');
 });
 

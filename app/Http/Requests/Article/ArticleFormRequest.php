@@ -34,7 +34,7 @@ class ArticleFormRequest extends FormRequest
             'origin_link' => 'nullable|url',
             'cover' => 'nullable',
             'hashtags' => 'nullable|array',
-            'created_at' => 'nullable|date|before:tomorrow',
+            'created_at' => 'nullable|date',
         ];
     }
 

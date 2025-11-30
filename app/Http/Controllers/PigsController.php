@@ -35,7 +35,7 @@ class PigsController extends Controller
             $filters['city'] = $cities->firstWhere(fn (string $city) => LinguisticsHelper::transliterate($city) === $filters['city']);
         }
 
-        $pigs = Pig::activeDesc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT));
+        $pigs = Pig::activeAsc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT));
         $state = 'catalog';
 
         return \view('pigs.index', compact('filters', 'cities', 'pigs', 'state'));
@@ -50,7 +50,7 @@ class PigsController extends Controller
             $filters['city'] = $cities->firstWhere(fn (string $city) => LinguisticsHelper::transliterate($city) === $filters['city']);
         }
 
-        $pigs = Pig::notActiveAsc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT));
+        $pigs = Pig::notActiveDesc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT));
         $state = 'archive';
 
         return \view('pigs.index', compact('filters', 'cities', 'pigs', 'state'));
@@ -58,7 +58,7 @@ class PigsController extends Controller
 
     public function showOne(Pig $pig): View
     {
-        $additionalPigs = Pig::activeDesc()->where('id', '!=', $pig->id)->take(3)->get();
+        $additionalPigs = Pig::activeAsc()->where('id', '!=', $pig->id)->take(3)->get();
 
         return \view('pigs.one', compact('pig', 'additionalPigs'));
     }
@@ -131,9 +131,9 @@ class PigsController extends Controller
 
     public function updateStatus(UpdatePigStatusRequest $request, Pig $pig): JsonResponse
     {
-        $pig->is_active = $request->validated('is_active');
+        $pig->status = $request->validated('status');
 
-        if (!$pig->is_active) {
+        if (!$pig->isActive()) {
             $pig->stopped_looking_date = now();
         } else {
             $pig->stopped_looking_date = null;

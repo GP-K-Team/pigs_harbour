@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Pig;
 
 use App\Enum\Fur;
+use App\Enum\PigStatus;
 use App\Enum\Sex;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
@@ -29,6 +30,7 @@ class PigFormRequest extends FormRequest
         $formData['birthday'] = Carbon::parseFromLocale($formData['birthday']);
         $formData['sex'] = Sex::from($formData['sex']);
         $formData['fur'] = Fur::from($formData['fur']);
+        $formData['status'] = PigStatus::from($formData['status']);
 
         return $formData;
     }
@@ -42,9 +44,9 @@ class PigFormRequest extends FormRequest
             'name' => 'required|string',
             'age' => 'nullable|string',
             'birthday' => 'required|string',
-            'is_active' => 'boolean',
             'has_delivery' => 'boolean',
             'description' => 'nullable|string',
+            'status' => ['required', Rule::enum(PigStatus::class)],
             'sex' => ['required', Rule::enum(Sex::class)],
             'fur' => ['required', Rule::enum(Fur::class)],
             'city_id' => 'required|int|exists:cities,id',

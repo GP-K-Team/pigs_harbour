@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Helpers\LinguisticsHelper;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
@@ -14,6 +15,8 @@ use Illuminate\Support\Collection;
  * @property string $tag
  * @property string $slug
  * @property Collection|iterable<Article> $articles
+ *
+ * @method static Builder|static activeOnly()
  */
 class Hashtag extends Model
 {
@@ -52,5 +55,17 @@ class Hashtag extends Model
         }
 
         return $hashtagIDs;
+    }
+
+
+    /**
+     * Returns hashtags with active articles only
+     *
+     * @param Builder $query
+     * @return void
+     */
+    public function scopeActiveOnly(Builder $query): void
+    {
+        $query->whereHas('articles');
     }
 }

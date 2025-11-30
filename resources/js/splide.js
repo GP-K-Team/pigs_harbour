@@ -22,15 +22,15 @@ $(document).ready(function () {
     });
 
     function initateSplide() {
-        if (!stepSplide) {
+        if (!stepSplide && $('#steps_splide').length) {
             stepSplide = new Splide('#steps_splide').mount();
         }
 
-        if (!pigsSplide) {
+        if (!pigsSplide && $('#pigs_splide').length) {
             pigsSplide = new Splide('#pigs_splide').mount()
         }
 
-        if (!articlesSplide) {
+        if (!articlesSplide && $('#articles_splide').length) {
             articlesSplide = new Splide('#articles_splide').mount();
         }
     }

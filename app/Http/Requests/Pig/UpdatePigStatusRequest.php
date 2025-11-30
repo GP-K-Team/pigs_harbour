@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Pig;
 
+use App\Enum\PigStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatePigStatusRequest extends FormRequest
 {
@@ -20,7 +22,7 @@ class UpdatePigStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'is_active' => 'boolean',
+            'status' => ['required', Rule::enum(PigStatus::class)],
         ];
     }
 }

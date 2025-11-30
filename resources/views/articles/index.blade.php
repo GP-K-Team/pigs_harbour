@@ -18,7 +18,8 @@
     /** @var Collection|iterable<Hashtag> $hashtags */
     /** @var Collection|iterable<PageText> $pageTexts */
     /** @var bool $isAdmin */
-    /** @var array $activeHashtags */
+    /** @var string $activeHashtagSlug */
+    /** @var string $state */
 @endphp
 
 @push('styles')
@@ -26,7 +27,6 @@
 @endpush
 
 @push('js')
-    @vite('resources/js/hashtags.js')
     @vite('resources/js/page-text.js')
     @vite('resources/js/delete-handler.js')
     @vite('resources/js/main-animation.js')
@@ -42,21 +42,37 @@
             <li><a href="/">Главная</a></li>
             <li>Статьи</li>
         </ul>
+
+        @if($isAdmin)
+            <div class="admin-links">
+                @if($state === 'published')
+                    <a href="{{ route('blog.unpublished') }}">Неопубликованные</a>
+                @else
+                    <a href="{{ route('blog.index') }}">Опубликованные</a>
+                @endif
+            </div>
+        @endif
     </div>
 
     <div class="list-container">
-        <div class="list-header">
-            <ul class="hashtag-list">
-                <li @class(['hashtag-item-active' => !count($activeHashtags), 'hashtag-item']) data-hashtag="vse">
-                    Все
-                </li>
-                @foreach($hashtags as $hashtag)
-                    <li @class(['hashtag-item-active' => in_array($hashtag->slug, $activeHashtags), 'hashtag-item']) data-hashtag="{{ $hashtag->slug }}">
-                        {{ $hashtag->tag }}
-                    </li>
-                @endforeach
-            </ul>
-        </div>
+        @if($state === 'published')
+            <div class="hashtag-list-header">
+                <ul class="hashtag-list">
+                    <a href="{{ route('blog.index') }}">
+                        <li @class(['hashtag-item-active' => !$activeHashtagSlug, 'hashtag-item']) data-hashtag="vse">
+                            Все
+                        </li>
+                    </a>
+                    @foreach($hashtags as $hashtag)
+                        <a href="{{ route('blog.index', $hashtag->slug) }}">
+                            <li @class(['hashtag-item-active' => $hashtag->slug === $activeHashtagSlug, 'hashtag-item']) data-hashtag="{{ $hashtag->slug }}">
+                                {{ $hashtag->tag }}
+                            </li>
+                        </a>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         @if($articles->isEmpty())
             <h3>Нет результатов</h3>
@@ -561,7 +577,7 @@
             color: var(--main-font);
         }
 
-        .list-header {
+        .hashtag-list-header {
             max-width: 80%;
 
             @media (max-width: 768px) {
@@ -584,7 +600,7 @@
         .hashtag-item {
             display: flex;
             align-items: center;
-            width: fit-content;
+            min-width: max-content;
             padding: 10px 30px;
             border-radius: 10px;
             font-size: 25px;
@@ -639,6 +655,18 @@
         .list-item.card.animated-block.active {
             opacity: 1;
             translate: 0;
+        }
+
+        .bread-crumbs {
+            position: relative;
+        }
+
+        .admin-links {
+            top: 30px;
+        }
+
+        .admin-links a {
+            color: var(--main-pink);
         }
     </style>
 @endsection

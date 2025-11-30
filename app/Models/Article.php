@@ -8,6 +8,7 @@ use App\Attributes\RouteSlug;
 use App\Models\Traits\HasImages;
 use App\Models\Traits\HasTimestamps;
 use App\Models\Traits\IsIdentifiedBySlug;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
@@ -26,6 +27,9 @@ use Illuminate\Support\Collection;
  * @property Collection|iterable<Image> $images
  * @property Image|null $mainImage
  * @mixin HasTimestamps
+ *
+ * @method static Builder|static published();
+ * @method static Builder|static unpublished();
  */
 #[RouteSlug('slug_title')]
 class Article extends Model
@@ -57,5 +61,25 @@ class Article extends Model
     public function hashtags(): BelongsToMany
     {
         return $this->belongsToMany(Hashtag::class);
+    }
+
+    /**
+     * Returns articles with created_date that equals or is before today
+     * @param Builder $query
+     * @return void
+     */
+    public function scopePublished(Builder $query): void
+    {
+        $query->whereDate('created_at', '<=', today());
+    }
+
+    /**
+     * Returns articles with created_date that is in the future
+     * @param Builder $query
+     * @return void
+     */
+    public function scopeUnpublished(Builder $query): void
+    {
+        $query->whereDate('created_at', '>=', today());
     }
 }

@@ -7,7 +7,9 @@ namespace App\Models;
 use App\Attributes\RouteSlug;
 use App\Enum\AgeFilter;
 use App\Enum\Fur;
+use App\Enum\PigStatus;
 use App\Enum\Sex;
+use App\Helpers\LinguisticsHelper;
 use App\Models\Traits\HasImages;
 use App\Models\Traits\HasTimestamps;
 use App\Models\Traits\IsIdentifiedBySlug;
@@ -29,7 +31,7 @@ use Illuminate\Support\Collection;
  * @property Carbon $birthday
  * @property Carbon $stopped_looking_date
  * @property bool $has_delivery
- * @property bool $is_active
+ * @property PigStatus $status
  * @property City $city
  * @property Pig $companion
  * @property Pig $companionOf
@@ -39,7 +41,9 @@ use Illuminate\Support\Collection;
  * @property int $companion_pig_id
  *
  * @method static Builder|static activeDesc()
+ * @method static Builder|static activeAsc()
  * @method static Builder|static notActiveAsc()
+ * @method static Builder|static notActiveDesc()
  * @method static Builder|static filter(array $params)
  *
  * @mixin HasTimestamps
@@ -55,6 +59,8 @@ class Pig extends Model
 
     public const PAGINATE_ITEMS_COUNT = '6';
 
+    private const DELIVERY_LABEL = 'Доставка';
+
     protected $fillable = [
         'name',
         'slug_name',
@@ -64,7 +70,7 @@ class Pig extends Model
         'fur',
         'birthday',
         'has_delivery',
-        'is_active',
+        'status',
         'stopped_looking_date',
         'companion_pig_id',
         'city_id',
@@ -75,8 +81,116 @@ class Pig extends Model
         'sex' => Sex::class,
         'birthday' => 'date:Y-m-d',
         'stopped_looking_date' => 'date',
-        'is_active' => 'boolean',
+        'status' => PigStatus::class,
     ];
+
+    protected $ageCast = [
+        [
+            'maxAge' => 76,
+            'stringAge' => '2 месяца'
+        ],
+        [
+            'maxAge' => 105,
+            'stringAge' => '3 месяца'
+        ],
+        [
+            'maxAge' => 135,
+            'stringAge' => '4 месяца'
+        ],
+        [
+            'maxAge' => 166,
+            'stringAge' => '5 месяцев'
+        ],
+        [
+            'maxAge' => 227,
+            'stringAge' => '7 месяцев'
+        ],
+        [
+            'maxAge' => 257,
+            'stringAge' => '8 месяцев'
+        ],
+        [
+            'maxAge' => 288,
+            'stringAge' => '9 месяцев'
+        ],
+        [
+            'maxAge' => 318,
+            'stringAge' => '10 месяцев'
+        ],
+        [
+            'maxAge' => 365,
+            'stringAge' => '11 месяцев'
+        ],
+        [
+            'maxAge' => 548,
+            'stringAge' => '1 год'
+        ],
+        [
+            'maxAge' => 685,
+            'stringAge' => '1,5 года'
+        ],
+        [
+            'maxAge' => 900,
+            'stringAge' => '2 года'
+        ],
+        [
+            'maxAge' => 1050,
+            'stringAge' => '2,5 года'
+        ],
+        [
+            'maxAge' => 1460,
+            'stringAge' => '3 года'
+        ],
+        [
+            'maxAge' => 1825,
+            'stringAge' => '4 года'
+        ],
+        [
+            'maxAge' => 2190,
+            'stringAge' => '5 лет'
+        ],
+        [
+            'maxAge' => 2555,
+            'stringAge' => '6 лет'
+        ],
+        [
+            'maxAge' => 2920,
+            'stringAge' => '7 лет'
+        ],
+        [
+            'maxAge' => 3285,
+            'stringAge' => '8 лет'
+        ],
+    ];
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->status === PigStatus::ACTIVE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAgeString(): string
+    {
+        $ageString = '';
+
+        if ($this->birthday) {
+            $daysDifference = $this->birthday->diffInDays(today());
+
+            foreach ($this->ageCast as $ageCast) {
+                if ($daysDifference <= $ageCast['maxAge']) {
+                    $ageString = $ageCast['stringAge'];
+                    break;
+                }
+            }
+        }
+
+        return $ageString;
+    }
 
     /**
      * @return BelongsTo
@@ -102,12 +216,25 @@ class Pig extends Model
         return $this->hasOne(Pig::class, 'companion_pig_id', 'id');
     }
 
+    public static function getDeliveryLabel(): string
+    {
+        return LinguisticsHelper::transliterate(static::DELIVERY_LABEL);
+    }
+
     /**
      * Currently active in desc order by created_at
      */
     public function scopeActiveDesc(Builder $query): void
     {
-        $query->where('is_active', true)->orderByDesc('created_at');
+        $query->where('status', '=', PigStatus::ACTIVE)->orderByDesc('created_at');
+    }
+
+    /**
+     * Currently active in asc order by created_at
+     */
+    public function scopeActiveAsc(Builder $query): void
+    {
+        $query->where('status', '=', PigStatus::ACTIVE)->orderBy('created_at');
     }
 
     /**
@@ -115,7 +242,15 @@ class Pig extends Model
      */
     public function scopeNotActiveAsc(Builder $query): void
     {
-        $query->where('is_active', false)->orderBy('created_at');
+        $query->where('status', '!=', PigStatus::ACTIVE)->orderBy('created_at');
+    }
+
+    /**
+     * Currently not active in desc order by created_at
+     */
+    public function scopeNotActiveDesc(Builder $query): void
+    {
+        $query->where('status', '!=', PigStatus::ACTIVE)->orderByDesc('created_at');
     }
 
     /**

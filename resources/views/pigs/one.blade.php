@@ -24,6 +24,7 @@
     use App\Models\Pig;
     use App\Models\City;
     use App\Enum\AgeFilter;
+    use App\Enum\PigStatus;
     use Illuminate\Support\Str;
     use App\Helpers\LinguisticsHelper;
     use Illuminate\Support\Collection;
@@ -43,7 +44,7 @@
         <div class="bread-crumbs">
             <ul>
                 <li><a href="/">Главная</a></li>
-                @if($pig->is_active || !$pig->is_active && !$isAdmin)
+                @if($pig->isActive() || !$pig->isActive() && !$isAdmin)
                     <li><a href="/catalog">Ищут дом</a></li>
                 @else
                     <li><a href="{{ route('pigs.archive') }}">Архив</a></li>
@@ -90,16 +91,13 @@
                                     Ищет дом
                                 </legend>
                                 <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" name="is_active" id="1"
-                                               value="1" checked>
-                                        <label for="1">Да</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" name="is_active" id="0"
-                                               value="0" @checked(isset($pig) && !$pig->is_active)>
-                                        <label for="0">Нет</label>
-                                    </div>
+                                    @foreach(PigStatus::cases() as $status)
+                                        <div class="radio-item">
+                                            <input type="radio" name="status" id="{{ $status->value }}"
+                                                   value="{{ $status->value }}" @checked($pig?->status === $status || old('status') === $status->value)>
+                                            <label for="{{ $status->value }}">{{ $status->getLabel() }}</label>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </fieldset>
                         </div>
@@ -114,13 +112,16 @@
                         <b>ДР</b>: <span>~ {{ $pig->birthday?->translatedFormat('d F Y') ?? 'Неизвестно' }}</span>
                     </p>
                     <p>
+                        <b>Возраст</b>: <span>{{ $pig->getAgeString() ?? 'Неизвестен' }}</span>
+                    </p>
+                    <p>
                         <b>Город</b>: <span>{{ $pig->city->name }}</span>
                     </p>
                     <p>
                         <b>Доставка</b>: <span>{{ $pig->has_delivery ? 'По РФ' : ('Только в ' . LinguisticsHelper::getCityLocativeForm($pig->city->name)) }}</span>
                     </p>
 
-                    @if($pig->companion || $pig->companionOf)
+                    @if($pig->isActive() && ($pig->companion || $pig->companionOf))
                         @php
                             $companion = $pig->companion ?? $pig->companionOf;
                         @endphp
@@ -130,9 +131,13 @@
                             </b>
                         </p>
                     @endif
-
+                    @if(!$pig->isActive())
+                        <div class="inactive-status-wrapper">
+                            <p>{{ $pig->status === PigStatus::FOUND_HOME ? (($pig->sex === Sex::FEMALE ? 'Нашла' : 'Нашел') . ' дом.') : 'На Пристани, будет искать дом позднее.' }}</p>
+                        </div>
+                    @endif
                 </div>
-                @if($pig->is_active)
+                @if($pig->isActive())
                     <div class="button pig-details-button">
                         <a href="/blog/kak-vzyat">
                             Как взять свинку
@@ -147,7 +152,7 @@
         </div>
     </div>
 
-    @if($pig->is_active)
+    @if($pig->isActive())
         <div class="additional-text">
             <p>
                 Все наши животные обработаны от паразитов. Отдаются в готовые условия в обмен на корм или другие нужности для будущих подопечных, после заполнения анкеты. Волонтеры остаются на связи для поддержки будущих владельцев.
@@ -162,7 +167,7 @@
 
     @if($additionalPigs->count())
         <div class="additional-pigs-wrapper">
-            <h2 class="additional-pigs-header">{{ $pig->is_active ? 'Ещё свинки' : 'Свинки' }} в поисках дома →</h2>
+            <h2 class="additional-pigs-header">{{ $pig->isActive() ? 'Ещё свинки' : 'Свинки' }} в поисках дома →</h2>
 
             <ul class="additional-pig-list">
                 @foreach($additionalPigs as $pig)
@@ -448,5 +453,14 @@
         .button.pig-details-button {
             font-size: 20px;
         }
+    }
+
+    .inactive-status-wrapper {
+        margin-top: 35px;
+    }
+
+    .inactive-status-wrapper p {
+        color: var(--holiday-red);
+        font-size: 1.25em;
     }
 </style>
