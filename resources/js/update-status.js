@@ -8,9 +8,6 @@ $(document).ready(function () {
             data: {
                 status: $(this).val(),
             },
-            then: {
-
-            }
         }).done(function () {
             location.reload();
         });
