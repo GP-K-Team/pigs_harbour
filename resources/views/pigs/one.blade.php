@@ -128,7 +128,11 @@
                             </b>
                         </p>
                     @endif
-
+                    @if(!$pig->isActive())
+                        <div class="inactive-status-wrapper">
+                            <p>{{ $pig->status === PigStatus::FOUND_HOME ? (($pig->sex === Sex::FEMALE ? 'Нашла' : 'Нашел') . ' дом.') : 'На Пристани, будет искать дом позднее.' }}</p>
+                        </div>
+                    @endif
                 </div>
                 @if($pig->isActive())
                     <div class="button pig-details-button">
@@ -446,5 +450,14 @@
         .button.pig-details-button {
             font-size: 20px;
         }
+    }
+
+    .inactive-status-wrapper {
+        margin-top: 35px;
+    }
+
+    .inactive-status-wrapper p {
+        color: var(--holiday-red);
+        font-size: 1.25em;
     }
 </style>

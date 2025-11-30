@@ -7,9 +7,12 @@ $(document).ready(function () {
             type: 'POST',
             data: {
                 status: $(this).val(),
-            }
-        });
+            },
+            then: {
 
-        location.reload();
+            }
+        }).done(function () {
+            location.reload();
+        });
     });
 });
