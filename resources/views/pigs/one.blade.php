@@ -24,6 +24,7 @@
     use App\Models\Pig;
     use App\Models\City;
     use App\Enum\AgeFilter;
+    use App\Enum\PigStatus;
     use Illuminate\Support\Str;
     use App\Helpers\LinguisticsHelper;
     use Illuminate\Support\Collection;

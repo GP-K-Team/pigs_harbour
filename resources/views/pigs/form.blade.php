@@ -5,6 +5,7 @@
     use App\Enum\Sex;
     use App\Models\Pig;
     use App\Models\City;
+    use App\Enum\PigStatus;
     use Illuminate\Support\Collection;
     use Illuminate\Support\Facades\Vite;
 
