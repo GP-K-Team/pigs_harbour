@@ -9,6 +9,7 @@ use App\Attributes\FilterValue;
 use App\Enum\AgeFilter;
 use App\Enum\Fur;
 use App\Enum\Sex;
+use App\Models\Pig;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
@@ -32,6 +33,8 @@ class UrlHelper
                     $filters['age'] = $age;
                 } elseif ($fur = Fur::tryFromAttribute(FilterLabel::class, $param)) {
                     $filters['fur'] = $fur;
+                } elseif ($param === LinguisticsHelper::transliterate(Pig::getDeliveryLabel())) {
+                    $filters['has_delivery'] = true;
                 } else {
                     $filters['city'] = $param;
                 }

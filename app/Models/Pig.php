@@ -9,6 +9,7 @@ use App\Enum\AgeFilter;
 use App\Enum\Fur;
 use App\Enum\PigStatus;
 use App\Enum\Sex;
+use App\Helpers\LinguisticsHelper;
 use App\Models\Traits\HasImages;
 use App\Models\Traits\HasTimestamps;
 use App\Models\Traits\IsIdentifiedBySlug;
@@ -57,6 +58,8 @@ class Pig extends Model
     public const IMAGE_PATH = 'pigs';
 
     public const PAGINATE_ITEMS_COUNT = '6';
+
+    private const DELIVERY_LABEL = 'Доставка';
 
     protected $fillable = [
         'name',
@@ -211,6 +214,11 @@ class Pig extends Model
     public function companionOf(): HasOne
     {
         return $this->hasOne(Pig::class, 'companion_pig_id', 'id');
+    }
+
+    public static function getDeliveryLabel(): string
+    {
+        return LinguisticsHelper::transliterate(static::DELIVERY_LABEL);
     }
 
     /**
