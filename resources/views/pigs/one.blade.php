@@ -118,7 +118,7 @@
                         <b>Доставка</b>: <span>{{ $pig->has_delivery ? 'По РФ' : ('Только в ' . LinguisticsHelper::getCityLocativeForm($pig->city->name)) }}</span>
                     </p>
 
-                    @if($pig->companion || $pig->companionOf)
+                    @if($pig->isActive() && ($pig->companion || $pig->companionOf))
                         @php
                             $companion = $pig->companion ?? $pig->companionOf;
                         @endphp
