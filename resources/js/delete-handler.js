@@ -1,6 +1,10 @@
 $(document).ready(function () {
     let closestForm;
 
+    $('.delete-form-wrapper').on('click', function (e) {
+        e.stopPropagation();
+    })
+
     $('.delete-form').on('submit', function (e) {
         e.preventDefault();
         closestForm = $(this);
