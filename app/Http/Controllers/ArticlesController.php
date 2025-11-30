@@ -12,38 +12,49 @@ use App\Models\Hashtag;
 use App\Models\PageText;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ArticlesController extends Controller
 {
-    public function index(Request $request, UrlHelper $urlHelper): View
+    public function index(UrlHelper $urlHelper): View
     {
-        $activeHashtags = [];
+        $state = 'published';
+        $activeHashtagSlug = head($urlHelper->collectFilters());
 
-        if ($request->get('hashtags')) {
-            $activeHashtags = explode(',', $request->get('hashtags'));
+        if ($activeHashtagSlug) {
+            if ($articleBySlug = Article::query()->firstWhere('slug_title', $activeHashtagSlug)) {
+                return $this->showOne($articleBySlug);
+            }
         }
 
-        $articlesBuilder = Article::query()->with('images');
+        $articlesBuilder = Article::published()->with('images');
 
-        if (count($activeHashtags)) {
-            $articlesBuilder->whereHas('hashtags', function (Builder $query) use ($activeHashtags) {
-               $query->whereIn('slug', $activeHashtags);
+        if ($activeHashtagSlug) {
+            $articlesBuilder->whereHas('hashtags', function (Builder $query) use ($activeHashtagSlug) {
+               $query->where(['slug' => $activeHashtagSlug]);
             });
         }
 
         $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT);
-        $hashtags = Hashtag::query()->get();
+        $hashtags = Hashtag::activeOnly()->get();
         $pageTexts = PageText::where('page_base_url', '=', $urlHelper->getCurrentPage())->get();
 
-        return \view('articles.index', compact('articles', 'hashtags', 'activeHashtags', 'pageTexts'));
+        return \view('articles.index', compact('articles', 'hashtags', 'activeHashtagSlug', 'pageTexts', 'state'));
+    }
+
+    public function showUnpublished(UrlHelper $urlHelper): View
+    {
+        $state = 'unpublished';
+        $articles = Article::unpublished()->with('images')->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT);
+        $pageTexts = PageText::where('page_base_url', '=', $urlHelper->getCurrentPage())->get();
+
+        return \view('articles.index', compact('articles', 'pageTexts', 'state'));
     }
 
     public function showOne(Article $article): View
     {
-        $hashtags = Hashtag::query()->get();
-        $additionalArticles = Article::query()->whereHas('hashtags', function (Builder $query) use ($article) {
+        $hashtags = Hashtag::activeOnly()->get();
+        $additionalArticles = Article::published()->whereHas('hashtags', function (Builder $query) use ($article) {
             $query->whereIn('tag', $article->hashtags()->pluck('tag')->toArray() ?? []);
         })->where('id', '!=', $article->id)->inRandomOrder()->take(3)->get();
 
@@ -91,7 +102,7 @@ class ArticlesController extends Controller
 
         $article->fill($formData)->save();
 
-        if ($request->has('cover')) {
+        if ($request->has('cover') && !is_string($formData['cover'])) {
             if ($article->mainImage) {
                 $article->mainImage->delete();
             }
@@ -103,7 +114,7 @@ class ArticlesController extends Controller
             $article->hashtags()->sync($hashtagIds);
         }
 
-        return \response()->redirectToAction([self::class, 'index']);
+        return \response()->redirectToAction([self::class, 'showOne'], compact('article'));
     }
 
     public function delete(Article $article): RedirectResponse

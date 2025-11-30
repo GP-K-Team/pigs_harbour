@@ -92,19 +92,16 @@
                             Ищет дом
                         </legend>
                         <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" name="is_active" id="1"
-                                       value="1" checked>
-                                <label for="1">Да</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="is_active" id="0"
-                                       value="0" @checked(isset($pig) && !$pig->is_active)>
-                                <label for="0">Нет</label>
-                            </div>
+                            @foreach(PigStatus::cases() as $status)
+                                <div class="radio-item">
+                                    <input type="radio" name="status" id="{{ $status->value }}"
+                                           value="{{ $status->value }}" @checked($pig?->status === $status || old('status') === $status->value)>
+                                    <label for="{{ $status->value }}">{{ $status->getLabel() }}</label>
+                                </div>
+                            @endforeach
                         </div>
                     </fieldset>
-                    <x-error-bag name="is_active"/>
+                    <x-error-bag name="status"/>
                 </div>
 
                 <div class="input-container has-textarea">

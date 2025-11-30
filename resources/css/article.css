@@ -86,9 +86,12 @@
     font-size: inherit;
 }
 
-:is(.article-container, .trumbowyg-editor) > :is(ol, ul) > li {
-    list-style: disc;
+:is(.article-container, .trumbowyg-editor) > :is(ul, ol) > li {
     font-size: inherit;
+}
+
+:is(.article-container, .trumbowyg-editor) > :is(ul) > li {
+    list-style: disc;
 }
 
 :is(.article-container, .trumbowyg-editor) a {
@@ -172,5 +175,9 @@
 
     :is(.article-container, .trumbowyg-editor) > p > figure > img + figcaption {
         font-size: 0.75rem;
+    }
+
+    :is(.article-container, .trumbowyg-editor) > p > strong {
+        font-size: inherit;
     }
 }

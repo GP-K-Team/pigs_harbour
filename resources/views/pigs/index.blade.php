@@ -546,7 +546,7 @@
             color: white;
             font-family: inherit;
             font-size: 1.25rem;
-            background: var(--holiday-red);
+            background: var(--main-pink);
             border-radius: 50%;
             border: 1px solid var(--main-font);
             cursor: default;
@@ -724,7 +724,7 @@
             .list-item.card {
                 width: 90%;
                 max-width: 300px;
-                height: 340px;
+                height: 400px;
             }
         }
 

@@ -43,7 +43,7 @@
         <div class="bread-crumbs">
             <ul>
                 <li><a href="/">Главная</a></li>
-                @if($pig->is_active || !$pig->is_active && !$isAdmin)
+                @if($pig->isActive() || !$pig->isActive() && !$isAdmin)
                     <li><a href="/catalog">Ищут дом</a></li>
                 @else
                     <li><a href="{{ route('pigs.archive') }}">Архив</a></li>
@@ -90,16 +90,13 @@
                                     Ищет дом
                                 </legend>
                                 <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" name="is_active" id="1"
-                                               value="1" checked>
-                                        <label for="1">Да</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" name="is_active" id="0"
-                                               value="0" @checked(isset($pig) && !$pig->is_active)>
-                                        <label for="0">Нет</label>
-                                    </div>
+                                    @foreach(PigStatus::cases() as $status)
+                                        <div class="radio-item">
+                                            <input type="radio" name="status" id="{{ $status->value }}"
+                                                   value="{{ $status->value }}" @checked($pig?->status === $status || old('status') === $status->value)>
+                                            <label for="{{ $status->value }}">{{ $status->getLabel() }}</label>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </fieldset>
                         </div>
@@ -132,7 +129,7 @@
                     @endif
 
                 </div>
-                @if($pig->is_active)
+                @if($pig->isActive())
                     <div class="button pig-details-button">
                         <a href="/blog/kak-vzyat">
                             Как взять свинку
@@ -147,7 +144,7 @@
         </div>
     </div>
 
-    @if($pig->is_active)
+    @if($pig->isActive())
         <div class="additional-text">
             <p>
                 Все наши животные обработаны от паразитов. Отдаются в готовые условия в обмен на корм или другие нужности для будущих подопечных, после заполнения анкеты. Волонтеры остаются на связи для поддержки будущих владельцев.
@@ -162,7 +159,7 @@
 
     @if($additionalPigs->count())
         <div class="additional-pigs-wrapper">
-            <h2 class="additional-pigs-header">{{ $pig->is_active ? 'Ещё свинки' : 'Свинки' }} в поисках дома →</h2>
+            <h2 class="additional-pigs-header">{{ $pig->isActive() ? 'Ещё свинки' : 'Свинки' }} в поисках дома →</h2>
 
             <ul class="additional-pig-list">
                 @foreach($additionalPigs as $pig)

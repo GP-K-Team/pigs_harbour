@@ -99,3 +99,7 @@
     content: attr(placeholder);
     color: #999;
 }
+
+.rich-text-editor.trumbowyg-textarea {
+    min-height: 90%;
+}

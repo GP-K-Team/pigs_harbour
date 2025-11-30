@@ -73,7 +73,7 @@ $(document).ready(function () {
 });
 
 function wrapImages() {
-    $('.trumbowyg-editor > p > img').each(function (i, img) {
+    $('.trumbowyg-editor img').not('figure img').each(function (i, img) {
         const caption = $('<figcaption>').text( $(img).attr('alt') );
 
         caption.insertAfter($(img).wrap('<figure>'));

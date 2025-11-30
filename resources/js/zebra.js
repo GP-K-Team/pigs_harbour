@@ -6,7 +6,6 @@ window.Zebra_DatePicker = Zebra_DatePicker;
 
 $('input.datepick').Zebra_DatePicker({
     default_position: 'icon_top_left',
-    direction: -1,
     format: 'd M Y',
     lang_clear_date: 'Очистить',
     first_day_of_week: 0,

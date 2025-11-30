@@ -29,6 +29,7 @@
 
 @push('js')
     @vite('resources/js/delete-handler.js')
+    @vite('resources/js/splide.js')
 @endpush
 
 @section('content')
@@ -227,6 +228,14 @@
         color: var(--dark-blue-font);
     }
 
+    .splide__slide {
+        padding: 10px 5px;
+    }
+
+    .splide__pagination {
+        bottom: -15px !important;
+    }
+
     /* Additional articles list */
     .additional-articles-wrapper {
         display: flex;
@@ -274,7 +283,7 @@
     .hashtag-item {
         display: flex;
         align-items: center;
-        width: fit-content;
+        min-width: max-content;
         padding: 5px 20px;
         border-radius: 10px;
         font-size: 15px;
@@ -338,6 +347,7 @@
 
     @media (max-width: 768px) {
         .article-list-item.article-card {
+            margin: auto;
             width: 90%;
             max-width: 300px;
             height: 340px;

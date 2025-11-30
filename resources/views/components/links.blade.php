@@ -9,11 +9,6 @@
             <div class="footer-icon-block footer-icon-telegram"></div>
         </a>
     </li>
-    <li>
-        <a href="https://dzen.ru/pristansvinki" target="_blank">
-            <div class="footer-icon-block footer-icon-dzen"></div>
-        </a>
-    </li>
 </ul>
 
 <style>
@@ -55,12 +50,6 @@
     .footer-icon-block.footer-icon-telegram {
         background-repeat: no-repeat;
         background-image: url("/images/logo/footer/tg.png");
-        background-position: center;
-    }
-
-    .footer-icon-block.footer-icon-dzen {
-        background-repeat: no-repeat;
-        background-image: url("/images/logo/footer/dz.svg");
         background-position: center;
     }
 </style>

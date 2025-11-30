@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Attributes\RouteSlug;
 use App\Enum\AgeFilter;
 use App\Enum\Fur;
+use App\Enum\PigStatus;
 use App\Enum\Sex;
 use App\Models\Traits\HasImages;
 use App\Models\Traits\HasTimestamps;
@@ -29,7 +30,7 @@ use Illuminate\Support\Collection;
  * @property Carbon $birthday
  * @property Carbon $stopped_looking_date
  * @property bool $has_delivery
- * @property bool $is_active
+ * @property PigStatus $status
  * @property City $city
  * @property Pig $companion
  * @property Pig $companionOf
@@ -39,7 +40,9 @@ use Illuminate\Support\Collection;
  * @property int $companion_pig_id
  *
  * @method static Builder|static activeDesc()
+ * @method static Builder|static activeAsc()
  * @method static Builder|static notActiveAsc()
+ * @method static Builder|static notActiveDesc()
  * @method static Builder|static filter(array $params)
  *
  * @mixin HasTimestamps
@@ -64,7 +67,7 @@ class Pig extends Model
         'fur',
         'birthday',
         'has_delivery',
-        'is_active',
+        'status',
         'stopped_looking_date',
         'companion_pig_id',
         'city_id',
@@ -75,8 +78,16 @@ class Pig extends Model
         'sex' => Sex::class,
         'birthday' => 'date:Y-m-d',
         'stopped_looking_date' => 'date',
-        'is_active' => 'boolean',
+        'status' => PigStatus::class,
     ];
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->status === PigStatus::ACTIVE;
+    }
 
     /**
      * @return BelongsTo
@@ -107,7 +118,15 @@ class Pig extends Model
      */
     public function scopeActiveDesc(Builder $query): void
     {
-        $query->where('is_active', true)->orderByDesc('created_at');
+        $query->where('status', '=', PigStatus::ACTIVE)->orderByDesc('created_at');
+    }
+
+    /**
+     * Currently active in asc order by created_at
+     */
+    public function scopeActiveAsc(Builder $query): void
+    {
+        $query->where('status', '=', PigStatus::ACTIVE)->orderBy('created_at');
     }
 
     /**
@@ -115,7 +134,15 @@ class Pig extends Model
      */
     public function scopeNotActiveAsc(Builder $query): void
     {
-        $query->where('is_active', false)->orderBy('created_at');
+        $query->where('status', '!=', PigStatus::ACTIVE)->orderBy('created_at');
+    }
+
+    /**
+     * Currently not active in desc order by created_at
+     */
+    public function scopeNotActiveDesc(Builder $query): void
+    {
+        $query->where('status', '!=', PigStatus::ACTIVE)->orderByDesc('created_at');
     }
 
     /**
