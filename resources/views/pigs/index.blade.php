@@ -226,7 +226,7 @@
                                      width="350" height="250" alt="Фотография морской свинки по имени {{ $pig->name }}">
                                 <div class="card-bio">
                                     <h2 class="card-title">{{ $pig->name }}</h2>
-                                    <p class="card-age">{{ $pig->age ?? 'Возраст неизвестен' }}</p>
+                                    <p class="card-age">{{ $pig->getAgeString() ?? 'Возраст неизвестен' }}</p>
 
                                     @if($pig->city)
                                         <p class="card-city">Находится

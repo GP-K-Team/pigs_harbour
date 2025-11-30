@@ -7,9 +7,9 @@ $(document).ready(function () {
             type: 'POST',
             data: {
                 status: $(this).val(),
-            }
+            },
+        }).done(function () {
+            location.reload();
         });
-
-        location.reload();
     });
 });
