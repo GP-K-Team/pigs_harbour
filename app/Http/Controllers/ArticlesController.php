@@ -16,28 +16,28 @@ use Illuminate\View\View;
 
 class ArticlesController extends Controller
 {
-    public function index(UrlHelper $urlHelper): View
+    public function index(UrlHelper $urlHelper, string $slug = ''): View
     {
         $state = 'published';
-        $activeHashtagSlug = head($urlHelper->collectFilters());
 
-        if ($activeHashtagSlug) {
-            if ($articleBySlug = Article::query()->firstWhere('slug_title', $activeHashtagSlug)) {
+        if ($slug) {
+            if ($articleBySlug = Article::query()->firstWhere('slug_title', $slug)) {
                 return $this->showOne($articleBySlug);
             }
         }
 
         $articlesBuilder = Article::published()->with('images');
 
-        if ($activeHashtagSlug) {
-            $articlesBuilder->whereHas('hashtags', function (Builder $query) use ($activeHashtagSlug) {
-               $query->where(['slug' => $activeHashtagSlug]);
+        if ($slug) {
+            $articlesBuilder->whereHas('hashtags', function (Builder $query) use ($slug) {
+               $query->where(['slug' => $slug]);
             });
         }
 
         $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT);
         $hashtags = Hashtag::activeOnly()->get();
         $pageTexts = PageText::where('page_base_url', '=', $urlHelper->getCurrentPage())->get();
+        $activeHashtagSlug = $slug;
 
         return \view('articles.index', compact('articles', 'hashtags', 'activeHashtagSlug', 'pageTexts', 'state'));
     }

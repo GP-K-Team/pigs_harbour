@@ -47,7 +47,7 @@ Route::prefix('blog')->name('blog.')->group(function () {
         Route::delete('/{article}', [ArticlesController::class, 'delete'])->name('delete');
     });
 
-    Route::get('/{search?}', [ArticlesController::class, 'index'])->name('index');
+    Route::get('/{slug?}', [ArticlesController::class, 'index'])->name('index');
     Route::get('/{article}', [ArticlesController::class, 'showOne'])->name('one');
 });
 
