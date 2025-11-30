@@ -80,7 +80,7 @@ class Pig extends Model
         'fur' => Fur::class,
         'sex' => Sex::class,
         'birthday' => 'date:Y-m-d',
-        'stopped_looking_date' => 'date',
+        'stopped_looking_date' => 'date:Y-m-d',
         'status' => PigStatus::class,
     ];
 
@@ -179,7 +179,7 @@ class Pig extends Model
         $ageString = '';
 
         if ($this->birthday) {
-            $daysDifference = $this->birthday->diffInDays(today());
+            $daysDifference = $this->status === PigStatus::FOUND_HOME ? $this->birthday->diffInDays($this->stopped_looking_date) : $this->birthday->diffInDays(today());
 
             foreach ($this->ageCast as $ageCast) {
                 if ($daysDifference <= $ageCast['maxAge']) {
