@@ -68,7 +68,7 @@ class PigsController extends Controller
         $cities = City::query()->pluck('name', 'id');
         $companionCandidates = Pig::activeDesc()->get();
 
-        return \view('pigs.form', compact(  'cities', 'companionCandidates'));
+        return \view('pigs.form', compact('cities', 'companionCandidates'));
     }
 
     public function showUpdate(Pig $pig): View
