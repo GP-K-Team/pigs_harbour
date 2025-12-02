@@ -9,17 +9,25 @@
         <meta name="viewport" content="width=device-width" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <script src="https://vk.com/js/api/openapi.js?169"></script>
-
-        <script>
-            VK.Widgets.CommunityMessages("vk_community_messages", 229736671, {
-                tooltipButtonText: 'Связаться с нами'
-            });
-        </script>
-
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         @stack('styles')
+
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function(m,e,t,r,i,k,a){
+                m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                m[i].l=1*new Date();
+                for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+                k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+            })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=105505481', 'ym');
+
+            ym(105505481, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+        </script>
+        <noscript><div><img src="https://mc.yandex.ru/watch/105505481" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+        <!-- /Yandex.Metrika counter -->
+
+        <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
 
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -80,6 +88,7 @@
         </script>
 
         <div id="vk_community_messages"></div>
+        @vite('resources/js/widgets.js')
     </body>
 </html>
 
