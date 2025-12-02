@@ -923,7 +923,7 @@
         }
 
         .admin-links {
-            margin-top: 40px;
+            margin-top: 10px;
         }
 
         .admin-links a {
