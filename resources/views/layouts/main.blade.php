@@ -9,14 +9,19 @@
 
         <meta name="description" content="@yield('description')" />
 
-        @unless(\Illuminate\Support\Facades\App::environment('production'))
-            <meta name="robots" content="noindex">
-        @endif
+        <meta property="og:title" content="@yield('og_title', 'Пристань пушистых сердец')">
+        <meta property="og:image" content="@yield('og_image', '/images/logo.svg')">
+        <meta property="og:site_name" content="Помощь бездомным морским свинкам">
+        <meta property="og:type" content="{{ request()->routeIs('blog') ? 'article' : 'website' }}">
 
         <meta name="authors" content="whatevernumber, the_nepodarok" />
         <meta name="keywords" content="морские свинки, пристань пушистых сердец, помощь животным, волонтёрский проект">
         <meta name="viewport" content="width=device-width" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        @unless(\Illuminate\Support\Facades\App::environment('production'))
+            <meta name="robots" content="noindex">
+        @endif
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 

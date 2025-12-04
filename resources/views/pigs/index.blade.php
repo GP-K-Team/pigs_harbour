@@ -1,12 +1,7 @@
 @extends('layouts.main', ['background' => 'texture-light'])
 
-@section('title')
-    Морские свинки в добрые руки
-@endsection
-
-@section('description')
-    Морские свинки Пристани в поисках дома
-@endsection
+@section('title', 'Морские свинки в добрые руки')
+@section('description', 'Морские свинки на нашей Пристани в поисках дома')
 
 @php
     use App\Enum\Fur;

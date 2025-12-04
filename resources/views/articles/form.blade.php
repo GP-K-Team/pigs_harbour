@@ -15,9 +15,7 @@
     $article ??= null;
 @endphp
 
-@section('title')
-    {{ $article?->title ?? 'Новая статья' }}
-@endsection
+@section('title', $article?->title ?? 'Новая статья')
 
 @push('styles')
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">

@@ -1,12 +1,7 @@
 @extends('layouts.main')
 
-@section('title')
-{{ $pig->name }}
-@endsection
-
-@section('description')
-Морская свинка {{ $pig->name }} в поисках дома
-@endsection
+@section('title', $pig->name)
+@section('description', "Морская свинка $pig->name в поисках дома")
 
 @push('styles')
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
