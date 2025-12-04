@@ -17,9 +17,7 @@
     $pig ??= null;
 @endphp
 
-@section('title')
-    {{ isset($pig) ? $pig->name : 'Новая свинка' }}
-@endsection
+@section('title', isset($pig) ? $pig->name : 'Новая свинка')
 
 @push('styles')
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
