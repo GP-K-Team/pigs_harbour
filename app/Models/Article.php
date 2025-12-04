@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property int $id
@@ -32,7 +34,7 @@ use Illuminate\Support\Collection;
  * @method static Builder|static unpublished();
  */
 #[RouteSlug('slug_title')]
-class Article extends Model
+class Article extends Model implements Sitemapable
 {
     use HasImages, HasTimestamps, IsIdentifiedBySlug;
 
@@ -81,5 +83,15 @@ class Article extends Model
     public function scopeUnpublished(Builder $query): void
     {
         $query->whereDate('created_at', '>=', today());
+    }
+
+    /**
+     * Outline the URL pattern for sitemap.
+     */
+    public function toSitemapTag(): Url|string|array
+    {
+        return Url::create(route('blog.one', $this))
+            ->setLastModificationDate($this->updated_at)
+            ->setPriority(0.75);
     }
 }

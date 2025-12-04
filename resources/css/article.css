@@ -19,6 +19,9 @@
 :is(.article-container, .trumbowyg-editor),
 :is(.article-container, .trumbowyg-editor) * {
     box-sizing: border-box;
+}
+
+:is(.article-container, .trumbowyg-editor) {
     font-size: 1.5rem;
 }
 
