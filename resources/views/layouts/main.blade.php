@@ -1,8 +1,17 @@
 <!doctype html>
 <html lang="ru">
     <head>
-        <title>@yield('title') &mdash; Пристань Пушистых Сердец</title>
-        <meta name="description" content="@yield('description')">
+        @hasSection('full_title')
+            <title>@yield('full_title')</title>
+        @else
+            <title>@yield('title') &mdash; Пристань Пушистых Сердец</title>
+        @endif
+
+        <meta name="description" content="@yield('description')" />
+
+        @unless(\Illuminate\Support\Facades\App::environment('production'))
+            <meta name="robots" content="noindex">
+        @endif
 
         <meta name="authors" content="whatevernumber, the_nepodarok" />
         <meta name="keywords" content="морские свинки, пристань пушистых сердец, помощь животным, волонтёрский проект">

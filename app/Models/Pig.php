@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property int $id
@@ -49,7 +51,7 @@ use Illuminate\Support\Collection;
  * @mixin HasTimestamps
  */
 #[RouteSlug('slug_name')]
-class Pig extends Model
+class Pig extends Model implements Sitemapable
 {
     use HasImages, HasTimestamps, IsIdentifiedBySlug;
 
@@ -163,17 +165,11 @@ class Pig extends Model
         ],
     ];
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool
     {
         return $this->status === PigStatus::ACTIVE;
     }
 
-    /**
-     * @return string
-     */
     public function getAgeString(): string
     {
         $ageString = '';
@@ -192,25 +188,16 @@ class Pig extends Model
         return $ageString;
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function companion(): BelongsTo
     {
         return $this->belongsTo(Pig::class, 'companion_pig_id', 'id');
     }
 
-    /**
-     * @return HasOne
-     */
     public function companionOf(): HasOne
     {
         return $this->hasOne(Pig::class, 'companion_pig_id', 'id');
@@ -278,5 +265,15 @@ class Pig extends Model
                 },
             };
         }
+    }
+
+    /**
+     * Outline the URL pattern for sitemap.
+     */
+    public function toSitemapTag(): Url|string|array
+    {
+        return Url::create(route('catalog.one', $this))
+            ->setLastModificationDate($this->updated_at)
+            ->setPriority(0.25);
     }
 }
