@@ -153,7 +153,7 @@
                             </li>
                         </a>
                     @foreach($hashtags as $hashtag)
-                        <a href="{{ '/blog?hashtags=' . $hashtag->slug }}" >
+                        <a href="{{ '/blog/' . $hashtag->slug }}" >
                             <li class="hashtag-item">
                             {{ $hashtag->tag }}
                             </li>
