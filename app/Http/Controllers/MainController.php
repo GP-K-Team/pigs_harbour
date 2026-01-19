@@ -18,7 +18,7 @@ class MainController extends Controller
             'title' => 'Приют для морских свинок',
             'cities' => City::all(),
             'pigs' => Pig::activeAsc()->orderBy('created_at')->limit(6)->with(['city', 'companion', 'companionOf'])->get(),
-            'articles' => Article::query()->inRandomOrder()->take(3)->get(),
+            'articles' => Article::published()->inRandomOrder()->take(3)->get(),
         ]);
     }
 

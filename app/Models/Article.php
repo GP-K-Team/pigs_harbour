@@ -82,7 +82,7 @@ class Article extends Model implements Sitemapable
      */
     public function scopeUnpublished(Builder $query): void
     {
-        $query->whereDate('created_at', '>=', today());
+        $query->whereDate('created_at', '>', today());
     }
 
     /**

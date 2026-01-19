@@ -21,7 +21,7 @@
 
         @unless(\Illuminate\Support\Facades\App::environment('production'))
             <meta name="robots" content="noindex">
-        @endif
+        @endunless
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -49,6 +49,8 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="apple-mobile-web-app-title" content="Пристань Пушистых Сердец" />
+
+        @stack('additionalHeader')
     </head>
 
     <body>
