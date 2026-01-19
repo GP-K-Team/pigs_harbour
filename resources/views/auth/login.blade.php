@@ -1,5 +1,9 @@
 @extends('layouts.main', ['background' => 'texture-light'])
 
+@push('additionalHeader')
+    <meta http-equiv="refresh" content="{{ config('session.lifetime') * 60 }}">
+@endpush
+
 @push('styles')
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/form.css') }}">
 @endpush

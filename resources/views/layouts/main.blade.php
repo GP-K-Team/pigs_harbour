@@ -11,7 +11,7 @@
 
         @unless(\Illuminate\Support\Facades\App::environment('production'))
             <meta name="robots" content="noindex">
-        @endif
+        @endunless
 
         <meta name="authors" content="whatevernumber, the_nepodarok" />
         <meta name="keywords" content="морские свинки, пристань пушистых сердец, помощь животным, волонтёрский проект">
@@ -44,6 +44,8 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="apple-mobile-web-app-title" content="Пристань Пушистых Сердец" />
+
+        @stack('additionalHeader')
     </head>
 
     <body>
