@@ -72,7 +72,11 @@ class Article extends Model implements Sitemapable
      */
     public function scopePublished(Builder $query): void
     {
-        $query->whereDate('created_at', '<=', today());
+        $query->whereDate('created_at', '<=', today())
+            ->where(function (Builder $q) {
+                $q->whereNull('updated_at')
+                    ->orWhereDate('updated_at', '<=', today());
+            });;
     }
 
     /**
@@ -82,7 +86,11 @@ class Article extends Model implements Sitemapable
      */
     public function scopeUnpublished(Builder $query): void
     {
-        $query->whereDate('created_at', '>=', today());
+        $query->whereDate('created_at', '>=', today())
+            ->where(function (Builder $q) {
+                $q->whereNull('updated_at')
+                    ->orWhereDate('updated_at', '>=', today());
+            });
     }
 
     /**
