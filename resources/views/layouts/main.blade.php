@@ -19,9 +19,9 @@
         <meta name="viewport" content="width=device-width" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        @unless(\Illuminate\Support\Facades\App::environment('production'))
+        @if(!\Illuminate\Support\Facades\App::environment('production'))
             <meta name="robots" content="noindex">
-        @endunless
+        @endif
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
