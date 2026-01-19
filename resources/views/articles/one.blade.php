@@ -1,12 +1,12 @@
 @extends('layouts.main')
 
-@section('title')
-    {{ $article->meta_title ?? $article->title }}
-@endsection
+@section('title', $article->meta_title ?? $article->title)
+@section('description', $article->meta_description ?? 'Статья')
+@section('og_title', $article->meta_title ?? $article->title)
 
-@section('description')
-    {{ $article->meta_description ?? 'Статья' }}
-@endsection
+@if($article->mainImage)
+    @section('og_image', $article->mainImage?->getFullUrl())
+@endif
 
 @php
     use App\Models\Article;

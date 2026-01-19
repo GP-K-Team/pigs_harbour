@@ -9,6 +9,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PageTextController;
 use App\Http\Controllers\PigsController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'index'])->name('home');
@@ -55,5 +56,7 @@ Route::middleware('auth:web')->group(function () {
    Route::delete('files/{file}', [FileController::class, 'delete']);
    Route::put('page-text/{pageText}', [PageTextController::class, 'update']);
 });
+
+Route::get('/sitemap', [SitemapController::class, 'get']);
 
 Route::fallback([MainController::class, 'showError']);

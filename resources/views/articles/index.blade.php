@@ -1,12 +1,7 @@
 @extends('layouts.main', ['background' => 'texture-light'])
 
-@section('title')
-    Статьи Пристани
-@endsection
-
-@section('description')
-    Статьи пристани о морских свинках
-@endsection
+@section('title', 'Статьи Пристани')
+@section('description', 'Статьи Пристани о морских свинках')
 
 @php
     use App\Models\Article;

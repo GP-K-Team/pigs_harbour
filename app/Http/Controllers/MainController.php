@@ -8,7 +8,7 @@ use App\Models\Article;
 use App\Models\City;
 use App\Models\Pig;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 
 class MainController extends Controller
 {
@@ -22,8 +22,8 @@ class MainController extends Controller
         ]);
     }
 
-    public function showError(): View
+    public function showError(): Response
     {
-        return \view('errors.404');
+        return \response()->view('errors.404', status: 404);
     }
 }
