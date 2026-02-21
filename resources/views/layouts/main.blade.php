@@ -81,7 +81,9 @@
                     <a href="{{ route('home') }}">
                         <img src="/images/logo.svg" alt="Логотип пристани">
                     </a>
-                    <p>Пристань пушистых сердец  | {{ now()->year }}</p>
+                    <p class="footer-label-wrapper">
+                        <span>Пристань пушистых сердец</span>&nbsp;&verbar;&nbsp;<span class="footer-year">{{ now()->year }}</span>
+                    </p>
                 </div>
             </div>
         </footer>
@@ -196,7 +198,8 @@
         display: none;
 
         @media (max-width: 768px) {
-            display: block;
+            display: flex;
+            height: 100%;
         }
     }
 
@@ -206,6 +209,15 @@
         @media (max-width: 400px) {
             width: 20px;
         }
+    }
+
+    .footer-label-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .footer-year {
+        margin-top: 2px;
     }
 
     .footer-links {
