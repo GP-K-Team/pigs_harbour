@@ -1,12 +1,17 @@
 <ul class="social-links-wrapper">
     <li>
         <a href="https://vk.com/pristansvinki" target="_blank">
-            <div class="footer-icon-block footer-icon-vk"></div>
+            <div class="footer-icon footer-icon-vk"></div>
         </a>
     </li>
     <li>
-        <a href="https://t.me/pristansvinki " target="_blank">
-            <div class="footer-icon-block footer-icon-telegram"></div>
+        <a href="https://t.me/pristansvinki" target="_blank">
+            <div class="footer-icon footer-icon-telegram"></div>
+        </a>
+    </li>
+    <li>
+        <a href="https://max.ru/join/nk3ElIsaSdkxuQyBjxxT7yPyq8aTlDzrazPCWu_eEYU" target="_blank">
+            <div class="footer-icon footer-icon-max"></div>
         </a>
     </li>
 </ul>
@@ -17,10 +22,11 @@
         column-gap: 20px;
     }
 
-    .footer-icon-block {
+    .footer-icon {
         width: 48px;
         height: 48px;
         background-color: #EAB0C8;
+        border-radius: 4px;
 
         @media (max-width: 768px) {
             width: 36px;
@@ -28,11 +34,11 @@
         }
     }
 
-    .footer-icon-block:hover {
+    .footer-icon:hover {
         background-color: #DE90B0;
     }
 
-    .footer-icon-block:active::after {
+    .footer-icon:active::after {
         content: "";
         width: 100%;
         height: 100%;
@@ -41,15 +47,21 @@
         opacity: 0.5;
     }
 
-    .footer-icon-block.footer-icon-vk {
+    .footer-icon.footer-icon-vk {
         background-repeat: no-repeat;
         background-image: url("/images/logo/footer/vk.png");
         background-position: center;
     }
 
-    .footer-icon-block.footer-icon-telegram {
+    .footer-icon.footer-icon-telegram {
         background-repeat: no-repeat;
         background-image: url("/images/logo/footer/tg.png");
+        background-position: center;
+    }
+
+    .footer-icon.footer-icon-max {
+        background-repeat: no-repeat;
+        background-image: url("/images/logo/footer/max.png");
         background-position: center;
     }
 </style>
