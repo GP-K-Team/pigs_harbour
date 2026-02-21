@@ -5,8 +5,13 @@
         </a>
     </li>
     <li>
-        <a href="https://t.me/pristansvinki " target="_blank">
+        <a href="https://t.me/pristansvinki" target="_blank">
             <div class="footer-icon-block footer-icon-telegram"></div>
+        </a>
+    </li>
+    <li>
+        <a href="https://max.ru/join/nk3ElIsaSdkxuQyBjxxT7yPyq8aTlDzrazPCWu_eEYU" target="_blank">
+            <div class="footer-icon-block footer-icon-max"></div>
         </a>
     </li>
 </ul>
@@ -50,6 +55,12 @@
     .footer-icon-block.footer-icon-telegram {
         background-repeat: no-repeat;
         background-image: url("/images/logo/footer/tg.png");
+        background-position: center;
+    }
+
+    .footer-icon-block.footer-icon-max {
+        background-repeat: no-repeat;
+        background-image: url("/images/logo/footer/max.png");
         background-position: center;
     }
 </style>
