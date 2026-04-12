@@ -141,6 +141,9 @@
         object-fit: cover;
         border-top-left-radius: 1.5rem;
         border-bottom-left-radius: 1.5rem;
+
+        transform: translate3d(0, 0, 1px);
+        will-change: scale;
     }
 
     @media (max-width: 768px) {

@@ -116,3 +116,8 @@ a:active {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+img.card-image {
+    transform: translate3d(0, 0, 1px);
+    will-change: scale;
+}
