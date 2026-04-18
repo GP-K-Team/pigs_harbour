@@ -132,6 +132,11 @@ return [
             'path' => storage_path('logs/cleanup.log'),
         ],
 
+        'images' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/images.log'),
+        ],
+
     ],
 
 ];
