@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.3-fpm AS php
 
 #---------------------------------------------------- Set username and UID/GID ----------------------------------------#
 ENV user=user \
@@ -7,54 +7,48 @@ ENV user=user \
 
 #---------------------------------------- Update and install system dependencies --------------------------------------#
 RUN apt-get update && apt-get install -y \
+    cron \
     curl \
     git \
-    libzip-dev \
-    zip \
-    cron \
-    supervisor \
-    sudo \
-    mc \
     htop \
+    jpegoptim \
     libpq-dev \
     libfreetype6-dev \
+    libicu-dev \
     libjpeg62-turbo-dev \
     libpng-dev \
-    libxslt-dev \
     libxml2-dev \
+    libxslt-dev \
+    libwebp-dev \
+    libzip-dev \
     locales \
     locales-all \
-    tzdata \
-    libicu-dev \
     pkg-config \
+    sudo \
+    supervisor \
+    tzdata \
+    webp \
+    zip \
     && rm -rf /var/lib/apt/lists/*
 #----------------------------------------------------------------------------------------------------------------------#
 
 #---------------------------------------------- Install PHP extensions ------------------------------------------------#
-RUN docker-php-ext-install zip \
-        calendar \
-        soap \
-        pcntl \
-        mysqli \
-        pdo_mysql \
-        pdo_pgsql \
-        opcache \
-        exif \
-        intl \
-        xsl \
-        bcmath \
-        gd
+RUN docker-php-ext-install \
+    bcmath \
+    calendar \
+    exif \
+    intl \
+    opcache \
+    pcntl \
+    xsl \
+    zip
 #----------------------------------------------------------------------------------------------------------------------#
+
+RUN docker-php-ext-configure gd --with-jpeg --with-webp && \
+    docker-php-ext-install gd
 
 #------------------------------------------ Copy php.ini --------------------------------------------------------------#
 COPY /php/php.ini /usr/local/etc/php/php.ini
-#----------------------------------------------------------------------------------------------------------------------#
-
-#---------------------------------------- Install xdebug --------------------------------------------------------------#
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 #----------------------------------------------------------------------------------------------------------------------#
 
 #---------------------------------- Create system user ----------------------------------------------------------------#
@@ -110,5 +104,15 @@ RUN chown -R $user:$user /home/$user
 
 #------------------------------------- Set working directory and active user ------------------------------------------#
 WORKDIR /var/www/
+
+FROM php AS production
 USER $user
 
+#---------------------------------------- Install xdebug --------------------------------------------------------------#
+FROM php AS dev
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+USER $user
+#----------------------------------------------------------------------------------------------------------------------#

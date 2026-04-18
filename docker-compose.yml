@@ -11,6 +11,7 @@ services:
         build:
             context: ./docker
             dockerfile: Dockerfile
+            target: ${APP_ENV}
         environment:
             PHP_IDE_CONFIG: serverName=harbour
         extra_hosts:

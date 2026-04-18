@@ -7,11 +7,11 @@ use App\Models\Pig;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller as DefaultController;
+use Illuminate\Routing\Controller;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 
-class SitemapController extends DefaultController
+class SitemapController extends Controller
 {
     public function get(): Application|Response|ResponseFactory
     {
