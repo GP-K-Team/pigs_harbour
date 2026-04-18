@@ -86,7 +86,7 @@ class Pig extends Model implements Sitemapable
         'status' => PigStatus::class,
     ];
 
-    protected $ageCast = [
+    protected array $ageCast = [
         [
             'maxAge' => 76,
             'stringAge' => '2 месяца'
