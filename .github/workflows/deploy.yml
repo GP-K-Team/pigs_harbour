@@ -85,7 +85,6 @@ jobs:
         run: |
           ssh -i ~/.ssh/deploy_key \
               -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'BASH'
-              chown -R production:production ${{ secrets.SERVER_PATH }} &&
               cd ${{ secrets.SERVER_PATH }} &&
               echo 'Back up any sqlite files' &&
               for f in database/*.sqlite; do [[ "$f" == *.backup.sqlite ]] && continue; [ -f "$f" ] && cp "$f" "${f%.sqlite}.backup.sqlite"; done &&
