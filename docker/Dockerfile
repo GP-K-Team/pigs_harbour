@@ -1,8 +1,8 @@
 FROM php:8.3-fpm AS php
 
 #---------------------------------------------------- Set username and UID/GID ----------------------------------------#
-ENV user=user \
-    uid=1001
+ARG uid=1001
+ENV user=user uid=$uid
 #----------------------------------------------------------------------------------------------------------------------#
 
 #---------------------------------------- Update and install system dependencies --------------------------------------#
@@ -110,6 +110,8 @@ USER $user
 
 #---------------------------------------- Install xdebug --------------------------------------------------------------#
 FROM php AS dev
+ARG uid=1002
+RUN usermod -u $uid $user && chown -R $user:$user /home/$user
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
