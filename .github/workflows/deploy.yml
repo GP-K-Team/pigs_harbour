@@ -87,7 +87,7 @@ jobs:
               -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'BASH'
               cd ${{ secrets.SERVER_PATH }} &&
               echo 'Back up any sqlite files' &&
-              for f in database/*.sqlite; do [ -f $f ] && cp $f ${f%.sqlite}.backup.sqlite; done &&
+              for f in database/!(*.backup).sqlite; do [ -f "$f" ] && cp "$f" "${f%.sqlite}.backup.sqlite"; done &&
               docker compose exec -T harbour-php php artisan migrate &&
               docker compose exec -T harbour-php php artisan optimize &&
               docker compose exec -T harbour-php php artisan storage:link
