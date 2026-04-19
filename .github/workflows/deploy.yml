@@ -84,11 +84,11 @@ jobs:
       - name: Run post-deploy tasks
         run: |
           ssh -i ~/.ssh/deploy_key \
-              -o StrictHostKeyChecking=no \
-              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-              "cd ${{ secrets.SERVER_PATH }} && \
-               echo 'Back up any sqlite files' && \
-               for f in database/*.sqlite; do [ -f $f ] && cp $f ${f%.sqlite}.backup.sqlite; done && \
-               docker compose exec -T harbour-php php artisan migrate && \
-               docker compose exec -T harbour-php php artisan optimize && \
-               docker compose exec -T harbour-php php artisan storage:link"
+              -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'BASH'
+              cd *** &&
+              echo 'Back up any sqlite files' &&
+              for f in database/*.sqlite; do [ -f $f ] && cp $f ${f%.sqlite}.backup.sqlite; done &&
+              docker compose exec -T harbour-php php artisan migrate &&
+              docker compose exec -T harbour-php php artisan optimize &&
+              docker compose exec -T harbour-php php artisan storage:link
+          BASH
