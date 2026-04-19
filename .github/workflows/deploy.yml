@@ -25,7 +25,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
-          extensions: mbstring, pdo, pdo_mysql, tokenizer, xml, ctype, json
+          extensions: mbstring, pdo, xml, json
           coverage: none
 
       - name: Cache Composer packages
@@ -71,6 +71,8 @@ jobs:
             --exclude='.github/' \
             --exclude='node_modules/' \
             --exclude='.env' \
+            --exclude='database/*.sqlite' \
+            --exclude='database/sqladmin/index.php' \
             --exclude='storage/app/' \
             --exclude='storage/logs/' \
             --exclude='storage/framework/cache/' \
@@ -85,8 +87,5 @@ jobs:
               -o StrictHostKeyChecking=no \
               ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
               "cd ${{ secrets.SERVER_PATH }} && \
-               docker compose exec -T harbour-php php artisan migrate --force && \
-               docker compose exec -T harbour-php php artisan config:cache && \
-               docker compose exec -T harbour-php php artisan route:cache && \
-               docker compose exec -T harbour-php php artisan view:cache && \
-               docker compose exec -T harbour-php php artisan event:cache"
+               docker compose exec -T harbour-php php artisan migrate && \
+               docker compose exec -T harbour-php php artisan optimize"
