@@ -57,6 +57,6 @@ Route::middleware('auth:web')->group(function () {
    Route::put('page-text/{pageText}', [PageTextController::class, 'update']);
 });
 
-Route::get('/sitemap', [SitemapController::class, 'get']);
+Route::get('/sitemap.xml', [SitemapController::class, 'get']);
 
 Route::fallback([MainController::class, 'showError']);
