@@ -73,6 +73,7 @@ jobs:
             --exclude='.env' \
             --exclude='database/*.sqlite' \
             --exclude='database/sqladmin/index.php' \
+            --exclude='public/robots.txt' \
             --exclude='storage/app/' \
             --exclude='storage/logs/' \
             --exclude='storage/framework/cache/' \
