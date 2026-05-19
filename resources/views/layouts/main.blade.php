@@ -25,7 +25,9 @@
 
         @if(!\Illuminate\Support\Facades\App::environment('production'))
             <meta name="robots" content="noindex">
-        @endunless
+        @else
+            <link rel="canonical" href="{{ url()->current() }}">
+        @endif
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
