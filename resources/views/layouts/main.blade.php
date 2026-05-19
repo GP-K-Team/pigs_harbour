@@ -4,7 +4,10 @@
         @hasSection('full_title')
             <title>@yield('full_title')</title>
         @else
-            <title>@yield('title') &mdash; Пристань Пушистых Сердец</title>
+            <title>
+                @yield('title')
+                @unless(request()->is('blog/*'))&mdash;&nbsp;{{ config('app.name') }}@endunless
+            </title>
         @endif
 
         <meta name="description" content="@yield('description')" />
@@ -12,8 +15,9 @@
         <meta property="og:title" content="@yield('og_title', 'Пристань пушистых сердец')">
         <meta property="og:image" content="@yield('og_image', '/images/logo.svg')">
         <meta property="og:site_name" content="Помощь бездомным морским свинкам">
-        <meta property="og:type" content="{{ request()->routeIs('blog') ? 'article' : 'website' }}">
+        <meta property="og:type" content="{{ request()->routeIs('blog.*') ? 'article' : 'website' }}">
 
+        <meta charset="UTF-8">
         <meta name="authors" content="whatevernumber, the_nepodarok" />
         <meta name="keywords" content="морские свинки, пристань пушистых сердец, помощь животным, волонтёрский проект">
         <meta name="viewport" content="width=device-width" />
@@ -45,6 +49,13 @@
 
         <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
 
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <meta name="apple-mobile-web-app-title" content="Пристань Пушистых Сердец">
         <link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48" />
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -79,7 +90,9 @@
                     <a href="{{ route('home') }}">
                         <img src="/images/logo.svg" alt="Логотип пристани">
                     </a>
-                    <p>Пристань пушистых сердец  | {{ now()->year }}</p>
+                    <p class="footer-label-wrapper">
+                        <span>Пристань пушистых сердец</span>&nbsp;&verbar;&nbsp;<span class="footer-year">{{ now()->year }}</span>
+                    </p>
                 </div>
             </div>
         </footer>
@@ -194,7 +207,8 @@
         display: none;
 
         @media (max-width: 768px) {
-            display: block;
+            display: flex;
+            height: 100%;
         }
     }
 
@@ -204,6 +218,15 @@
         @media (max-width: 400px) {
             width: 20px;
         }
+    }
+
+    .footer-label-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .footer-year {
+        margin-top: 2px;
     }
 
     .footer-links {
