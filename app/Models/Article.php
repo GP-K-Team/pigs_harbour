@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
+use Laravel\Scout\Searchable;
 use Spatie\Sitemap\Contracts\Sitemapable;
 use Spatie\Sitemap\Tags\Url;
 
@@ -36,7 +37,7 @@ use Spatie\Sitemap\Tags\Url;
 #[RouteSlug('slug_title')]
 class Article extends Model implements Sitemapable
 {
-    use HasImages, HasTimestamps, IsIdentifiedBySlug;
+    use HasImages, HasTimestamps, IsIdentifiedBySlug, Searchable;
 
     public const DEFAULT_IMAGE = 'default.png';
 
@@ -93,5 +94,21 @@ class Article extends Model implements Sitemapable
         return Url::create(route('blog.one', $this))
             ->setLastModificationDate($this->updated_at)
             ->setPriority(0.75);
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (string) $this->id,
+            'title' => $this->title,
+            'text' => $this->text,
+            'hashtags' => $this->hashtags()->pluck('tag')->toArray(),
+            'created_at' => $this->created_at->timestamp,
+        ];
     }
 }
