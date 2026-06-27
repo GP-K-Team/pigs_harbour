@@ -53,7 +53,7 @@ class ArticlesController extends Controller
 
     public function showOne(Article $article): View
     {
-        $hashtags = Hashtag::activeOnly()->get();
+        $hashtags = Hashtag::activeOnly(HashtagType::ARTICLE)->get();
         $additionalArticles = Article::published()->whereHas('hashtags', function (Builder $query) use ($article) {
             $query->whereIn('tag', $article->hashtags()->pluck('tag')->toArray() ?? []);
         })->where('id', '!=', $article->id)->inRandomOrder()->take(3)->get();
@@ -63,7 +63,7 @@ class ArticlesController extends Controller
 
     public function showCreate(): View
     {
-        $hashtags = Hashtag::query()->pluck('tag', 'id');
+        $hashtags = Hashtag::ofType(HashtagType::ARTICLE)->pluck('tag', 'id');
         $isAdmin = true;
 
         return \view('articles.form', compact('hashtags', 'isAdmin'));
@@ -71,7 +71,7 @@ class ArticlesController extends Controller
 
     public function showUpdate(Article $article): View
     {
-        $hashtags = Hashtag::query()->pluck('tag', 'id');
+        $hashtags = Hashtag::ofType(HashtagType::ARTICLE)->pluck('tag', 'id');
         $isAdmin = true;
 
         return \view('articles.form', compact('article', 'hashtags', 'isAdmin'));
@@ -89,7 +89,7 @@ class ArticlesController extends Controller
         }
 
         if ($request->has('hashtags')) {
-            $hashtagIds = Hashtag::getOrCreateIds($formData['hashtags']);
+            $hashtagIds = Hashtag::getOrCreateIds($formData['hashtags'], HashtagType::ARTICLE);
             $article->hashtags()->sync($hashtagIds);
         }
 
@@ -110,7 +110,7 @@ class ArticlesController extends Controller
         }
 
         if ($request->has('hashtags')) {
-            $hashtagIds = Hashtag::getOrCreateIds($formData['hashtags']);
+            $hashtagIds = Hashtag::getOrCreateIds($formData['hashtags'], HashtagType::ARTICLE);
             $article->hashtags()->sync($hashtagIds);
         }
 

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('slug_title')->index();
             $table->string('synonyms');
             $table->string('description');
-            $table->string('type');
             $table->text('text');
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
