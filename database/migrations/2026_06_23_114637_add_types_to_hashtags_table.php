@@ -19,16 +19,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        if (DB::getDriverName() === 'sqlite') {
-            DB::statement('DROP INDEX IF EXISTS hashtags_type_index');
-        } else {
-            Schema::table('hashtags', function (Blueprint $table) {
-                $table->dropIndex(['type']);
-            });
-        }
-
-        Schema::table('hashtags', function (Blueprint $table) {
-            $table->dropColumn('type');
-        });
+        //
     }
 };
