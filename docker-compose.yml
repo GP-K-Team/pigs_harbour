@@ -22,3 +22,18 @@ services:
         volumes:
             - ./:/var/www/
             - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+
+    typesense:
+        image: typesense/typesense:30.2
+        restart: on-failure
+        ports:
+            - "8108:8108"
+        environment:
+            TYPESENSE_DATA_DIR: '${TYPESENSE_DATA_DIR}'
+            TYPESENSE_API_KEY: '${TYPESENSE_API_KEY}'
+            TYPESENSE_ENABLE_CORS: '${TYPESENSE_ENABLE_CORS}'
+        volumes:
+            - typesense:/typesense-data
+
+volumes:
+    typesense:
