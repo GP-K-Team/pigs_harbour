@@ -40,9 +40,7 @@ class FoodProductController extends Controller
 
             SearchQuery::record($searchText, FoodProduct::searchType(), empty($titles));
 
-            if (!empty($titles)) {
-                $foodProductsBuilder->whereIn('title', $titles);
-            }
+            $foodProductsBuilder->whereIn('title', $titles);
         }
 
         $foodProducts = $foodProductsBuilder->orderByDesc('created_at')->paginate(FoodProduct::PAGINATE_ITEMS_COUNT)->withQueryString();

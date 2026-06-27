@@ -44,9 +44,7 @@ class ArticlesController extends Controller
 
             SearchQuery::record($searchText, Article::searchType(), empty($titles));
 
-            if (!empty($titles)) {
-                $articlesBuilder->whereIn('title', $titles);
-            }
+            $articlesBuilder->whereIn('title', $titles);
         }
 
         $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT)->withQueryString();
