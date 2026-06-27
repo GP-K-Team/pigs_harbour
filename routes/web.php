@@ -6,9 +6,11 @@ use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\FoodProductController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PageTextController;
 use App\Http\Controllers\PigsController;
+use App\Http\Controllers\SearchQueryController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,9 +54,24 @@ Route::prefix('blog')->name('blog.')->group(function () {
     Route::get('/{article}', [ArticlesController::class, 'showOne'])->name('one');
 });
 
+Route::prefix('food')->name('products.')->group(function () {
+    Route::middleware('auth:web')->group(function () {
+        Route::get('/create', [FoodProductController::class, 'showCreate'])->name('show.create');
+        Route::get('/update/{foodProduct}', [FoodProductController::class, 'showUpdate'])->name('show.update');
+        Route::post('/', [FoodProductController::class, 'create'])->name('create');
+        Route::post('/{foodProduct}', [FoodProductController::class, 'update'])->name('update');
+        Route::delete('/{foodProduct}', [FoodProductController::class, 'delete'])->name('delete');
+    });
+
+    Route::get('/{slug?}', [FoodProductController::class, 'index'])->name('index');
+    Route::get('/{foodProduct}', [FoodProductController::class, 'showOne'])->name('one');
+});
+
 Route::middleware('auth:web')->group(function () {
    Route::delete('files/{file}', [FileController::class, 'delete']);
    Route::put('page-text/{pageText}', [PageTextController::class, 'update']);
+
+   Route::get('/admin/search-queries', [SearchQueryController::class, 'index'])->name('search-queries.index');
 });
 
 Route::get('/sitemap.xml', [SitemapController::class, 'get']);
