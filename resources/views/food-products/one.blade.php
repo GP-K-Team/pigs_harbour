@@ -55,10 +55,6 @@
                     </div>
                 </div>
             @endif
-
-            @if($foodProduct->synonyms)
-                <span class="article-synonyms">Синонимы: {{ $foodProduct->synonyms }}</span>
-            @endif
         </div>
     @endif
 
