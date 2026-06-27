@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enum\HashtagType;
 use App\Helpers\LinguisticsHelper;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -14,18 +15,34 @@ use Illuminate\Support\Collection;
  * @property int $id
  * @property string $tag
  * @property string $slug
+ * @property HashtagType $type
  * @property Collection|iterable<Article> $articles
+ * @property Collection|iterable<FoodProduct> $foodProducts
  *
- * @method static Builder|static activeOnly()
+ * @method static Builder|static activeOnly(HashtagType $type)
+ * @method static Builder|static ofType(HashtagType $type)
  */
 class Hashtag extends Model
 {
     protected $fillable = [
         'tag',
         'slug',
+        'type',
     ];
 
     public $timestamps = false;
+
+    private array $relationTypes = [
+        HashtagType::ARTICLE->value => 'articles',
+        HashtagType::PRODUCT->value => 'foodProducts',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'type' => HashtagType::class,
+        ];
+    }
 
     /**
      * @return BelongsToMany
@@ -36,12 +53,20 @@ class Hashtag extends Model
     }
 
     /**
+     * @return BelongsToMany
+     */
+    public function foodProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(FoodProduct::class);
+    }
+
+    /**
      * @param array{string} $hashtagsToProcess
      * @return array{int}
      */
-    public static function getOrCreateIds(array $hashtagsToProcess): array
+    public static function getOrCreateIds(array $hashtagsToProcess, HashtagType $type): array
     {
-        $hashtags = Hashtag::whereIn('tag', $hashtagsToProcess)->get();
+        $hashtags = Hashtag::ofType($type)->whereIn('tag', $hashtagsToProcess)->get();
 
         $newHashtags = array_diff($hashtagsToProcess, $hashtags->pluck('tag')->toArray());
         $hashtagIDs = $hashtags->pluck('id')->toArray();
@@ -50,6 +75,7 @@ class Hashtag extends Model
             $newHashtag = new Hashtag();
             $newHashtag->tag = $hashtagsToProcess;
             $newHashtag->slug = LinguisticsHelper::transliterate($hashtagsToProcess);
+            $newHashtag->type = $type;
             $newHashtag->save();
             $hashtagIDs[] = $newHashtag->id;
         }
@@ -57,15 +83,27 @@ class Hashtag extends Model
         return $hashtagIDs;
     }
 
-
     /**
-     * Returns hashtags with active articles only
+     * Limits hashtags to the given type
      *
      * @param Builder $query
+     * @param HashtagType $type
      * @return void
      */
-    public function scopeActiveOnly(Builder $query): void
+    public function scopeOfType(Builder $query, HashtagType $type): void
     {
-        $query->whereHas('articles');
+        $query->where('type', $type->value);
+    }
+
+    /**
+     * Returns hashtags of the given type that have related entities only.
+     *
+     * @param Builder $query
+     * @param HashtagType $type
+     * @return void
+     */
+    public function scopeActiveOnly(Builder $query, HashtagType $type): void
+    {
+        $query->ofType($type)->whereHas($this->relationTypes[$type->value]);
     }
 }

@@ -52,6 +52,8 @@
 
     <div class="list-container">
         @if($state === 'published')
+            <x-search.search type="articles"/>
+
             <div class="hashtag-list-header">
                 <ul class="hashtag-list">
                     <a href="{{ route('blog.index') }}">
