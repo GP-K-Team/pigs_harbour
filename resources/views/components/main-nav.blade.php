@@ -170,14 +170,6 @@
         column-gap: 15px;
     }
 
-    .admin-nav-link {
-        font-weight: bold;
-    }
-
-    .admin-nav-link:hover {
-        color: var(--dark-blue-font);
-    }
-
     @media (max-width: 1200px) {
         .nav-list {
             column-gap: 5px;
@@ -207,5 +199,3 @@
         }
     }
 </style>
-
-
