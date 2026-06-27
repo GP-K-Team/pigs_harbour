@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enum\HashtagType;
-use App\Enum\SearchableType;
 use App\Helpers\UrlHelper;
 use App\Http\Requests\Article\CreateArticleFormRequest;
 use App\Http\Requests\Article\UpdateArticleFormRequest;
@@ -13,14 +12,13 @@ use App\Models\Article;
 use App\Models\Hashtag;
 use App\Models\PageText;
 use App\Models\SearchQuery;
-use App\Services\Search\SearchService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class ArticlesController extends Controller
 {
-    public function index(UrlHelper $urlHelper, SearchService $searchService, string $slug = ''): View
+    public function index(UrlHelper $urlHelper, string $slug = ''): View
     {
         $state = 'published';
 
@@ -38,13 +36,13 @@ class ArticlesController extends Controller
             });
         }
 
-        $searchText = trim((string) request()->query(SearchService::QUERY_PARAM, ''));
+        $searchText = trim((string) request()->query(Article::QUERY_PARAM, ''));
 
         if ($searchText) {
-            $searchResults = $searchService->search(SearchableType::ARTICLES, $searchText);
+            $searchResults = Article::searchFor($searchText);
             $titles = $searchResults->pluck('title')->toArray();
 
-            SearchQuery::record($searchText, SearchableType::ARTICLES, empty($titles));
+            SearchQuery::record($searchText, Article::searchType(), empty($titles));
 
             if (!empty($titles)) {
                 $articlesBuilder->whereIn('title', $titles);

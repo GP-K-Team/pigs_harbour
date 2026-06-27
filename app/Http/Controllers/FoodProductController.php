@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enum\HashtagType;
-use App\Enum\SearchableType;
 use App\Models\SearchQuery;
-use App\Services\Search\SearchService;
 use App\Http\Requests\FoodProduct\CreateFoodProductFormRequest;
 use App\Http\Requests\FoodProduct\UpdateFoodProductFormRequest;
 use App\Models\FoodProduct;
@@ -18,7 +16,7 @@ use Illuminate\View\View;
 
 class FoodProductController extends Controller
 {
-    public function index(SearchService $searchService, string $slug = ''): View
+    public function index(string $slug = ''): View
     {
         if ($slug) {
             if ($foodProductBySlug = FoodProduct::query()->firstWhere('slug_title', $slug)) {
@@ -34,13 +32,13 @@ class FoodProductController extends Controller
             });
         }
 
-        $searchText = trim((string) request()->query(SearchService::QUERY_PARAM, ''));
+        $searchText = trim((string) request()->query(FoodProduct::QUERY_PARAM, ''));
 
         if ($searchText) {
-            $searchResults = $searchService->search(SearchableType::FOOD_PRODUCTS, $searchText);
+            $searchResults = FoodProduct::searchFor($searchText);
             $titles = $searchResults->pluck('title')->toArray();
 
-            SearchQuery::record($searchText, SearchableType::FOOD_PRODUCTS, empty($titles));
+            SearchQuery::record($searchText, FoodProduct::searchType(), empty($titles));
 
             if (!empty($titles)) {
                 $foodProductsBuilder->whereIn('title', $titles);

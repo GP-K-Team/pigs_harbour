@@ -8,11 +8,11 @@ use App\Attributes\RouteSlug;
 use App\Models\Traits\HasImages;
 use App\Models\Traits\HasTimestamps;
 use App\Models\Traits\IsIdentifiedBySlug;
+use App\Models\Traits\IsSearchable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
-use Laravel\Scout\Searchable;
 use Spatie\Sitemap\Contracts\Sitemapable;
 use Spatie\Sitemap\Tags\Url;
 
@@ -35,7 +35,9 @@ use Spatie\Sitemap\Tags\Url;
 #[RouteSlug('slug_title')]
 class FoodProduct extends Model implements Sitemapable
 {
-    use HasImages, HasTimestamps, IsIdentifiedBySlug, Searchable;
+    use HasImages, HasTimestamps, IsIdentifiedBySlug, IsSearchable;
+
+    public const SEARCH_TYPE = 'food_products';
 
     public const DEFAULT_IMAGE = 'default.png';
 

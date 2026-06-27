@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enum\SearchableType;
 use App\Models\Traits\HasTimestamps;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -12,12 +11,12 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property string $search_text
- * @property SearchableType $type
+ * @property string $type
  * @property int $search_count
  * @property bool $failed
  * @mixin HasTimestamps
  *
- * @method static Builder|static ofType(SearchableType $type)
+ * @method static Builder|static ofType(string $type)
  */
 class SearchQuery extends Model
 {
@@ -33,16 +32,15 @@ class SearchQuery extends Model
     protected function casts(): array
     {
         return [
-            'type' => SearchableType::class,
             'failed' => 'boolean',
         ];
     }
 
-    public static function record(string $searchText, SearchableType $type, bool $failed): void
+    public static function record(string $searchText, string $type, bool $failed): void
     {
         $query = static::firstOrNew([
             'search_text' => $searchText,
-            'type' => $type->value,
+            'type' => $type,
         ]);
 
         $query->search_count = ($query->search_count ?? 0) + 1;
@@ -52,11 +50,11 @@ class SearchQuery extends Model
 
     /**
      * @param Builder $query
-     * @param SearchableType $type
+     * @param string $type
      * @return void
      */
-    public function scopeOfType(Builder $query, SearchableType $type): void
+    public function scopeOfType(Builder $query, string $type): void
     {
-        $query->where('type', $type->value);
+        $query->where('type', $type);
     }
 }
