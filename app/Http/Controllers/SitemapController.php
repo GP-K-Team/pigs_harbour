@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\FoodProduct;
 use App\Models\Pig;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Application;
@@ -19,8 +20,10 @@ class SitemapController extends Controller
             ->add(Url::create('/')->setPriority(1))
             ->add(Url::create(route('catalog.index'))->setPriority(0.5))
             ->add(Url::create(route('blog.index'))->setPriority(0.5))
+            ->add(Url::create(route('products.index'))->setPriority(0.5))
             ->add(Pig::activeAsc()->get())
             ->add(Article::published()->get())
+            ->add(FoodProduct::query()->get())
             ->render();
 
         return response($xml, headers: ['Content-Type' => 'application/xml']);
