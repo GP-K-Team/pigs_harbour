@@ -47,6 +47,7 @@
                 @else
                     <a href="{{ route('blog.index') }}">Опубликованные</a>
                 @endif
+                <a href="{{ route('search-queries.index', ['type' => Article::searchType()]) }}">Запросы</a>
             </div>
         @endif
     </div>
@@ -669,3 +670,4 @@
         }
     </style>
 @endsection
+

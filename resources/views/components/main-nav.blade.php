@@ -73,7 +73,6 @@
 @if(isset($isAdmin) && $isAdmin)
     <div class="logout-button-wrapper">
         @include('components.buttons.logout-button')
-        <a class="admin-nav-link" href="{{ route('search-queries.index') }}">Запросы</a>
     </div>
 @endif
 
@@ -208,3 +207,5 @@
         }
     }
 </style>
+
+
