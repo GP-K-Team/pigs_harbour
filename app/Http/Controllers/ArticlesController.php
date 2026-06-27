@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enum\HashtagType;
+use App\Enum\SearchableType;
 use App\Helpers\UrlHelper;
 use App\Http\Requests\Article\CreateArticleFormRequest;
 use App\Http\Requests\Article\UpdateArticleFormRequest;
 use App\Models\Article;
 use App\Models\Hashtag;
 use App\Models\PageText;
+use App\Models\SearchQuery;
+use App\Services\Search\SearchService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class ArticlesController extends Controller
 {
-    public function index(UrlHelper $urlHelper, string $slug = ''): View
+    public function index(UrlHelper $urlHelper, SearchService $searchService, string $slug = ''): View
     {
         $state = 'published';
 
@@ -34,8 +38,21 @@ class ArticlesController extends Controller
             });
         }
 
-        $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT);
-        $hashtags = Hashtag::activeOnly()->get();
+        $searchText = trim((string) request()->query(SearchService::QUERY_PARAM, ''));
+
+        if ($searchText) {
+            $searchResults = $searchService->search(SearchableType::ARTICLES, $searchText);
+            $titles = $searchResults->pluck('title')->toArray();
+
+            SearchQuery::record($searchText, SearchableType::ARTICLES, empty($titles));
+
+            if (!empty($titles)) {
+                $articlesBuilder->whereIn('title', $titles);
+            }
+        }
+
+        $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT)->withQueryString();
+        $hashtags = Hashtag::activeOnly(HashtagType::ARTICLE)->get();
         $pageTexts = PageText::where('page_base_url', '=', $urlHelper->getCurrentPage())->get();
         $activeHashtagSlug = $slug;
 
