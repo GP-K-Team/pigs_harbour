@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
  * @property string $link
  * @property Collection|iterable<Pig> $pigs
  * @property Collection|iterable<Article> $articles
+ * @property Collection|iterable<FoodProduct> $foodProducts
  * @mixin HasTimestamps
  */
 class Image extends Model
@@ -44,5 +45,13 @@ class Image extends Model
     public function articles(): BelongsToMany
     {
         return $this->belongsToMany(Article::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function foodProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(FoodProduct::class);
     }
 }
