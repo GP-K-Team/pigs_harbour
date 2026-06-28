@@ -121,7 +121,8 @@
             .catalog-card.food-product-card .card-bio {
                 display: flex;
                 flex-direction: column;
-                padding: 0.25rem 1rem 1rem;
+                align-items: center;
+                padding: 1rem;
                 row-gap: 0.5rem;
                 flex-grow: 1;
             }
@@ -147,15 +148,19 @@
                 position: absolute;
                 left: 1rem;
                 bottom: -1.375rem;
-                width: 3.25rem;
-                height: 3.25rem;
+                width: 42px;
+                height: 42px;
                 object-fit: contain;
+
+                @media (max-width: 768px) {
+                    width: 30px;
+                    height: 30px;
+                }
             }
 
             .catalog-card.food-product-card .card-button {
                 margin-top: auto;
                 align-self: center;
-                min-width: 170px;
                 padding: 0.35rem 1rem;
                 font-size: 1rem;
                 line-height: 1.2;
