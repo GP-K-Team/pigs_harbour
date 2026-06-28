@@ -18,7 +18,7 @@ class FoodProductFormRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-            'synonyms' => 'required|string',
+            'synonyms' => 'nullable|string',
             'description' => 'required|string|max:300',
             'text' => 'required|string',
             'meta_title' => 'nullable|string',
