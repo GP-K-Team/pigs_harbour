@@ -61,8 +61,8 @@ class Hashtag extends Model
     }
 
     /**
-     * @param array{string} $hashtagsToProcess
-     * @return array{int}
+     * @param array<string> $hashtagsToProcess
+     * @return array<int>
      */
     public static function getOrCreateIds(array $hashtagsToProcess, HashtagType $type): array
     {
@@ -104,6 +104,6 @@ class Hashtag extends Model
      */
     public function scopeActiveOnly(Builder $query, HashtagType $type): void
     {
-        $query->ofType($type)->whereHas($this->relationTypes[$type->value]);
+        $query->whereHas($this->relationTypes[$type->value]);
     }
 }

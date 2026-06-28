@@ -48,7 +48,7 @@ class ArticlesController extends Controller
         }
 
         $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT)->withQueryString();
-        $hashtags = Hashtag::activeOnly(HashtagType::ARTICLE)->get();
+        $hashtags = Hashtag::ofType(HashtagType::ARTICLE)->activeOnly(HashtagType::ARTICLE)->get();
         $pageTexts = PageText::where('page_base_url', '=', $urlHelper->getCurrentPage())->get();
         $activeHashtagSlug = $slug;
 
@@ -66,7 +66,7 @@ class ArticlesController extends Controller
 
     public function showOne(Article $article): View
     {
-        $hashtags = Hashtag::activeOnly(HashtagType::ARTICLE)->get();
+        $hashtags = Hashtag::ofType(HashtagType::ARTICLE)->activeOnly(HashtagType::ARTICLE)->get();
         $additionalArticles = Article::published()->whereHas('hashtags', function (Builder $query) use ($article) {
             $query->whereIn('tag', $article->hashtags()->pluck('tag')->toArray() ?? []);
         })->where('id', '!=', $article->id)->inRandomOrder()->take(3)->get();
