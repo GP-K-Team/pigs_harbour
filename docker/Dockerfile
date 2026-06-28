@@ -83,9 +83,9 @@ RUN echo -e "en_US.UTF-8 UTF-8 \\nru_RU.UTF-8 UTF-8" >> /etc/locale.gen && \
 #----------------------------------------------------------------------------------------------------------------------#
 
 #--------------------------------------- Set config supervisor --------------------------------------------------------#
-RUN mkdir -p /etc/supervisor.d/
-COPY /supervisor/supervisord.conf /etc/supervisord.conf
-COPY /supervisor/laravel/example.conf /etc/supervisor/laravel.conf
+RUN mkdir -p /etc/supervisor/conf.d/
+COPY /supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+COPY /supervisor/laravel/laravel.conf /etc/supervisor/conf.d/laravel.conf
 #----------------------------------------------------------------------------------------------------------------------#
 
 #----------------------------------------- Set config crontab ---------------------------------------------------------#
