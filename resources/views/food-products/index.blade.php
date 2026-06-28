@@ -328,7 +328,7 @@
 
         .card.add-card {
             flex-direction: column;
-            width: 350px;
+            width: 280px;
             height: 430px;
             background-color: var(--light-blue);
             border-radius: 1rem;
@@ -378,7 +378,6 @@
 
         @media (max-width: 1200px) {
             .card.add-card {
-                width: 217px;
                 height: 250px;
                 align-self: flex-start;
             }
@@ -544,14 +543,35 @@
 
         /** Food product cards **/
         .food-product-list {
-            max-width: 90vw;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            width: 100%;
+            max-width: 1080px;
             gap: 1rem;
+            align-items: stretch;
+            justify-items: stretch;
             z-index: 2;
+
+            @media(max-width: 1150px) {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .food-product-list > .list-item.card {
+            width: 100%;
+            max-width: none;
+            box-sizing: border-box;
         }
 
         @media (max-width: 768px) {
             .food-product-list {
-                flex-direction: column;
+                grid-template-columns: 1fr;
+                justify-items: center;
+            }
+
+            .food-product-list > .list-item.card {
+                width: 90%;
+                max-width: 300px;
             }
 
         }

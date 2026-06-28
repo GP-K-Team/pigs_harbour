@@ -180,10 +180,6 @@
             }
 
             @media (max-width: 1200px) {
-                .list-item.card.catalog-card.food-product-card {
-                    width: 217px;
-                }
-
                 .catalog-card.food-product-card .card-title {
                     font-size: 1.5rem;
                 }
