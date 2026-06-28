@@ -73,7 +73,7 @@
 
     @if($additionalFoodProducts->count())
         <div class="additional-articles-wrapper">
-            <h2 class="additional-articles-header">Еще по теме →</h2>
+            <h2 class="additional-articles-header">Другие продукты</h2>
 
             <ul class="article-list food-product-related-list">
                 @foreach($additionalFoodProducts as $additionalFoodProduct)
