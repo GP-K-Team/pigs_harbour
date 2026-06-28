@@ -95,19 +95,17 @@
                 <div class="splide__track">
                     <ul class="splide__list">
                         @foreach($additionalFoodProducts as $additionalFoodProduct)
-                            <li class="splide__slide">
-                                <x-cards.catalog-card
-                                    :href="route('products.one', ['foodProduct' => $additionalFoodProduct])"
-                                    :image="$additionalFoodProduct->mainImage?->getFullUrl() ?? $additionalFoodProduct->getDefaultImage()"
-                                    image-alt="Обложка продукта {{ $additionalFoodProduct->title }}"
-                                    :title="$additionalFoodProduct->title"
-                                    class="food-product-card"
-                                    :food-product="$additionalFoodProduct"
-                                >
-                                    <p class="card-description">{{ $additionalFoodProduct->description }}</p>
-                                    <span class="button card-button">Подробнее</span>
-                                </x-cards.catalog-card>
-                            </li>
+                            <x-cards.catalog-card
+                                :href="route('products.one', ['foodProduct' => $additionalFoodProduct])"
+                                :image="$additionalFoodProduct->mainImage?->getFullUrl() ?? $additionalFoodProduct->getDefaultImage()"
+                                image-alt="Обложка продукта {{ $additionalFoodProduct->title }}"
+                                :title="$additionalFoodProduct->title"
+                                class="splide__slide food-product-card"
+                                :food-product="$additionalFoodProduct"
+                            >
+                                <p class="card-description">{{ $additionalFoodProduct->description }}</p>
+                                <span class="button card-button">Подробнее</span>
+                            </x-cards.catalog-card>
                         @endforeach
                     </ul>
                 </div>
@@ -300,13 +298,35 @@
             padding-bottom: 1rem;
         }
 
-        #products_splide .splide__slide {
-            display: flex;
-            justify-content: center;
+        #products_splide .splide__slide.catalog-card.food-product-card {
+            width: 100% !important;
+            max-width: none;
+            height: 420px;
+            padding: 10px 0;
+            align-items: center;
+            background: transparent;
+            border: 0;
+            filter: none;
+            cursor: default;
+            overflow: visible;
         }
 
-        #products_splide .catalog-card.food-product-card {
+        #products_splide .splide__slide.catalog-card.food-product-card:hover {
+            opacity: 1;
+            scale: 1;
+        }
+
+        #products_splide .catalog-card.food-product-card .catalog-card-link {
+            width: 90%;
+            max-width: 300px;
+            height: 400px;
             margin: 0 auto;
+            background-color: var(--catalog-card-background, #F4FAF5);
+            border: var(--catalog-card-border-width, 0) solid var(--catalog-card-border, transparent);
+            border-radius: 10px;
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+            overflow: visible;
+            cursor: pointer;
         }
     }
 </style>
