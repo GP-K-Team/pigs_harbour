@@ -68,7 +68,7 @@
                 <div class="input-container has-input-prefix">
                     <label class="input-label" for="slug_title">Транслит</label>
                     <input type="text" name="slug_title" id="slug_title" value="{{ old('slug_title', $foodProduct?->slug_title) }}"
-                           placeholder="Транслит" data-input-prefix="/products/" data-translit-target>
+                           placeholder="Транслит" data-input-prefix="/food/" data-translit-target>
                     <x-error-bag name="slug_title"/>
                 </div>
 
