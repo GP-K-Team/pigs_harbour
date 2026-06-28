@@ -2,7 +2,7 @@
 
 @section('title', 'Рацион морской свинки: что можно и нельзя — большой список продуктов')
 @section('description', 'Узнайте, какие овощи, фрукты и растения можно давать морской свинке. Удобный справочник с поиском по названию, карточки с дозировками и пользой')
-@section('og_image', '/images/og-food.jpg')
+@section('og_image', url('/images/og-food.jpg'))
 
 @php
     use App\Models\FoodProduct;

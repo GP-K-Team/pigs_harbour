@@ -12,8 +12,12 @@
 
         <meta name="description" content="@yield('description')" />
 
+        @php
+            $ogImageUrl = url('/images/logo.svg');
+        @endphp
+
         <meta property="og:title" content="@yield('og_title', 'Пристань пушистых сердец')">
-        <meta property="og:image" content="@yield('og_image', '/images/logo.svg')">
+        <meta property="og:image" content="@yield('og_image', $ogImageUrl)">
         <meta property="og:site_name" content="Помощь бездомным морским свинкам">
         <meta property="og:type" content="{{ request()->routeIs('blog.*') ? 'article' : 'website' }}">
 
