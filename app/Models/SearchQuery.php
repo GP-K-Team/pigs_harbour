@@ -36,7 +36,7 @@ class SearchQuery extends Model
         ];
     }
 
-    public static function record(string $searchText, string $type, bool $failed): void
+    public static function addRecord(string $searchText, string $type, bool $failed): void
     {
         $query = static::firstOrNew([
             'search_text' => $searchText,

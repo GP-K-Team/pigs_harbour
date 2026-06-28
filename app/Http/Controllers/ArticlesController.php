@@ -42,7 +42,7 @@ class ArticlesController extends Controller
             $searchResults = Article::searchFor($searchText);
             $titles = $searchResults->pluck('title')->toArray();
 
-            SearchQuery::record($searchText, Article::searchType(), empty($titles));
+            SearchQuery::addRecord($searchText, Article::searchType(), empty($titles));
 
             $articlesBuilder->whereIn('title', $titles);
         }

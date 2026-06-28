@@ -38,7 +38,7 @@ class FoodProductController extends Controller
             $searchResults = FoodProduct::searchFor($searchText);
             $titles = $searchResults->pluck('title')->toArray();
 
-            SearchQuery::record($searchText, FoodProduct::searchType(), empty($titles));
+            SearchQuery::addRecord($searchText, FoodProduct::searchType(), empty($titles));
 
             $foodProductsBuilder->whereIn('title', $titles);
         }
