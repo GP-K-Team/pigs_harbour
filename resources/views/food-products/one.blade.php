@@ -103,7 +103,6 @@
                                     :title="$additionalFoodProduct->title"
                                     class="food-product-card"
                                     :food-product="$additionalFoodProduct"
-                                    tag="div"
                                 >
                                     <p class="card-description">{{ $additionalFoodProduct->description }}</p>
                                     <span class="button card-button">Подробнее</span>
