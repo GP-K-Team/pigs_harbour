@@ -304,6 +304,23 @@
             background-color: var(--pale-yellow);
         }
 
+        .food-product-list .food-product-delete-wrapper {
+            position: absolute;
+            top: 0.5rem;
+            right: 2.75rem;
+            bottom: auto;
+            z-index: 5;
+        }
+
+        .food-product-list .food-product-delete-wrapper .delete-button-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.75rem;
+            height: 1.75rem;
+            padding: 0.25rem;
+        }
+
         .card.add-card {
             flex-direction: column;
             width: 350px;
@@ -522,7 +539,6 @@
 
         /** Food product cards **/
         .food-product-list {
-            width: auto;
             max-width: 90vw;
             gap: 1rem;
             z-index: 2;
