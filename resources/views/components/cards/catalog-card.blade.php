@@ -20,7 +20,7 @@
 
     /** @var FoodProduct|null $foodProduct */
     if ($foodProduct) {
-        $signalStylesByTag = [
+        $typeStylesByTag = [
             'нельзя' => [
                 'label' => 'Нельзя',
                 'background' => '#FBEFF4',
@@ -45,17 +45,17 @@
             fn (string $tag) => mb_strtolower($tag)
         );
 
-        $signalTag = null;
+        $typeTag = null;
 
-        foreach (array_keys($signalStylesByTag) as $tag) {
+        foreach (array_keys($typeStylesByTag) as $tag) {
             if ($productTags->contains($tag)) {
-                $signalTag = $tag;
+                $typeTag = $tag;
                 break;
             }
         }
 
-        if ($signalTag) {
-            $signalStyle = $signalStylesByTag[$signalTag];
+        if ($typeTag) {
+            $signalStyle = $typeStylesByTag[$typeTag];
 
             $color = $signalStyle['background'];
             $borderColor = $signalStyle['border'];
@@ -233,7 +233,8 @@
                  width="350" height="250" alt="{{ $imageAlt }}">
 
             @if($bottomIcon)
-                <img class="catalog-card-bottom-icon" src="{{ $bottomIcon }}" alt="{{ $bottomIconAlt }}" draggable="false">
+                <img class="catalog-card-bottom-icon" src="{{ $bottomIcon }}" alt="{{ $bottomIconAlt }}"
+                     draggable="false">
             @endif
         </span>
 
