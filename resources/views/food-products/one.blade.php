@@ -95,17 +95,20 @@
                 <div class="splide__track">
                     <ul class="splide__list">
                         @foreach($additionalFoodProducts as $additionalFoodProduct)
-                            <x-cards.catalog-card
-                                :href="route('products.one', ['foodProduct' => $additionalFoodProduct])"
-                                :image="$additionalFoodProduct->mainImage?->getFullUrl() ?? $additionalFoodProduct->getDefaultImage()"
-                                image-alt="Обложка продукта {{ $additionalFoodProduct->title }}"
-                                :title="$additionalFoodProduct->title"
-                                class="splide__slide food-product-card"
-                                :food-product="$additionalFoodProduct"
-                            >
-                                <p class="card-description">{{ $additionalFoodProduct->description }}</p>
-                                <span class="button card-button">Подробнее</span>
-                            </x-cards.catalog-card>
+                            <li class="splide__slide">
+                                <x-cards.catalog-card
+                                    :href="route('products.one', ['foodProduct' => $additionalFoodProduct])"
+                                    :image="$additionalFoodProduct->mainImage?->getFullUrl() ?? $additionalFoodProduct->getDefaultImage()"
+                                    image-alt="Обложка продукта {{ $additionalFoodProduct->title }}"
+                                    :title="$additionalFoodProduct->title"
+                                    class="food-product-card"
+                                    :food-product="$additionalFoodProduct"
+                                    tag="div"
+                                >
+                                    <p class="card-description">{{ $additionalFoodProduct->description }}</p>
+                                    <span class="button card-button">Подробнее</span>
+                                </x-cards.catalog-card>
+                            </li>
                         @endforeach
                     </ul>
                 </div>
@@ -290,5 +293,21 @@
 
     .article-list > li:empty {
         display: none;
+    }
+
+    @media (max-width: 768px) {
+        #products_splide {
+            width: 100%;
+            padding-bottom: 1rem;
+        }
+
+        #products_splide .splide__slide {
+            display: flex;
+            justify-content: center;
+        }
+
+        #products_splide .catalog-card.food-product-card {
+            margin: 0 auto;
+        }
     }
 </style>
