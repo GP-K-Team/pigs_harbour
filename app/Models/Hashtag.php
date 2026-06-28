@@ -21,6 +21,7 @@ use Illuminate\Support\Collection;
  *
  * @method static Builder|static activeOnly(HashtagType $type)
  * @method static Builder|static ofType(HashtagType $type)
+ * @method static Builder|static withoutWarning()
  */
 class Hashtag extends Model
 {
@@ -105,5 +106,16 @@ class Hashtag extends Model
     public function scopeActiveOnly(Builder $query, HashtagType $type): void
     {
         $query->whereHas($this->relationTypes[$type->value]);
+    }
+
+    /**
+     * Skips Warning tag
+     *
+     * @param Builder $query
+     * @return void
+     */
+    public function scopeWithoutWarning(Builder $query): void
+    {
+        $query->where('tag', '!=', 'С осторожностью');
     }
 }

@@ -44,7 +44,7 @@ class FoodProductController extends Controller
         }
 
         $foodProducts = $foodProductsBuilder->orderByDesc('created_at')->paginate(FoodProduct::PAGINATE_ITEMS_COUNT)->withQueryString();
-        $hashtags = Hashtag::ofType(HashtagType::PRODUCT)->activeOnly(HashtagType::PRODUCT)->where('tag', '!=', 'С осторожностью')->get();
+        $hashtags = Hashtag::ofType(HashtagType::PRODUCT)->activeOnly(HashtagType::PRODUCT)->withoutWarning()->get();
         $activeHashtagSlug = $slug;
 
         return \view('food-products.index', compact('foodProducts', 'hashtags', 'activeHashtagSlug'));
@@ -66,17 +66,15 @@ class FoodProductController extends Controller
     public function showCreate(): View
     {
         $hashtags = Hashtag::ofType(HashtagType::PRODUCT)->pluck('tag', 'id');
-        $isAdmin = true;
 
-        return \view('food-products.form', compact('hashtags', 'isAdmin'));
+        return \view('food-products.form', compact('hashtags'));
     }
 
     public function showUpdate(FoodProduct $foodProduct): View
     {
         $hashtags = Hashtag::ofType(HashtagType::PRODUCT)->pluck('tag', 'id');
-        $isAdmin = true;
 
-        return \view('food-products.form', compact('foodProduct', 'hashtags', 'isAdmin'));
+        return \view('food-products.form', compact('foodProduct', 'hashtags'));
     }
 
     public function create(CreateFoodProductFormRequest $request): RedirectResponse
