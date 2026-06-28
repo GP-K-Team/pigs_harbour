@@ -59,13 +59,11 @@ trait HasImages
 
     public function deleteImages(): void
     {
-        $images = $this->images()->get(['images.id', 'images.link']);
-
-        if ($images->isEmpty()) {
+        if ($this->images->isEmpty()) {
             return;
         }
 
-        Image::query()->whereKey($images->modelKeys())->delete();
-        Storage::disk('public')->delete($images->pluck('link')->all());
+        Image::query()->whereKey($this->images->modelKeys())->delete();
+        Storage::disk('public')->delete($this->images->pluck('link')->all());
     }
 }
