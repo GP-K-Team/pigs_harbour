@@ -151,11 +151,6 @@
                 width: 42px;
                 height: 42px;
                 object-fit: contain;
-
-                @media (max-width: 768px) {
-                    width: 30px;
-                    height: 30px;
-                }
             }
 
             .catalog-card.food-product-card .card-button {
