@@ -106,6 +106,7 @@ class FoodProductController extends Controller
             if ($foodProduct->mainImage) {
                 $foodProduct->mainImage->delete();
             }
+
             $foodProduct->uploadImages($formData['cover']);
         }
 
