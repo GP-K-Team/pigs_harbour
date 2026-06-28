@@ -45,7 +45,7 @@
     </div>
 
     <div class="list-container">
-        <x-search.search type="food_products" placeholder="Можно ли морским свинкам... Введите продукт" icon="/images/logo.svg"/>
+        <x-search.search type="food_products" placeholder="Можно ли морским свинкам..." icon="/images/icons/food-search.svg"/>
 
         <div class="hashtag-list-header">
             <ul class="hashtag-list">
@@ -388,9 +388,17 @@
 
 
         .footer-block {
-            padding: 40px;
+            padding: 60px;
             border-top: 10px solid var(--main-pink);
             background-image: url("/images/bright_dark.png");
+
+            @media(max-width: 1206px) {
+                padding: 40px;
+            }
+
+            @media(max-width: 768px) {
+                padding: 20px;
+            }
         }
 
         .footer-text {
@@ -406,9 +414,10 @@
         }
 
         .food-products-footer-text {
-            max-width: 760px;
             margin: 0 auto;
-            line-height: 1.35;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 20px;
         }
 
         .food-products-footer-text p,

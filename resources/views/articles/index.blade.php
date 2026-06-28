@@ -54,7 +54,7 @@
 
     <div class="list-container">
         @if($state === 'published')
-            <x-search.search type="articles"/>
+            <x-search.search type="articles" icon="/images/icons/search.svg"/>
 
             <div class="hashtag-list-header">
                 <ul class="hashtag-list">

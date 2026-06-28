@@ -84,7 +84,8 @@
 
     .search-icon {
         position: absolute;
-        right: clamp(126px, 16vw, 182px);
+        top: -5px;
+        right: 150px;
         width: 72px;
         height: 72px;
         object-fit: contain;
@@ -113,9 +114,9 @@
         }
 
         .search-icon {
-            right: 102px;
-            width: 52px;
-            height: 52px;
+            right: 110px;
+            width: 62px;
+            height: 62px;
         }
     }
 </style>
