@@ -304,7 +304,11 @@
             background-color: var(--pale-yellow);
         }
 
-        .food-product-list .food-product-delete-wrapper {
+        .food-product-list .catalog-card.food-product-card .edit-icon-link {
+            z-index: 10;
+        }
+
+        .food-product-list .catalog-card.food-product-card .food-product-delete-wrapper {
             position: absolute;
             top: 0.5rem;
             right: 2.75rem;
@@ -312,7 +316,7 @@
             z-index: 5;
         }
 
-        .food-product-list .food-product-delete-wrapper .delete-button-icon {
+        .food-product-list .catalog-card.food-product-card .food-product-delete-wrapper .delete-button-icon {
             display: flex;
             align-items: center;
             justify-content: center;
