@@ -544,36 +544,37 @@
         /** Food product cards **/
         .food-product-list {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 350px));
             width: 100%;
-            max-width: 1080px;
+            max-width: calc(1050px + 2rem);
             gap: 1rem;
             align-items: stretch;
-            justify-items: stretch;
+            justify-content: center;
+            justify-items: center;
             z-index: 2;
 
             @media(max-width: 1150px) {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-template-columns: repeat(2, minmax(0, 350px));
+                max-width: calc(700px + 1rem);
             }
         }
 
         .food-product-list > .list-item.card {
-            width: 100%;
-            max-width: none;
+            width: 350px;
+            max-width: 100%;
             box-sizing: border-box;
+        }
+
+        .food-product-list > .card.add-card {
+            height: 430px;
         }
 
         @media (max-width: 768px) {
             .food-product-list {
-                grid-template-columns: 1fr;
+                grid-template-columns: minmax(0, 300px);
+                max-width: 100%;
                 justify-items: center;
             }
-
-            .food-product-list > .list-item.card {
-                width: 90%;
-                max-width: 300px;
-            }
-
         }
 
         /** Animation **/
