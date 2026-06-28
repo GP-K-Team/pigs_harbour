@@ -33,11 +33,6 @@ class Hashtag extends Model
 
     public $timestamps = false;
 
-    private array $relationTypes = [
-        HashtagType::ARTICLE->value => 'articles',
-        HashtagType::PRODUCT->value => 'foodProducts',
-    ];
-
     protected function casts(): array
     {
         return [
@@ -105,7 +100,7 @@ class Hashtag extends Model
      */
     public function scopeActiveOnly(Builder $query, HashtagType $type): void
     {
-        $query->whereHas($this->relationTypes[$type->value]);
+        $query->whereHas($type->getRelationValue());
     }
 
     /**
