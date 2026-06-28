@@ -54,12 +54,24 @@
         outline-offset: 2px;
     }
 
+    .search-input::-webkit-search-cancel-button,
+    .search-input::-webkit-search-decoration {
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .search-input::-ms-clear,
+    .search-input::-ms-reveal {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+
     .search-button {
         position: absolute;
         top: 2px;
         right: 2px;
         bottom: 2px;
-        min-width: clamp(130px, 16vw, 185px);
         padding: 0 28px;
         font-size: 1.25rem;
         text-transform: uppercase;
