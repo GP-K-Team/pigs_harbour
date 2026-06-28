@@ -17,42 +17,62 @@
 
 @php
     use App\Models\FoodProduct;
-    use Illuminate\Support\Str;
 
     /** @var FoodProduct|null $foodProduct */
     if ($foodProduct) {
-        $foodProductHashtags = $foodProduct->relationLoaded('hashtags')
-            ? $foodProduct->hashtags->pluck('tag')
-            : $foodProduct->hashtags()->pluck('tag');
-        $normalizedHashtags = $foodProductHashtags->map(fn (string $tag) => Str::lower($tag));
-        $signalTags = ['можно', 'нельзя', 'с осторожностью'];
-        $signalTag = match (true) {
-            $normalizedHashtags->contains('нельзя') => 'check-no',
-            $normalizedHashtags->contains('с осторожностью') => 'warning',
-            $normalizedHashtags->contains('можно') => 'allowed',
-            default => null,
-        };
+        $signalStylesByTag = [
+            'нельзя' => [
+                'label' => 'Нельзя',
+                'background' => '#FBEFF4',
+                'border' => '#EAB0C8',
+                'icon' => asset('images/icons/food-close.svg'),
+            ],
+            'с осторожностью' => [
+                'label' => 'С осторожностью',
+                'background' => '#FFFDF4',
+                'border' => '#FEF3C6',
+                'icon' => asset('images/icons/warning.svg'),
+            ],
+            'можно' => [
+                'label' => 'Можно',
+                'background' => '#F4FAF5',
+                'border' => '#E5F1E3',
+                'icon' => asset('images/icons/food-check.svg'),
+            ],
+        ];
 
-        $color ??= match ($signalTag) {
-            'check-no' => '#FBEFF4',
-            'warning' => '#FFFDF4',
-            default => '#F4FAF5',
-        };
-        $borderColor ??= match ($signalTag) {
-            'check-no' => '#EAB0C8',
-            'warning' => '#FEF3C6',
-            'allowed' => '#E5F1E3',
-            default => null,
-        };
-        $bottomIcon ??= match ($signalTag) {
-            'check-no' => asset('images/icons/food-close.svg'),
-            'warning' => asset('images/icons/warning.svg'),
-            'allowed' => asset('images/icons/food-check.svg'),
-            default => null,
-        };
-        $bottomIconAlt = $bottomIconAlt ?: (
-            $foodProductHashtags->first(fn (string $tag) => in_array(Str::lower($tag), $signalTags, true)) ?? ''
+        $productTags = $foodProduct->hashtags->pluck('tag')->map(
+            fn (string $tag) => mb_strtolower($tag)
         );
+
+        $signalTag = null;
+
+        foreach (array_keys($signalStylesByTag) as $tag) {
+            if ($productTags->contains($tag)) {
+                $signalTag = $tag;
+                break;
+            }
+        }
+
+        if ($signalTag) {
+            $signalStyle = $signalStylesByTag[$signalTag];
+
+            $color = $signalStyle['background'];
+            $borderColor = $signalStyle['border'];
+            $bottomIcon = $signalStyle['icon'];
+            $bottomIconAlt = $signalStyle['label'];
+        }
+    }
+
+    $cardStyles = [];
+
+    if ($color) {
+        $cardStyles[] = "--catalog-card-background: {$color};";
+    }
+
+    if ($borderColor) {
+        $cardStyles[] = "--catalog-card-border: {$borderColor};";
+        $cardStyles[] = '--catalog-card-border-width: 2px;';
     }
 @endphp
 
@@ -197,7 +217,7 @@
         'can-edit' => $canEdit,
         $class,
     ])
-    @if($color || $borderColor) style="@if($color)--catalog-card-background: {{ $color }};@endif @if($borderColor)--catalog-card-border: {{ $borderColor }}; --catalog-card-border-width: 2px;@endif" @endif
+    @if($cardStyles) style="{{ implode(' ', $cardStyles) }}" @endif
     @if($dataUrl) data-url="{{ $dataUrl }}" @endif
 >
     @if($canEdit && $editHref)

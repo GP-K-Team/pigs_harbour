@@ -53,7 +53,12 @@ class FoodProductController extends Controller
     public function showOne(FoodProduct $foodProduct): View
     {
         $hashtags = Hashtag::activeOnly(HashtagType::PRODUCT)->get();
-        $additionalFoodProducts = FoodProduct::query()->where('id', '!=', $foodProduct->id)->inRandomOrder()->take(3)->get();
+        $additionalFoodProducts = FoodProduct::query()
+            ->with(['images', 'hashtags'])
+            ->where('id', '!=', $foodProduct->id)
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
 
         return \view('food-products.one', compact('foodProduct', 'hashtags', 'additionalFoodProducts'));
     }
