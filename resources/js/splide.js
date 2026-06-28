@@ -8,6 +8,7 @@ $(document).ready(function () {
     let stepSplide;
     let pigsSplide;
     let articlesSplide;
+    let productsSplide;
 
     if (windowWidth < 768) {
         initateSplide();
@@ -32,6 +33,10 @@ $(document).ready(function () {
 
         if (!articlesSplide && $('#articles_splide').length) {
             articlesSplide = new Splide('#articles_splide').mount();
+        }
+
+        if (!productsSplide && $('#products_splide').length) {
+            productsSplide = new Splide('#products_splide').mount();
         }
     }
 });
