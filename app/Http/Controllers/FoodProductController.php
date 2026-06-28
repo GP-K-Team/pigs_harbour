@@ -36,14 +36,23 @@ class FoodProductController extends Controller
 
         if ($searchText) {
             $searchResults = FoodProduct::searchFor($searchText);
-            $titles = $searchResults->pluck('title')->toArray();
+            $foodProductIds = $searchResults->modelKeys();
 
-            SearchQuery::addRecord($searchText, FoodProduct::searchType(), empty($titles));
+            SearchQuery::addRecord($searchText, FoodProduct::searchType(), empty($foodProductIds));
+            $foodProductsBuilder->whereKey($foodProductIds);
 
-            $foodProductsBuilder->whereIn('title', $titles);
+            if ($foodProductIds) {
+                $orderByRelevance = collect($foodProductIds)
+                    ->map(fn (int $id, int $index) => "WHEN {$id} THEN {$index}")
+                    ->implode(' ');
+
+                $foodProductsBuilder->orderByRaw("CASE id {$orderByRelevance} END");
+            }
+        } else {
+            $foodProductsBuilder->orderByDesc('created_at');
         }
 
-        $foodProducts = $foodProductsBuilder->orderByDesc('created_at')->paginate(FoodProduct::PAGINATE_ITEMS_COUNT)->withQueryString();
+        $foodProducts = $foodProductsBuilder->paginate(FoodProduct::PAGINATE_ITEMS_COUNT)->withQueryString();
         $hashtags = Hashtag::ofType(HashtagType::PRODUCT)->activeOnly(HashtagType::PRODUCT)->withoutWarning()->get();
         $activeHashtagSlug = $slug;
 

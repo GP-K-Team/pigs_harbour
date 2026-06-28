@@ -40,14 +40,23 @@ class ArticlesController extends Controller
 
         if ($searchText) {
             $searchResults = Article::searchFor($searchText);
-            $titles = $searchResults->pluck('title')->toArray();
+            $articleIds = $searchResults->modelKeys();
 
-            SearchQuery::addRecord($searchText, Article::searchType(), empty($titles));
+            SearchQuery::addRecord($searchText, Article::searchType(), empty($articleIds));
+            $articlesBuilder->whereKey($articleIds);
 
-            $articlesBuilder->whereIn('title', $titles);
+            if ($articleIds) {
+                $orderByRelevance = collect($articleIds)
+                    ->map(fn (int $id, int $index) => "WHEN {$id} THEN {$index}")
+                    ->implode(' ');
+
+                $articlesBuilder->orderByRaw("CASE id {$orderByRelevance} END");
+            }
+        } else {
+            $articlesBuilder->orderByDesc('created_at');
         }
 
-        $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT)->withQueryString();
+        $articles = $articlesBuilder->paginate(Article::PAGINATE_ITEMS_COUNT)->withQueryString();
         $hashtags = Hashtag::ofType(HashtagType::ARTICLE)->activeOnly(HashtagType::ARTICLE)->get();
         $pageTexts = PageText::where('page_base_url', '=', $urlHelper->getCurrentPage())->get();
         $activeHashtagSlug = $slug;
