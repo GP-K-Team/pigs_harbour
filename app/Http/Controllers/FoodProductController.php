@@ -24,7 +24,13 @@ class FoodProductController extends Controller
             }
         }
 
-        $foodProductsBuilder = FoodProduct::query()->with(['images', 'hashtags']);
+        $searchText = trim((string) request()->query(FoodProduct::QUERY_PARAM, ''));
+
+        if ($searchText) {
+            $foodProductsBuilder = FoodProduct::search($searchText);
+        } else {
+            $foodProductsBuilder = FoodProduct::query()->with(['images', 'hashtags']);
+        }
 
         if ($slug) {
             $foodProductsBuilder->whereHas('hashtags', function (Builder $query) use ($slug) {
@@ -32,27 +38,16 @@ class FoodProductController extends Controller
             });
         }
 
-        $searchText = trim((string) request()->query(FoodProduct::QUERY_PARAM, ''));
-
-        if ($searchText) {
-            $searchResults = FoodProduct::searchFor($searchText);
-            $foodProductIds = $searchResults->modelKeys();
-
-            SearchQuery::addRecord($searchText, FoodProduct::searchType(), empty($foodProductIds));
-            $foodProductsBuilder->whereKey($foodProductIds);
-
-            if ($foodProductIds) {
-                $orderByRelevance = collect($foodProductIds)
-                    ->map(fn (int $id, int $index) => "WHEN {$id} THEN {$index}")
-                    ->implode(' ');
-
-                $foodProductsBuilder->orderByRaw("CASE id {$orderByRelevance} END");
-            }
-        } else {
+        if (!$searchText) {
             $foodProductsBuilder->orderByDesc('created_at');
         }
 
         $foodProducts = $foodProductsBuilder->paginate(FoodProduct::PAGINATE_ITEMS_COUNT)->withQueryString();
+
+        if ($searchText) {
+            SearchQuery::addRecord($searchText, FoodProduct::searchType(), !$foodProducts->total());
+        }
+
         $hashtags = Hashtag::ofType(HashtagType::PRODUCT)->activeOnly(HashtagType::PRODUCT)->withoutWarning()->get();
         $activeHashtagSlug = $slug;
 
