@@ -125,7 +125,7 @@
     body {
         display: flex;
         flex-direction: column;
-        height: calc(100vh);
+        height: auto;
         margin: 0;
         padding: 0;
         min-height: 100%;
