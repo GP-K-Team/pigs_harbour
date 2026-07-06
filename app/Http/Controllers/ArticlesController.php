@@ -26,6 +26,8 @@ class ArticlesController extends Controller
             if ($articleBySlug = Article::query()->firstWhere('slug_title', $slug)) {
                 return $this->showOne($articleBySlug);
             }
+
+            abort_unless(Hashtag::ofType(HashtagType::ARTICLE)->activeOnly(HashtagType::ARTICLE)->where('slug', $slug)->exists(), 404);
         }
 
         $searchText = trim((string) request()->query(Article::QUERY_PARAM, ''));

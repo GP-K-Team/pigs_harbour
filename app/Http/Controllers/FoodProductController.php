@@ -22,6 +22,8 @@ class FoodProductController extends Controller
             if ($foodProductBySlug = FoodProduct::query()->firstWhere('slug_title', $slug)) {
                 return $this->showOne($foodProductBySlug);
             }
+
+            abort_unless(Hashtag::ofType(HashtagType::PRODUCT)->activeOnly(HashtagType::PRODUCT)->where('slug', $slug)->exists(), 404);
         }
 
         $searchText = trim((string) request()->query(FoodProduct::QUERY_PARAM, ''));

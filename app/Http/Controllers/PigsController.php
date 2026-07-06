@@ -33,6 +33,7 @@ class PigsController extends Controller
 
         if (array_key_exists('city', $filters)) {
             $filters['city'] = $cities->firstWhere(fn (string $city) => LinguisticsHelper::transliterate($city) === $filters['city']);
+            abort_unless($filters['city'], 404);
         }
 
         $pigs = Pig::activeAsc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT));
