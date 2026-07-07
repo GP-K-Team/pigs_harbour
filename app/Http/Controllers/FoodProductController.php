@@ -26,12 +26,12 @@ class FoodProductController extends Controller
             abort_unless(Hashtag::ofType(HashtagType::PRODUCT)->activeOnly(HashtagType::PRODUCT)->where('slug', $slug)->exists(), 404);
         }
 
-        $searchText = trim((string) request()->query(FoodProduct::QUERY_PARAM, ''));
+        $searchText = request()->query(FoodProduct::SEARCH_QUERY_PARAM);
 
-        if ($searchText) {
-            $foodProductsBuilder = FoodProduct::search($searchText);
-        } else {
+        if (is_null($searchText)) {
             $foodProductsBuilder = FoodProduct::query()->with(['images', 'hashtags']);
+        } else {
+            $foodProductsBuilder = FoodProduct::getSearchQuery($searchText);
         }
 
         if ($slug) {
@@ -40,13 +40,13 @@ class FoodProductController extends Controller
             });
         }
 
-        if (!$searchText) {
+        if (is_null($searchText)) {
             $foodProductsBuilder->orderByDesc('created_at');
         }
 
         $foodProducts = $foodProductsBuilder->paginate(FoodProduct::PAGINATE_ITEMS_COUNT)->withQueryString();
 
-        if ($searchText) {
+        if (!is_null($searchText)) {
             SearchQuery::addRecord($searchText, FoodProduct::searchType(), !$foodProducts->total());
         }
 

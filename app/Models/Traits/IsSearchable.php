@@ -12,14 +12,14 @@ trait IsSearchable
 {
     use Searchable;
 
-    public const QUERY_PARAM = 'search_query';
+    public const SEARCH_QUERY_PARAM = 'search_query';
 
     public static function searchFor(string $searchText): Collection
     {
         return static::search(trim($searchText))->get();
     }
 
-    public static function searchBuilder(string $searchText): \Laravel\Scout\Builder
+    public static function getSearchQuery(string $searchText): \Laravel\Scout\Builder
     {
         return static::search(trim($searchText));
     }

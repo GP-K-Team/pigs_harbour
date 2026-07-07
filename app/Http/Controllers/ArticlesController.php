@@ -30,12 +30,12 @@ class ArticlesController extends Controller
             abort_unless(Hashtag::ofType(HashtagType::ARTICLE)->activeOnly(HashtagType::ARTICLE)->where('slug', $slug)->exists(), 404);
         }
 
-        $searchText = trim((string) request()->query(Article::QUERY_PARAM, ''));
+        $searchText = request()->query(Article::SEARCH_QUERY_PARAM);
 
-        if ($searchText) {
-            $articlesBuilder = Article::searchBuilder($searchText);
-        } else {
+        if (is_null($searchText)) {
             $articlesBuilder = Article::published()->with('images');
+        } else {
+            $articlesBuilder = Article::getSearchQuery($searchText);
         }
 
         if ($slug) {
@@ -44,13 +44,13 @@ class ArticlesController extends Controller
             });
         }
 
-        if (!$searchText) {
+        if (is_null($searchText)) {
             $articlesBuilder->orderByDesc('created_at');
         }
 
         $articles = $articlesBuilder->paginate(Article::PAGINATE_ITEMS_COUNT)->withQueryString();
 
-        if ($searchText) {
+        if (!is_null($searchText)) {
             SearchQuery::addRecord($searchText, Article::searchType(), !$articles->total());
         }
 
