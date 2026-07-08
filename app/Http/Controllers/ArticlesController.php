@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enum\HashtagType;
 use App\Helpers\UrlHelper;
 use App\Http\Requests\Article\CreateArticleFormRequest;
 use App\Http\Requests\Article\UpdateArticleFormRequest;
 use App\Models\Article;
 use App\Models\Hashtag;
 use App\Models\PageText;
+use App\Models\SearchQuery;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ArticlesController extends Controller
 {
@@ -24,9 +27,19 @@ class ArticlesController extends Controller
             if ($articleBySlug = Article::query()->firstWhere('slug_title', $slug)) {
                 return $this->showOne($articleBySlug);
             }
+
+            if (!Hashtag::ofType(HashtagType::ARTICLE)->activeOnly(HashtagType::ARTICLE)->where('slug', $slug)->exists()) {
+                throw new NotFoundHttpException(code: 404);
+            }
         }
 
-        $articlesBuilder = Article::published()->with('images');
+        $searchText = request()->query(Article::SEARCH_QUERY_PARAM);
+
+        if (is_null($searchText)) {
+            $articlesBuilder = Article::published()->with('images');
+        } else {
+            $articlesBuilder = Article::getSearchQuery($searchText);
+        }
 
         if ($slug) {
             $articlesBuilder->whereHas('hashtags', function (Builder $query) use ($slug) {
@@ -34,8 +47,17 @@ class ArticlesController extends Controller
             });
         }
 
-        $articles = $articlesBuilder->orderByDesc('created_at')->paginate(Article::PAGINATE_ITEMS_COUNT);
-        $hashtags = Hashtag::activeOnly()->get();
+        if (is_null($searchText)) {
+            $articlesBuilder->orderByDesc('created_at');
+        }
+
+        $articles = $articlesBuilder->paginate(Article::PAGINATE_ITEMS_COUNT)->withQueryString();
+
+        if (!is_null($searchText)) {
+            SearchQuery::addRecord($searchText, Article::searchType(), !$articles->total());
+        }
+
+        $hashtags = Hashtag::ofType(HashtagType::ARTICLE)->activeOnly(HashtagType::ARTICLE)->get();
         $pageTexts = PageText::where('page_base_url', '=', $urlHelper->getCurrentPage())->get();
         $activeHashtagSlug = $slug;
 
@@ -53,7 +75,7 @@ class ArticlesController extends Controller
 
     public function showOne(Article $article): View
     {
-        $hashtags = Hashtag::activeOnly()->get();
+        $hashtags = Hashtag::ofType(HashtagType::ARTICLE)->activeOnly(HashtagType::ARTICLE)->get();
         $additionalArticles = Article::published()->whereHas('hashtags', function (Builder $query) use ($article) {
             $query->whereIn('tag', $article->hashtags()->pluck('tag')->toArray() ?? []);
         })->where('id', '!=', $article->id)->inRandomOrder()->take(3)->get();
@@ -63,18 +85,16 @@ class ArticlesController extends Controller
 
     public function showCreate(): View
     {
-        $hashtags = Hashtag::query()->pluck('tag', 'id');
-        $isAdmin = true;
+        $hashtags = Hashtag::ofType(HashtagType::ARTICLE)->pluck('tag', 'id');
 
-        return \view('articles.form', compact('hashtags', 'isAdmin'));
+        return \view('articles.form', compact('hashtags'));
     }
 
     public function showUpdate(Article $article): View
     {
-        $hashtags = Hashtag::query()->pluck('tag', 'id');
-        $isAdmin = true;
+        $hashtags = Hashtag::ofType(HashtagType::ARTICLE)->pluck('tag', 'id');
 
-        return \view('articles.form', compact('article', 'hashtags', 'isAdmin'));
+        return \view('articles.form', compact('article', 'hashtags'));
     }
 
     public function create(CreateArticleFormRequest $request): RedirectResponse
@@ -89,7 +109,7 @@ class ArticlesController extends Controller
         }
 
         if ($request->has('hashtags')) {
-            $hashtagIds = Hashtag::getOrCreateIds($formData['hashtags']);
+            $hashtagIds = Hashtag::getOrCreateIds($formData['hashtags'], HashtagType::ARTICLE);
             $article->hashtags()->sync($hashtagIds);
         }
 
@@ -110,7 +130,7 @@ class ArticlesController extends Controller
         }
 
         if ($request->has('hashtags')) {
-            $hashtagIds = Hashtag::getOrCreateIds($formData['hashtags']);
+            $hashtagIds = Hashtag::getOrCreateIds($formData['hashtags'], HashtagType::ARTICLE);
             $article->hashtags()->sync($hashtagIds);
         }
 

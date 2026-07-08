@@ -16,6 +16,14 @@
                     Как взять
                 </a>
             </li>
+            <span>
+                <img src="/images/icons/dot.svg" alt="Круглый элемент">
+            </span>
+            <li>
+                <a href="/blog/o-nas">
+                    О нас
+                </a>
+            </li>
         </ul>
     </div>
     <div class="logo-wrapper">
@@ -33,10 +41,11 @@
                 <img src="/images/icons/dot.svg" alt="Круглый элемент">
             </span>
             <li>
-                <a href="/blog/o-nas">
-                    О нас
-                </a>
+                <a href="{{ route('products.index') }}">Рацион</a>
             </li>
+            <span>
+                <img src="/images/icons/dot.svg" alt="Круглый элемент">
+            </span>
             <li>
                 <div class="special-link">
                     <a href="https://vk.com/pristansvinki" target="_blank" class="vk-link">
@@ -156,6 +165,9 @@
     .logout-button-wrapper {
         position: absolute;
         left: 15px;
+        display: flex;
+        align-items: center;
+        column-gap: 15px;
     }
 
     @media (max-width: 1200px) {

@@ -22,6 +22,7 @@
 @endpush
 
 @push('js')
+    @vite('resources/js/catalog-initialize.js')
     @vite('resources/js/blog.js')
     @vite('resources/js/page-text.js')
     @vite('resources/js/delete-handler.js')
@@ -33,7 +34,7 @@
 @section('content')
     @include('components.banner', ['showPigs' => false, 'specialHeader' => 'Полезные статьи', 'specialText' => 'все самое важное, что нужно знать о морских свинках'])
 
-    <div class="bread-crumbs">
+    <div class="bread-crumbs catalog-wrapper">
         <ul>
             <li><a href="/">Главная</a></li>
             <li>Статьи</li>
@@ -46,12 +47,15 @@
                 @else
                     <a href="{{ route('blog.index') }}">Опубликованные</a>
                 @endif
+                <a href="{{ route('search-queries.index', ['type' => Article::searchType()]) }}">Запросы</a>
             </div>
         @endif
     </div>
 
     <div class="list-container">
         @if($state === 'published')
+            <x-search.search type="articles" icon="/images/icons/search.svg"/>
+
             <div class="hashtag-list-header">
                 <ul class="hashtag-list">
                     <a href="{{ route('blog.index') }}">
@@ -666,3 +670,4 @@
         }
     </style>
 @endsection
+

@@ -111,6 +111,7 @@
     .special-text {
         font-family: 'overdoze sans', sans-serif;
         font-size: 40px;
+        max-width: 500px;
     }
 
     .banner-image {
@@ -171,6 +172,7 @@
         }
 
         .special-text {
+            max-width: 250px;
             font-size: 20px;
         }
 

@@ -19,14 +19,12 @@ use Spatie\Sitemap\Tags\Url;
 /**
  * @property int $id
  * @property string $title
+ * @property string $slug_title
+ * @property string $synonyms
  * @property string $description
  * @property string $text
- * @property string $slug_title
  * @property string $meta_description
  * @property string $meta_title
- * @property string $author
- * @property string $translated_by
- * @property string $origin_link
  * @property Collection|iterable<Image> $images
  * @property Image|null $mainImage
  * @mixin HasTimestamps
@@ -35,28 +33,26 @@ use Spatie\Sitemap\Tags\Url;
  * @method static Builder|static unpublished();
  */
 #[RouteSlug('slug_title')]
-class Article extends Model implements Sitemapable
+class FoodProduct extends Model implements Sitemapable
 {
     use HasImages, HasTimestamps, IsIdentifiedBySlug, IsSearchable;
 
-    public const SEARCH_TYPE = 'articles';
+    public const SEARCH_TYPE = 'food_products';
 
     public const DEFAULT_IMAGE = 'default.png';
 
-    public const IMAGE_PATH = 'articles';
+    public const IMAGE_PATH = 'food_products';
 
     public const PAGINATE_ITEMS_COUNT = '6';
 
     protected $fillable = [
         'title',
         'slug_title',
+        'synonyms',
         'description',
         'text',
         'meta_title',
         'meta_description',
-        'author',
-        'translated_by',
-        'origin_link',
         'created_at',
     ];
 
@@ -69,31 +65,11 @@ class Article extends Model implements Sitemapable
     }
 
     /**
-     * Returns articles with created_date that equals or is before today
-     * @param Builder $query
-     * @return void
-     */
-    public function scopePublished(Builder $query): void
-    {
-        $query->whereDate('created_at', '<=', today());
-    }
-
-    /**
-     * Returns articles with created_date that is in the future
-     * @param Builder $query
-     * @return void
-     */
-    public function scopeUnpublished(Builder $query): void
-    {
-        $query->whereDate('created_at', '>', today());
-    }
-
-    /**
      * Outline the URL pattern for sitemap.
      */
     public function toSitemapTag(): Url|string|array
     {
-        return Url::create(route('blog.one', $this))
+        return Url::create(route('products.one', $this))
             ->setLastModificationDate($this->updated_at)
             ->setPriority(0.75);
     }
@@ -109,6 +85,7 @@ class Article extends Model implements Sitemapable
             'id' => (string) $this->id,
             'title' => $this->title,
             'text' => $this->text,
+            'synonyms' => $this->synonyms,
             'hashtags' => $this->hashtags()->pluck('tag')->toArray(),
             'created_at' => $this->created_at->timestamp,
         ];

@@ -12,8 +12,12 @@
 
         <meta name="description" content="@yield('description')" />
 
+        @php
+            $ogImageUrl = url('/images/logo.svg');
+        @endphp
+
         <meta property="og:title" content="@yield('og_title', 'Пристань пушистых сердец')">
-        <meta property="og:image" content="@yield('og_image', '/images/logo.svg')">
+        <meta property="og:image" content="@yield('og_image', $ogImageUrl)">
         <meta property="og:site_name" content="Помощь бездомным морским свинкам">
         <meta property="og:type" content="{{ request()->routeIs('blog.*') ? 'article' : 'website' }}">
 
@@ -74,6 +78,9 @@
                 <a href="{{ route('home') }}">
                     <img src="/images/logo.svg" alt="Логотип пристани" width="80">
                 </a>
+                <div class="small-link">
+                    <a href="https://github.com/whatevernumber" target="_blank">developed by whatevernumber</a>
+                </div>
             </div>
             <div class="footer-links">
                 <div class="links">
@@ -86,6 +93,9 @@
                     <p class="footer-label-wrapper">
                         <span>Пристань пушистых сердец</span>&nbsp;&verbar;&nbsp;<span class="footer-year">{{ now()->year }}</span>
                     </p>
+                </div>
+                <div class="small-link">
+                    <a href="https://github.com/whatevernumber" target="_blank">developed by whatevernumber</a>
                 </div>
             </div>
         </footer>
@@ -222,14 +232,28 @@
         margin-top: 2px;
     }
 
+    .small-link {
+        margin-top: 5px;
+        font-size: 8px;
+    }
+
     .footer-links {
         display: flex;
         column-gap: 20px;
         align-items: center;
 
+        .small-link {
+            margin-top: 0;
+            display: none;
+        }
+
         @media (max-width: 768px) {
             flex-direction: column;
             row-gap: 10px;
+
+            .small-link {
+                display: block;
+            }
         }
     }
 

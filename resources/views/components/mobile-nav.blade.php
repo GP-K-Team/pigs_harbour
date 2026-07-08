@@ -19,6 +19,11 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('products.index') }}">
+                Сочный Рацион
+            </a>
+        </li>
+        <li>
             <a href="/blog/o-nas">
                 О нас
             </a>
@@ -70,7 +75,7 @@
         width: 100%;
         padding: 20px;
         text-align: center;
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
         font-weight: bold;
         cursor: pointer;
     }

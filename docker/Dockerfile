@@ -49,6 +49,7 @@ RUN docker-php-ext-configure gd --with-jpeg --with-webp && \
 
 #------------------------------------------ Copy php.ini --------------------------------------------------------------#
 COPY /php/php.ini /usr/local/etc/php/php.ini
+COPY /php/zz-fpm-workers.conf /usr/local/etc/php-fpm.d/zz-fpm-workers.conf
 #----------------------------------------------------------------------------------------------------------------------#
 
 #---------------------------------- Create system user ----------------------------------------------------------------#
@@ -83,9 +84,9 @@ RUN echo -e "en_US.UTF-8 UTF-8 \\nru_RU.UTF-8 UTF-8" >> /etc/locale.gen && \
 #----------------------------------------------------------------------------------------------------------------------#
 
 #--------------------------------------- Set config supervisor --------------------------------------------------------#
-RUN mkdir -p /etc/supervisor.d/
-COPY /supervisor/supervisord.conf /etc/supervisord.conf
-COPY /supervisor/laravel/example.conf /etc/supervisor/laravel.conf
+RUN mkdir -p /etc/supervisor/conf.d/
+COPY /supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+COPY /supervisor/laravel/laravel.conf /etc/supervisor/conf.d/laravel.conf
 #----------------------------------------------------------------------------------------------------------------------#
 
 #----------------------------------------- Set config crontab ---------------------------------------------------------#
