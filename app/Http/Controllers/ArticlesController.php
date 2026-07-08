@@ -15,6 +15,7 @@ use App\Models\SearchQuery;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ArticlesController extends Controller
 {
@@ -27,7 +28,9 @@ class ArticlesController extends Controller
                 return $this->showOne($articleBySlug);
             }
 
-            abort_unless(Hashtag::ofType(HashtagType::ARTICLE)->activeOnly(HashtagType::ARTICLE)->where('slug', $slug)->exists(), 404);
+            if (!Hashtag::ofType(HashtagType::ARTICLE)->activeOnly(HashtagType::ARTICLE)->where('slug', $slug)->exists()) {
+                throw new NotFoundHttpException(code: 404);
+            }
         }
 
         $searchText = request()->query(Article::SEARCH_QUERY_PARAM);

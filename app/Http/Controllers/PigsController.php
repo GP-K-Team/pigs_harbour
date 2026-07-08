@@ -15,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PigsController extends Controller
 {
@@ -33,7 +34,9 @@ class PigsController extends Controller
 
         if (array_key_exists('city', $filters)) {
             $filters['city'] = $cities->firstWhere(fn (string $city) => LinguisticsHelper::transliterate($city) === $filters['city']);
-            abort_unless($filters['city'], 404);
+            if (!$filters['city']) {
+                throw new NotFoundHttpException(code: 404);
+            }
         }
 
         $pigs = Pig::activeAsc()->with(['companion', 'companionOf', 'city', 'images'])->filter($filters)->paginate((Pig::PAGINATE_ITEMS_COUNT));

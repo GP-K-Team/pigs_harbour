@@ -13,6 +13,7 @@ use App\Models\Hashtag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FoodProductController extends Controller
 {
@@ -23,7 +24,9 @@ class FoodProductController extends Controller
                 return $this->showOne($foodProductBySlug);
             }
 
-            abort_unless(Hashtag::ofType(HashtagType::PRODUCT)->activeOnly(HashtagType::PRODUCT)->where('slug', $slug)->exists(), 404);
+            if (!Hashtag::ofType(HashtagType::PRODUCT)->activeOnly(HashtagType::PRODUCT)->where('slug', $slug)->exists()) {
+                throw new NotFoundHttpException(code: 404);
+            }
         }
 
         $searchText = request()->query(FoodProduct::SEARCH_QUERY_PARAM);
