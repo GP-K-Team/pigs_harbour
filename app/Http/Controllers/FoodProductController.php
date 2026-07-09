@@ -17,8 +17,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FoodProductController extends Controller
 {
-    public function index(string $slug = ''): View
+    public function index(string $slug = ''): RedirectResponse|View
     {
+        $searchText = request()->query(FoodProduct::SEARCH_QUERY_PARAM);
+
+        if ($slug && !is_null($searchText)) {
+            return \redirect()->route('products.index', [
+                FoodProduct::SEARCH_QUERY_PARAM => $searchText,
+            ]);
+        }
+
         if ($slug) {
             if ($foodProductBySlug = FoodProduct::query()->firstWhere('slug_title', $slug)) {
                 return $this->showOne($foodProductBySlug);
@@ -28,8 +36,6 @@ class FoodProductController extends Controller
                 throw new NotFoundHttpException(code: 404);
             }
         }
-
-        $searchText = request()->query(FoodProduct::SEARCH_QUERY_PARAM);
 
         if (is_null($searchText)) {
             $foodProductsBuilder = FoodProduct::query()->with(['images', 'hashtags']);
@@ -43,12 +49,6 @@ class FoodProductController extends Controller
             $foodProductsBuilder->orderByDesc('created_at');
         } else {
             $foodProductsBuilder = FoodProduct::getSearchQuery($searchText);
-
-            if ($slug) {
-                $foodProductsBuilder->query(fn (Builder $query) => $query->whereHas('hashtags', function (Builder $query) use ($slug) {
-                    $query->where(['slug' => $slug]);
-                }));
-            }
         }
 
         $foodProducts = $foodProductsBuilder->paginate(FoodProduct::PAGINATE_ITEMS_COUNT)->withQueryString();
