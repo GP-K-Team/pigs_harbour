@@ -29,8 +29,6 @@ class FoodProductController extends Controller
             }
         }
 
-        $searchText = request()->query(FoodProduct::SEARCH_QUERY_PARAM);
-
         if (is_null($searchText)) {
             $foodProductsBuilder = FoodProduct::query()->with(['images', 'hashtags']);
         } else {

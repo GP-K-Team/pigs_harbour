@@ -83,7 +83,7 @@
                 display: flex;
                 flex-direction: column;
                 width: 350px;
-                height: 430px;
+                min-height: 430px;
                 background-color: var(--catalog-card-background, #F4FAF5);
                 border: var(--catalog-card-border-width, 0) solid var(--catalog-card-border, transparent);
                 border-radius: 10px;
@@ -138,10 +138,7 @@
                 margin: 0;
                 padding: 0;
                 font-size: 1.25rem;
-                display: -webkit-box;
                 overflow: hidden;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
             }
 
             .catalog-card.food-product-card .catalog-card-bottom-icon {
