@@ -29,20 +29,26 @@ class FoodProductController extends Controller
             }
         }
 
+        $searchText = request()->query(FoodProduct::SEARCH_QUERY_PARAM);
+
         if (is_null($searchText)) {
             $foodProductsBuilder = FoodProduct::query()->with(['images', 'hashtags']);
+
+            if ($slug) {
+                $foodProductsBuilder->whereHas('hashtags', function (Builder $query) use ($slug) {
+                    $query->where(['slug' => $slug]);
+                });
+            }
+
+            $foodProductsBuilder->orderByDesc('created_at');
         } else {
             $foodProductsBuilder = FoodProduct::getSearchQuery($searchText);
-        }
 
-        if ($slug) {
-            $foodProductsBuilder->whereHas('hashtags', function (Builder $query) use ($slug) {
-               $query->where(['slug' => $slug]);
-            });
-        }
-
-        if (is_null($searchText)) {
-            $foodProductsBuilder->orderByDesc('created_at');
+            if ($slug) {
+                $foodProductsBuilder->query(fn (Builder $query) => $query->whereHas('hashtags', function (Builder $query) use ($slug) {
+                    $query->where(['slug' => $slug]);
+                }));
+            }
         }
 
         $foodProducts = $foodProductsBuilder->paginate(FoodProduct::PAGINATE_ITEMS_COUNT)->withQueryString();
