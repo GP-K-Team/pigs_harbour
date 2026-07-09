@@ -19,9 +19,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ArticlesController extends Controller
 {
-    public function index(UrlHelper $urlHelper, string $slug = ''): View
+    public function index(UrlHelper $urlHelper, string $slug = ''): RedirectResponse|View
     {
         $state = 'published';
+        $searchText = request()->query(Article::SEARCH_QUERY_PARAM);
+
+        if ($slug && !is_null($searchText)) {
+            return \redirect()->route('blog.index', [
+                Article::SEARCH_QUERY_PARAM => $searchText,
+            ]);
+        }
 
         if ($slug) {
             if ($articleBySlug = Article::query()->firstWhere('slug_title', $slug)) {
@@ -32,8 +39,6 @@ class ArticlesController extends Controller
                 throw new NotFoundHttpException(code: 404);
             }
         }
-
-        $searchText = request()->query(Article::SEARCH_QUERY_PARAM);
 
         if (is_null($searchText)) {
             $articlesBuilder = Article::published()->with('images');
@@ -47,12 +52,6 @@ class ArticlesController extends Controller
             $articlesBuilder->orderByDesc('created_at');
         } else {
             $articlesBuilder = Article::getSearchQuery($searchText);
-
-            if ($slug) {
-                $articlesBuilder->query(fn (Builder $query) => $query->whereHas('hashtags', function (Builder $query) use ($slug) {
-                    $query->where(['slug' => $slug]);
-                }));
-            }
         }
 
         $articles = $articlesBuilder->paginate(Article::PAGINATE_ITEMS_COUNT)->withQueryString();
