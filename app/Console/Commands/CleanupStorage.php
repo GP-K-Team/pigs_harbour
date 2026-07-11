@@ -55,6 +55,7 @@ class CleanupStorage extends Command
         $danglingImages = Image::query()
             ->whereDoesntHave('articles')
             ->whereDoesntHave('pigs')
+            ->whereDoesntHave('foodProducts')
             ->pluck('link', 'images.id');
 
         if ($danglingImages->count()) {
