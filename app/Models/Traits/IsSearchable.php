@@ -12,7 +12,7 @@ trait IsSearchable
 {
     use Searchable;
 
-    public const SEARCH_QUERY_PARAM = 'search_query';
+    public const SEARCH_QUERY_PARAM = 'query';
 
     public static function searchFor(string $searchText): Collection
     {

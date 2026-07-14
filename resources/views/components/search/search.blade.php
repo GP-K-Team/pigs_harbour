@@ -9,8 +9,8 @@
     <input
         class="search-input"
         type="search"
-        name="search_query"
-        value="{{ request()->query('search_query')}}"
+        name="query"
+        value="{{ request()->query('query') }}"
         placeholder="{{ $placeholder }}"
         aria-label="{{ $placeholder }}"
         @if($type) data-search-type="{{ $type }}" @endif
