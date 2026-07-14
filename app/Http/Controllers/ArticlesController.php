@@ -41,7 +41,7 @@ class ArticlesController extends Controller
         }
 
         if (is_null($searchText)) {
-            $articlesBuilder = Article::published()->with('images');
+            $articlesBuilder = Article::published()->with(['images', 'hashtags']);
 
             if ($slug) {
                 $articlesBuilder->whereHas('hashtags', function (Builder $query) use ($slug) {
@@ -51,7 +51,8 @@ class ArticlesController extends Controller
 
             $articlesBuilder->orderByDesc('created_at');
         } else {
-            $articlesBuilder = Article::getSearchQuery($searchText);
+            $articlesBuilder = Article::getSearchQuery($searchText)
+                ->query(fn (Builder $query) => $query->with(['images', 'hashtags']));
         }
 
         $articles = $articlesBuilder->paginate(Article::PAGINATE_ITEMS_COUNT)->withQueryString();
