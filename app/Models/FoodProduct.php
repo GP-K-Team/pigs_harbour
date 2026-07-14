@@ -25,12 +25,15 @@ use Spatie\Sitemap\Tags\Url;
  * @property string $text
  * @property string $meta_description
  * @property string $meta_title
+ * @property bool $has_page
  * @property Collection|iterable<Image> $images
  * @property Image|null $mainImage
  * @mixin HasTimestamps
  *
  * @method static Builder|static published();
  * @method static Builder|static unpublished();
+ * @method static Builder|static withPage();
+ * @method static Builder|static withoutPage();
  */
 #[RouteSlug('slug_title')]
 class FoodProduct extends Model implements Sitemapable
@@ -53,7 +56,12 @@ class FoodProduct extends Model implements Sitemapable
         'text',
         'meta_title',
         'meta_description',
+        'has_page',
         'created_at',
+    ];
+
+    protected $casts = [
+        'has_page' => 'boolean',
     ];
 
     /**
@@ -62,6 +70,16 @@ class FoodProduct extends Model implements Sitemapable
     public function hashtags(): BelongsToMany
     {
         return $this->belongsToMany(Hashtag::class);
+    }
+
+    public function scopeWithoutPage(Builder $query): Builder
+    {
+        return $query->where('has_page', false);
+    }
+
+    public function scopeWithPage(Builder $query): Builder
+    {
+        return $query->where('has_page', true);
     }
 
     /**

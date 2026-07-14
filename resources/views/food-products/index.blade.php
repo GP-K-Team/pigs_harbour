@@ -122,7 +122,7 @@
             @if($foodProducts->total() > 1 && $foodProducts->lastPage() !== 1)
                 <div class="pagination-wrapper">
                     <ul class="pagination-list">
-                        <a href="?page=1">
+                        <a href="{{ $foodProducts->url(1) }}">
                             <li @class(['item-active' => $foodProducts->currentPage() === 1])>
                                 1
                             </li>
@@ -183,7 +183,7 @@
                             @endif
                         @endif
 
-                        <a href="{{ "?page=" . $foodProducts->lastPage()  }}">
+                        <a href="{{ $foodProducts->url($foodProducts->lastPage()) }}">
                             <li @class(['item-active' => $foodProducts->currentPage() === $foodProducts->lastPage()])>
                                 {{ $foodProducts->lastPage() }}
                             </li>

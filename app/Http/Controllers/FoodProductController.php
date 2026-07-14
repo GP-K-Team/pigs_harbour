@@ -29,10 +29,14 @@ class FoodProductController extends Controller
 
         if ($slug) {
             if ($foodProductBySlug = FoodProduct::query()->firstWhere('slug_title', $slug)) {
-                return $this->showOne($foodProductBySlug);
+                if ($foodProductBySlug->has_page) {
+                    return $this->showOne($foodProductBySlug);
+                }
+
+                $slug = '';
             }
 
-            if (!Hashtag::ofType(HashtagType::PRODUCT)->activeOnly(HashtagType::PRODUCT)->where('slug', $slug)->exists()) {
+            if ($slug && !Hashtag::ofType(HashtagType::PRODUCT)->activeOnly(HashtagType::PRODUCT)->where('slug', $slug)->exists()) {
                 throw new NotFoundHttpException(code: 404);
             }
         }
