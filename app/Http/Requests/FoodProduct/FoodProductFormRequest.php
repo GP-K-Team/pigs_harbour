@@ -19,12 +19,13 @@ class FoodProductFormRequest extends FormRequest
         return [
             'title' => 'required|string',
             'synonyms' => 'nullable|string',
-            'description' => 'required|string|max:300',
-            'text' => 'required|string',
+            'description' => 'nullable|required_unless:without_details,1|string|max:300',
+            'text' => 'nullable|required_unless:without_details,1|string',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
             'cover' => 'nullable',
             'hashtags' => 'nullable|array',
+            'has_page' => 'boolean',
         ];
     }
 
@@ -41,6 +42,7 @@ class FoodProductFormRequest extends FormRequest
     {
         $this->merge([
             'slug_title' => Str::afterLast($this->slug_title, '/'),
+            'has_page' => !$this->boolean('without_details'),
         ]);
     }
 }

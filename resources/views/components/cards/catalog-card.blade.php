@@ -219,7 +219,11 @@
         </a>
     @endif
 
-    <a class="catalog-card-link" href="{{ $href }}">
+    @if($href)
+        <a class="catalog-card-link" href="{{ $href }}">
+    @else
+        <div class="catalog-card-link">
+    @endif
         <span class="catalog-card-image-wrapper">
             <img class="card-image"
                  src="{{ $image }}"
@@ -235,5 +239,9 @@
             <h2 class="card-title">{{ $title }}</h2>
             {{ $slot }}
         </div>
-    </a>
+    @if($href)
+        </a>
+    @else
+        </div>
+    @endif
 </li>

@@ -23,7 +23,7 @@ class SitemapController extends Controller
             ->add(Url::create(route('products.index'))->setPriority(0.5))
             ->add(Pig::activeAsc()->get())
             ->add(Article::published()->get())
-            ->add(FoodProduct::query()->get())
+            ->add(FoodProduct::withPage()->get())
             ->render();
 
         return response($xml, headers: ['Content-Type' => 'application/xml']);

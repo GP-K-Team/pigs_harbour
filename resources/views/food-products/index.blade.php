@@ -96,12 +96,12 @@
 
                 @foreach($foodProducts as $foodProduct)
                     <x-cards.catalog-card
-                        :href="route('products.one', compact('foodProduct'))"
+                        :href="$foodProduct->has_page ? route('products.one', compact('foodProduct')) : null"
                         :image="$foodProduct->mainImage?->getFullUrl() ?? $foodProduct->getDefaultImage()"
                         image-alt="Обложка продукта {{ $foodProduct->title }}"
                         :title="$foodProduct->title"
                         class="animated-block food-product-card"
-                        :data-url="route('products.one', compact('foodProduct'))"
+                        :data-url="$foodProduct->has_page ? route('products.one', compact('foodProduct')) : null"
                         :can-edit="$isAdmin"
                         :edit-href="route('products.show.update', compact('foodProduct'))"
                         :food-product="$foodProduct"
@@ -122,7 +122,7 @@
             @if($foodProducts->total() > 1 && $foodProducts->lastPage() !== 1)
                 <div class="pagination-wrapper">
                     <ul class="pagination-list">
-                        <a href="?page=1">
+                        <a href="{{ $foodProducts->url(1) }}">
                             <li @class(['item-active' => $foodProducts->currentPage() === 1])>
                                 1
                             </li>
@@ -183,7 +183,7 @@
                             @endif
                         @endif
 
-                        <a href="{{ "?page=" . $foodProducts->lastPage()  }}">
+                        <a href="{{ $foodProducts->url($foodProducts->lastPage()) }}">
                             <li @class(['item-active' => $foodProducts->currentPage() === $foodProducts->lastPage()])>
                                 {{ $foodProducts->lastPage() }}
                             </li>

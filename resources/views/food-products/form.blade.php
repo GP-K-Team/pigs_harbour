@@ -136,6 +136,13 @@
                     <x-error-bag name="cover"/>
                 </div>
 
+                <div class="filter-input-container">
+                    <label class="input-label" for="without_details">
+                        <input type="checkbox" name="without_details" id="without_details" value="1" @checked(old('without_details', $foodProduct && !$foodProduct->has_page))>
+                        <span>Без деталей</span>
+                    </label>
+                </div>
+
                 <button class="button form-button" type="submit">Отправить</button>
 
                 @csrf
@@ -165,6 +172,17 @@
             align-items: center;
             padding: 4rem 1rem 1rem;
             row-gap: 5rem;
+        }
+
+        .content-container .filter-input-container {
+            height: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-input-container .input-label {
+            display: flex;
+            align-items: center;
         }
 
         .filepond {

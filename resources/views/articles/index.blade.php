@@ -138,7 +138,7 @@
             @if($articles->total() > 1 && $articles->lastPage() !== 1)
                 <div class="pagination-wrapper">
                     <ul class="pagination-list">
-                        <a href="?page=1">
+                        <a href="{{ $articles->url(1) }}">
                             <li @class(['item-active' => $articles->currentPage() === 1])>
                                 1
                             </li>
@@ -199,7 +199,7 @@
                             @endif
                         @endif
 
-                        <a href="{{ "?page=" . $articles->lastPage()  }}">
+                        <a href="{{ $articles->url($articles->lastPage()) }}">
                             <li @class(['item-active' => $articles->currentPage() === $articles->lastPage()])>
                                 {{ $articles->lastPage() }}
                             </li>
