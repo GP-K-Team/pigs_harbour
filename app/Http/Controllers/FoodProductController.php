@@ -48,7 +48,8 @@ class FoodProductController extends Controller
 
             $foodProductsBuilder->orderByDesc('created_at');
         } else {
-            $foodProductsBuilder = FoodProduct::getSearchQuery($searchText);
+            $foodProductsBuilder = FoodProduct::getSearchQuery($searchText)
+                ->query(fn (Builder $query) => $query->with(['images', 'hashtags']));
         }
 
         $foodProducts = $foodProductsBuilder->paginate(FoodProduct::PAGINATE_ITEMS_COUNT)->withQueryString();
