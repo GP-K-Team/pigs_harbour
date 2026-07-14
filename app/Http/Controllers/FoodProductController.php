@@ -33,7 +33,7 @@ class FoodProductController extends Controller
                     return $this->showOne($foodProductBySlug);
                 }
 
-                $slug = '';
+                return \redirect()->route('products.index');
             }
 
             if ($slug && !Hashtag::ofType(HashtagType::PRODUCT)->activeOnly(HashtagType::PRODUCT)->where('slug', $slug)->exists()) {
