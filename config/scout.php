@@ -219,7 +219,9 @@ return [
                      'default_sorting_field' => 'created_at',
                  ],
                  'search-parameters' => [
-                     'query_by' => 'title,description,text,hashtags'
+                     'query_by' => 'title,description,text,hashtags',
+                     'query_by_weights' => '8,4,1,1',
+                     'text_match_type' => 'max_weight',
                  ],
              ],
              FoodProduct::class => [
