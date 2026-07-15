@@ -14,14 +14,12 @@ trait IsSearchable
 
     public const SEARCH_QUERY_PARAM = 'query';
 
-    public static function searchFor(string $searchText): Collection
-    {
-        return static::search(trim($searchText))->get();
-    }
-
     public static function getSearchQuery(string $searchText): \Laravel\Scout\Builder
     {
-        return static::search(trim($searchText));
+        return static::search(trim($searchText))->options(config(
+            'scout.typesense.model-settings.'.static::class.'.search-parameters',
+            []
+        ));
     }
 
     public static function searchType(): string
