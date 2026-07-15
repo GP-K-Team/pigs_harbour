@@ -100,7 +100,7 @@
                         :image="$foodProduct->mainImage?->getFullUrl() ?? $foodProduct->getDefaultImage()"
                         image-alt="Обложка продукта {{ $foodProduct->title }}"
                         :title="$foodProduct->title"
-                        class="animated-block food-product-card"
+                        :class="'animated-block food-product-card' . ($foodProduct->has_page ? '' : ' without-page')"
                         :data-url="$foodProduct->has_page ? route('products.one', compact('foodProduct')) : null"
                         :can-edit="$isAdmin"
                         :edit-href="route('products.show.update', compact('foodProduct'))"

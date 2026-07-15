@@ -93,6 +93,14 @@
                 overflow: visible;
             }
 
+            .list-item.card.catalog-card.food-product-card.without-page {
+                cursor: default;
+            }
+
+            .catalog-card.food-product-card.without-page .card-button {
+                display: none;
+            }
+
             .list-item.card.catalog-card.food-product-card:hover {
                 opacity: 0.9;
                 scale: 1.01;

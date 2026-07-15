@@ -199,6 +199,10 @@ return [
                              'type' => 'string',
                          ],
                          [
+                             'name' => 'description',
+                             'type' => 'string',
+                         ],
+                         [
                              'name' => 'text',
                              'type' => 'string',
                          ],
@@ -215,7 +219,9 @@ return [
                      'default_sorting_field' => 'created_at',
                  ],
                  'search-parameters' => [
-                     'query_by' => 'title,text,hashtags'
+                     'query_by' => 'title,description,text,hashtags',
+                     'query_by_weights' => '8,4,1,1',
+                     'text_match_type' => 'max_weight',
                  ],
              ],
              FoodProduct::class => [
@@ -228,6 +234,11 @@ return [
                          [
                              'name' => 'title',
                              'type' => 'string',
+                         ],
+                         [
+                             'name' => 'description',
+                             'type' => 'string',
+                             'optional' => true,
                          ],
                          [
                              'name' => 'text',
@@ -250,7 +261,7 @@ return [
                      'default_sorting_field' => 'created_at',
                  ],
                  'search-parameters' => [
-                     'query_by' => 'title,text,hashtags,synonyms'
+                     'query_by' => 'title,description,text,hashtags,synonyms'
                  ],
              ],
         ],

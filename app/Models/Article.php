@@ -108,6 +108,7 @@ class Article extends Model implements Sitemapable
         return [
             'id' => (string) $this->id,
             'title' => $this->title,
+            'description' => $this->description,
             'text' => $this->text,
             'hashtags' => $this->hashtags()->pluck('tag')->toArray(),
             'created_at' => $this->created_at->timestamp,
