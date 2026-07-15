@@ -197,18 +197,22 @@ return [
                          [
                              'name' => 'title',
                              'type' => 'string',
+                             'locale' => 'ru',
                          ],
                          [
                              'name' => 'description',
                              'type' => 'string',
+                             'locale' => 'ru',
                          ],
                          [
                              'name' => 'text',
                              'type' => 'string',
+                             'locale' => 'ru',
                          ],
                          [
                              'name' => 'hashtags',
                              'type' => 'string[]',
+                             'locale' => 'ru',
                              'optional' => true,
                          ],
                          [
@@ -234,23 +238,28 @@ return [
                          [
                              'name' => 'title',
                              'type' => 'string',
+                             'locale' => 'ru',
                          ],
                          [
                              'name' => 'description',
                              'type' => 'string',
+                             'locale' => 'ru',
                              'optional' => true,
                          ],
                          [
                              'name' => 'text',
                              'type' => 'string',
+                             'locale' => 'ru',
                          ],
                          [
                              'name' => 'synonyms',
                              'type' => 'string',
+                             'locale' => 'ru',
                          ],
                          [
                              'name' => 'hashtags',
                              'type' => 'string[]',
+                             'locale' => 'ru',
                              'optional' => true,
                          ],
                          [
