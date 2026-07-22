@@ -3,8 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Models\Article;
+use App\Models\FoodProduct;
 use App\Models\Image;
+use App\Models\Traits\HasRichContent;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -76,7 +79,12 @@ class CleanupStorage extends Command
      */
     private function cleanupArticleInlineImages(): void
     {
-        $articles = Article::query()->pluck('text');
+        $modelClasses = [Article::class, FoodProduct::class];
+
+        /** @var class-string|HasRichContent $model */
+        $texts = collect($modelClasses)->flatMap(fn (Model|string $model) => $model::query()
+            ->pluck($model::getRichContentColumnName()));
+
         $path = Storage::path('/public/articles');
         $articleCoverImages = Image::query()->whereHas('articles')->pluck('link')
             ->transform(fn (string $path) => Str::afterLast($path, '/'));
@@ -88,8 +96,8 @@ class CleanupStorage extends Command
                 continue;
             }
 
-            foreach ($articles as $articleText) {
-                if (Str::contains($articleText, $file->getFilename())) {
+            foreach ($texts as $text) {
+                if (Str::contains($text, $file->getFilename())) {
                     $isTrash = false;
 
                     break;
