@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Attributes\RouteSlug;
 use App\Models\Traits\HasImages;
+use App\Models\Traits\HasRichContent;
 use App\Models\Traits\HasTimestamps;
 use App\Models\Traits\IsIdentifiedBySlug;
 use App\Models\Traits\IsSearchable;
@@ -37,7 +38,7 @@ use Spatie\Sitemap\Tags\Url;
 #[RouteSlug('slug_title')]
 class Article extends Model implements Sitemapable
 {
-    use HasImages, HasTimestamps, IsIdentifiedBySlug, IsSearchable;
+    use HasImages, HasRichContent, HasTimestamps, IsIdentifiedBySlug, IsSearchable;
 
     public const SEARCH_TYPE = 'articles';
 
@@ -59,6 +60,11 @@ class Article extends Model implements Sitemapable
         'origin_link',
         'created_at',
     ];
+
+    public static function getRichContentColumnName(): string
+    {
+        return 'text';
+    }
 
     /**
      * @return BelongsToMany
