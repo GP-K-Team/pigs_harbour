@@ -26,7 +26,8 @@
     @vite('resources/js/blog.js')
     @vite('resources/js/page-text.js')
     @vite('resources/js/delete-handler.js')
-    @vite('resources/js/main-animation.js')
+    {{-- Temporarily disabled: article catalog card entrance animations. --}}
+    {{-- @vite('resources/js/main-animation.js') --}}
 @endpush
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -630,6 +631,7 @@
             }
         }
 
+        {{-- Temporarily disabled: article catalog card entrance animations.
         /** Animation **/
 
         .list-item.card.animated-block {
@@ -656,6 +658,7 @@
             opacity: 1;
             translate: 0;
         }
+        --}}
 
         .bread-crumbs {
             position: relative;
