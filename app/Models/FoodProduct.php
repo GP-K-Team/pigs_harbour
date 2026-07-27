@@ -108,9 +108,9 @@ class FoodProduct extends Model implements Sitemapable
         return [
             'id' => (string) $this->id,
             'title' => $this->title,
-            'description' => $this->description,
-            'text' => $this->text,
-            'synonyms' => $this->synonyms,
+            'description' => $this->description ?? '',
+            'text' => $this->text ?? '',
+            'synonyms' => $this->synonyms ?? '',
             'hashtags' => $this->hashtags()->pluck('tag')->toArray(),
             'created_at' => $this->created_at->timestamp,
         ];

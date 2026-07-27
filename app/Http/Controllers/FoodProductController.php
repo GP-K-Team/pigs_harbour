@@ -50,7 +50,7 @@ class FoodProductController extends Controller
                 });
             }
 
-            $foodProductsBuilder->orderByDesc('created_at');
+            $foodProductsBuilder->orderBy('food_products.title');
         } else {
             $foodProductsBuilder = FoodProduct::getSearchQuery($searchText)
                 ->query(fn (Builder $query) => $query->with(['images', 'hashtags']));
