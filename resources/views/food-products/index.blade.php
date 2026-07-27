@@ -108,7 +108,9 @@
                     >
                         <p class="card-description">{{ $foodProduct->description }}</p>
 
-                        <span class="button card-button">Подробнее</span>
+                        @if($foodProduct->has_page)
+                            <span class="button card-button">Подробнее</span>
+                        @endif
 
                         @if($isAdmin)
                             <div class="delete-form-wrapper food-product-delete-wrapper">

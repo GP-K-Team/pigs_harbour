@@ -41,18 +41,16 @@
         </ul>
     </div>
 
-    @if($isAdmin || $foodProduct->synonyms)
+    @if($isAdmin)
         <div class="article-date">
-            @if($isAdmin)
-                <div class="control-buttons">
-                    <a class="edit-icon-link" href="{{ route('products.show.update', compact('foodProduct')) }}" draggable="false">
-                        <img src="{{ asset('images/icons/edit.svg') }}" height="28" alt="Иконка редактирования карточки" draggable="false">
-                    </a>
-                    <div class="delete-form-wrapper">
-                        @include('components.buttons.food-product-delete-button', ['foodProductToDelete' => $foodProduct])
-                    </div>
+            <div class="control-buttons">
+                <a class="edit-icon-link" href="{{ route('products.show.update', compact('foodProduct')) }}" draggable="false">
+                    <img src="{{ asset('images/icons/edit.svg') }}" height="28" alt="Иконка редактирования карточки" draggable="false">
+                </a>
+                <div class="delete-form-wrapper">
+                    @include('components.buttons.food-product-delete-button', ['foodProductToDelete' => $foodProduct])
                 </div>
-            @endif
+            </div>
         </div>
     @endif
 
