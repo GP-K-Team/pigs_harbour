@@ -208,6 +208,7 @@ return [
                              'name' => 'text',
                              'type' => 'string',
                              'locale' => 'ru',
+                             'optional' => true,
                          ],
                          [
                              'name' => 'hashtags',
