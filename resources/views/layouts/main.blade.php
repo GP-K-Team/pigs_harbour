@@ -51,7 +51,7 @@
         <noscript><div><img src="https://mc.yandex.ru/watch/105505481" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
         <!-- /Yandex.Metrika counter -->
 
-        <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
+        <script id="vk-openapi" src="https://vk.com/js/api/openapi.js?169" type="text/javascript" async></script>
 
         <link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48">
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
