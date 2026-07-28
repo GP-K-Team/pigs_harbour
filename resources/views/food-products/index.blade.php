@@ -23,7 +23,9 @@
     @vite('resources/js/catalog-initialize.js')
     @vite('resources/js/blog.js')
     @vite('resources/js/page-text.js')
-    @vite('resources/js/delete-handler.js')
+    @if($isAdmin)
+        @vite('resources/js/delete-handler.js')
+    @endif
     @vite('resources/js/main-animation.js')
 @endpush
 
@@ -238,7 +240,9 @@
         </div>
     </div>
 
-    @include('components.modal.modal-delete-confirm')
+    @if($isAdmin)
+        @include('components.modal.modal-delete-confirm')
+    @endif
 
     <style>
         h3 {
