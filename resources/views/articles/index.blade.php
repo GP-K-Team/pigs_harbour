@@ -25,7 +25,9 @@
     @vite('resources/js/catalog-initialize.js')
     @vite('resources/js/blog.js')
     @vite('resources/js/page-text.js')
-    @vite('resources/js/delete-handler.js')
+    @if($isAdmin)
+        @vite('resources/js/delete-handler.js')
+    @endif
     {{-- Temporarily disabled: article catalog card entrance animations. --}}
     {{-- @vite('resources/js/main-animation.js') --}}
 @endpush
@@ -226,7 +228,9 @@
         </div>
     @endif
 
-    @include('components.modal.modal-delete-confirm')
+    @if($isAdmin)
+        @include('components.modal.modal-delete-confirm')
+    @endif
 
     <style>
         h3 {

@@ -164,7 +164,9 @@
         </div>
     @endif
 
-    @include('components.modal.modal-delete-confirm')
+    @if($isAdmin)
+        @include('components.modal.modal-delete-confirm')
+    @endif
 @endsection
 
 <style>
