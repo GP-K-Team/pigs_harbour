@@ -31,6 +31,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property Collection|iterable<Image> $images
  * @property Image|null $mainImage
  * @mixin HasTimestamps
+ * @mixin RichContentColumnName
  *
  * @method static Builder|static published();
  * @method static Builder|static unpublished();
