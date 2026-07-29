@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Attributes\RichContentColumnName;
 use App\Attributes\RouteSlug;
 use App\Models\Traits\HasImages;
-use App\Models\Traits\HasRichContent;
 use App\Models\Traits\HasTimestamps;
 use App\Models\Traits\IsIdentifiedBySlug;
 use App\Models\Traits\IsSearchable;
@@ -37,9 +37,10 @@ use Spatie\Sitemap\Tags\Url;
  * @method static Builder|static withoutPage();
  */
 #[RouteSlug('slug_title')]
+#[RichContentColumnName('text')]
 class FoodProduct extends Model implements Sitemapable
 {
-    use HasImages, HasRichContent, HasTimestamps, IsIdentifiedBySlug, IsSearchable;
+    use HasImages, HasTimestamps, IsIdentifiedBySlug, IsSearchable;
 
     public const SEARCH_TYPE = 'food_products';
 
@@ -60,11 +61,6 @@ class FoodProduct extends Model implements Sitemapable
         'has_page',
         'created_at',
     ];
-
-    public static function getRichContentColumnName(): string
-    {
-        return 'text';
-    }
 
     protected $casts = [
         'has_page' => 'boolean',
