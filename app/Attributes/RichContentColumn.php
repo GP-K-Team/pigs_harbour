@@ -10,9 +10,4 @@ readonly class RichContentColumn
     public function __construct(public string $columnName)
     {
     }
-
-    public function columnName(): string
-    {
-        return $this->columnName;
-    }
 }

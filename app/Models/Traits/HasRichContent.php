@@ -16,6 +16,6 @@ trait HasRichContent
         $attribute = (new ReflectionClass(static::class))
             ->getAttributes(RichContentColumn::class)[0] ?? throw new \Exception('Атрибут не существует!');
 
-        return $attribute->newInstance()->columnName();
+        return $attribute->newInstance()->columnName;
     }
 }
