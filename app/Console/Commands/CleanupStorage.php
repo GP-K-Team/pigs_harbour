@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Article;
 use App\Models\FoodProduct;
 use App\Models\Image;
+use App\Models\Traits\HasRichContent;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
@@ -80,7 +81,7 @@ class CleanupStorage extends Command
     {
         $modelClasses = [Article::class, FoodProduct::class];
 
-        /** @var class-string|Model $model */
+        /** @var class-string|HasRichContent $model */
         $texts = collect($modelClasses)->flatMap(fn (Model|string $model) => $model::query()
             ->pluck($model::getRichContentColumn()));
 
