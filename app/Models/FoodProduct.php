@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Attributes\RichContentColumnName;
+use App\Attributes\RichContentColumn;
 use App\Attributes\RouteSlug;
 use App\Models\Traits\HasImages;
 use App\Models\Traits\HasTimestamps;
@@ -30,7 +30,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property Collection|iterable<Image> $images
  * @property Image|null $mainImage
  * @mixin HasTimestamps
- * @mixin RichContentColumnName
+ * @mixin RichContentColumn
  *
  * @method static Builder|static published();
  * @method static Builder|static unpublished();
@@ -38,7 +38,7 @@ use Spatie\Sitemap\Tags\Url;
  * @method static Builder|static withoutPage();
  */
 #[RouteSlug('slug_title')]
-#[RichContentColumnName('text')]
+#[RichContentColumn('text')]
 class FoodProduct extends Model implements Sitemapable
 {
     use HasImages, HasTimestamps, IsIdentifiedBySlug, IsSearchable;
