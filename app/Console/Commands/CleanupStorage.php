@@ -80,7 +80,7 @@ class CleanupStorage extends Command
     {
         $modelClasses = [Article::class, FoodProduct::class];
 
-        /** @var class-string|Article|FoodProduct $model */
+        /** @var class-string|Model $model */
         $texts = collect($modelClasses)->flatMap(fn (Model|string $model) => $model::query()
             ->pluck($model::getRichContentColumn()));
 
