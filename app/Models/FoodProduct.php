@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Attributes\RichContentColumn;
 use App\Attributes\RouteSlug;
 use App\Models\Traits\HasImages;
+use App\Models\Traits\HasRichContent;
 use App\Models\Traits\HasTimestamps;
 use App\Models\Traits\IsIdentifiedBySlug;
 use App\Models\Traits\IsSearchable;
@@ -30,7 +31,6 @@ use Spatie\Sitemap\Tags\Url;
  * @property Collection|iterable<Image> $images
  * @property Image|null $mainImage
  * @mixin HasTimestamps
- * @mixin RichContentColumn
  *
  * @method static Builder|static published();
  * @method static Builder|static unpublished();
@@ -41,7 +41,7 @@ use Spatie\Sitemap\Tags\Url;
 #[RichContentColumn('text')]
 class FoodProduct extends Model implements Sitemapable
 {
-    use HasImages, HasTimestamps, IsIdentifiedBySlug, IsSearchable;
+    use HasImages, HasRichContent, HasTimestamps, IsIdentifiedBySlug, IsSearchable;
 
     public const SEARCH_TYPE = 'food_products';
 
