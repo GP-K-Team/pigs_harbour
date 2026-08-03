@@ -10,7 +10,7 @@
         </a>
     </li>
     <li>
-        <a href="https://max.ru/join/nk3ElIsaSdkxuQyBjxxT7yPyq8aTlDzrazPCWu_eEYU" target="_blank">
+        <a href="https://max.ru/channel_pristansvinki" target="_blank">
             <div class="footer-icon footer-icon-max"></div>
         </a>
     </li>
