@@ -3,8 +3,8 @@
     use App\Models\City;
     use Illuminate\Support\Collection;
 
-    /** @var Collection|iterable<Pig> $pigs */
-    /** @var Collection|iterable<City> $cities */
+    /** @var Collection<int, Pig> $pigs */
+    /** @var Collection<int, City> $cities */
 @endphp
 
 <div class="summary-wrapper">
@@ -22,7 +22,7 @@
         <li>
             <div class="summary-block">
                 <p class="summary-number">
-                    15+
+                    20+
                 </p>
                 <p>
                     волонтеров
@@ -32,7 +32,7 @@
         <li>
             <div class="summary-block">
                 <p class="summary-number">
-                    {{ max($pigs->count(), 100) }}+
+                    {{ max($pigs->count(), 200) }}+
                 </p>
                 <p>
                     счастливых свинок
