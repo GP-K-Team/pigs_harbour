@@ -29,7 +29,7 @@
                             @endif
 
                             @if($pig->companion || $pig->companionOf)
-                                <p class="card-companion">Пристраивается с другом</p>
+                                <p class="card-companion">Пристраивается в паре</p>
                             @endif
                         </div>
                     </a>
@@ -54,7 +54,7 @@
                             @endif
 
                             @if($pig->companion || $pig->companionOf)
-                                <p class="card-companion">Пристраивается с другом</p>
+                                <p class="card-companion">Пристраивается в паре</p>
                             @endif
                         </div>
                     </a>
@@ -82,7 +82,7 @@
                                         @endif
 
                                         @if($pig->companion || $pig->companionOf)
-                                            <p class="card-companion">Пристраивается с другом</p>
+                                            <p class="card-companion">Пристраивается в паре</p>
                                         @endif
                                     </div>
                                 </a>

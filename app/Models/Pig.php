@@ -170,6 +170,11 @@ class Pig extends Model implements Sitemapable
         return $this->status === PigStatus::ACTIVE;
     }
 
+    /**
+     * Get formatted age string.
+     *
+     * @example '1,5 года', '10 месяцев', etc.
+     */
     public function getAgeString(): string
     {
         $ageString = '';
