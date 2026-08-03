@@ -18,15 +18,25 @@ class LinguisticsHelper
         return in_array($letter, $vowels);
     }
 
+    /**
+     * @example 'Москва' => 'Москве', 'Нижний Новгород' => 'Нижнем Новгороде', etc.
+     */
     public static function getCityLocativeForm(string $word): string
     {
-        $isRiverCityWord = Str::contains($word, '-на-', ignoreCase: true);
+        $word = Str::of($word);
+
+        $parentheses = $word->contains('(') ? $word->after('(')->prepend('(') : null;
+        $word = $word->before($parentheses ?? '')->rtrim();
+
+        $isRiverCityWord = $word->contains('-на-', ignoreCase: true);
 
         if ($isRiverCityWord) {
-            $tail = Str::of($word)->after('-')->prepend('-');
-            $mainWord = Str::before($word, $tail);
+            $tail = $word->after('-')->prepend('-');
+            $mainWord = $word->before($tail)->toString();
 
-            $result = self::getCityLocativeForm($mainWord) . $tail;
+            return self::getCityLocativeForm($mainWord) . $tail;
+        } else if (($words = $word->split('/\s/')) && $words->count() > 1) {
+            return $words->map(fn ($part) => self::getCityLocativeForm($part))->join(' ');
         }
 
         $rules = [
@@ -58,11 +68,11 @@ class LinguisticsHelper
         }
 
         if (!$ruleApplied) {
-            $lastLetter = Str::charAt($word, -1);
-            $result = (self::isVowel($lastLetter) ? Str::chopEnd($word, $lastLetter) : $word) . 'е';
+            $lastLetter = $word->charAt(-1);
+            $result = (self::isVowel($lastLetter) ? $word->chopEnd($lastLetter) : $word) . 'е';
         }
 
-        return $result ?? $word;
+        return Str::of($result ?? $word)->append(" $parentheses")->rtrim()->toString();
     }
 
     public static function transliterate(string $text): string
