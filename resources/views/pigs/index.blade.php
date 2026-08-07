@@ -209,7 +209,7 @@
                     @endif
 
                     @foreach($pigs as $pig)
-                        <li @class(['can-edit' => $isAdmin, 'card-pink' => $pig->sex === Sex::FEMALE, 'card-in-harbour' => $pig->status === PigStatus::IN_HARBOUR, 'card-booked' => $pig->status === PigStatus::BOOKED, 'list-item', 'card'])>
+                        <li @class(['can-edit' => $isAdmin, 'card-pink' => $pig->sex === Sex::FEMALE, 'card-in-harbour' => $pig->status === PigStatus::IN_HARBOUR, 'list-item', 'card'])>
                             @if($isAdmin)
                                 <a class="edit-icon-link" href="{{ route('catalog.show.update', compact('pig')) }}" draggable="false">
                                     <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
@@ -231,12 +231,10 @@
 
                                     @if($pig->status === PigStatus::IN_HARBOUR)
                                         <p class="card-later-status">Будет {{ LinguisticsHelper::getGenderedForm('готов', $pig->sex) }} к переезду позднее</p>
+                                    @elseif($pig->status === PigStatus::BOOKED)
+                                        <p class="card-booked-status">{{ LinguisticsHelper::getGenderedForm('Забронирован', $pig->sex) }}</p>
                                     @elseif($pig->companion || $pig->companionOf)
                                         <p class="card-companion">Пристраивается в паре</p>
-                                    @endif
-
-                                    @if($pig->status === PigStatus::BOOKED)
-                                        <p class="card-booked-status">{{ LinguisticsHelper::getGenderedForm('Забронирован', $pig->sex) }}</p>
                                     @endif
                                 </div>
                             </a>
@@ -723,14 +721,7 @@
             font-weight: 700;
         }
 
-        .card.card-booked {
-            position: relative;
-        }
-
         .card .card-booked-status {
-            position: absolute;
-            bottom: 1rem;
-            left: 1rem;
             color: var(--holiday-red);
             font-size: 0.875rem;
         }
