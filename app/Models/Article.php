@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Attributes\RichContentColumn;
 use App\Attributes\RouteSlug;
 use App\Models\Traits\HasImages;
 use App\Models\Traits\HasRichContent;
@@ -36,6 +37,7 @@ use Spatie\Sitemap\Tags\Url;
  * @method static Builder|static unpublished();
  */
 #[RouteSlug('slug_title')]
+#[RichContentColumn('text')]
 class Article extends Model implements Sitemapable
 {
     use HasImages, HasRichContent, HasTimestamps, IsIdentifiedBySlug, IsSearchable;
@@ -60,11 +62,6 @@ class Article extends Model implements Sitemapable
         'origin_link',
         'created_at',
     ];
-
-    public static function getRichContentColumnName(): string
-    {
-        return 'text';
-    }
 
     /**
      * @return BelongsToMany

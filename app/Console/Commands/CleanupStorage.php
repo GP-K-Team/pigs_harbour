@@ -83,7 +83,7 @@ class CleanupStorage extends Command
 
         /** @var class-string|HasRichContent $model */
         $texts = collect($modelClasses)->flatMap(fn (Model|string $model) => $model::query()
-            ->pluck($model::getRichContentColumnName()));
+            ->pluck($model::getRichContentColumn()));
 
         $path = Storage::path('/public/articles');
         $articleCoverImages = Image::query()->whereHas('articles')->pluck('link')
