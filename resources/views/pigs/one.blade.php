@@ -131,7 +131,7 @@
                         </div>
                     @elseif(!$pig->isActive())
                         <div class="inactive-status-wrapper">
-                            <p>{{ $pig->status === PigStatus::FOUND_HOME ? (($pig->sex === Sex::FEMALE ? 'Нашла' : 'Нашел') . ' дом.') : 'На Пристани, будет искать дом позднее.' }}</p>
+                            <p>{{ $pig->status === PigStatus::FOUND_HOME ? (($pig->sex === Sex::FEMALE ? 'Нашла' : 'Нашел') . ' дом.') : 'Забронировано' }}</p>
                         </div>
                     @endif
                 </div>
