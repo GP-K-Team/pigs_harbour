@@ -15,4 +15,6 @@ enum PigStatus: string
     case FOUND_HOME = 'found_home';
     #[Label('На Пристани')]
     case IN_HARBOUR = 'in_harbour';
+    #[Label('Бронь')]
+    case BOOKED = 'booked';
 }

@@ -1,5 +1,7 @@
 @php
     use App\Models\Pig;
+    use App\Enum\PigStatus;
+    use App\Enum\Sex;
     use App\Helpers\LinguisticsHelper;
     use Illuminate\Support\Collection;
 
@@ -14,7 +16,7 @@
     <div class="list-wrapper">
         <ul class="list">
             @foreach($pigs as $pig)
-                <li @class(['card-pink' => ($pig->sex->value === 'female'), 'list-item', 'card'])>
+                <li @class(['card-pink' => $pig->sex === Sex::FEMALE, 'card-in-harbour' => $pig->status === PigStatus::IN_HARBOUR, 'list-item', 'card'])>
                     <a href="{{ route('catalog.one', compact('pig')) }}">
                         <img class="card-image"
                              src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
@@ -28,7 +30,9 @@
                                     в {{ LinguisticsHelper::getCityLocativeForm($pig->city->name) }}</p>
                             @endif
 
-                            @if($pig->companion || $pig->companionOf)
+                            @if($pig->status === PigStatus::IN_HARBOUR)
+                                <p class="card-later-status">Будет {{ $pig->sex === Sex::FEMALE ? 'готова' : 'готов' }} к переезду позднее</p>
+                            @elseif($pig->companion || $pig->companionOf)
                                 <p class="card-companion">Пристраивается с другом</p>
                             @endif
                         </div>
@@ -39,7 +43,7 @@
 
         <ul class="list list-mobile">
             @foreach($pigs->take(3) as $pig)
-                <li class="list-item card">
+                <li @class(['card-in-harbour' => $pig->status === PigStatus::IN_HARBOUR, 'list-item', 'card'])>
                     <a href="{{ route('catalog.one', compact('pig')) }}">
                         <img class="card-image"
                              src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
@@ -53,7 +57,9 @@
                                     в {{ LinguisticsHelper::getCityLocativeForm($pig->city->name) }}</p>
                             @endif
 
-                            @if($pig->companion || $pig->companionOf)
+                            @if($pig->status === PigStatus::IN_HARBOUR)
+                                <p class="card-later-status">Будет {{ $pig->sex === Sex::FEMALE ? 'готова' : 'готов' }} к переезду позднее</p>
+                            @elseif($pig->companion || $pig->companionOf)
                                 <p class="card-companion">Пристраивается с другом</p>
                             @endif
                         </div>
@@ -67,7 +73,7 @@
                 <ul class="splide__list">
                     @foreach($pigs->take(3) as $pig)
                         <li class="splide__slide">
-                            <div class="list-item card">
+                            <div @class(['card-in-harbour' => $pig->status === PigStatus::IN_HARBOUR, 'list-item', 'card'])>
                                 <a href="{{ route('catalog.one', compact('pig')) }}">
                                     <img class="card-image"
                                          src="{{ asset($pig->mainImage?->getFullUrl() ?? $pig::getDefaultImage()) }}"
@@ -81,7 +87,9 @@
                                                 в {{ LinguisticsHelper::getCityLocativeForm($pig->city->name) }}</p>
                                         @endif
 
-                                        @if($pig->companion || $pig->companionOf)
+                                        @if($pig->status === PigStatus::IN_HARBOUR)
+                                            <p class="card-later-status">Будет {{ $pig->sex === Sex::FEMALE ? 'готова' : 'готов' }} к переезду позднее</p>
+                                        @elseif($pig->companion || $pig->companionOf)
                                             <p class="card-companion">Пристраивается с другом</p>
                                         @endif
                                     </div>
@@ -236,6 +244,20 @@
         opacity: 0.9;
         scale: 1.01;
         transition: 250ms;
+    }
+
+    .card.card-in-harbour {
+        opacity: 0.65;
+    }
+
+    .card.card-in-harbour:hover {
+        opacity: 0.75;
+    }
+
+    .card .card-later-status {
+        color: var(--holiday-red);
+        font-size: 1rem;
+        font-weight: 700;
     }
 
     .card p {

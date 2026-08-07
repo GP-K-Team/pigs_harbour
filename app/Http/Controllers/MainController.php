@@ -17,7 +17,7 @@ class MainController extends Controller
         return \view('index', [
             'title' => 'Приют для морских свинок',
             'cities' => City::all(),
-            'pigs' => Pig::activeAsc()->orderBy('created_at')->limit(6)->with(['city', 'companion', 'companionOf'])->get(),
+            'pigs' => Pig::activeAsc()->limit(6)->with(['city', 'companion', 'companionOf'])->get(),
             'articles' => Article::published()->inRandomOrder()->take(3)->get(),
         ]);
     }

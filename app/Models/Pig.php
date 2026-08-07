@@ -61,6 +61,10 @@ class Pig extends Model implements Sitemapable
 
     public const PAGINATE_ITEMS_COUNT = '6';
 
+    public const ACTIVE_STATUSES = [PigStatus::ACTIVE, PigStatus::IN_HARBOUR];
+
+    public const ARCHIVE_STATUSES = [PigStatus::BOOKED, PigStatus::FOUND_HOME];
+
     private const DELIVERY_LABEL = 'Доставка';
 
     protected $fillable = [
@@ -167,7 +171,7 @@ class Pig extends Model implements Sitemapable
 
     public function isActive(): bool
     {
-        return $this->status === PigStatus::ACTIVE;
+        return in_array($this->status, self::ACTIVE_STATUSES, true);
     }
 
     public function getAgeString(): string
@@ -209,35 +213,47 @@ class Pig extends Model implements Sitemapable
     }
 
     /**
-     * Currently active in desc order by created_at
+     * Active first, then in harbour; each group in desc order by created_at
      */
     public function scopeActiveDesc(Builder $query): void
     {
-        $query->where('status', '=', PigStatus::ACTIVE)->orderByDesc('created_at');
+        $query
+            ->whereIn('status', self::ACTIVE_STATUSES)
+            ->orderBy('status')
+            ->orderByDesc('created_at');
     }
 
     /**
-     * Currently active in asc order by created_at
+     * Active first, then in harbour; each group in asc order by created_at
      */
     public function scopeActiveAsc(Builder $query): void
     {
-        $query->where('status', '=', PigStatus::ACTIVE)->orderBy('created_at');
+        $query
+            ->whereIn('status', self::ACTIVE_STATUSES)
+            ->orderBy('status')
+            ->orderBy('created_at');
     }
 
     /**
-     * Currently not active in asc order by created_at
+     * Booked first, then found home; each group in asc order by updated_at
      */
     public function scopeNotActiveAsc(Builder $query): void
     {
-        $query->where('status', '!=', PigStatus::ACTIVE)->orderBy('created_at');
+        $query
+            ->whereIn('status', self::ARCHIVE_STATUSES)
+            ->orderBy('status')
+            ->orderBy('updated_at');
     }
 
     /**
-     * Currently not active in desc order by created_at
+     * Booked first, then found home; each group in desc order by updated_at
      */
     public function scopeNotActiveDesc(Builder $query): void
     {
-        $query->where('status', '!=', PigStatus::ACTIVE)->orderByDesc('created_at');
+        $query
+            ->whereIn('status', self::ARCHIVE_STATUSES)
+            ->orderBy('status')
+            ->orderByDesc('updated_at');
     }
 
     /**

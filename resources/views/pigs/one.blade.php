@@ -113,7 +113,7 @@
                         <b>Доставка</b>: <span>{{ $pig->has_delivery ? 'По РФ' : ('Только в ' . LinguisticsHelper::getCityLocativeForm($pig->city->name)) }}</span>
                     </p>
 
-                    @if($pig->isActive() && ($pig->companion || $pig->companionOf))
+                    @if($pig->status === PigStatus::ACTIVE && ($pig->companion || $pig->companionOf))
                         @php
                             $companion = $pig->companion ?? $pig->companionOf;
                         @endphp
@@ -123,7 +123,13 @@
                             </b>
                         </p>
                     @endif
-                    @if(!$pig->isActive())
+                    @if($pig->status === PigStatus::IN_HARBOUR)
+                        <div class="in-harbour-status-wrapper">
+                            <p>
+                                Эта морская свинка сейчас находится у нашего волонтера и будет готова к переезду немного позже. Вы можете заполнить <a href="/blog/kak-vzyat">анкету</a>, если готовы подождать.
+                            </p>
+                        </div>
+                    @elseif(!$pig->isActive())
                         <div class="inactive-status-wrapper">
                             <p>{{ $pig->status === PigStatus::FOUND_HOME ? (($pig->sex === Sex::FEMALE ? 'Нашла' : 'Нашел') . ' дом.') : 'На Пристани, будет искать дом позднее.' }}</p>
                         </div>
@@ -454,5 +460,20 @@
     .inactive-status-wrapper p {
         color: var(--holiday-red);
         font-size: 1.25em;
+    }
+
+    .in-harbour-status-wrapper {
+        margin-top: 35px;
+    }
+
+    .in-harbour-status-wrapper p,
+    .in-harbour-status-wrapper a {
+        color: var(--holiday-red);
+        font-family: inherit;
+        font-size: 1rem;
+    }
+
+    .in-harbour-status-wrapper a {
+        text-decoration: underline;
     }
 </style>
