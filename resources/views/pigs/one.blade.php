@@ -15,7 +15,6 @@
 
 @php
     use App\Enum\Fur;
-    use App\Enum\Sex;
     use App\Models\Pig;
     use App\Models\City;
     use App\Enum\AgeFilter;
@@ -131,7 +130,7 @@
                         </div>
                     @elseif(!$pig->isActive())
                         <div class="inactive-status-wrapper">
-                            <p>{{ $pig->status === PigStatus::FOUND_HOME ? (($pig->sex === Sex::FEMALE ? 'Нашла' : 'Нашел') . ' дом.') : ($pig->sex === Sex::FEMALE ? 'Забронирована' : 'Забронирован') }}</p>
+                            <p>{{ $pig->status === PigStatus::FOUND_HOME ? (LinguisticsHelper::getGenderedForm('Нашел', $pig->sex) . ' дом.') : LinguisticsHelper::getGenderedForm('Забронирован', $pig->sex) }}</p>
                         </div>
                     @endif
                 </div>
