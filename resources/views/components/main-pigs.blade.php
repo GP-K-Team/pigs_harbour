@@ -60,7 +60,7 @@
                             @if($pig->status === PigStatus::IN_HARBOUR)
                                 <p class="card-later-status">Будет {{ LinguisticsHelper::getGenderedForm('готов', $pig->sex) }} к переезду позднее</p>
                             @elseif($pig->companion || $pig->companionOf)
-                                <p class="card-companion">Пристраивается с паре</p>
+                                <p class="card-companion">Пристраивается в паре</p>
                             @endif
                         </div>
                     </a>
