@@ -4,10 +4,31 @@ declare(strict_types=1);
 
 namespace App\Helpers;
 
+use App\Enum\Sex;
 use Illuminate\Support\Str;
 
 class LinguisticsHelper
 {
+    /**
+     * @param string $masculineForm
+     * @param Sex $sex
+     * @return string
+     */
+    public static function getGenderedForm(string $masculineForm, Sex $sex): string
+    {
+        $genderedForm = $masculineForm;
+
+        if ($sex === Sex::FEMALE) {
+            if (Str::endsWith($masculineForm, 'шел')) {
+                $genderedForm = Str::substr($masculineForm, 0, -2) . 'ла';
+            } elseif (Str::endsWith($masculineForm, ['н', 'в'])) {
+                $genderedForm .= 'а';
+            }
+        }
+
+        return $genderedForm;
+    }
+
     public static function isVowel(string $letter): bool
     {
         $vowels = [

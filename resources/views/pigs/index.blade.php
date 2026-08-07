@@ -9,6 +9,7 @@
     use App\Models\Pig;
     use App\Models\City;
     use App\Enum\AgeFilter;
+    use App\Enum\PigStatus;
     use Illuminate\Support\Str;
     use App\Helpers\LinguisticsHelper;
     use Illuminate\Support\Collection;
@@ -208,7 +209,7 @@
                     @endif
 
                     @foreach($pigs as $pig)
-                        <li @class(['can-edit' => $isAdmin, 'card-pink' => $pig->sex === Sex::FEMALE, 'list-item', 'card'])>
+                        <li @class(['can-edit' => $isAdmin, 'card-pink' => $pig->sex === Sex::FEMALE, 'card-in-harbour' => $pig->status === PigStatus::IN_HARBOUR, 'card-booked' => $pig->status === PigStatus::BOOKED, 'list-item', 'card'])>
                             @if($isAdmin)
                                 <a class="edit-icon-link" href="{{ route('catalog.show.update', compact('pig')) }}" draggable="false">
                                     <img src="{{ asset('images/icons/edit.svg') }}" alt="Иконка редактирования карточки" draggable="false">
@@ -228,8 +229,14 @@
                                             в {{ LinguisticsHelper::getCityLocativeForm($pig->city->name) }}</p>
                                     @endif
 
-                                    @if($pig->companion || $pig->companionOf)
+                                    @if($pig->status === PigStatus::IN_HARBOUR)
+                                        <p class="card-later-status">Будет {{ LinguisticsHelper::getGenderedForm('готов', $pig->sex) }} к переезду позднее</p>
+                                    @elseif($pig->companion || $pig->companionOf)
                                         <p class="card-companion">Пристраивается в паре</p>
+                                    @endif
+
+                                    @if($pig->status === PigStatus::BOOKED)
+                                        <p class="card-booked-status">{{ LinguisticsHelper::getGenderedForm('Забронирован', $pig->sex) }}</p>
                                     @endif
                                 </div>
                             </a>
@@ -700,6 +707,32 @@
             opacity: 0.9;
             scale: 1.01;
             transition: 250ms;
+        }
+
+        .card.card-in-harbour {
+            opacity: 0.65;
+        }
+
+        .card.card-in-harbour:hover {
+            opacity: 0.75;
+        }
+
+        .card .card-later-status {
+            color: var(--holiday-red);
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .card.card-booked {
+            position: relative;
+        }
+
+        .card .card-booked-status {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            color: var(--holiday-red);
+            font-size: 0.875rem;
         }
 
         .card a {
