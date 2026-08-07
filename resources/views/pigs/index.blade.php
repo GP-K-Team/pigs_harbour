@@ -232,7 +232,7 @@
                                     @if($pig->status === PigStatus::IN_HARBOUR)
                                         <p class="card-later-status">Будет {{ $pig->sex === Sex::FEMALE ? 'готова' : 'готов' }} к переезду позднее</p>
                                     @elseif($pig->companion || $pig->companionOf)
-                                        <p class="card-companion">Пристраивается с другом</p>
+                                        <p class="card-companion">Пристраивается в паре</p>
                                     @endif
 
                                     @if($pig->status === PigStatus::BOOKED)
