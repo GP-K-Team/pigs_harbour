@@ -236,7 +236,7 @@
                                     @endif
 
                                     @if($pig->status === PigStatus::BOOKED)
-                                        <p class="card-booked-status">Забронировано</p>
+                                        <p class="card-booked-status">{{ $pig->sex === Sex::FEMALE ? 'Забронирована' : 'Забронирован' }}</p>
                                     @endif
                                 </div>
                             </a>
