@@ -1,5 +1,10 @@
 FROM php:8.3-fpm AS php
 
+#-----------------------------------------------------Set mirror for packagist-----------------------------------------#
+COPY --from=ghcr.io/php/pie:bin /pie /usr/local/bin/pie
+RUN pie repository:remove packagist.org \
+    && pie repository:add composer https://packagist.org.ru/
+
 #---------------------------------------------------- Set username and UID/GID ----------------------------------------#
 ARG uid=1001
 ENV user=user uid=$uid
@@ -113,8 +118,7 @@ USER $user
 FROM php AS dev
 ARG uid=1002
 RUN usermod -u $uid $user && chown -R $user:$user /home/$user
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug \
+RUN pie install xdebug/xdebug \
     && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 USER $user
